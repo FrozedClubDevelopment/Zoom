@@ -4,7 +4,7 @@ import me.ryzeon.core.utils.command.*;
 import org.bukkit.entity.Player;
 
 public class GamemodeSurvival extends BaseCMD {
-    @Command(name = "gms",permission = "core.gamemode",aliases = {"gm0"})
+    @Command(name = "gms",permission = "core.gamemode",aliases = {"gm0"},inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

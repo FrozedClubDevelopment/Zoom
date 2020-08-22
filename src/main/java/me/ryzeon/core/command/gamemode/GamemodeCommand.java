@@ -1,13 +1,12 @@
 package me.ryzeon.core.command.gamemode;
 
 import me.ryzeon.core.Zoom;
-import me.ryzeon.core.utils.Color;
-import me.ryzeon.core.utils.ConfigFile;
 import me.ryzeon.core.utils.Utils;
 import me.ryzeon.core.utils.command.BaseCMD;
 import me.ryzeon.core.utils.command.Command;
 import me.ryzeon.core.utils.command.CommandArgs;
 import me.ryzeon.core.utils.command.Completer;
+import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -38,12 +37,12 @@ public class GamemodeCommand extends BaseCMD {
         }
         return null;
     }
-    @Command(name = "gamemode",permission = "core.gamemode",aliases = {"gm"})
+    @Command(name = "gamemode",permission = "core.gamemode",aliases = {"gm"},inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        ConfigFile messages = Zoom.getInstance().getMessagesconfig();
+        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesconfig(),"");
         if (args.length == 0){
             p.sendMessage("§7§m-----------------------");
             p.sendMessage("§eUsage /gamemode <survival/creative/adventure>");

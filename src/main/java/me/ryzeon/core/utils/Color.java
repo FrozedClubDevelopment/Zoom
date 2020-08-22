@@ -13,4 +13,5 @@ public class Color {
     public static List<String> translate(List<String> source) {
         return (List<String>)source.stream().map(Color::translate).collect(Collectors.toList());
     }
+    public static String LINE = "§7§m-------------------";
 }

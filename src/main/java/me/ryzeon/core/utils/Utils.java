@@ -28,4 +28,12 @@ public class Utils {
             return -1;
         }
     }
+    public static void sendAllMsg(String string){
+        for (Player p : Bukkit.getOnlinePlayers()){
+            if (p != null){
+                p.sendMessage(string);
+            }
+        }
+        Bukkit.getConsoleSender().sendMessage(string);
+    }
 }

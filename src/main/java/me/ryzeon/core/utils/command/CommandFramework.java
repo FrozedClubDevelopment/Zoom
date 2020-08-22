@@ -6,6 +6,10 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
+import me.ryzeon.core.Zoom;
+import me.ryzeon.core.command.gamemode.GamemodeAdventure;
+import me.ryzeon.core.command.gamemode.GamemodeCreative;
+import me.ryzeon.core.utils.config.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -29,6 +33,9 @@ import org.bukkit.plugin.SimplePluginManager;
 public class CommandFramework implements CommandExecutor {
 
 	private Map<String, Entry<Method, Object>> commandMap = new HashMap<String, Entry<Method, Object>>();
+
+	private List<Command> comandos = new ArrayList<>();
+
 	private CommandMap map;
 	private Plugin plugin;
 
@@ -107,6 +114,24 @@ public class CommandFramework implements CommandExecutor {
 		return true;
 	}
 
+	// Add all config in commandsd.yml for users
+	public void loadCommandsInFile() {
+		FileConfig file =  Zoom.getInstance().getCommandsconfig();
+		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
+		this.commandMap.forEach((key, value) -> {
+			Method method = (Method)((Map.Entry)this.commandMap.get(key)).getKey();
+			Object methodObject = ((Map.Entry)this.commandMap.get(key)).getValue();
+			Command command = method.<Command>getAnnotation(Command.class);
+			file.getConfig().set(command.name() + ".permission", command.permission());
+			file.getConfig().set(command.name() + ".aliases", command.aliases());
+			file.getConfig().set(command.name() + ".description", command.description());
+			file.getConfig().set(command.name() + ".in-game-only",command.inGameOnly());
+		});
+		file.getConfig().set("info","This file it's only for view commands with aliases & permission");
+		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
+		file.save();
+	}
+
 	/**
 	 * Registers all command and completer methods inside of the object. Similar
 	 * to Bukkit's registerEvents method.
@@ -114,6 +139,7 @@ public class CommandFramework implements CommandExecutor {
 	 * @param obj The object to register the commands of
 	 */
 	public void registerCommands(Object obj) {
+		comandos.add(obj.getClass().getAnnotation(Command.class));
 		for (Method m : obj.getClass().getMethods()) {
 			if (m.getAnnotation(Command.class) != null) {
 				Command command = m.getAnnotation(Command.class);
@@ -178,7 +204,7 @@ public class CommandFramework implements CommandExecutor {
 		}
 	}
 
-	public void registerCompleter(String label, Method m, Object obj) {
+		public void registerCompleter(String label, Method m, Object obj) {
 		String cmdLabel = label.split("\\.")[0].toLowerCase();
 		if (map.getCommand(cmdLabel) == null) {
 			org.bukkit.command.Command command = new BukkitCommand(cmdLabel, this, plugin);

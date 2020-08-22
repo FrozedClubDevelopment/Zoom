@@ -8,3 +8,6 @@ ping:
   sound: 'NOTE_PLING'
   default: '&eYour ping is &7: $1'
   other: '&e$1 &fping is &7: $2'
+
+chat:
+  clear: '&eChat has been cleared by &f$1'

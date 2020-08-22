@@ -9,7 +9,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>EssentialsCore</name>
+    <name>Zoom</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -65,10 +65,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.7</version>
         </dependency>
     </dependencies>
 </project>
