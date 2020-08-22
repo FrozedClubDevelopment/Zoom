@@ -1,0 +1,10 @@
+# Messages Config
+
+gamemode:
+  default: '&eYour update your gamemode to $1'
+  other: '&eYou update &f$1''s &egamemode to &f$2'
+
+ping:
+  sound: 'NOTE_PLING'
+  default: '&eYour ping is &7: $1'
+  other: '&e$1 &fping is &7: $2'
