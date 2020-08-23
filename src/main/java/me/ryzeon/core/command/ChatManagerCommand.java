@@ -3,7 +3,10 @@ package me.ryzeon.core.command;
 import me.ryzeon.core.Zoom;
 import me.ryzeon.core.utils.Color;
 import me.ryzeon.core.utils.Utils;
-import me.ryzeon.core.utils.command.*;
+import me.ryzeon.core.utils.command.BaseCMD;
+import me.ryzeon.core.utils.command.Command;
+import me.ryzeon.core.utils.command.CommandArgs;
+import me.ryzeon.core.utils.command.Completer;
 import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
@@ -34,7 +37,7 @@ public class ChatManagerCommand extends BaseCMD {
                 for (int i = 0; i < 120; i++){
                     Utils.sendAllMsg("");
                 }
-                Utils.sendAllMsg(Utils.format(messages.getString("clear"),new Object[]{ p.getDisplayName() }));
+                Utils.sendAllMsg(Color.translate(messages.getString("clear").replace("<target>", p.getDisplayName())));
                 break;
             default:
                 break;

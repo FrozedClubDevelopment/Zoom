@@ -1,7 +1,7 @@
 package me.ryzeon.core.command.gamemode;
 
 import me.ryzeon.core.Zoom;
-import me.ryzeon.core.utils.Utils;
+import me.ryzeon.core.utils.Color;
 import me.ryzeon.core.utils.command.BaseCMD;
 import me.ryzeon.core.utils.command.Command;
 import me.ryzeon.core.utils.command.CommandArgs;
@@ -57,8 +57,8 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     p.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.default"), new Object[]{ "survival"}));
-                    p.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "survival")));
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")){
@@ -67,8 +67,8 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     p.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.default"), new Object[]{ "creative"}));
-                    p.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "creative")));
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")){
@@ -77,8 +77,8 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     p.setGameMode(GameMode.ADVENTURE);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.default"), new Object[]{ "adventure"}));
-                    p.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "adventure")));
+                    p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else {
@@ -111,8 +111,10 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     target.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.other"), new Object[]{ target.getName(),"survival"}));
-                    target.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.other")
+                            .replace("<gamemode>", "survival")
+                            .replace("<target>", target.getName())));
+                    target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")){
@@ -121,8 +123,10 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     target.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.other"), new Object[]{ target.getName(),"creative"}));
-                    target.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.other")
+                            .replace("<gamemode>", "creative")
+                            .replace("<target>", target.getName())));
+                    target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")){
@@ -131,8 +135,10 @@ public class GamemodeCommand extends BaseCMD {
                 }
                 else {
                     target.setGameMode(GameMode.ADVENTURE);
-                    p.sendMessage(Utils.format(messages.getString("gamemode.other"), new Object[]{ target.getName(),"adventure"}));
-                    target.playSound(p.getLocation(), Sound.NOTE_PLING,2F,2F);
+                    p.sendMessage(Color.translate(messages.getString("gamemode.other")
+                            .replace("<gamemode>", "adventure")
+                            .replace("<target>", target.getName())));
+                    target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
             else {

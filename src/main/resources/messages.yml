@@ -1,13 +1,45 @@
-# Messages Config
+#############################
+##---> Messages Config --->##
+#############################
 
+#Gamemode
 gamemode:
-  default: '&eYour update your gamemode to $1'
-  other: '&eYou update &f$1''s &egamemode to &f$2'
-
+  default: '&eYour update your gamemode to &F<gamemode>'
+  other: '&eYou update &f<target>''s &egamemode to &f<gamemode>'
+#Ping
 ping:
-  sound: 'NOTE_PLING'
-  default: '&eYour ping is &7: $1'
-  other: '&e$1 &fping is &7: $2'
-
+  sound: 'NOTE_PLING' # You can view more sound on  this  page  https://jd.bukkit.org/org/bukkit/Sound.html # If you don't wish sound put 'none'
+  default: '&eYour ping is&7: <ping>ms'
+  other: '&e<target>''s &fping is&7: <ping>ms'
+#Chat Manageer
 chat:
-  clear: '&eChat has been cleared by &f$1'
+  clear: '&eChat has been cleared by &f<player>'
+#Teleport Command
+teleport:
+  tp: '&eYou has been teleported to &f<target>'
+  top: '&eYou has been teleported to the top.'
+  tphere:
+    sender: '&eYou have been teleported &f<target> &eto you'
+    target: '&f<player> &eteleported you to him'
+  tpall: '&eAll players has been teleport to &f<player>'
+  tppos: '&eYou has been teleported to &f<x>&ex &f<y>&ey &f<z>&ez'
+#Fix Commands
+fix:
+  hand: '&eYou repaired the item in your hand'
+  all: '&eYou repaired all your items'
+#Rename Command
+rename: '&eYou name your item to <text>'
+#Clear Command
+clear:
+  default: '&eYou cleaned up your inventory'
+  other:
+    target: '&eYour inventory was cleared by <player>'
+    sender: '&eYou cleared the inventory of <target>'
+#Lore Command
+lore:
+  add: '&eYou added a lore to your item successfully'
+  remove: '&eYou remove a lore to your item successfully'
+#Speed Command
+speed:
+  walk: '&eYou set your walk speed to <amount>'
+  fly: '&eYou set your fly speed to <amount>'
