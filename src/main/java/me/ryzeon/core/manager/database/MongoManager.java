@@ -3,10 +3,12 @@ package me.ryzeon.core.manager.database;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import me.ryzeon.core.Zoom;
 import me.ryzeon.core.utils.config.ConfigCursor;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 
 import java.util.Collections;
@@ -17,13 +19,15 @@ public class MongoManager {
 
     private MongoDatabase mongoDatabase;
 
-    ConfigCursor mongoconfig = new ConfigCursor(Zoom.getInstance().getDatabaseconfig(),"mongodb");
+    ConfigCursor mongoconfig = new ConfigCursor(Zoom.getInstance().getDatabaseconfig(), "mongodb");
 
     private final boolean authentication = mongoconfig.getBoolean("authentication.enabled");
 
     private final String host = mongoconfig.getString("host");
 
     private final int port = mongoconfig.getInt("port");
+
+    private final String authdatabase = mongoconfig.getString("database");
 
     private final String database = mongoconfig.getString("database");
 
@@ -33,20 +37,23 @@ public class MongoManager {
 
     private boolean connect;
 
-    public void connect(){
+    private MongoCollection<Document> playerdata;
+
+    public void connect() {
         try {
             Zoom.getInstance().getLogger().info("Connecting to database");
             if (authentication) {
-                MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.database, this.password.toCharArray());
+                MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authdatabase, this.password.toCharArray());
                 this.client = new MongoClient(new ServerAddress(this.host, this.port), Collections.singletonList(mongoCredential));
                 this.connect = true;
-                Bukkit.getConsoleSender().sendMessage("§aSuccessfully connect to database.");
+                Bukkit.getConsoleSender().sendMessage("§aSuccessfully connect to MongoDB.");
             } else {
                 this.client = new MongoClient(new ServerAddress(this.host, this.port));
                 this.connect = true;
-                Bukkit.getConsoleSender().sendMessage("§aSuccessfully connect to database.");
+                Bukkit.getConsoleSender().sendMessage("§aSuccessfully connect to MongoDB.");
             }
             this.mongoDatabase = this.client.getDatabase(this.database);
+            this.playerdata = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
         } catch (Exception e) {
             this.connect = false;
             Zoom.getInstance().setDisablemsg("Error in mongodb");
@@ -57,9 +64,10 @@ public class MongoManager {
     }
     public void disconnect(){
         if (this.client != null){
-            Zoom.getInstance().getLogger().info("[Database] Disconnecting...");
+            Zoom.getInstance().getLogger().info("[DB] Disconnecting...");
             this.client.close();
             this.connect = false;
+            Zoom.getInstance().getLogger().info("[DB] Disconnecting Successfully");
         }
     }
 }

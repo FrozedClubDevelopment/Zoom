@@ -36,9 +36,7 @@ public class PingCommand extends BaseCMD {
             p.sendMessage(Color.translate(messages.getString("default")
                     .replace("<ping>", String.valueOf(ping))
                     .replace("<target>", target.getName())));
-            if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
-                p.playSound(p.getLocation(), Sound.valueOf(messages.getString("sound")), 2F, 2F);
-            }
+            Utils.sendPlayerSound(p, sound);
         }
     }
 }

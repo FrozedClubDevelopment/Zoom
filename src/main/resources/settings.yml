@@ -1,0 +1,18 @@
+#############################
+##---> Settings Config --->##
+#############################
+
+server-name: 'DEV'
+#Chat Settings
+chat:
+  mute: false
+  delay: 3
+  format: ''
+  staff-chat:
+    format: '&7(&9SC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
+    sound: 'NOTE_PLING' #Only in toggle msg
+    toggle: '&eYou <status> &estaff-chat'
+  admin-chat:
+    format: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
+    sound: 'NOTE_PLING' #Only in toggle msg
+    toggle: '&eYou <status> &eadmin-chat'

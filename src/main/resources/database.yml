@@ -1,3 +1,8 @@
+#############################
+##---> Database Config --->##
+#############################
+
+#For save data
 mongodb:
   host: '127.0.0.1'
   port: 27017
@@ -7,3 +12,9 @@ mongodb:
     user: 'root'
     password: 'password'
     database: 'database'
+#For sync rank
+redis:
+  host: ''
+  port: 16693
+  password: ''
+
