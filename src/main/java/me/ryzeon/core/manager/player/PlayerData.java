@@ -75,12 +75,12 @@ public class PlayerData {
         playersdataNames.remove(name);
         datas.add(this);
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
-        mongoManager.getPlayerdata().replaceOne(Filters.eq("name_lowercase", this.name.toLowerCase()), document, (new UpdateOptions()).upsert(true));
+        mongoManager.getPlayerdata().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
     }
 
     public void loadData() {
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
-        Document document = mongoManager.getPlayerdata().find(Filters.eq("name_lowercase", this.name.toLowerCase())).first();
+        Document document = mongoManager.getPlayerdata().find(Filters.eq("name", this.name)).first();
         if (document != null) {
             this.lastserver = document.getString("last-server");
             this.staffchat = document.getBoolean("staff-chat");
