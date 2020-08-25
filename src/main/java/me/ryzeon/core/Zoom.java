@@ -6,8 +6,8 @@ import me.ryzeon.core.listeners.ChatListener;
 import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.mongo.MongoManager;
 import me.ryzeon.core.manager.database.redis.Redis;
-import me.ryzeon.core.manager.database.redis.handler.Action;
-import me.ryzeon.core.manager.database.redis.jedis.JedisSubscriber;
+import me.ryzeon.core.manager.database.redis.handler.Payload;
+import me.ryzeon.core.manager.database.redis.manager.JedisSettings;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
 import me.ryzeon.core.manager.tags.TagManager;
@@ -73,8 +73,8 @@ public final class Zoom extends JavaPlugin {
         loadCommands();
         loadMenuListener();
         loadListener();
-        this.redis = new Redis(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host"), Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port"), Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
-        redis.connect();
+        JedisSettings settings = new JedisSettings(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host"), Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port"), Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
+        this.redis = new Redis(settings);
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
@@ -83,29 +83,33 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aDatabase§f:");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redis.isConnect() ? "§aEnabled" : "§cDisabled"));
+        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redis.isActive() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-        if (redis.isConnect()) {
+        if (redis.isActive()) {
             servermanagerMSG();
+        } else {
+
         }
     }
 
     @Override
     public void onDisable() {
-        if (redis.isConnect()) {
-            this.redis.getPublisher().write(JedisSubscriber.ZOOM, Action.SERVER_ON, new GsonUtil()
+        if (Zoom.getInstance().getRedis().isActive()) {
+            Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
                     .addProperty("SERVER", Lang.SERVER_NAME)
                     .addProperty("STATUS", "offline").get());
         }
-        PlayerData.datas.forEach(PlayerData::saveData);
-        shutdownmsg();
+        if (!PlayerData.datas.isEmpty()) {
+            PlayerData.datas.forEach(PlayerData::saveData);
+        }
         mongoManager.disconnect();
         Zoom.getInstance().getLogger().info("[DB] Disconnecting...");
         this.redis.getPool().destroy();
         Zoom.getInstance().getLogger().info("[DB] Disconnecting Successfully");
+        shutdownmsg();
     }
 
     private void loadCommands() {
@@ -118,12 +122,11 @@ public final class Zoom extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Zoom.getInstance().getRedis().getPublisher().write(JedisSubscriber.ZOOM, Action.SERVER_ON,
-                        new GsonUtil()
-                                .addProperty("SERVER", Lang.SERVER_NAME)
-                                .addProperty("STATUS", "online").get());
+                Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
+                        .addProperty("SERVER", Lang.SERVER_NAME)
+                        .addProperty("STATUS", "online").get());
             }
-        }.runTaskLater(this, 20);
+        }.runTaskLater(this, 5);
     }
 
     private void loadListener() {

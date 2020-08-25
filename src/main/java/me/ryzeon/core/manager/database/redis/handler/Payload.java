@@ -1,7 +1,7 @@
 package me.ryzeon.core.manager.database.redis.handler;
 
-public enum Action {
+public enum Payload {
+    SERVER_MANAGER,
     ADMIN_CHAT,
-    SERVER_ON,
-    SERVER_OFF;
+    STAFF_CHAT
 }

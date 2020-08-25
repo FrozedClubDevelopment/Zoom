@@ -1,4 +1,4 @@
-package me.ryzeon.core.manager.database.redis.jedis;
+package me.ryzeon.core.manager.database.redis.manager;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -7,22 +7,19 @@ import lombok.Getter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
+
 @Getter
 public class JedisSubscriber {
 
-    public static String ZOOM = "Zoom";
+    private static JsonParser JSON_PARSER = new JsonParser();
 
-    private static final JsonParser JSON_PARSER = new JsonParser();
-
-    private final String channel;
-    private final JedisSettings settings;
-    private final Jedis jedis;
+    private String channel;
+    private Jedis jedis;
     private JedisPubSub pubSub;
     private JedisSubscriptionHandler subscriptionHandler;
 
     public JedisSubscriber(String channel, JedisSettings settings, JedisSubscriptionHandler subscriptionHandler) {
         this.channel = channel;
-        this.settings = settings;
         this.subscriptionHandler = subscriptionHandler;
 
         this.pubSub = new JedisPubSub() {
@@ -38,12 +35,13 @@ public class JedisSubscriber {
             }
         };
 
-        this.jedis = new Jedis(this.settings.getAddress(), this.settings.getPort());
+        this.jedis = new Jedis(settings.getAddress(), settings.getPort());
 
-        if (this.settings.hasPassword()) {
-            this.jedis.auth(this.settings.getPassword());
+        if (settings.hasPassword()) {
+            this.jedis.auth(settings.getPassword());
         }
 
+        // Run subscription in it's own thread
         new Thread(() -> this.jedis.subscribe(this.pubSub, this.channel)).start();
     }
 
