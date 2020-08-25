@@ -2,6 +2,10 @@
 ##---> Messages Config --->##
 #############################
 
+#Sever Manager
+server:
+  prefix: '&7[&eServerManager&7]'
+  format: '<prefix> &d&l<server> &eserver will be <status> &ein 5 seconds'
 #Gamemode
 gamemode:
   default: '&eYour update your gamemode to &f<gamemode>'

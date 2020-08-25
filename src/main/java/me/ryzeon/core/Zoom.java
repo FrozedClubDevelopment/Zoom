@@ -5,12 +5,13 @@ import lombok.Setter;
 import me.ryzeon.core.listeners.ChatListener;
 import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.mongo.MongoManager;
-import me.ryzeon.core.manager.database.redis.listener.RecievedMessagesListener;
-import me.ryzeon.core.manager.database.redis.manager.Redis;
-import me.ryzeon.core.manager.database.redis.manager.RedisCredentials;
+import me.ryzeon.core.manager.database.redis.Redis;
+import me.ryzeon.core.manager.database.redis.handler.Action;
+import me.ryzeon.core.manager.database.redis.jedis.JedisSubscriber;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
 import me.ryzeon.core.manager.tags.TagManager;
+import me.ryzeon.core.utils.GsonUtil;
 import me.ryzeon.core.utils.RegisterHandler;
 import me.ryzeon.core.utils.command.CommandFramework;
 import me.ryzeon.core.utils.config.FileConfig;
@@ -19,6 +20,7 @@ import me.ryzeon.core.utils.menu.MenuListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
 @Setter
@@ -44,8 +46,6 @@ public final class Zoom extends JavaPlugin {
 
     private Redis redis;
 
-    private RedisCredentials redisCredentials;
-
     private ChatManager chatManager;
 
     private String disablemsg = "null";
@@ -64,18 +64,17 @@ public final class Zoom extends JavaPlugin {
         this.mongoManager = new MongoManager();
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
-        String redishost = Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host");
-        int redisport = Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port");
-        this.redisCredentials = new RedisCredentials(redishost, redisport);
-        this.redisCredentials.authenticate(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
-        this.redis = new Redis("Zoom", redisCredentials);
-        loadRedisListeners();
         zoomAPI = new ZoomAPI();
         chatManager.load();
         mongoManager.connect();
         if (!mongoManager.isConnect()) return;
         getLogger().info("[Tags] Register tags...");
         tagManager.registerTags();
+        loadCommands();
+        loadMenuListener();
+        loadListener();
+        this.redis = new Redis(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host"), Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port"), Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
+        redis.connect();
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
@@ -89,28 +88,42 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-        loadCommands();
-        loadMenuListener();
-        loadListener();
-        this.redis.subscribe();
+        if (redis.isConnect()) {
+            servermanagerMSG();
+        }
     }
 
     @Override
     public void onDisable() {
+        if (redis.isConnect()) {
+            this.redis.getPublisher().write(JedisSubscriber.ZOOM, Action.SERVER_ON, new GsonUtil()
+                    .addProperty("SERVER", Lang.SERVER_NAME)
+                    .addProperty("STATUS", "offline").get());
+        }
         PlayerData.datas.forEach(PlayerData::saveData);
         shutdownmsg();
         mongoManager.disconnect();
-        redis.close();
-    }
-
-    private void loadRedisListeners() {
-        this.redis.registerListener(new RecievedMessagesListener());
+        Zoom.getInstance().getLogger().info("[DB] Disconnecting...");
+        this.redis.getPool().destroy();
+        Zoom.getInstance().getLogger().info("[DB] Disconnecting Successfully");
     }
 
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
         // To load commands in file to view commands with permisison && usage
         commandFramework.loadCommandsInFile();
+    }
+
+    private void servermanagerMSG() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Zoom.getInstance().getRedis().getPublisher().write(JedisSubscriber.ZOOM, Action.SERVER_ON,
+                        new GsonUtil()
+                                .addProperty("SERVER", Lang.SERVER_NAME)
+                                .addProperty("STATUS", "online").get());
+            }
+        }.runTaskLater(this, 20);
     }
 
     private void loadListener() {

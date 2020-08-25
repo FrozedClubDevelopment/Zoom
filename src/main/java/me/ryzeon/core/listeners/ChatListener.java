@@ -2,10 +2,11 @@ package me.ryzeon.core.listeners;
 
 import me.ryzeon.core.Zoom;
 import me.ryzeon.core.manager.chat.ChatManager;
-import me.ryzeon.core.manager.database.redis.implement.AdminChatMessage;
-import me.ryzeon.core.manager.database.redis.type.Type;
+import me.ryzeon.core.manager.database.redis.handler.Action;
+import me.ryzeon.core.manager.database.redis.jedis.JedisSubscriber;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.utils.Color;
+import me.ryzeon.core.utils.GsonUtil;
 import me.ryzeon.core.utils.config.ConfigCursor;
 import me.ryzeon.core.utils.config.ConfigReplacement;
 import me.ryzeon.core.utils.lang.Lang;
@@ -85,7 +86,20 @@ public class ChatListener implements Listener {
                 .replace("<text>", e.getMessage()));
         if (adminchat && !staffchat || adminchat && staffchat) {
             e.setCancelled(true);
-            Zoom.getInstance().getRedis().sendMessage(Type.ADMIN_CHAT.getName(), new AdminChatMessage(playerData.getPlayer().getName(), Lang.SERVER_NAME, e.getMessage()));
+            if (Zoom.getInstance().getRedis().isConnect()) {
+                Zoom.getInstance().getRedis().getPublisher().write(JedisSubscriber.ZOOM, Action.ADMIN_CHAT,
+                        new GsonUtil()
+                                .addProperty("SERVER", Lang.SERVER_NAME)
+                                .addProperty("PLAYER", playerData.getPlayer().getName())
+                                .addProperty("TEXT", e.getMessage()).get());
+            } else {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.hasPermission("core.adminchat")) {
+                        p.sendMessage(format);
+                        ;
+                    }
+                }
+            }
         }
     }
 

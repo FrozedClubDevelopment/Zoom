@@ -1,23 +1,38 @@
 package me.ryzeon.core.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public final class GsonUtil {
 
-    public static final Gson NORMAL = new GsonBuilder().disableHtmlEscaping().create();
-    public static final Gson PRETTY_PRINTING = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-    public static final JsonParser NORMAL_PARSER = new JsonParser();
+    private JsonObject json = new JsonObject();
 
-    public static final Gson PLAIN_GSON = new GsonBuilder().create();
-    public static final Type MAP_OBJECT_TYPE = new TypeToken<Map<String, Object>>() {
-    }.getRawType();
-    public static final Type LIST_STRING_TYPE = new TypeToken<List<String>>() {
-    }.getType();
+    public GsonUtil addProperty(String property, String value) {
+        this.json.addProperty(property, value);
+        return this;
+    }
+
+    public GsonUtil addProperty(String property, Number value) {
+        this.json.addProperty(property, value);
+        return this;
+    }
+
+    public GsonUtil addProperty(String property, Boolean value) {
+        this.json.addProperty(property, value);
+        return this;
+    }
+
+    public GsonUtil addProperty(String property, Character value) {
+        this.json.addProperty(property, value);
+        return this;
+    }
+
+    public GsonUtil add(String property, JsonElement element) {
+        this.json.add(property, element);
+        return this;
+    }
+
+    public JsonObject get() {
+        return this.json;
+    }
 }
