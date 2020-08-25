@@ -1,6 +1,0 @@
-# Zoom Core
-
---> Informacion <--
-
-|- Permission
- ->
