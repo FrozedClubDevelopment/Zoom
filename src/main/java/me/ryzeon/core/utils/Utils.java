@@ -1,8 +1,10 @@
 package me.ryzeon.core.utils;
 
+import me.ryzeon.core.utils.items.ItemCreator;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -100,5 +102,13 @@ public class Utils {
         if (!(entirePage.toString().contains("\"country\":\"")))
             return null;
         return entirePage.toString().split("\"country\":\"")[1].split("\",")[0];
+    }
+
+    public static void fillInventory(Inventory inventory) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) {
+                inventory.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE, 7).setName(" ").get());
+            }
+        }
     }
 }

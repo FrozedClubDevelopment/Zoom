@@ -1,4 +1,4 @@
-package me.ryzeon.core.manager.database;
+package me.ryzeon.core.manager.database.mongo;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;

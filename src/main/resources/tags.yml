@@ -1,0 +1,44 @@
+title: '&eTags menu'
+# Permission is core.tags.<name>
+no-perms-lore:
+  - '&7&m---------------------'
+  - '&cYou don''t have this tag'
+  - '&eBuy in store.example.com'
+  - '&7&m---------------------'
+tags:
+  verified:
+    name: 'Verified'
+    color: GREEN
+    prefix: '&7[&a✔&7]'
+    permission: 'core.tag.verified'
+    item:
+      material: NAME_TAG
+      data: 0
+    lore:
+      - '&7&m------------------'
+      - '&e<tag>&e<player>&7: &fHello!'
+      - '&7&m------------------'
+  heart:
+    name: 'Heart'
+    color: RED
+    prefix: '&7[&c❤&7]'
+    permission: 'core.tag.heart'
+    item:
+      material: NAME_TAG
+      data: 0
+    lore:
+      - '&7&m------------------'
+      - '&e<tag>&e<player>&7: &fHello!'
+      - '&7&m------------------'
+  dolar:
+    name: 'Dolar'
+    color: GREEN
+    prefix: '&7[&a$$&7]'
+    permission: 'core.tag.dolar'
+    item:
+      material: NAME_TAG
+      data: 0
+    lore:
+      - '&7&m------------------'
+      - '&e<tag>&e<player>&7: &fHello!'
+      - '&7&m------------------'

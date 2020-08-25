@@ -3,16 +3,21 @@
 #############################
 
 server-name: 'DEV'
+prefix: '&7[&6ZoomCore&7]'
 #Chat Settings
 chat:
+  chat-color-menu: '&eChoose your chat color'
+  format:
+    enabled: true
+    default-color: YELLOW
+    format: '<rank> <tag> <namecolor><name>&7: <chatcolor><text>'
   mute: false
   delay: 3
-  format: ''
   staff-chat:
     format: '&7(&9SC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
     sound: 'NOTE_PLING' #Only in toggle msg
     toggle: '&eYou <status> &estaff-chat'
   admin-chat:
-    format: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
+    format: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: <text>'
     sound: 'NOTE_PLING' #Only in toggle msg
     toggle: '&eYou <status> &eadmin-chat'
