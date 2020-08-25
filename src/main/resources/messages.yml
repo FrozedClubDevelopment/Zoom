@@ -6,6 +6,11 @@
 server:
   prefix: '&7[&eServerManager&7]'
   format: '<prefix> &d&l<server> &eserver will be <status> &ein 5 seconds'
+#
+staff:
+  join: '&7(&9Staff&7) &d<player> &econnected to &d<server>'
+  quit: '&7(&9Staff&7) &d<player> &edisconnected from &d<server>'
+  switch: '&7(&9Staff&7) &d<player> &econnected to &d<server> &efrom &d<lastserver>'
 #Gamemode
 gamemode:
   default: '&eYour update your gamemode to &f<gamemode>'

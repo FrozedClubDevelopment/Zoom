@@ -3,8 +3,8 @@ package me.ryzeon.core.manager.database.redis.handler;
 import com.google.gson.JsonObject;
 import me.ryzeon.core.Zoom;
 import me.ryzeon.core.manager.database.redis.manager.JedisSubscriptionHandler;
+import me.ryzeon.core.manager.staff.StaffLang;
 import me.ryzeon.core.utils.Color;
-import me.ryzeon.core.utils.Utils;
 import me.ryzeon.core.utils.config.ConfigCursor;
 
 public class RedisSubHandler implements JedisSubscriptionHandler {
@@ -33,7 +33,7 @@ public class RedisSubHandler implements JedisSubscriptionHandler {
                         .replace("<prefix>", this.prefix)
                         .replace("<server>", server)
                         .replace("<status>", status));
-                Utils.sendRedisServerMsg(format);
+                StaffLang.sendRedisServerMsg(format);
                 break;
             }
             case ADMIN_CHAT: {
@@ -45,7 +45,7 @@ public class RedisSubHandler implements JedisSubscriptionHandler {
                         .replace("<server>", server)
                         .replace("<player>", player)
                         .replace("<text>", msg));
-                Utils.sendAdminChat(format);
+                StaffLang.sendAdminChat(format);
                 break;
             }
             case STAFF_CHAT: {
@@ -57,7 +57,26 @@ public class RedisSubHandler implements JedisSubscriptionHandler {
                         .replace("<server>", server)
                         .replace("<player>", player)
                         .replace("<text>", msg));
-                Utils.sendStaffChat(format);
+                StaffLang.sendStaffChat(format);
+                break;
+            }
+            case STAFF_JOIN: {
+                String player = data.get("STAFF").getAsString();
+                String server = data.get("SERVER").getAsString();
+                StaffLang.StaffJoinMessage(player, server);
+                break;
+            }
+            case STAFF_LEAVE: {
+                String player = data.get("STAFF").getAsString();
+                String server = data.get("SERVER").getAsString();
+                StaffLang.StaffLeaveMessage(player, server);
+                break;
+            }
+            case STAFF_SWICTH: {
+                String player = data.get("STAFF").getAsString();
+                String last_server = data.get("LAST_SERVER").getAsString();
+                String actual_server = data.get("ACTUAL_SERVER").getAsString();
+                StaffLang.StaffSwitchMessage(player, last_server, actual_server);
                 break;
             }
         }

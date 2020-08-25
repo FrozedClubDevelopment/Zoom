@@ -112,26 +112,4 @@ public class Utils {
         }
     }
 
-    public static void sendRedisServerMsg(String string) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("core.servermanager")) {
-                p.sendMessage(string);
-            }
-        }
-        Bukkit.getConsoleSender().sendMessage(string);
-    }
-
-    public static void sendAdminChat(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission("core.adminchat")) return;
-            p.sendMessage(msg);
-        }
-    }
-
-    public static void sendStaffChat(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission("core.adminchat")) return;
-            p.sendMessage(msg);
-        }
-    }
 }

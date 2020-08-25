@@ -1,7 +1,5 @@
 package me.ryzeon.core.utils.command;
 
-import me.ryzeon.core.Zoom;
-import me.ryzeon.core.utils.config.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -112,27 +110,39 @@ public class CommandFramework implements CommandExecutor {
 	}
 
 	// Add all config in commandsd.yml for users
-	public void loadCommandsInFile() {
-		FileConfig file =  Zoom.getInstance().getCommandsconfig();
-		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
-		this.commandMap.forEach((key, value) -> {
-			Method method = (Method)((Map.Entry)this.commandMap.get(key)).getKey();
-			Object methodObject = ((Map.Entry)this.commandMap.get(key)).getValue();
-			Command command = method.<Command>getAnnotation(Command.class);
-			file.getConfig().set(command.name() + ".permission", command.permission());
-			file.getConfig().set(command.name() + ".aliases", command.aliases());
-			file.getConfig().set(command.name() + ".description", command.description());
-			file.getConfig().set(command.name() + ".in-game-only",command.inGameOnly());
-		});
-		file.getConfig().set("info","This file it's only for view commands with aliases & permission");
-		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
-		file.save();
-	}
+//	public void loadCommandsInFile() {
+//		FileConfig file =  Zoom.getInstance().getCommandsconfig();
+//		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
+//		this.commandMap.forEach((key, value) -> {
+//			Method method = (Method)((Map.Entry)this.commandMap.get(key)).getKey();
+//			Object methodObject = ((Map.Entry)this.commandMap.get(key)).getValue();
+//			Command command = method.<Command>getAnnotation(Command.class);
+//			file.getConfig().set(command.name() + ".permission", command.permission());
+//			file.getConfig().set(command.name() + ".aliases", command.aliases());
+//			file.getConfig().set(command.name() + ".description", command.description());
+//			file.getConfig().set(command.name() + ".in-game-only",command.inGameOnly());
+//		});
+//		file.getConfig().set("info","This file it's only for view commands with aliases & permission");
+//		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
+//		file.save();
+//	}
+//	public void loadCommandsInFile() {
+//		FileConfig file =  Zoom.getInstance().getCommandsconfig();
+//		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
+//		this.commandMap.forEach((key, value) -> {
+//			Method method = (Method)((Map.Entry)this.commandMap.get(key)).getKey();
+//			Command command = method.<Command>getAnnotation(Command.class);
+//			file.getConfig().set(command.name(),"Permission -> "+command.name()+ "||  Aliases -> "+command.aliases().toString());
+//		});
+//		file.getConfig().set("info","This file it's only for view commands with aliases & permission");
+//		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
+//		file.save();
+//	}
 
 	/**
 	 * Registers all command and completer methods inside of the object. Similar
 	 * to Bukkit's registerEvents method.
-	 * 
+	 *
 	 * @param obj The object to register the commands of
 	 */
 	public void registerCommands(Object obj) {

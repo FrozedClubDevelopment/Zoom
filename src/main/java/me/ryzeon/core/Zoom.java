@@ -10,6 +10,7 @@ import me.ryzeon.core.manager.database.redis.handler.Payload;
 import me.ryzeon.core.manager.database.redis.manager.JedisSettings;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
+import me.ryzeon.core.manager.staff.StaffListener;
 import me.ryzeon.core.manager.tags.TagManager;
 import me.ryzeon.core.utils.GsonUtil;
 import me.ryzeon.core.utils.RegisterHandler;
@@ -34,8 +35,6 @@ public final class Zoom extends JavaPlugin {
 
     private FileConfig databaseconfig;
 
-    private FileConfig commandsconfig;
-
     private FileConfig settingsconfig;
 
     private FileConfig tagsconfig;
@@ -58,7 +57,6 @@ public final class Zoom extends JavaPlugin {
         commandFramework = new CommandFramework(this);
         this.messagesconfig = new FileConfig(this, "messages.yml");
         this.databaseconfig = new FileConfig(this, "database.yml");
-        this.commandsconfig = new FileConfig(this, "commands.yml");
         this.settingsconfig = new FileConfig(this, "settings.yml");
         this.tagsconfig = new FileConfig(this, "tags.yml");
         this.mongoManager = new MongoManager();
@@ -71,7 +69,6 @@ public final class Zoom extends JavaPlugin {
         getLogger().info("[Tags] Register tags...");
         tagManager.registerTags();
         loadCommands();
-        loadMenuListener();
         loadListener();
         JedisSettings settings = new JedisSettings(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host"), Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port"), Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
         this.redis = new Redis(settings);
@@ -115,7 +112,6 @@ public final class Zoom extends JavaPlugin {
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
         // To load commands in file to view commands with permisison && usage
-        commandFramework.loadCommandsInFile();
     }
 
     private void servermanagerMSG() {
@@ -133,13 +129,12 @@ public final class Zoom extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         //Important to load player data
         pluginManager.registerEvents(new PlayerDataLoad(), this);
+        //General Players Listener
         pluginManager.registerEvents(new ChatListener(), this);
-    }
-
-    private void loadMenuListener() {
-        PluginManager pluginManager = Bukkit.getPluginManager();
-        //Important to load player data
+        //Important to work menus
         pluginManager.registerEvents(new MenuListener(), this);
+        // Staff Listener
+        pluginManager.registerEvents(new StaffListener(), this);
     }
 
     public void shutdownmsg() {
