@@ -26,7 +26,7 @@ public class ChatManagerCommand extends BaseCMD {
         list.add("delay");
         return list;
     }
-    @Command(name = "chat",permission = "core.manager.chat",aliases = {"chatmanager"},inGameOnly = true)
+    @Command(name = "chat", permission = "core.manager", aliases = {"chatmanager"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

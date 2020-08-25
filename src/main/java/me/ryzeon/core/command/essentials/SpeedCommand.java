@@ -24,7 +24,7 @@ public class SpeedCommand extends BaseCMD {
         return add;
     }
 
-    @Command(name = "speed", permission = "core.speed", inGameOnly = true)
+    @Command(name = "speed", permission = "core.essentials.speed", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

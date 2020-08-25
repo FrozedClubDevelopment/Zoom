@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ClearInventoryCommand extends BaseCMD {
-    @Command(name = "clear", permission = "core.clear", usage = "Clear inventory", inGameOnly = true)
+    @Command(name = "clear", permission = "core.command.clear", usage = "Clear inventory", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

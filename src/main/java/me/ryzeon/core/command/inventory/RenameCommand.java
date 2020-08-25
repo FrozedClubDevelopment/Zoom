@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RenameCommand extends BaseCMD {
-    @Command(name = "rename", permission = "core.rename", inGameOnly = true)
+    @Command(name = "rename", permission = "core.command.rename", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

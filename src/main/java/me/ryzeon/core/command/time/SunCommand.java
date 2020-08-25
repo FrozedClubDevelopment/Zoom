@@ -9,7 +9,7 @@ import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
 public class SunCommand extends BaseCMD {
-    @Command(name = "sun", permission = "core.time.sun", inGameOnly = true)
+    @Command(name = "sun", permission = "core.command.sun", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

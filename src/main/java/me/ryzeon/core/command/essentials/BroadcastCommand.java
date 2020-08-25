@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BroadcastCommand extends BaseCMD {
-    @Command(name = "broadcast", permission = "core.broadcast", aliases = {"bc", "alerta"}, inGameOnly = true)
+    @Command(name = "broadcast", permission = "core.essentials.broadcast", aliases = {"bc", "alerta"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

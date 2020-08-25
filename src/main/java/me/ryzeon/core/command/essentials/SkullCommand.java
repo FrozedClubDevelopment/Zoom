@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkullCommand extends BaseCMD {
-    @Command(name = "skull", permission = "core.skull", aliases = {"cabeza", "getskull", "head"}, inGameOnly = true)
+    @Command(name = "skull", permission = "core.essentials.skull", aliases = {"cabeza", "getskull", "head"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

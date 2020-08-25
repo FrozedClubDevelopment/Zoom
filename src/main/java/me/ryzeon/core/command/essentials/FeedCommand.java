@@ -9,7 +9,7 @@ import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
 public class FeedCommand extends BaseCMD {
-    @Command(name = "feed", permission = "core.feed", aliases = {"comer", "tragar"}, inGameOnly = true)
+    @Command(name = "feed", permission = "core.essentials.feed", aliases = {"comer", "tragar"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

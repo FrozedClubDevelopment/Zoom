@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class MoreCommand extends BaseCMD {
-    @Command(name = "more", permission = "core.more", inGameOnly = true, aliases = {"stackitem"})
+    @Command(name = "more", permission = "core.command.more", inGameOnly = true, aliases = {"stackitem"})
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

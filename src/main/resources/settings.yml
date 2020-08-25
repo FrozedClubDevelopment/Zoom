@@ -6,6 +6,7 @@ server-name: 'DEV'
 prefix: '&7[&6ZoomCore&7]'
 #Chat Settings
 chat:
+  name-color-menu: '&eChoose your name color'
   chat-color-menu: '&eChoose your chat color'
   format:
     enabled: true

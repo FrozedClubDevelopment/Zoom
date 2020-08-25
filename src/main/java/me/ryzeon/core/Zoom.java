@@ -2,7 +2,7 @@ package me.ryzeon.core;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.ryzeon.core.listeners.ChatListener;
+import me.ryzeon.core.manager.chat.ChatListener;
 import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.mongo.MongoManager;
 import me.ryzeon.core.manager.database.redis.Redis;
@@ -39,6 +39,8 @@ public final class Zoom extends JavaPlugin {
 
     private FileConfig tagsconfig;
 
+    private FileConfig commandsconfig;
+
     private TagManager tagManager;
 
     private MongoManager mongoManager;
@@ -59,6 +61,7 @@ public final class Zoom extends JavaPlugin {
         this.databaseconfig = new FileConfig(this, "database.yml");
         this.settingsconfig = new FileConfig(this, "settings.yml");
         this.tagsconfig = new FileConfig(this, "tags.yml");
+        this.commandsconfig = new FileConfig(this, "commands.yml");
         this.mongoManager = new MongoManager();
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
@@ -112,6 +115,7 @@ public final class Zoom extends JavaPlugin {
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
         // To load commands in file to view commands with permisison && usage
+        this.commandFramework.loadCommandsInFile();
     }
 
     private void servermanagerMSG() {

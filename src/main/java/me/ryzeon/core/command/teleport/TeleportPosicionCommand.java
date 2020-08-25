@@ -11,7 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class TeleportPosicionCommand extends BaseCMD {
-    @Command(name = "teleportposition", permission = "core.teleport.tppos", aliases = {"tppos"}, inGameOnly = true)
+    @Command(name = "teleportposition", permission = "core.command.tppos", aliases = {"tppos"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

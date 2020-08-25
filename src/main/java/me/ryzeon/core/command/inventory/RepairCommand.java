@@ -23,7 +23,7 @@ public class RepairCommand extends BaseCMD {
         return list;
     }
 
-    @Command(name = "repair", permission = "core.fix", aliases = {"fix"}, description = "To fix items", inGameOnly = true)
+    @Command(name = "repair", permission = "core.command.fix", aliases = {"fix"}, description = "To fix items", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

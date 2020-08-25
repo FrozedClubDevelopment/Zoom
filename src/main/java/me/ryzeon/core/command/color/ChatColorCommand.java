@@ -1,4 +1,4 @@
-package me.ryzeon.core.command.chat;
+package me.ryzeon.core.command.color;
 
 import me.ryzeon.core.menu.color.ChatColorMenu;
 import me.ryzeon.core.utils.command.BaseCMD;

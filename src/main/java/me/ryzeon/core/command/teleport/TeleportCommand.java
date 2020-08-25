@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class TeleportCommand extends BaseCMD {
-    @Command(name = "teleport",permission = "core.teleport",aliases = {"tp"},inGameOnly = true)
+    @Command(name = "teleport", permission = "core.command.teleport", aliases = {"tp"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

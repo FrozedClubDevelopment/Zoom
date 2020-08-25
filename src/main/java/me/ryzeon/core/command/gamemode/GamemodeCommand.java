@@ -37,7 +37,7 @@ public class GamemodeCommand extends BaseCMD {
         }
         return null;
     }
-    @Command(name = "gamemode",permission = "core.gamemode",aliases = {"gm"},inGameOnly = true)
+    @Command(name = "gamemode", permission = "core.gamemode.command", aliases = {"gm"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
@@ -51,31 +51,40 @@ public class GamemodeCommand extends BaseCMD {
         }
         if (args.length == 1){
             String gamemode = args[0];
-            if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("s") || gamemode.equalsIgnoreCase("0")){
-                if (p.getGameMode().equals(GameMode.SURVIVAL)){
-                    p.sendMessage("§eYou already in gamemode survival");
+            if (gamemode.equalsIgnoreCase("survival") || gamemode.equalsIgnoreCase("s") || gamemode.equalsIgnoreCase("0")) {
+                if (!p.hasPermission("core.gamemode.survival")) {
+                    p.sendMessage("§cYou don't have permissions");
+                    return;
                 }
-                else {
+                if (p.getGameMode().equals(GameMode.SURVIVAL)) {
+                    p.sendMessage("§eYou already in gamemode survival");
+                } else {
                     p.setGameMode(GameMode.SURVIVAL);
                     p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "survival")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
-            else if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")){
-                if (p.getGameMode().equals(GameMode.CREATIVE)){
-                    p.sendMessage("§eYou already in gamemode creative");
+            else if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")) {
+                if (!p.hasPermission("core.gamemode.creative")) {
+                    p.sendMessage("§cYou don't have permissions");
+                    return;
                 }
-                else {
+                if (p.getGameMode().equals(GameMode.CREATIVE)) {
+                    p.sendMessage("§eYou already in gamemode creative");
+                } else {
                     p.setGameMode(GameMode.CREATIVE);
                     p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "creative")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             }
-            else if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")){
-                if (p.getGameMode().equals(GameMode.ADVENTURE)){
-                    p.sendMessage("§eYou already in gamemode adventure");
+            else if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")) {
+                if (!p.hasPermission("core.gamemode.adventure")) {
+                    p.sendMessage("§cYou don't have permissions");
+                    return;
                 }
-                else {
+                if (p.getGameMode().equals(GameMode.ADVENTURE)) {
+                    p.sendMessage("§eYou already in gamemode adventure");
+                } else {
                     p.setGameMode(GameMode.ADVENTURE);
                     p.sendMessage(Color.translate(messages.getString("gamemode.default").replace("<gamemode>", "adventure")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);

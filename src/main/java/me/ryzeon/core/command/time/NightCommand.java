@@ -9,7 +9,7 @@ import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
 public class NightCommand extends BaseCMD {
-    @Command(name = "night", permission = "core.time.night", inGameOnly = true)
+    @Command(name = "night", permission = "core.command.night", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

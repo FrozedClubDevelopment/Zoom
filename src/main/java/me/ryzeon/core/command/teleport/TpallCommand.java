@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class TpallCommand extends BaseCMD {
-    @Command(name = "teleportall", permission = "core.teleport.all", aliases = {"tpall"}, inGameOnly = true)
+    @Command(name = "teleportall", permission = "core.command.tpall", aliases = {"tpall"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

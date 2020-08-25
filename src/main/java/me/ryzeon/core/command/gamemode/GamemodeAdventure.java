@@ -6,7 +6,7 @@ import me.ryzeon.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
 public class GamemodeAdventure extends BaseCMD {
-    @Command(name = "gma",permission = "core.gamemode",aliases = {"gm2"},inGameOnly = true)
+    @Command(name = "gma", permission = "core.gamemode.adventure", aliases = {"gm2"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class HealCommand extends BaseCMD {
-    @Command(name = "heal", permission = "core.heal", aliases = {"curar"}, inGameOnly = true)
+    @Command(name = "heal", permission = "core.essentials.heal", aliases = {"curar"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

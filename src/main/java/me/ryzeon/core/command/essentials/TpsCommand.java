@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TpsCommand extends BaseCMD {
-    @Command(name = "tps", permission = "core.tps", aliases = {"lag", "serverlag", "lagg"})
+    @Command(name = "tps", permission = "core.essentials.tps", aliases = {"lag", "serverlag", "lagg"})
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

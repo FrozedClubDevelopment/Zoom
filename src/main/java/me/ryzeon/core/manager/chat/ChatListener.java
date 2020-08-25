@@ -1,7 +1,6 @@
-package me.ryzeon.core.listeners;
+package me.ryzeon.core.manager.chat;
 
 import me.ryzeon.core.Zoom;
-import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.redis.handler.Payload;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.utils.Color;
@@ -41,7 +40,7 @@ public class ChatListener implements Listener {
             replacement.add("<chatcolor>", ChatColor.valueOf(chatcolor));
         }
         if (playerData.getNamecolor() != null) {
-            replacement.add("<namecolor>", playerData.getNamecolor());
+            replacement.add("<namecolor>", ChatColor.valueOf(playerData.getChatColor()));
         } else {
             replacement.add("<namecolor>", ChatColor.valueOf(chatcolor));
         }

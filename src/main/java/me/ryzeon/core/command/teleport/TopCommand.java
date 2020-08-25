@@ -10,7 +10,7 @@ import me.ryzeon.core.utils.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
 public class TopCommand extends BaseCMD {
-    @Command(name = "teleporttop", permission = "core.teleport.top", aliases = {"top"}, inGameOnly = true)
+    @Command(name = "teleporttop", permission = "core.command.top", aliases = {"top"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

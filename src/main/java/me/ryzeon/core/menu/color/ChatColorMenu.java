@@ -47,7 +47,7 @@ public class ChatColorMenu implements Menu {
         this.inventory.setItem(24, new ItemCreator(Material.INK_SACK, 2).setName("&2Dark Green").get());
         this.inventory.setItem(25, new ItemCreator(Material.RED_ROSE).setName("&cRed").get());
         this.inventory.setItem(4, new ItemCreator(Material.NETHER_STALK).setName("&4Dark Red").get());
-        this.inventory.setItem(31, new ItemCreator(Material.INK_SACK, 0).setName("&1Blacks").get());
+        this.inventory.setItem(31, new ItemCreator(Material.INK_SACK, 0).setName("&1Black").get());
         InventoryUtil.fillInventory(this.inventory);
     }
 
@@ -84,80 +84,159 @@ public class ChatColorMenu implements Menu {
                         break;
                     }
                 case 11:
-                    if (p.hasPermission("core.color.white") || p.hasPermission("core.color.all")) {
+                    if (p.hasPermission("core.chatcolor.white") || p.hasPermission("core.chatcolor.all")) {
                         data.setChatColor("WHITE");
                         playSound(p, true);
                         p.closeInventory();
                     } else {
-                        p.sendMessage("§cYou don't have permission to this color");
+                        p.sendMessage("§cYou don't have permission for this color");
                         playSound(p, false);
                         p.closeInventory();
                     }
                     break;
                 case 12:
-                    data.setChatColor("GOLD");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.orange") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("GOLD");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 13:
-                    data.setChatColor("LIGHT_PURPLE");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.lightpurple") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("LIGHT_PURPLE");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 14:
-                    data.setChatColor("AQUA");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.lightblue") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("AQUA");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 15:
-                    data.setChatColor("YELLOW");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.yellow") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("YELLOW");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 19:
-                    data.setChatColor("DARK_GRAY");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.darkgray") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_GRAY");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 20:
-                    data.setChatColor("GRAY");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.gray") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("GRAY");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 21:
-                    data.setChatColor("DARK_AQUA");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.cyan") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_AQUA");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 22:
-                    data.setChatColor("DARK_PURPLE");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.purple") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_PURPLE");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 23:
-                    data.setChatColor("DARK_BLUE");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.darkblue") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_BLUE");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 24:
-                    data.setChatColor("DARK_GREEN");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.darkgreen") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_GREEN");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 25:
-                    data.setChatColor("RED");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.red") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("RED");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 4:
-                    data.setChatColor("DARK_RED");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.darkred") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("DARK_RED");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
                     break;
                 case 31:
-                    data.setChatColor("BLACk");
-                    playSound(p, true);
-                    p.closeInventory();
+                    if (p.hasPermission("core.chatcolor.black") || p.hasPermission("core.chatcolor.all")) {
+                        data.setChatColor("BLACK");
+                        playSound(p, true);
+                        p.closeInventory();
+                    } else {
+                        p.sendMessage("§cYou don't have permission for this color");
+                        playSound(p, false);
+                        p.closeInventory();
+                    }
+                    ;
                     break;
                 default:
                     break;
