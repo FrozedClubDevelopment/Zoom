@@ -29,7 +29,6 @@ messages:
     sender: '&7(To &e<recipient>&7) -> &e<text>'
     recipient: '&7(From &e<sender>&7) -> &e<text>'
     social-spy: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<recipient> &7» <text>'
-
 # Tips
 tips:
   enabled: true

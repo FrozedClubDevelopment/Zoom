@@ -123,8 +123,6 @@ public final class Zoom extends JavaPlugin {
 
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
-        // To load commands in file to view commands with permisison && usage
-        this.commandFramework.loadCommandsInFile();
     }
 
     private void loadListener() {
