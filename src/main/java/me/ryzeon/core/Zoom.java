@@ -10,7 +10,9 @@ import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
 import me.ryzeon.core.manager.staff.StaffListener;
 import me.ryzeon.core.manager.tags.TagManager;
+import me.ryzeon.core.manager.tips.TipsRunnable;
 import me.ryzeon.core.utils.RegisterHandler;
+import me.ryzeon.core.utils.TaskUtil;
 import me.ryzeon.core.utils.command.CommandFramework;
 import me.ryzeon.core.utils.config.FileConfig;
 import me.ryzeon.core.utils.lang.Lang;
@@ -68,6 +70,10 @@ public final class Zoom extends JavaPlugin {
         tagManager.registerTags();
         loadCommands();
         loadListener();
+        if (Zoom.getInstance().getSettingsconfig().getConfig().getBoolean("tips.enabled")) {
+            TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsconfig().getConfig().getInt("tips.delay"));
+            Bukkit.getConsoleSender().sendMessage("§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsconfig().getConfig().getString("tips.mode"));
+        }
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");

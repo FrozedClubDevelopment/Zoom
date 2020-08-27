@@ -29,6 +29,10 @@ public class TaskUtil {
         Zoom.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Zoom.getInstance(), runnable, delay);
     }
 
+    public static void runTaskTimerAsynchronously(Runnable runnable, int delay) {
+        Zoom.getInstance().getServer().getScheduler().runTaskTimerAsynchronously((Plugin) Zoom.getInstance(), runnable, 20 * delay, 20 * delay);
+    }
+
     public static void runAsync(Runnable runnable) {
         Zoom.getInstance().getServer().getScheduler().runTaskAsynchronously((Plugin) Zoom.getInstance(), runnable);
     }

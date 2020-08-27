@@ -1,7 +1,5 @@
 package me.ryzeon.core.utils.command;
 
-import me.ryzeon.core.Zoom;
-import me.ryzeon.core.utils.config.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -109,20 +107,6 @@ public class CommandFramework implements CommandExecutor {
 		}
 		defaultCommand(new CommandArgs(sender, cmd, label, args, 0));
 		return true;
-	}
-
-	// Add all config in commandsd.yml for users
-	public void loadCommandsInFile() {
-		FileConfig file = Zoom.getInstance().getCommandsconfig();
-		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
-		this.commandMap.forEach((key, value) -> {
-            Method method = (Method) ((Map.Entry) this.commandMap.get(key)).getKey();
-            Object methodObject = ((Map.Entry) this.commandMap.get(key)).getValue();
-            Command command = method.<Command>getAnnotation(Command.class);
-            file.getConfig().set(command.name(), "Permission -> " + (command.permission().isEmpty() ? "No perm" : command.permission()));
-        });
-		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
-		file.save();
 	}
 
 	/**

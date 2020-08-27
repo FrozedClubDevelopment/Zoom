@@ -2,6 +2,18 @@
 ##---> Messages Config --->##
 #############################
 
+#Player Message:
+player:
+  sound: 'NOTE_PLING'
+  join: # <player>, <server>, <rank>, <prefix>, <teamspeak>, <twitter>, <store>, <discord>
+    - '&7&m-----------------------'
+    - '&6&lWelcome <player>'
+    - ''
+    - '&6Twitter&7: <twitter>'
+    - '&6TeamSpeak&7: <teamspeak>'
+    - '&6Discord&7: <discord>'
+    - '&6Store&7: <store>'
+    - '&7&m-----------------------'
 #Sever Manager
 server:
   prefix: '&7[&eServerManager&7]'
