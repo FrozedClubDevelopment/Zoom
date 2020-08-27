@@ -38,7 +38,7 @@ public class GamemodeCommand extends BaseCMD {
         return null;
     }
 
-    @Command(name = "gamemode", permission = "core.gamemode.command", inGameOnly = true)
+    @Command(name = "gamemode", permission = "core.gamemode.command", inGameOnly = true, aliases = {"gm"})
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

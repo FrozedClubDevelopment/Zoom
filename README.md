@@ -56,6 +56,7 @@
 - core.command.craft
 - core.command.clear
 - core.command.lore
+- core.command.invsee
 ```
 ```$xslt
 -> Teleport
