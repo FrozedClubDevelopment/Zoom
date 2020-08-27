@@ -84,10 +84,10 @@ public class PlayerData {
         /*
         pa los msg
          */
+        document.put("social-spy", this.socialspy);
         document.put("toggle-sounds", this.togglesound);
         document.put("toggle-privatemsg", this.toggleprivatemessages);
         document.put("ignore-list", this.ignorelist);
-        document.put("social-spy", this.socialspy);
         this.dataloaded = false;
         playersdata.remove(uuid);
         playersdataNames.remove(name);
@@ -112,10 +112,10 @@ public class PlayerData {
             /*
             pal chat seetings
              */
+            this.socialspy = document.getBoolean("social-spy");
             this.togglesound = document.getBoolean("toggle-sounds");
             this.toggleprivatemessages = document.getBoolean("toggle-privatemsg");
             this.ignorelist.addAll((List<String>) document.get("ignore-list"));
-            this.socialspy = document.getBoolean("social-spy");
         }
         this.dataloaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");

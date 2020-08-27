@@ -45,4 +45,12 @@ public class ZoomAPI {
         }
         return null;
     }
+
+    public boolean isSocialSpy(Player player) {
+        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        if (data != null) {
+            return data.isSocialspy();
+        }
+        return false;
+    }
 }
