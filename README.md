@@ -21,6 +21,7 @@
 - core.essentials.skull
 - core.essentials.speed
 - core.essentials.tps
+- core.essentials.fly
 - core.staff.join (To view staff joint msg)
 ```
 ```$xslt

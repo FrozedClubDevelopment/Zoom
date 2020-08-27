@@ -73,6 +73,8 @@ speed:
   fly: '&eYou set your fly speed to <amount>'
 #Feed Command
 feed: '&eSuccessfully regenerate food'
+#Fly Commnad
+fly: '&eFly <status>&e.'
 #Heal Command
 heal:
   default: '&eSuccessfully regenerate heal'
