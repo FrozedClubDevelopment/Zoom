@@ -21,9 +21,6 @@ public class PlayerData {
     public static Map<UUID, PlayerData> playersdata = new HashMap<>();
     @Getter
     public static Map<String, PlayerData> playersdataNames = new HashMap<>();
-    @Getter
-    public static List<PlayerData> datas = new ArrayList<>();
-
 
     // for identiry player
     private String name;
@@ -36,9 +33,21 @@ public class PlayerData {
     private String country;
     private String ip;
     private Cooldown chatdelay = new Cooldown(0);
+    /*
+    Esto es de chat
+    */
     private String tag;
     private String namecolor;
     private String chatColor;
+    private boolean bold;
+    private boolean italic;
+    /*
+    La wea del sistema de msg
+     */
+    private boolean togglesound;
+    private boolean toggleprivatemessages;
+    private List<String> ignorelist = new ArrayList<>();
+    private boolean socialspy;
 
     public PlayerData(String name, UUID uuid) {
         this.name = name;
@@ -62,18 +71,26 @@ public class PlayerData {
         document.put("staff-chat", this.staffchat);
         document.put("admin-chat", this.adminchat);
         document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
-        document.put("tag", this.tag);
-        document.put("name-color", this.namecolor);
-        document.put("chat-color", this.chatColor);
         try {
             document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
         } catch (Exception e) {
             Bukkit.getLogger().info("Error in get player country");
         }
+        document.put("tag", this.tag);
+        document.put("name-color", this.namecolor);
+        document.put("chat-color", this.chatColor);
+        document.put("name-color-bold", this.bold);
+        document.put("name-color-italic", this.italic);
+        /*
+        pa los msg
+         */
+        document.put("toggle-sounds", this.togglesound);
+        document.put("toggle-privatemsg", this.toggleprivatemessages);
+        document.put("ignore-list", this.ignorelist);
+        document.put("social-spy", this.socialspy);
         this.dataloaded = false;
         playersdata.remove(uuid);
         playersdataNames.remove(name);
-        datas.add(this);
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerdata().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
     }
@@ -90,6 +107,15 @@ public class PlayerData {
             this.tag = document.getString("tag");
             this.namecolor = document.getString("name-color");
             this.chatColor = document.getString("chat-color");
+            this.bold = document.getBoolean("name-color-bold");
+            this.italic = document.getBoolean("name-color-italic");
+            /*
+            pal chat seetings
+             */
+            this.togglesound = document.getBoolean("toggle-sounds");
+            this.toggleprivatemessages = document.getBoolean("toggle-privatemsg");
+            this.ignorelist.addAll((List<String>) document.get("ignore-list"));
+            this.socialspy = document.getBoolean("social-spy");
         }
         this.dataloaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
@@ -97,7 +123,6 @@ public class PlayerData {
 
     public void destroy() {
         this.saveData();
-        datas.remove(this);
     }
 
     public static PlayerData getByUuid(UUID uuid) {

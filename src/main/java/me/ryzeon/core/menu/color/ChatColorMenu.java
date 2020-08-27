@@ -14,7 +14,9 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-
+/*
+Andrezito ayudo en el order xd
+ */
 public class ChatColorMenu implements Menu {
     private Inventory inventory;
 
@@ -47,7 +49,7 @@ public class ChatColorMenu implements Menu {
         this.inventory.setItem(24, new ItemCreator(Material.INK_SACK, 2).setName("&2Dark Green").get());
         this.inventory.setItem(25, new ItemCreator(Material.RED_ROSE).setName("&cRed").get());
         this.inventory.setItem(4, new ItemCreator(Material.NETHER_STALK).setName("&4Dark Red").get());
-        this.inventory.setItem(31, new ItemCreator(Material.INK_SACK, 0).setName("&1Black").get());
+        this.inventory.setItem(31, new ItemCreator(Material.INK_SACK, 0).setName("&0Black").get());
         InventoryUtil.fillInventory(this.inventory);
     }
 

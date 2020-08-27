@@ -5,23 +5,20 @@ import lombok.Setter;
 import me.ryzeon.core.manager.chat.ChatListener;
 import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.mongo.MongoManager;
-import me.ryzeon.core.manager.database.redis.Redis;
-import me.ryzeon.core.manager.database.redis.handler.Payload;
-import me.ryzeon.core.manager.database.redis.manager.JedisSettings;
+import me.ryzeon.core.manager.messages.MessageManager;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
 import me.ryzeon.core.manager.staff.StaffListener;
 import me.ryzeon.core.manager.tags.TagManager;
-import me.ryzeon.core.utils.GsonUtil;
 import me.ryzeon.core.utils.RegisterHandler;
 import me.ryzeon.core.utils.command.CommandFramework;
 import me.ryzeon.core.utils.config.FileConfig;
 import me.ryzeon.core.utils.lang.Lang;
 import me.ryzeon.core.utils.menu.MenuListener;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
 @Setter
@@ -39,13 +36,11 @@ public final class Zoom extends JavaPlugin {
 
     private FileConfig tagsconfig;
 
-    private FileConfig commandsconfig;
-
     private TagManager tagManager;
 
     private MongoManager mongoManager;
 
-    private Redis redis;
+    private MessageManager messageManager;
 
     private ChatManager chatManager;
 
@@ -61,10 +56,10 @@ public final class Zoom extends JavaPlugin {
         this.databaseconfig = new FileConfig(this, "database.yml");
         this.settingsconfig = new FileConfig(this, "settings.yml");
         this.tagsconfig = new FileConfig(this, "tags.yml");
-        this.commandsconfig = new FileConfig(this, "commands.yml");
         this.mongoManager = new MongoManager();
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
+        this.messageManager = new MessageManager();
         zoomAPI = new ZoomAPI();
         chatManager.load();
         mongoManager.connect();
@@ -73,8 +68,6 @@ public final class Zoom extends JavaPlugin {
         tagManager.registerTags();
         loadCommands();
         loadListener();
-        JedisSettings settings = new JedisSettings(Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.host"), Zoom.getInstance().getDatabaseconfig().getConfig().getInt("redis.port"), Zoom.getInstance().getDatabaseconfig().getConfig().getString("redis.password"));
-        this.redis = new Redis(settings);
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
@@ -83,32 +76,42 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aDatabase§f:");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redis.isActive() ? "§aEnabled" : "§cDisabled"));
+//        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redis.isActive() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-        if (redis.isActive()) {
-            servermanagerMSG();
-        } else {
-
-        }
+//        if (redis.isActive()) {
+//            servermanagerMSG();
+//        } else {
+//            String format = Color.translate(Zoom.getInstance().getMessagesconfig().getConfig().getString("server.format")
+//                    .replace("<prefix>", Lang.PREFIX)
+//                    .replace("<server>", Lang.SERVER_NAME)
+//                    .replace("<status>", "&aonline"));
+//            StaffLang.sendRedisServerMsg(Color.translate(format));
+//        }
     }
 
     @Override
     public void onDisable() {
-        if (Zoom.getInstance().getRedis().isActive()) {
-            Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
-                    .addProperty("SERVER", Lang.SERVER_NAME)
-                    .addProperty("STATUS", "offline").get());
-        }
-        if (!PlayerData.datas.isEmpty()) {
-            PlayerData.datas.forEach(PlayerData::saveData);
+//        if (Zoom.getInstance().getRedis().isActive()) {
+//            Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
+//                    .addProperty("SERVER", Lang.SERVER_NAME)
+//                    .addProperty("STATUS", "offline").get());
+//        }else {
+//            String format = Color.translate(Zoom.getInstance().getMessagesconfig().getConfig().getString("server.format")
+//                    .replace("<prefix>", Lang.PREFIX)
+//                    .replace("<server>", Lang.SERVER_NAME)
+//                    .replace("<status>", "&coffline"));
+//            StaffLang.sendRedisServerMsg(Color.translate(format));
+//        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+            if (playerData != null) {
+                playerData.saveData();
+            }
         }
         mongoManager.disconnect();
-        Zoom.getInstance().getLogger().info("[DB] Disconnecting...");
-        this.redis.getPool().destroy();
-        Zoom.getInstance().getLogger().info("[DB] Disconnecting Successfully");
         shutdownmsg();
     }
 
@@ -116,17 +119,6 @@ public final class Zoom extends JavaPlugin {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
         // To load commands in file to view commands with permisison && usage
         this.commandFramework.loadCommandsInFile();
-    }
-
-    private void servermanagerMSG() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
-                        .addProperty("SERVER", Lang.SERVER_NAME)
-                        .addProperty("STATUS", "online").get());
-            }
-        }.runTaskLater(this, 5);
     }
 
     private void loadListener() {
@@ -156,5 +148,12 @@ public final class Zoom extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         }
+    }
+
+    public void reloadFile() {
+        this.messagesconfig = new FileConfig(this, "messages.yml");
+        this.databaseconfig = new FileConfig(this, "database.yml");
+        this.settingsconfig = new FileConfig(this, "settings.yml");
+        this.tagsconfig = new FileConfig(this, "tags.yml");
     }
 }

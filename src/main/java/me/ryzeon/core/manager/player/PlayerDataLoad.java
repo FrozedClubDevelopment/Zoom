@@ -13,11 +13,9 @@ public class PlayerDataLoad implements Listener {
         PlayerData playerData = PlayerData.getByName(e.getName());
         if (playerData == null) {
             playerData = new PlayerData(e.getName(), e.getUniqueId());
-            playerData.loadData();
         }
         if (!playerData.isDataloaded()) {
-            PlayerData.playersdataNames.remove(e.getName());
-            PlayerData.playersdata.remove(e.getUniqueId());
+            playerData.loadData();
         }
     }
 

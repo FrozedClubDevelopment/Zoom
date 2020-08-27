@@ -85,7 +85,7 @@ tps:
     - '&eWorlds:'
     - '<world>'
     - '&7&m---------------------'
-  world: '&7* &e<name>&f* &eChunks&f* &e<chunks>  &f* &eEntities &f* &e<entities>'
+  world: '&7* e<name> &f*&eChunks &f*&e<chunks>  &f*&eEntities &f*&e<entities>'
 # Social Cmd
 social:
   twitter: 'https://twitter.com/ryzeon_'

@@ -27,7 +27,6 @@ public class LoreCommand extends BaseCMD {
         }
         return list;
     }
-
     @Command(name = "lore", permission = "core.command.lore", aliases = {"setlore"}, inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {

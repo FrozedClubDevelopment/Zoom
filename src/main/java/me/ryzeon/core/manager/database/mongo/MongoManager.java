@@ -62,8 +62,24 @@ public class MongoManager {
             Bukkit.shutdown();
         }
     }
-    public void disconnect(){
-        if (this.client != null){
+
+    public void reconnect() {
+        try {
+            if (authentication) {
+                MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authdatabase, this.password.toCharArray());
+                this.client = new MongoClient(new ServerAddress(this.host, this.port), Collections.singletonList(mongoCredential));
+            } else {
+                this.client = new MongoClient(new ServerAddress(this.host, this.port));
+            }
+            this.mongoDatabase = this.client.getDatabase(this.database);
+            this.playerdata = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
+        } catch (Exception e) {
+            Zoom.getInstance().setDisablemsg("Error in mongodb");
+        }
+    }
+
+    public void disconnect() {
+        if (this.client != null) {
             Zoom.getInstance().getLogger().info("[DB] Disconnecting...");
             this.client.close();
             this.connect = false;

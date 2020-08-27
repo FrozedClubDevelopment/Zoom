@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamemodeCommand extends BaseCMD {
-    @Completer(name = "gamemode",aliases = {"gm"})
+    @Completer(name = "gamemode")
     public List<String> gamemodeCompleter(CommandArgs args) {
         if (args.length() == 1){
             List<String> list = new ArrayList<String>();
@@ -37,7 +37,8 @@ public class GamemodeCommand extends BaseCMD {
         }
         return null;
     }
-    @Command(name = "gamemode", permission = "core.gamemode.command", aliases = {"gm"}, inGameOnly = true)
+
+    @Command(name = "gamemode", permission = "core.gamemode.command", inGameOnly = true)
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();

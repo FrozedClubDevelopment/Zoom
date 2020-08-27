@@ -14,6 +14,7 @@
 ```$xslt
 -> Essentials
 - core.essentials.broadcast
+- core.essentials.alert
 - core.essentials.geoip
 - core.essentials.feed
 - core.essentials.heal
@@ -33,14 +34,18 @@
 - core.chatmanager
 - core.chat.bypass
 - core.chat.delaybypass
+- core.chat.socialspy
 ```
 ```$xslt
--> Chat-Color
+-> Color
 - core.chatcolor
 - core.chatcolor.<color> (white/orange/lightpurple/lightblue/yellow/darkgray/gray/cyan/purple/darkblue/darkgreen/red/darkred/black)
 - core.chatcolor.all
 - core.namecolor
-- core.chatmanager
+- core.namecolor.<color> (white/orange/lightpurple/lightblue/yellow/darkgray/gray/cyan/purple/darkblue/darkgreen/red/darkred/black)
+- core.namecolor.all
+- core.namecolor.bold
+- core.namecolor.italic
 ```
 ```$xslt
 -> Inventory

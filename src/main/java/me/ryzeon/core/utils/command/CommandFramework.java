@@ -116,12 +116,11 @@ public class CommandFramework implements CommandExecutor {
 		FileConfig file = Zoom.getInstance().getCommandsconfig();
 		file.getConfig().getKeys(false).forEach(key -> file.getConfig().set(key, null));
 		this.commandMap.forEach((key, value) -> {
-			Method method = (Method) ((Map.Entry) this.commandMap.get(key)).getKey();
-			Object methodObject = ((Map.Entry) this.commandMap.get(key)).getValue();
-			Command command = method.<Command>getAnnotation(Command.class);
-			file.getConfig().set(command.name(), "Permission -> " + command.name());
-		});
-		file.getConfig().set("info", "This file it's only for view commands with permission");
+            Method method = (Method) ((Map.Entry) this.commandMap.get(key)).getKey();
+            Object methodObject = ((Map.Entry) this.commandMap.get(key)).getValue();
+            Command command = method.<Command>getAnnotation(Command.class);
+            file.getConfig().set(command.name(), "Permission -> " + (command.permission().isEmpty() ? "No perm" : command.permission()));
+        });
 		file.getConfig().set("commands", Integer.valueOf(file.getConfig().getKeys(false).size()));
 		file.save();
 	}

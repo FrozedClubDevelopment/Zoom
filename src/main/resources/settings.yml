@@ -11,7 +11,7 @@ chat:
   format:
     enabled: true
     default-color: YELLOW
-    format: '<rank> <tag> <namecolor><name>&7: <chatcolor><text>'
+    format: '<rank><tag> <namecolor><name>&7: <chatcolor><text>'
   mute: false
   delay: 3
   staff-chat:
@@ -22,3 +22,10 @@ chat:
     format: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: <text>'
     sound: 'NOTE_PLING' #Only in toggle msg
     toggle: '&eYou <status> &eadmin-chat'
+#Messages Settings
+messages:
+  sound: 'NOTE_PLING' # put none or NONE to disable sounds
+  format: # <rank>,<prefx>
+    sender: '&7(To &e<recipient>&7) -> &e<text>'
+    recipient: '&7(From &e<sender>&7) -> &e<text>'
+    social-spy: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<recipient> &7» <text>'
