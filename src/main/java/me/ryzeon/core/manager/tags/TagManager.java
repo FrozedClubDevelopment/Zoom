@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 public class TagManager {
     List<Tag> tags = new ArrayList<>();
-    private int tagssize = 0;
 
     public void registerTags() {
         try {
@@ -26,12 +25,15 @@ public class TagManager {
                 String permiso = Zoom.getInstance().getTagsconfig().getConfig().getString("tags." + tags + ".permission");
                 ChatColor chatColor = ChatColor.valueOf(Zoom.getInstance().getTagsconfig().getConfig().getString("tags." + tags + ".color"));
                 this.tags.add(new Tag(name, prefix, itemStack, lore, permiso, chatColor));
-                tagssize = tagssize + 1;
             }
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully load §f" + tagssize + " §etags.");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully load §f" + this.tags.size() + " §etags.");
         } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eError in load tags, pleasess check your config :)");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eError in load tags, please check your config :)");
         }
+    }
+
+    public void deleteTags() {
+        this.tags.clear();
     }
 
     public Tag getTagByPrefix(String prefix) {

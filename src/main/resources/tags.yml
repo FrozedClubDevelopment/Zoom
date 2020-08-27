@@ -16,7 +16,7 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag>&e<player>&7: &fHello!'
+      - '&e<tag> &e<player>&7: &fHello!'
       - '&7&m------------------'
   heart:
     name: 'Heart'
@@ -28,7 +28,7 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag>&e<player>&7: &fHello!'
+      - '&e<tag> &e<player>&7: &fHello!'
       - '&7&m------------------'
   dolar:
     name: 'Dolar'
@@ -40,5 +40,5 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag>&e<player>&7: &fHello!'
+      - '&e<tag> &e<player>&7: &fHello!'
       - '&7&m------------------'

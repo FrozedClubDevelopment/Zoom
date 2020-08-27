@@ -33,7 +33,7 @@ messages:
 tips:
   enabled: true
   delay: 60
-  mode: random # Sellect a random number or announcer in order
+  mode: normal # Sellect a random number or announcer in order
   tips: #Use \n if you want a separator line before the tip.
     - '&6Hello World!'
     - '&6Zoom Core!'

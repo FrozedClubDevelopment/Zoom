@@ -122,6 +122,10 @@ public final class Zoom extends JavaPlugin {
         shutdownmsg();
     }
 
+    public void reloadTags() {
+        this.tagsconfig = new FileConfig(this, "tags.yml");
+    }
+
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
     }
