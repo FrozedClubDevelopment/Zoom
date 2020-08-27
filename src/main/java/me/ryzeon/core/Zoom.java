@@ -23,9 +23,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Getter
-@Setter
+@Getter @Setter
 public final class Zoom extends JavaPlugin {
+
     @Getter
     private static Zoom instance;
 
