@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.ryzeon.core.manager.chat.ChatListener;
 import me.ryzeon.core.manager.chat.ChatManager;
 import me.ryzeon.core.manager.database.mongo.MongoManager;
+import me.ryzeon.core.manager.listener.GeneralPlayerListener;
 import me.ryzeon.core.manager.messages.MessageManager;
 import me.ryzeon.core.manager.player.PlayerData;
 import me.ryzeon.core.manager.player.PlayerDataLoad;
@@ -72,7 +73,7 @@ public final class Zoom extends JavaPlugin {
         loadListener();
         if (Zoom.getInstance().getSettingsconfig().getConfig().getBoolean("tips.enabled")) {
             TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsconfig().getConfig().getInt("tips.delay"));
-            Bukkit.getConsoleSender().sendMessage("§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsconfig().getConfig().getString("tips.mode"));
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsconfig().getConfig().getString("tips.mode"));
         }
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
@@ -101,7 +102,7 @@ public final class Zoom extends JavaPlugin {
     @Override
     public void onDisable() {
 //        if (Zoom.getInstance().getRedis().isActive()) {
-//            Zoom.getInstance().getRedis().write(Payload.SERVER_MANAGER, new GsonUtil()
+//            Zoom.getInstance().getRedis().write("SERVER_MANAGER", new GsonUtil()
 //                    .addProperty("SERVER", Lang.SERVER_NAME)
 //                    .addProperty("STATUS", "offline").get());
 //        }else {
@@ -135,6 +136,10 @@ public final class Zoom extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
         // Staff Listener
         pluginManager.registerEvents(new StaffListener(), this);
+        /*
+        Player Join Msg
+         */
+        pluginManager.registerEvents(new GeneralPlayerListener(), this);
     }
 
     public void shutdownmsg() {

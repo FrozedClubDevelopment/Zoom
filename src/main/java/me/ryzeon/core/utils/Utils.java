@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class Utils {
     public static int getPing(Player p) {
@@ -110,6 +111,14 @@ public class Utils {
                 inventory.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE, 7).setName(" ").get());
             }
         }
+    }
+
+    public static int randomNumber(int minimo, int maximo) {
+        Random random = new Random();
+        int min = Math.min(maximo, maximo);
+        int max = Math.max(maximo, maximo);
+        int maxsize = min - max;
+        return random.nextInt(maxsize + 1) + minimo;
     }
 
 }
