@@ -22,12 +22,13 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
+
     public static int getPing(Player p) {
         try {
             String version = Bukkit.getServer().getClass().getPackage().getName().substring(23);
             Class<?> craftPlayer = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftPlayer");
             Object handle = craftPlayer.getMethod("getHandle", new Class[0]).invoke(p, new Object[0]);
-            return ((Integer) handle.getClass().getDeclaredField("ping").get(handle)).intValue();
+            return (Integer) handle.getClass().getDeclaredField("ping").get(handle);
         } catch (Exception e) {
             return -1;
         }
@@ -55,7 +56,7 @@ public class Utils {
         return new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 
-    public static boolean hasAvaliableSlot(Player player) {
+    public static boolean hasAvailableSlot(Player player) {
         Inventory inv = player.getInventory();
         for (ItemStack item : inv.getContents()) {
             if (item == null) {
@@ -68,8 +69,8 @@ public class Utils {
     public static String getTps() {
         String tps;
         DecimalFormat decimalFormat = new DecimalFormat("##.##");
-        double servertps = Bukkit.spigot().getTPS()[0];
-        tps = decimalFormat.format(servertps);
+        double serverTps = Bukkit.spigot().getTPS()[0];
+        tps = decimalFormat.format(serverTps);
         return tps;
     }
 
@@ -121,15 +122,12 @@ public class Utils {
 
     public static String getCountry(String ip) throws Exception {
         URL url = new URL("http://ip-api.com/json/" + ip);
-        BufferedReader stream = new BufferedReader(new InputStreamReader(
-                url.openStream()));
+        BufferedReader stream = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder entirePage = new StringBuilder();
         String inputLine;
-        while ((inputLine = stream.readLine()) != null)
-            entirePage.append(inputLine);
+        while ((inputLine = stream.readLine()) != null) entirePage.append(inputLine);
         stream.close();
-        if (!(entirePage.toString().contains("\"country\":\"")))
-            return null;
+        if (!(entirePage.toString().contains("\"country\":\""))) return null;
         return entirePage.toString().split("\"country\":\"")[1].split("\",")[0];
     }
 

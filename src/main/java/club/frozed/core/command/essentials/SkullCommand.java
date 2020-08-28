@@ -27,7 +27,7 @@ public class SkullCommand extends BaseCMD {
         }
 
         ItemStack itemStack = new ItemCreator(Material.SKULL_ITEM, 3).setOwner(args[0]).setName("§e" + args[0] + "'s skull").get();
-        if (Utils.hasAvaliableSlot(p)) {
+        if (Utils.hasAvailableSlot(p)) {
             p.getInventory().addItem(itemStack);
             p.sendMessage(Color.translate(messages.getString("SKULL-MESSAGE").replace("<target>", args[0])));
         } else {
