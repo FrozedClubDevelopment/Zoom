@@ -1,11 +1,7 @@
-#############################
-##---> Messages Config --->##
-#############################
-
-#Player Message:
-player:
-  sound: 'NOTE_PLING'
-  join: # <player>, <server>, <rank>, <prefix>, <teamspeak>, <twitter>, <store>, <discord>
+# Bukkit Sounds List -> https://jd.bukkit.org/org/bukkit/Sound.html (If you don't want to have any sound, just put the sound as 'none'
+NETWORK:
+  JOIN-SOUND: 'NOTE_PLING'
+  JOIN-MESSAGE:
     - '&7&m-----------------------'
     - '&6&lWelcome <player>'
     - ''
@@ -14,98 +10,83 @@ player:
     - '&6Discord&7: <discord>'
     - '&6Store&7: <store>'
     - '&7&m-----------------------'
-#Sever Manager
-server:
-  prefix: '&7[&eServerManager&7]'
-  format: '<prefix> &d&l<server> &eserver will be <status> &ein 5 seconds'
-#
-staff:
-  join: '&7(&9Staff&7) &d<player> &econnected to &d<server>'
-  quit: '&7(&9Staff&7) &d<player> &edisconnected from &d<server>'
-  switch: '&7(&9Staff&7) &d<player> &econnected to &d<server> &efrom &d<lastserver>'
-#Gamemode
-gamemode:
-  default: '&eYour update your gamemode to &f<gamemode>'
-  other: '&eYou update &f<target>''s &egamemode to &f<gamemode>'
-#Ping
-ping:
-  sound: 'NOTE_PLING' # You can view more sound on  this  page  https://jd.bukkit.org/org/bukkit/Sound.html # If you don't wish sound put 'none'
-  default: '&eYour ping is&7: <ping>ms'
-  other: '&e<target>''s &fping is&7: <ping>ms'
-#Chat Manageer
-chat:
-  clear: '&eChat has been cleared by &f<player>'
-  mute: '&eChat has been mute by &f<player>'
-  unmute: '&eChat has been un-mute by &f<player>'
-  already: '&cChat is already <label>'
-  delay: '&eChat delay has been set to <delay> by &f<player>'
-  playermsg:
-    mute: '&cChat is muted.'
-    delay: '&eYou must be wait &e<time> &f<left> &eto use chat.'
-#Teleport Command
-teleport:
-  tp: '&eYou has been teleported to &f<target>'
-  top: '&eYou has been teleported to the top.'
-  tphere:
-    sender: '&eYou have been teleported &f<target> &eto you'
-    target: '&f<player> &eteleported you to him'
-  tpall: '&eAll players has been teleport to &f<player>'
-  tppos: '&eYou has been teleported to &f<x>&ex &f<y>&ey &f<z>&ez'
-#Fix Commands
-fix:
-  hand: '&eYou repaired the item in your hand'
-  all: '&eYou repaired all your items'
-#Rename Command
-rename: '&eYou name your item to <text>'
-#Clear Command
-clear:
-  default: '&eYou cleaned up your inventory'
-  other:
-    target: '&eYour inventory was cleared by <player>'
-    sender: '&eYou cleared the inventory of <target>'
-#Lore Command
-lore:
-  add: '&eYou added a lore to your item successfully'
-  remove: '&eYou remove a lore to your item successfully'
-#Speed Command
-speed:
-  walk: '&eYou set your walk speed to <amount>'
-  fly: '&eYou set your fly speed to <amount>'
-#Feed Command
-feed: '&eSuccessfully regenerate food'
-#Fly Commnad
-fly: '&eFly <status>&e.'
-#Heal Command
-heal:
-  default: '&eSuccessfully regenerate heal'
-  other: '&f<target>''s &eheal successfully regenerate'
-#Skull Command:
-skull: '&e<target>''s head was added to your inventory successfully'
-#Day Command:
-time:
-  day: '&eYou set day in <world>'
-  night: '&eYou set night in <world>'
-  sun: '&eYou set sun in <world>'
-#Tps Command:
-tps:
-  text:
-    - '&7&m---------------------'
-    - '&7* &eTps&f: &f<tps>'
-    - '&7* &eUptime&f: &f<uptime>'
-    - '&7* &eMax Memory&f: &f<maxmemory> &eMB'
-    - '&7* &eAll Memory&f: &f<allmemory> &eMB'
-    - '&7* &eFree Memory&f: &f<freememory> &eMB'
-    - ''
-    - '&eWorlds:'
-    - '<world>'
-    - '&7&m---------------------'
-  world: '&7* e<name> &f*&eChunks &f*&e<chunks>  &f*&eEntities &f*&e<entities>'
-# Social Cmd
-social:
-  twitter: 'https://twitter.com/ryzeon_'
-  discord: 'https://discord.gg/invite'
-  teamspeak: 'ts.example.com'
-  store: 'store.example.com'
-  messages: '&e<command>&f: &e<social>'
-# Get Country
-geoip: '&f<player>''s &ecountry is &f<country>'
+
+  SERVER-MANAGER:
+    PREFIX: '&7[&eServerManager&7]'
+    FORMAT: '<prefix> &d&l<server> &eserver will be <status> &ein 5 seconds'
+
+  CHAT-MANAGER:
+    CLEAR: '&eChat has been cleared by &f<player>'
+    MUTE: '&eChat has been mute by &f<player>'
+    UNMUTE: '&eChat has been un-mute by &f<player>'
+    ALREADY: '&cChat is already <label>'
+    DELAY: '&eChat delay has been set to <delay> by &f<player>'
+    PLAYER-MESSAGE:
+      MUTE: '&cChat is muted.'
+      DELAY: '&eYou must be wait &e<time> &f<left> &eto use chat.'
+
+  STAFF-ALERTS:
+    JOIN: '&7(&9Staff&7) &d<player> &econnected to &d<server>'
+    QUIT: '&7(&9Staff&7) &d<player> &edisconnected from &d<server>'
+    SWITCH: '&7(&9Staff&7) &d<player> &econnected to &d<server> &efrom &d<lastServer>'
+
+  SERVER-TPS:
+    MESSAGE:
+      - '&7&m---------------------'
+      - '&7* &eTps&f: &f<tps>'
+      - '&7* &eUptime&f: &f<uptime>'
+      - '&7* &eMax Memory&f: &f<maxmemory> &eMB'
+      - '&7* &eAll Memory&f: &f<allmemory> &eMB'
+      - '&7* &eFree Memory&f: &f<freememory> &eMB'
+      - ''
+      - '&eWorlds:'
+      - '<world>'
+      - '&7&m---------------------'
+    WORLD-MESSAGE: '&7* e<name> &f*&eChunks &f*&e<chunks>  &f*&eEntities &f*&e<entities>'
+
+COMMANDS:
+  SOCIAL:
+    STORE: 'store.example.com'
+    TWITTER: 'https://twitter.com/ryzeon_'
+    DISCORD: 'https://discord.gg/invite'
+    TEAMSPEAK: 'ts.example.com'
+    MESSAGES: '&e<command>&f: &e<social>'
+  TELEPORT-MESSAGES:
+    TP: '&eYou has been teleported to &f<target>'
+    TOP: '&eYou has been teleported to the top.'
+    TPHERE:
+      SENDER: '&eYou have been teleported &f<target> &eto you'
+      TARGET: '&f<player> &eteleported you to him'
+    TPALL: '&eAll players has been teleport to &f<player>'
+    TPPOS: '&eYou has been teleported to &f<x>&ex &f<y>&ey &f<z>&ez'
+  FIX-MESSAGES:
+    HAND: '&eYou repaired the item in your hand'
+    ALL: '&eYou repaired all your items'
+  RENAME: '&eYou name your item to <text>'
+  CLEAR-MESSAGES:
+    DEFAULT: '&eYou cleaned up your inventory'
+    OTHER:
+      TARGET: '&eYour inventory was cleared by <player>'
+      SENDER: '&eYou cleared the inventory of <target>'
+  LORE-MESSAGES:
+    ADD: '&eYou added a lore to your item successfully'
+    REMOVE: '&eYou remove a lore to your item successfully'
+  SPEED-MESSAGES:
+    WALK: '&eYou set your walk speed to <amount>'
+    FLY: '&eYou set your fly speed to <amount>'
+  FEED-MESSAGE: '&eSuccessfully regenerate food'
+  FLY-MESSAGE: '&eFly <status>&e.'
+  HEAL-MESSAGES:
+    DEFAULT: '&eSuccessfully regenerate heal'
+    OTHER: '&f<target>''s &eheal successfully regenerate'
+  SKULL-MESSAGE: '&e<target>''s head was added to your inventory successfully'
+  SKULL-CLICK-MESSAGE: '&7You clicked <player>''s head!'
+  GAMEMODE-MESSAGES:
+    DEFAULT: '&eYour update your gamemode to &f<gamemode>'
+    OTHER: '&eYou update &f<target>''s &egamemode to &f<gamemode>'
+  PING-MESSAGES:
+    SOUND: 'NOTE_PLING'
+    DEFAULT: '&eYour ping is&7: <ping>ms'
+    OTHER: '&e<target>''s &fping is&7: <ping>ms'
+  TIME-MESSAGE: "&aYour time has been updated to <timeSetting>"
+  GEO-IP-MESSAGE: '&f<player>''s &ecountry is &f<country>'

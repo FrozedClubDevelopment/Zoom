@@ -1,40 +1,35 @@
-#############################
-##---> Settings Config --->##
-#############################
-
-server-name: 'DEV'
-prefix: '&7[&6ZoomCore&7]'
-#Chat Settings
-chat:
-  name-color-menu: '&eChoose your name color'
-  chat-color-menu: '&eChoose your chat color'
-  format:
-    enabled: true
-    default-color: YELLOW
-    format: '<rank><tag> <namecolor><name>&7: <chatcolor><text>'
-  mute: false
-  delay: 3
-  staff-chat:
-    format: '&7(&9SC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
-    sound: 'NOTE_PLING' #Only in toggle msg
-    toggle: '&eYou <status> &estaff-chat'
-  admin-chat:
-    format: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: <text>'
-    sound: 'NOTE_PLING' #Only in toggle msg
-    toggle: '&eYou <status> &eadmin-chat'
-#Messages Settings
-messages:
-  sound: 'NOTE_PLING' # put none or NONE to disable sounds
-  format: # <rank>,<prefx>
-    sender: '&7(To &e<recipient>&7) -> &e<text>'
-    recipient: '&7(From &e<sender>&7) -> &e<text>'
-    social-spy: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<recipient> &7» <text>'
-# Tips
-tips:
-  enabled: true
-  delay: 60
-  mode: normal # Sellect a random number or announcer in order
-  tips: #Use \n if you want a separator line before the tip.
-    - '&6Hello World!'
-    - '&6Zoom Core!'
-    - '&6Test Tip'
+# Bukkit Sounds List -> https://jd.bukkit.org/org/bukkit/Sound.html (If you don't want to have any sound, just put the sound as 'none'
+SETTINGS:
+  PREFIX: '&8[&6Zoom&8]'
+  SERVER-NAME: 'DEV'
+  CHAT:
+    NAME-COLOR-MENU-TITLE: '&eChoose your name color'
+    CHATCOLOR-MENU-TITLE: '&eChoose your chat color'
+    FORMAT:
+      ENABLED: true
+      DEFAULT-COLOR: YELLOW
+      FORMAT: '<rank><tag> <nameColor><name>&7: <chatcolor><text>'
+    MUTE: false
+    DELAY: 3
+  STAFF-CHAT:
+    FORMAT: '&7(&9SC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
+    SOUND: 'NOTE_PLING' #Only in toggle msg
+    TOGGLE: '&eYou <status> &estaff-chat'
+  ADMIN-CHAT:
+    FORMAT: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: <text>'
+    SOUND: 'NOTE_PLING' #Only in toggle msg
+    TOGGLE: '&eYou <status> &eadmin-chat'
+  TIPS:
+    ENABLED: true
+    DELAY: 60
+    MODE: normal # Select a random number or announcer in order
+    TIPS-LIST: #Use \n if you want a separator line before the tip.
+      - '&6Hello World!'
+      - '&6Zoom Core!'
+      - '&6Test Tip'
+  PRIVATE-MESSAGES:
+    NOTIFICATION-SOUND: 'NOTE_PLING' # put none or NONE to disable sounds
+    FORMAT: # <rank>,<prefix>
+      SENDER: '&7(To &e<target>&7) -> &e<text>'
+      TARGET: '&7(From &e<sender>&7) -> &e<text>'
+      SOCIAL-SPY: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<target> &7» <text>'

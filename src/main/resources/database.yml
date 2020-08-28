@@ -1,20 +1,14 @@
-#############################
-##---> Database Config --->##
-#############################
+MONGO:
+  HOST: '127.0.0.1'
+  PORT: 27017
+  DATABASE: 'core'
+  AUTH:
+    ENABLED: true
+    USERNAME: 'user'
+    PASSWORD: 'gang'
+    AUTH-DATABASE: 'admin'
 
-#For save data
-mongodb:
-  host: '127.0.0.1'
-  port: 27017
-  database: 'database'
-  authentication:
-    enabled: true
-    user: 'root'
-    password: 'password'
-    database: 'database'
-#For sync rank
-redis:
-  host: ''
-  port: 16693
-  password: ''
-
+REDIS:
+  HOST: ''
+  PORT: 6379
+  PASSWORD: ''
