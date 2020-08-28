@@ -19,6 +19,7 @@
 - core.essentials.tps
 - core.essentials.fly
 - core.staff.join (To view staff joint msg)
+- core.blocked.bypass
 
 > Server Manager
 - core.servermanager

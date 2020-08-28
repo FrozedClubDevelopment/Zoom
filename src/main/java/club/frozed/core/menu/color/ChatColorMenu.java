@@ -1,11 +1,11 @@
 package club.frozed.core.menu.color;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.Color;
 import club.frozed.core.utils.InventoryUtil;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Menu;
-import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 
 // Andrezito helped with the sorting
 public class ChatColorMenu implements Menu {
@@ -237,7 +236,6 @@ public class ChatColorMenu implements Menu {
                         playSound(p, false);
                         p.closeInventory();
                     }
-                    ;
                     break;
                 default:
                     break;

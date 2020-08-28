@@ -99,13 +99,19 @@ public class TagsMenu implements Menu {
             int slots = e.getSlot();
             switch (slots) {
                 case 37:
-                    if (page == 1) return;
+                    if (page == 1) {
+                        p.playSound(p.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
+                        return;
+                    }
                     page--;
                     p.playSound(p.getLocation(), Sound.CLICK, 2F, 2F);
                     update(p);
                     break;
                 case 43:
-                    if (page == getTotalPages()) return;
+                    if (page == getTotalPages()) {
+                        p.playSound(p.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
+                        return;
+                    }
                     page++;
                     p.playSound(p.getLocation(), Sound.CLICK, 2F, 2F);
                     update(p);
