@@ -1,0 +1,52 @@
+package club.frozed.zoom.command.tags;
+
+import club.frozed.zoom.ZoomPlugin;
+import club.frozed.zoom.menu.tags.TagsMenu;
+import club.frozed.zoom.utils.command.BaseCMD;
+import club.frozed.zoom.utils.command.Command;
+import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.zoom.utils.command.Completer;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TagsCommand extends BaseCMD {
+    @Completer(name = "tags", aliases = {"tag", "prefix"})
+
+    public List<String> gamemodeCompleter(CommandArgs args) {
+        if (args.length() == 1) {
+            List<String> list = new ArrayList<String>();
+            if (args.getPlayer().isOp()) {
+                list.add("reload");
+                return list;
+            }
+        }
+        return null;
+    }
+
+    @Command(name = "tags", permission = "core.tags", aliases = {"tag", "prefix"}, inGameOnly = true)
+
+    @Override
+    public void onCommand(CommandArgs cmd) {
+        Player p = cmd.getPlayer();
+        String[] args = cmd.getArgs();
+
+        if (args.length == 0) {
+            new TagsMenu().open(p);
+            return;
+        }
+
+        if (args[0].equalsIgnoreCase("reload")) {
+            if (!p.isOp()) return;
+            try {
+                ZoomPlugin.getInstance().getTagManager().deleteTags();
+                ZoomPlugin.getInstance().reloadTags();
+                ZoomPlugin.getInstance().getTagManager().registerTags();
+                p.sendMessage("§aSuccessfully reloaded tags");
+            } catch (Exception exception) {
+                p.sendMessage("§cAn error occurred while reloading the tags!");
+            }
+        }
+    }
+}

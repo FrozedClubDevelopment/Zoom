@@ -1,0 +1,41 @@
+package club.frozed.zoom.manager.staff;
+
+import club.frozed.zoom.manager.player.PlayerData;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+public class StaffListener implements Listener {
+
+    @EventHandler
+    public void onJoinStaffEvent(PlayerJoinEvent e) {
+        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        if (playerData == null) return;
+//        if (ZoomPlugin.getInstance().getRedis().isActive()) {
+//            if (playerData.getLastServer().equals(Lang.SERVER_NAME)) {
+//                ZoomPlugin.getInstance().getRedis().write("STAFF_JOIN", new JsonUtil()
+//                        .addProperty("STAFF", e.getPlayer().getName())
+//                        .addProperty("SERVER", Lang.SERVER_NAME).get());
+//            } else {
+//                ZoomPlugin.getInstance().getRedis().write("STAFF_SWICTH", new JsonUtil()
+//                        .addProperty("STAFF", e.getPlayer().getName())
+//                        .addProperty("LAST_SERVER", playerData.getLastServer())
+//                        .addProperty("ACTUAL_SERVER", Lang.SERVER_NAME).get());
+//            }
+//        } else {
+//            StaffLang.StaffJoinMessage(e.getPlayer().getName(), Lang.SERVER_NAME);
+//        }
+    }
+
+    @EventHandler
+    public void onLeaveStaffEvent(PlayerQuitEvent e) {
+//        if (ZoomPlugin.getInstance().getRedis().isActive()) {
+//            ZoomPlugin.getInstance().getRedis().write("STAFF_LEAVE", new JsonUtil()
+//                    .addProperty("STAFF", e.getPlayer().getName())
+//                    .addProperty("SERVER", Lang.SERVER_NAME).get());
+//        } else {
+//            StaffLang.StaffLeaveMessage(e.getPlayer().getName(), Lang.SERVER_NAME);
+//        }
+    }
+}
