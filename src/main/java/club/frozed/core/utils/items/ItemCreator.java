@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.items;
+package club.frozed.core.utils.items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

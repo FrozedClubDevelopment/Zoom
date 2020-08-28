@@ -1,10 +1,10 @@
-package club.frozed.zoom.menu.chat;
+package club.frozed.core.menu.chat;
 
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.InventoryUtil;
-import club.frozed.zoom.utils.items.ItemCreator;
-import club.frozed.zoom.utils.menu.Menu;
-import club.frozed.zoom.manager.player.PlayerData;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Menu;
+import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

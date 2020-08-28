@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.config;
+package club.frozed.core.utils.config;
 
 import java.io.File;
 import java.io.IOException;

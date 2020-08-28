@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.command;
+package club.frozed.core.utils.command;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

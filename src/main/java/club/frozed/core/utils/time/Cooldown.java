@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.time;
+package club.frozed.core.utils.time;
 
 import java.util.UUID;
 

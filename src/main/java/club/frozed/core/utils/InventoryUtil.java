@@ -1,6 +1,6 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
-import club.frozed.zoom.utils.items.ItemCreator;
+import club.frozed.core.utils.items.ItemCreator;
 import com.google.common.base.Preconditions;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

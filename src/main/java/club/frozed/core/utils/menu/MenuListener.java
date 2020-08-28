@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.menu;
+package club.frozed.core.utils.menu;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,14 +1,14 @@
-package club.frozed.zoom.manager.staff;
+package club.frozed.core.manager.staff;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class StaffLang {
 
     public static void StaffJoinMessage(String player, String server) {
-        String format = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.JOIN")
+        String format = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.JOIN")
                 .replace("<player>", player)
                 .replace("<server>", server
         );
@@ -22,7 +22,7 @@ public class StaffLang {
     }
 
     public static void StaffLeaveMessage(String player, String server) {
-        String format = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.QUIT")
+        String format = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.QUIT")
                 .replace("<player>", player)
                 .replace("<server>", server
         );
@@ -36,7 +36,7 @@ public class StaffLang {
     }
 
     public static void StaffSwitchMessage(String player, String lastserver, String actualserver) {
-        String format = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.SWITCH")
+        String format = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.STAFF-ALERTS.SWITCH")
                 .replace("<player>", player)
                 .replace("<server>", actualserver)
                 .replace("<lastServer>", lastserver

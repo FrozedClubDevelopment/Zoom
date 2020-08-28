@@ -1,10 +1,10 @@
-package club.frozed.zoom.command.inventory;
+package club.frozed.core.command.inventory;
 
-import club.frozed.zoom.menu.invsee.InventorySeeMenu;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.core.menu.invsee.InventorySeeMenu;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

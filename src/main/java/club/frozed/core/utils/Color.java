@@ -1,10 +1,9 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Color {
 

@@ -1,9 +1,9 @@
-package club.frozed.zoom.command.color;
+package club.frozed.core.command.color;
 
-import club.frozed.zoom.menu.color.ChatColorMenu;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.core.menu.color.ChatColorMenu;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
 public class ChatColorCommand extends BaseCMD {

@@ -1,6 +1,6 @@
-package club.frozed.zoom.manager.staff;
+package club.frozed.core.manager.staff;
 
-import club.frozed.zoom.manager.player.PlayerData;
+import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -12,13 +12,13 @@ public class StaffListener implements Listener {
     public void onJoinStaffEvent(PlayerJoinEvent e) {
         PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
         if (playerData == null) return;
-//        if (ZoomPlugin.getInstance().getRedis().isActive()) {
+//        if (Zoom.getInstance().getRedis().isActive()) {
 //            if (playerData.getLastServer().equals(Lang.SERVER_NAME)) {
-//                ZoomPlugin.getInstance().getRedis().write("STAFF_JOIN", new JsonUtil()
+//                Zoom.getInstance().getRedis().write("STAFF_JOIN", new JsonUtil()
 //                        .addProperty("STAFF", e.getPlayer().getName())
 //                        .addProperty("SERVER", Lang.SERVER_NAME).get());
 //            } else {
-//                ZoomPlugin.getInstance().getRedis().write("STAFF_SWICTH", new JsonUtil()
+//                Zoom.getInstance().getRedis().write("STAFF_SWICTH", new JsonUtil()
 //                        .addProperty("STAFF", e.getPlayer().getName())
 //                        .addProperty("LAST_SERVER", playerData.getLastServer())
 //                        .addProperty("ACTUAL_SERVER", Lang.SERVER_NAME).get());
@@ -30,8 +30,8 @@ public class StaffListener implements Listener {
 
     @EventHandler
     public void onLeaveStaffEvent(PlayerQuitEvent e) {
-//        if (ZoomPlugin.getInstance().getRedis().isActive()) {
-//            ZoomPlugin.getInstance().getRedis().write("STAFF_LEAVE", new JsonUtil()
+//        if (Zoom.getInstance().getRedis().isActive()) {
+//            Zoom.getInstance().getRedis().write("STAFF_LEAVE", new JsonUtil()
 //                    .addProperty("STAFF", e.getPlayer().getName())
 //                    .addProperty("SERVER", Lang.SERVER_NAME).get());
 //        } else {

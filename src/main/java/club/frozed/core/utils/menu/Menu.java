@@ -1,6 +1,6 @@
-package club.frozed.zoom.utils.menu;
+package club.frozed.core.utils.menu;
 
-import club.frozed.zoom.utils.InventoryUtil;
+import club.frozed.core.utils.InventoryUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;

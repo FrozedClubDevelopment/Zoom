@@ -4,7 +4,7 @@ import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class Zoom {
+public class ZoomAPI {
     // View last server
     public String getLastServer(Player player) {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());

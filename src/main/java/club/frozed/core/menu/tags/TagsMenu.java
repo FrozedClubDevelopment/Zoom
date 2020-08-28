@@ -1,12 +1,12 @@
-package club.frozed.zoom.menu.tags;
+package club.frozed.core.menu.tags;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.manager.player.PlayerData;
-import club.frozed.zoom.manager.tags.Tag;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.InventoryUtil;
-import club.frozed.zoom.utils.items.ItemCreator;
-import club.frozed.zoom.utils.menu.Menu;
+import club.frozed.core.Zoom;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.tags.Tag;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -26,12 +26,12 @@ public class TagsMenu implements Menu {
     private final Inventory inventory;
 
     public TagsMenu() {
-        this.inventory = Bukkit.createInventory(this, 9 * 5, Color.translate(ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("title")));
+        this.inventory = Bukkit.createInventory(this, 9 * 5, Color.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title")));
         this.page = 1;
     }
 
     private int getTotalPages() {
-        return ZoomPlugin.getInstance().getTagManager().getTags().size() / 28 + 1;
+        return Zoom.getInstance().getTagManager().getTags().size() / 28 + 1;
     }
 
     @Override
@@ -56,8 +56,8 @@ public class TagsMenu implements Menu {
         int slot = 9;
         int index = ((page * 27) - 27);
 
-        while (slot < 36 && ZoomPlugin.getInstance().getTagManager().getTags().size() > index) {
-            Tag tag = ZoomPlugin.getInstance().getTagManager().getTags().get(index);
+        while (slot < 36 && Zoom.getInstance().getTagManager().getTags().size() > index) {
+            Tag tag = Zoom.getInstance().getTagManager().getTags().get(index);
             ItemCreator itemCreator = new ItemCreator(tag.getTagIcon());
             itemCreator.setName(tag.getChatColor() + tag.getTagName());
             List<String> lore = new ArrayList<>();
@@ -66,7 +66,7 @@ public class TagsMenu implements Menu {
                     lore.add(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix()));
                 }
             } else {
-                for (String msg : ZoomPlugin.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
+                for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
                     lore.add(Color.translate(msg));
                 }
             }
@@ -125,8 +125,8 @@ public class TagsMenu implements Menu {
                     }
                     break;
                 default:
-                    if (p.hasPermission(ZoomPlugin.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPermission())) {
-                        data.setTag(ZoomPlugin.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPrefix());
+                    if (p.hasPermission(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPermission())) {
+                        data.setTag(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPrefix());
                         playSound(p, true);
                         p.closeInventory();
                     } else {

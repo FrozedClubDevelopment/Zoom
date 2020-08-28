@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.time;
+package club.frozed.core.utils.time;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;

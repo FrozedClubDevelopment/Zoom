@@ -1,15 +1,15 @@
-package club.frozed.zoom.command.chat;
+package club.frozed.core.command.chat;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.manager.chat.ChatManager;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.NumberUtils;
-import club.frozed.zoom.utils.Utils;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
-import club.frozed.zoom.utils.command.Completer;
-import club.frozed.zoom.utils.config.ConfigCursor;
+import club.frozed.core.Zoom;
+import club.frozed.core.manager.chat.ChatManager;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.NumberUtils;
+import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.command.Completer;
+import club.frozed.core.utils.config.ConfigCursor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -34,8 +34,8 @@ public class ChatManagerCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        ConfigCursor messages = new ConfigCursor(ZoomPlugin.getInstance().getMessagesConfig(), "NETWORK.CHAT-MANAGER");
-        ChatManager chatManager = ZoomPlugin.getInstance().getChatManager();
+        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "NETWORK.CHAT-MANAGER");
+        ChatManager chatManager = Zoom.getInstance().getChatManager();
 
         if (args.length == 0) {
             p.sendMessage(Color.CHAT_BAR);

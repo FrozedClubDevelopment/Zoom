@@ -1,11 +1,11 @@
-package club.frozed.zoom.menu.color;
+package club.frozed.core.menu.color;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.InventoryUtil;
-import club.frozed.zoom.utils.items.ItemCreator;
-import club.frozed.zoom.utils.menu.Menu;
-import club.frozed.zoom.manager.player.PlayerData;
+import club.frozed.core.Zoom;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,7 +22,7 @@ public class NameColorMenu implements Menu {
     private Inventory inventory;
 
     public NameColorMenu() {
-        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 5, Color.translate(ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("chat.name-color-menu")));
+        this.inventory = Bukkit.createInventory(this, 9 * 5, Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.NAME-COLOR-MENU-TITLE")));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class NameColorMenu implements Menu {
         if (playerData.getNameColor() != null) {
             color = ChatColor.valueOf(playerData.getNameColor());
         } else {
-            color = ChatColor.valueOf(ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("chat.format.default-color"));
+            color = ChatColor.valueOf(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR"));
         }
         this.inventory.setItem(42, new ItemCreator(Material.IRON_DOOR).setName(color + "&oItalic").setLore(Arrays.asList((PlayerData.getByUuid(player.getUniqueId()).isItalic() ? "&aenabled" : "&cdisabled"))).get());
         this.inventory.setItem(38, new ItemCreator(Material.SIGN).setName(color + "&lBold").setLore(Arrays.asList((PlayerData.getByUuid(player.getUniqueId()).isBold() ? "&aenabled" : "&cdisabled"))).get());
@@ -69,6 +69,7 @@ public class NameColorMenu implements Menu {
         PlayerData data = PlayerData.getByUuid(p.getUniqueId());
         final Inventory clickedInventory = e.getClickedInventory();
         final Inventory topInventory = e.getView().getTopInventory();
+
         if (!topInventory.equals(this.inventory)) {
             return;
         }
@@ -249,7 +250,6 @@ public class NameColorMenu implements Menu {
                         playSound(p, false);
                         p.closeInventory();
                     }
-                    ;
                     break;
                 case 42:
                     if (p.hasPermission("core.nameColor.italic")) {

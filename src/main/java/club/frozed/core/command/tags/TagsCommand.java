@@ -1,11 +1,11 @@
-package club.frozed.zoom.command.tags;
+package club.frozed.core.command.tags;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.menu.tags.TagsMenu;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
-import club.frozed.zoom.utils.command.Completer;
+import club.frozed.core.Zoom;
+import club.frozed.core.menu.tags.TagsMenu;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.command.Completer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -40,9 +40,9 @@ public class TagsCommand extends BaseCMD {
         if (args[0].equalsIgnoreCase("reload")) {
             if (!p.isOp()) return;
             try {
-                ZoomPlugin.getInstance().getTagManager().deleteTags();
-                ZoomPlugin.getInstance().reloadTags();
-                ZoomPlugin.getInstance().getTagManager().registerTags();
+                Zoom.getInstance().getTagManager().deleteTags();
+                Zoom.getInstance().reloadTags();
+                Zoom.getInstance().getTagManager().registerTags();
                 p.sendMessage("§aSuccessfully reloaded tags");
             } catch (Exception exception) {
                 p.sendMessage("§cAn error occurred while reloading the tags!");

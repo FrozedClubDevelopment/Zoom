@@ -1,21 +1,21 @@
-package club.frozed.zoom.command;
+package club.frozed.core.command;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Completer;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Completer;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ZoomCommand extends BaseCMD {
-    @Completer(name = "zoom", aliases = {"zoomcore"})
+    @Completer(name = "core", aliases = {"zoomcore", "zoom"})
 
     public List<String> gamemodeCompleter(CommandArgs args) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         if (!args.getPlayer().isOp()) {
             return null;
         }
@@ -26,7 +26,7 @@ public class ZoomCommand extends BaseCMD {
         return null;
     }
 
-    @Command(name = "zoom", aliases = {"zoomcore"})
+    @Command(name = "core", aliases = {"zoomcore", "zoom"})
 
     @Override
     public void onCommand(CommandArgs cmd) {
@@ -35,24 +35,24 @@ public class ZoomCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.sendMessage(Color.CHAT_BAR);
-            p.sendMessage(Color.translate("&6&lZoom &7- &ev" + ZoomPlugin.getInstance().getDescription().getVersion()));
+            p.sendMessage(Color.translate("&6&lZoom &7- &ev" + Zoom.getInstance().getDescription().getVersion()));
             p.sendMessage(Color.CHAT_BAR);
-            p.sendMessage(Color.translate("&6Authors&f: &e" + ZoomPlugin.getInstance().getAuthors()));
-            p.sendMessage(Color.translate("&6Description&f: &e" + ZoomPlugin.getInstance().getDescription().getDescription()));
-            p.sendMessage(Color.translate("&6Website&f: &e" + ZoomPlugin.getInstance().getDescription().getWebsite()));
+            p.sendMessage(Color.translate("&6Authors&f: &e" + Zoom.getInstance().getAuthors()));
+            p.sendMessage(Color.translate("&6Description&f: &e" + Zoom.getInstance().getDescription().getDescription()));
+            p.sendMessage(Color.translate("&6Website&f: &e" + Zoom.getInstance().getDescription().getWebsite()));
             p.sendMessage(Color.CHAT_BAR);
             return;
         }
         if (args[0].equalsIgnoreCase("reload")) {
             if (!p.isOp()) return;
             try {
-                ZoomPlugin.getInstance().reloadFile();
+                Zoom.getInstance().reloadFile();
                 p.sendMessage(Color.CHAT_BAR);
-                p.sendMessage(Color.translate("&6&lZoom &7- &ev" + ZoomPlugin.getInstance().getDescription().getVersion()));
+                p.sendMessage(Color.translate("&6&lZoom &7- &ev" + Zoom.getInstance().getDescription().getVersion()));
                 p.sendMessage(Color.translate("&a&oSuccesfully reloaded: &7messages, database and settings"));
                 p.sendMessage(Color.CHAT_BAR);
             } catch (Exception exception) {
-                p.sendMessage(Color.translate("&cThere has been an error while reloading ZoomPlugin files!"));
+                p.sendMessage(Color.translate("&cThere has been an error while reloading Zoom files!"));
             }
         }
     }

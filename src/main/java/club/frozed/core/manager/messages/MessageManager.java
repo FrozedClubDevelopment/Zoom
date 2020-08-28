@@ -1,4 +1,4 @@
-package club.frozed.zoom.manager.messages;
+package club.frozed.core.manager.messages;
 
 import lombok.Getter;
 

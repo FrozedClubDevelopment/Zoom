@@ -1,7 +1,15 @@
 package club.frozed.core;
 
+import club.frozed.core.manager.chat.ChatListener;
+import club.frozed.core.manager.chat.ChatManager;
+import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.PlayerDataLoad;
+import club.frozed.core.manager.staff.StaffListener;
+import club.frozed.core.manager.tags.TagManager;
+import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.command.CommandFramework;
@@ -10,14 +18,6 @@ import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
-import club.frozed.core.manager.chat.ChatListener;
-import club.frozed.core.manager.chat.ChatManager;
-import club.frozed.core.manager.database.mongo.MongoManager;
-import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerDataLoad;
-import club.frozed.core.manager.staff.StaffListener;
-import club.frozed.core.manager.tags.TagManager;
-import club.frozed.core.manager.tips.TipsRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -25,10 +25,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-@Getter @Setter
-public final class ZoomPlugin extends JavaPlugin {
+@Getter
+@Setter
+public final class Zoom extends JavaPlugin {
 
-    @Getter private static ZoomPlugin instance;
+    @Getter
+    private static Zoom instance;
 
     private CommandFramework commandFramework;
 
@@ -44,7 +46,7 @@ public final class ZoomPlugin extends JavaPlugin {
 
     private String disableMessage = "null";
 
-    private static Zoom zoom;
+    private static ZoomAPI zoomAPI;
 
     @Override
     public void onEnable() {
@@ -59,22 +61,22 @@ public final class ZoomPlugin extends JavaPlugin {
         this.tagManager = new TagManager();
         this.messageManager = new MessageManager();
 
-        zoom = new Zoom();
+        zoomAPI = new ZoomAPI();
 
         chatManager.load();
         mongoManager.connect();
 
         if (!mongoManager.isConnect()) return;
 
-        getLogger().info("[ZoomPlugin Tags] Registering tags...");
+        getLogger().info("[Zoom Tags] Registering tags...");
         tagManager.registerTags();
 
         loadCommands();
         loadListener();
 
-        if (ZoomPlugin.getInstance().getSettingsConfig().getConfig().getBoolean("TIPS.ENABLED")) {
-            TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), ZoomPlugin.getInstance().getSettingsConfig().getConfig().getInt("TIPS.DELAY"));
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE"));
+        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("TIPS.ENABLED")) {
+            TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsConfig().getConfig().getInt("TIPS.DELAY"));
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE"));
         }
 
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
@@ -93,22 +95,24 @@ public final class ZoomPlugin extends JavaPlugin {
 //        if (redis.isActive()) {
 //            servermanagerMSG();
 //        } else {
-//            String format = Color.translate(ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("server.format")
+//            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
 //                    .replace("<prefix>", Lang.PREFIX)
 //                    .replace("<server>", Lang.SERVER_NAME)
 //                    .replace("<status>", "&aonline"));
 //            StaffLang.sendRedisServerMsg(Color.translate(format));
 //        }
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     @Override
     public void onDisable() {
-//        if (ZoomPlugin.getInstance().getRedis().isActive()) {
-//            ZoomPlugin.getInstance().getRedis().write("SERVER_MANAGER", new GsonUtil()
+//        if (Zoom.getInstance().getRedis().isActive()) {
+//            Zoom.getInstance().getRedis().write("SERVER_MANAGER", new GsonUtil()
 //                    .addProperty("SERVER", Lang.SERVER_NAME)
 //                    .addProperty("STATUS", "offline").get());
 //        }else {
-//            String format = Color.translate(ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("server.format")
+//            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
 //                    .replace("<prefix>", Lang.PREFIX)
 //                    .replace("<server>", Lang.SERVER_NAME)
 //                    .replace("<status>", "&coffline"));
@@ -130,7 +134,7 @@ public final class ZoomPlugin extends JavaPlugin {
     }
 
     private void loadCommands() {
-        RegisterHandler.loadCommandsFromPackage(this, "me.ryzeon.core.command");
+        RegisterHandler.loadCommandsFromPackage(this, "club.frozed.core.command");
     }
 
     private void loadListener() {

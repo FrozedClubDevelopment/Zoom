@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.config;
+package club.frozed.core.utils.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

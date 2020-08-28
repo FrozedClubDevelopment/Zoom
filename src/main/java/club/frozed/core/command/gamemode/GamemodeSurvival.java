@@ -1,8 +1,8 @@
-package club.frozed.zoom.command.gamemode;
+package club.frozed.core.command.gamemode;
 
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
 public class GamemodeSurvival extends BaseCMD {

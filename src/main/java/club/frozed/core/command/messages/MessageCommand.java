@@ -1,10 +1,10 @@
-package club.frozed.zoom.command.messages;
+package club.frozed.core.command.messages;
 
-import club.frozed.zoom.manager.messages.PlayerMessage;
-import club.frozed.zoom.manager.player.PlayerData;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
+import club.frozed.core.manager.messages.PlayerMessage;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

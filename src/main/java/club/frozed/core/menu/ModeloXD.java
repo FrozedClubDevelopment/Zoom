@@ -1,10 +1,10 @@
-package club.frozed.zoom.menu;
+package club.frozed.core.menu;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.InventoryUtil;
-import club.frozed.zoom.utils.menu.Menu;
-import club.frozed.zoom.manager.player.PlayerData;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.menu.Menu;
+import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,7 +21,7 @@ public class ModeloXD implements Menu {
     private Inventory inventory;
 
     public ModeloXD() {
-        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 5, Color.translate(ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("chat.chat-color-menu")));
+        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 5, Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("chat.chat-color-menu")));
     }
 
     @Override

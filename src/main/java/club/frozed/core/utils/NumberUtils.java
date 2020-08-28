@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
 public class NumberUtils {
     public static boolean checkNumber(String s) {

@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils.command;
+package club.frozed.core.utils.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;

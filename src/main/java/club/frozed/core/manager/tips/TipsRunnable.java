@@ -1,8 +1,8 @@
-package club.frozed.zoom.manager.tips;
+package club.frozed.core.manager.tips;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.Utils;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -11,12 +11,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TipsRunnable extends BukkitRunnable {
 
-    List<String> messageTips = ZoomPlugin.getInstance().getSettingsConfig().getConfig().getStringList("TIPS.TIPS-LIST");
+    List<String> messageTips = Zoom.getInstance().getSettingsConfig().getConfig().getStringList("TIPS.TIPS-LIST");
     AtomicInteger normalTip = new AtomicInteger(0);
 
     @Override
     public void run() {
-        String tipsMode = ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE");
+        String tipsMode = Zoom.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE");
         switch (tipsMode) {
             case "normal":
                 if (this.normalTip.get() >= this.messageTips.size()) {

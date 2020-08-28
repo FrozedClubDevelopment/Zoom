@@ -1,10 +1,10 @@
-package club.frozed.zoom.menu.invsee;
+package club.frozed.core.menu.invsee;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.InventoryUtil;
-import club.frozed.zoom.utils.Utils;
-import club.frozed.zoom.utils.items.ItemCreator;
-import club.frozed.zoom.utils.menu.type.ChestMenu;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.type.ChestMenu;
 import lombok.Getter;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class InventorySeeMenu extends ChestMenu<ZoomPlugin> {
+public class InventorySeeMenu extends ChestMenu<Zoom> {
 
     @Getter
     private Player target;
@@ -61,17 +61,16 @@ public class InventorySeeMenu extends ChestMenu<ZoomPlugin> {
                     }
                     getInventory().setItem(42, new ItemCreator(Material.POTION).setName("§ePotions Effects").setLore(potions).get());
                 }
-                getInventory().setItem(43, new ItemCreator(Material.REDSTONE).setName("§e" + getTarget().getHealth() / 2 + " §4§l❤").get());
-                getInventory().setItem(44, new ItemCreator(Material.COOKED_BEEF).setName("§e" + getTarget().getFoodLevel()).get());
+                getInventory().setItem(43, new ItemCreator(Material.REDSTONE).setName("§eHealth: " + getTarget().getHealth() / 2 + " §4§l❤").get());
+                getInventory().setItem(44, new ItemCreator(Material.COOKED_BEEF).setName("§eFood: " + getTarget().getFoodLevel()).get());
 
                 InventoryUtil.fillInventory(inv);
             }
-        }.runTaskTimerAsynchronously(ZoomPlugin.getInstance(), 0, 20);
+        }.runTaskTimerAsynchronously(Zoom.getInstance(), 0, 20);
     }
 
     public void onInventoryClose(InventoryCloseEvent e) {
         this.runnable.cancel();
-        // to stop runnable
     }
 
     public void onInventoryClick(InventoryClickEvent event) {

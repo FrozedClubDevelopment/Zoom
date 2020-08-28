@@ -1,6 +1,6 @@
-package club.frozed.zoom.utils.config;
+package club.frozed.core.utils.config;
 
-import club.frozed.zoom.utils.Color;
+import club.frozed.core.utils.Color;
 
 import java.util.HashMap;
 import java.util.Map;

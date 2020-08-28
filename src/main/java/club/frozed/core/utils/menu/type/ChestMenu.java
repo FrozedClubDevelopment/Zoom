@@ -1,7 +1,7 @@
-package club.frozed.zoom.utils.menu.type;
+package club.frozed.core.utils.menu.type;
 
 import lombok.Getter;
-import club.frozed.zoom.utils.menu.Menu;
+import club.frozed.core.utils.menu.Menu;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 

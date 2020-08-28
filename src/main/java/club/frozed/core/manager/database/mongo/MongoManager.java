@@ -1,7 +1,7 @@
-package club.frozed.zoom.manager.database.mongo;
+package club.frozed.core.manager.database.mongo;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.config.ConfigCursor;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.config.ConfigCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -19,15 +19,16 @@ public class MongoManager {
 
     private MongoDatabase mongoDatabase;
 
-    ConfigCursor mongoConfig = new ConfigCursor(ZoomPlugin.getInstance().getDatabaseConfig(), "MONGO");
+    ConfigCursor mongoConfig = new ConfigCursor(Zoom.getInstance().getDatabaseConfig(), "MONGO");
 
-    private final boolean authentication = mongoConfig.getBoolean("AUTH.ENABLED");
     private final String host = mongoConfig.getString("HOST");
     private final int port = mongoConfig.getInt("PORT");
-    private final String authDatabase = mongoConfig.getString("AUTH-DATABASE");
     private final String database = mongoConfig.getString("DATABASE");
+    private final boolean authentication = mongoConfig.getBoolean("AUTH.ENABLED");
+
     private final String user = mongoConfig.getString("AUTH.USERNAME");
     private final String password = mongoConfig.getString("AUTH.PASSWORD");
+    private final String authDatabase = mongoConfig.getString("AUTH.AUTH-DATABASE");
 
     private boolean connect;
 
@@ -35,7 +36,7 @@ public class MongoManager {
 
     public void connect() {
         try {
-            ZoomPlugin.getInstance().getLogger().info("Connecting to MongoDB...");
+            Zoom.getInstance().getLogger().info("Connecting to MongoDB...");
             if (authentication) {
                 MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authDatabase, this.password.toCharArray());
                 this.client = new MongoClient(new ServerAddress(this.host, this.port), Collections.singletonList(mongoCredential));
@@ -50,8 +51,8 @@ public class MongoManager {
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
         } catch (Exception e) {
             this.connect = false;
-            ZoomPlugin.getInstance().setDisableMessage("An error has occured on -> MongoDB");
-            Bukkit.getConsoleSender().sendMessage("§eDisabling ZoomPlugin [Core] because an error occurred while trying to connect to MongoDB.");
+            Zoom.getInstance().setDisableMessage("An error has occured on -> MongoDB");
+            Bukkit.getConsoleSender().sendMessage("§eDisabling Zoom [Core] because an error occurred while trying to connect to MongoDB.");
             Bukkit.getPluginManager().disablePlugins();
             Bukkit.shutdown();
         }
@@ -68,16 +69,16 @@ public class MongoManager {
             this.mongoDatabase = this.client.getDatabase(this.database);
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
         } catch (Exception e) {
-            ZoomPlugin.getInstance().setDisableMessage("An error has occured on -> MongoDB");
+            Zoom.getInstance().setDisableMessage("An error has occurred on -> MongoDB");
         }
     }
 
     public void disconnect() {
         if (this.client != null) {
-            ZoomPlugin.getInstance().getLogger().info("[MongoDB] Disconnecting...");
+            Zoom.getInstance().getLogger().info("[MongoDB] Disconnecting...");
             this.client.close();
             this.connect = false;
-            ZoomPlugin.getInstance().getLogger().info("[MongoDB] Successfully disconnected.");
+            Zoom.getInstance().getLogger().info("[MongoDB] Successfully disconnected.");
         }
     }
 }

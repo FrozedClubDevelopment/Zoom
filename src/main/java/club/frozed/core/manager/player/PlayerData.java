@@ -1,13 +1,14 @@
-package club.frozed.zoom.manager.player;
+package club.frozed.core.manager.player;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Utils;
-import club.frozed.zoom.utils.time.Cooldown;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.time.Cooldown;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
 import lombok.Setter;
-import club.frozed.zoom.manager.database.mongo.MongoManager;
+import club.frozed.core.manager.database.mongo.MongoManager;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -64,7 +65,7 @@ public class PlayerData {
         document.put("name", this.name);
         document.put("name_lowercase", player.getName().toLowerCase());
         document.put("uuid", getUuid().toString());
-        document.put("last-server", ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("server-name"));
+        document.put("last-server", Lang.SERVER_NAME);
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
         document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
@@ -88,12 +89,12 @@ public class PlayerData {
         this.dataLoaded = false;
         playersData.remove(uuid);
         playersDataNames.remove(name);
-        MongoManager mongoManager = ZoomPlugin.getInstance().getMongoManager();
+        MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerData().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
     }
 
     public void loadData() {
-        MongoManager mongoManager = ZoomPlugin.getInstance().getMongoManager();
+        MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         Document document = mongoManager.getPlayerData().find(Filters.eq("name", this.name)).first();
         if (document != null) {
             this.lastServer = document.getString("last-server");
@@ -114,7 +115,7 @@ public class PlayerData {
             this.ignoredPlayersList.addAll((List<String>) document.get("ignore-list"));
         }
         this.dataLoaded = true;
-        ZoomPlugin.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
+        Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
     }
 
     public void destroy() {

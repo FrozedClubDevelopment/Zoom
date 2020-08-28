@@ -1,24 +1,20 @@
-package club.frozed.zoom.utils.lang;
+package club.frozed.core.utils.lang;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
 import lombok.Getter;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 @Getter
 public class Lang {
-    public static String TS = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("social.teamspeak");
+    public static String TS = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TEAMSPEAK");
+    public static String DISCORD = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.DISCORD");
+    public static String TWITTER = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TWITTER");
+    public static String STORE = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.STORE");
 
-    public static String DISCORD = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("social.discord");
-
-    public static String TWITTER = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("social.twitter");
-
-    public static String STORE = ZoomPlugin.getInstance().getMessagesConfig().getConfig().getString("social.store");
-
-    public static String SERVER_NAME = ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("server-name");
-
-    public static String PREFIX = Color.translate(ZoomPlugin.getInstance().getSettingsConfig().getConfig().getString("prefix") + " ");
+    public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.SERVER-NAME");
+    public static String PREFIX = Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX") + " ");
 
     public static void playSound(Player player, boolean confirmation) {
         if (confirmation) {

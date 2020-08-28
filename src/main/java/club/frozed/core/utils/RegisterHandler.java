@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
 import com.google.common.collect.ImmutableSet;
 import org.bukkit.event.Listener;

@@ -1,7 +1,7 @@
-package club.frozed.zoom.manager.tags;
+package club.frozed.core.manager.tags;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.lang.Lang;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.lang.Lang;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,13 +18,13 @@ public class TagManager {
 
     public void registerTags() {
         try {
-            for (String tags : ZoomPlugin.getInstance().getTagsConfig().getConfig().getConfigurationSection("tags").getKeys(false)) {
-                String tagName = ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".name");
-                String tagPrefix = ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".prefix");
-                ItemStack tagIcon = new ItemStack(Material.valueOf(ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".item.material")), ZoomPlugin.getInstance().getTagsConfig().getConfig().getInt("tags." + tags + ".item.data"));
-                List<String> tagLore = ZoomPlugin.getInstance().getTagsConfig().getConfig().getStringList("tags." + tags + ".lore");
-                String tagPermission = ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".permission");
-                ChatColor chatColor = ChatColor.valueOf(ZoomPlugin.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".color"));
+            for (String tags : Zoom.getInstance().getTagsConfig().getConfig().getConfigurationSection("tags").getKeys(false)) {
+                String tagName = Zoom.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".name");
+                String tagPrefix = Zoom.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".prefix");
+                ItemStack tagIcon = new ItemStack(Material.valueOf(Zoom.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".item.material")), Zoom.getInstance().getTagsConfig().getConfig().getInt("tags." + tags + ".item.data"));
+                List<String> tagLore = Zoom.getInstance().getTagsConfig().getConfig().getStringList("tags." + tags + ".lore");
+                String tagPermission = Zoom.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".permission");
+                ChatColor chatColor = ChatColor.valueOf(Zoom.getInstance().getTagsConfig().getConfig().getString("tags." + tags + ".color"));
                 this.tags.add(new Tag(tagName, tagPrefix, tagIcon, tagLore, tagPermission, chatColor));
             }
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + this.tags.size() + " §etags.");

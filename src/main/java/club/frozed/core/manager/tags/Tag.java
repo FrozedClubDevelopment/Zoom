@@ -1,6 +1,6 @@
-package club.frozed.zoom.manager.tags;
+package club.frozed.core.manager.tags;
 
-import club.frozed.zoom.utils.Color;
+import club.frozed.core.utils.Color;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;

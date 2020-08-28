@@ -1,6 +1,9 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
-import club.frozed.zoom.utils.items.ItemCreator;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.items.ItemCreator;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,6 +31,15 @@ public class Utils {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    public static void globalBroadcast(Player player, String message) {
+        ByteArrayDataOutput output = ByteStreams.newDataOutput();
+        output.writeUTF("Message");
+        output.writeUTF("ALL");
+        output.writeUTF(message);
+
+        player.sendPluginMessage(Zoom.getInstance(), "BungeeCord", output.toByteArray());
     }
 
     public static void sendAllMsg(String string) {

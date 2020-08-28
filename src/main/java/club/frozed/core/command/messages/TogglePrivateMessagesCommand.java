@@ -1,10 +1,10 @@
-package club.frozed.zoom.command.messages;
+package club.frozed.core.command.messages;
 
-import club.frozed.zoom.manager.player.PlayerData;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
-import club.frozed.zoom.utils.lang.Lang;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.lang.Lang;
 import org.bukkit.entity.Player;
 
 public class TogglePrivateMessagesCommand extends BaseCMD {

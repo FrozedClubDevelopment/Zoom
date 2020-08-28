@@ -1,11 +1,11 @@
-package club.frozed.zoom.command.teleport;
+package club.frozed.core.command.teleport;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
-import club.frozed.zoom.utils.config.ConfigCursor;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.config.ConfigCursor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -16,7 +16,7 @@ public class TeleportCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        ConfigCursor messages = new ConfigCursor(ZoomPlugin.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
+        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
 
         if (args.length == 0) {
             p.sendMessage("§eUsage /teleport <player>");

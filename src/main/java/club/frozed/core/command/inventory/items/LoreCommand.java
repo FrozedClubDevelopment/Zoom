@@ -1,13 +1,13 @@
-package club.frozed.zoom.command.inventory.items;
+package club.frozed.core.command.inventory.items;
 
-import club.frozed.zoom.ZoomPlugin;
-import club.frozed.zoom.utils.Color;
-import club.frozed.zoom.utils.NumberUtils;
-import club.frozed.zoom.utils.command.BaseCMD;
-import club.frozed.zoom.utils.command.Command;
-import club.frozed.zoom.utils.command.CommandArgs;
-import club.frozed.zoom.utils.command.Completer;
-import club.frozed.zoom.utils.config.ConfigCursor;
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.Color;
+import club.frozed.core.utils.NumberUtils;
+import club.frozed.core.utils.command.BaseCMD;
+import club.frozed.core.utils.command.Command;
+import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.command.Completer;
+import club.frozed.core.utils.config.ConfigCursor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public class LoreCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        ConfigCursor messages = new ConfigCursor(ZoomPlugin.getInstance().getMessagesConfig(), "COMMANDS.LORE-MESSAGES");
+        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.LORE-MESSAGES");
 
         if (args.length == 0) {
             p.sendMessage("§eUsage /" + cmd.getLabel() + " add/remove <text>");

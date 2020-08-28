@@ -1,4 +1,4 @@
-package club.frozed.zoom.utils;
+package club.frozed.core.utils;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
