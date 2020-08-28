@@ -47,6 +47,9 @@ public class PlayerData {
     private List<String> ignoredPlayersList = new ArrayList<>();
     private boolean socialSpy;
 
+    // Coins System
+    private int coins;
+
     public PlayerData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
@@ -87,6 +90,10 @@ public class PlayerData {
         document.put("toggle-privatemsg", this.togglePrivateMessages);
         document.put("ignore-list", this.ignoredPlayersList);
         this.dataLoaded = false;
+        /*
+        Coins
+         */
+        document.put("coins",this.coins);
         playersData.remove(uuid);
         playersDataNames.remove(name);
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
@@ -113,6 +120,9 @@ public class PlayerData {
             this.toggleSounds = document.getBoolean("toggle-sounds");
             this.togglePrivateMessages = document.getBoolean("toggle-privatemsg");
             this.ignoredPlayersList.addAll((List<String>) document.get("ignore-list"));
+
+            // Coins
+            this.coins = document.getInteger("coins");
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");

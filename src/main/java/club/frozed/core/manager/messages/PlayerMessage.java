@@ -23,25 +23,28 @@ public class PlayerMessage {
         this.message = message;
         this.reply = reply;
     }
+    /*
+    Te falto el SETTINGS xde
+     */
 
     public void send() {
         Zoom.getInstance().getMessageManager().getLastReplied().put(sender.getUniqueId(), target.getUniqueId());
         Zoom.getInstance().getMessageManager().getLastReplied().put(target.getUniqueId(), sender.getUniqueId());
 
-        String senderFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("PRIVATE-MESSAGES.FORMAT.SENDER")
+        String senderFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SENDER")
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
-        String targetFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("PRIVATE-MESSAGES.FORMAT.TARGET")
+        String targetFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.TARGET")
                 .replace("<sender>", this.sender.getName())
                 .replace("<text>", this.message);
-        String socialSpyFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("PRIVATE-MESSAGES.FORMAT.SOCIAL-SPY")
+        String socialSpyFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SOCIAL-SPY")
                 .replace("<sender>", this.sender.getName())
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
 
         PlayerData targetData = PlayerData.getByUuid(this.target.getUniqueId());
         if (targetData.isToggleSounds()) {
-            String sound = Zoom.getInstance().getSettingsConfig().getConfig().getString("PRIVATE-MESSAGES.NOTIFICATION-SOUND");
+            String sound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
             if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
                 this.target.playSound(this.target.getLocation(), Sound.valueOf(sound), 2F, 2F);
             }

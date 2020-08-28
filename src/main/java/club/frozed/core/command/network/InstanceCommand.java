@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  * Date: 08/27/2020 @ 21:12
  */
 public class InstanceCommand extends BaseCMD {
-    @Command(name = "instance", aliases = {"serverinstance", "checkinstance", "currentserver"}, permission = "core.network.instance", usage = "Usage: /instance <serverName>")
+    @Command(name = "instance", aliases = {"serverinstance", "checkinstance", "currentserver"}, permission = "core.network.instance", usage = "Usage: /instance <serverName>",inGameOnly = true)
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

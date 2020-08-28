@@ -16,6 +16,10 @@ public class Lang {
     public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.SERVER-NAME");
     public static String PREFIX = Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX") + " ");
 
+    public static String OFFLINE_PLAYER = Color.translate("&cPlayer not found.");
+    public static String NO_PERMS = Color.translate("&cYou don't have permissions.");
+    public static String NO_NUMBER = Color.translate("&cIt must be a number");
+
     public static void playSound(Player player, boolean confirmation) {
         if (confirmation) {
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 2F, 2F);

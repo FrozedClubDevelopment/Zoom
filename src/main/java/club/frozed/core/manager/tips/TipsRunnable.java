@@ -11,12 +11,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TipsRunnable extends BukkitRunnable {
 
-    List<String> messageTips = Zoom.getInstance().getSettingsConfig().getConfig().getStringList("TIPS.TIPS-LIST");
+    List<String> messageTips = Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.TIPS.TIPS-LIST");
     AtomicInteger normalTip = new AtomicInteger(0);
 
     @Override
     public void run() {
-        String tipsMode = Zoom.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE");
+        String tipsMode = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.TIPS.MODE");
         switch (tipsMode) {
             case "normal":
                 if (this.normalTip.get() >= this.messageTips.size()) {

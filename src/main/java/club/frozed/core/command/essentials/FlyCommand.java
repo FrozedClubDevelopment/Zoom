@@ -5,9 +5,11 @@ import club.frozed.core.utils.Color;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 
 public class FlyCommand extends BaseCMD {
     @Command(name = "fly", permission = "core.essentials.fly", aliases = {"flying"}, inGameOnly = true)
@@ -16,18 +18,12 @@ public class FlyCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-
-        /*if (args.length == 0) {
-            String status = !p.isFlying() ? "§aenabled" : "§cdisabled";
-            p.setAllowFlight(!p.getAllowFlight());
-            p.setFlying(!p.isFlying());
-
-            p.sendMessage(Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.FLY-MESSAGE").replace("<status>", status)));
-        }*/
+        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getMessagesConfig(),"COMMANDS.FLY-MESSAGE");
 
         if (args.length == 0) {
             p.setAllowFlight(!p.getAllowFlight());
-            p.sendMessage(Color.translate(Lang.PREFIX + "&7You have " + (p.getAllowFlight() ? "&aenabled" : "&cdisabled") + " &7your flight mode."));
+            p.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("DEFAULT")
+                    .replace("<status>",(p.getAllowFlight() ? "&aenabled" : "&cdisabled"))));
             return;
         }
 
@@ -39,8 +35,12 @@ public class FlyCommand extends BaseCMD {
         Player target = Bukkit.getPlayer(args[0]);
         if (target != null) {
             target.setAllowFlight(!target.getAllowFlight());
-            p.sendMessage(Color.translate(Lang.PREFIX + "&7You have " + (target.getAllowFlight() ? "&aenabled" : "&cdisabled") + " &b" + p.getName() + "'s &7flight mode."));
-            target.sendMessage(Color.translate(Lang.PREFIX + "&7Your flight mode has been " + (target.getAllowFlight() ? "&aenabled" : "&cdisabled") + " &7by " + p.getName() + "."));
+            p.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
+                    .replace("<status>",(target.getAllowFlight() ? "&aenabled" : "&cdisabled"))
+                    .replace("<target>",target.getName())));
+            target.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
+                    .replace("<status>",(target.getAllowFlight() ? "&aenabled" : "&cdisabled"))
+                    .replace("<sender>",p.getName())));
         } else {
             p.sendMessage(Color.translate(Lang.PREFIX + "&cPlayer not found."));
         }

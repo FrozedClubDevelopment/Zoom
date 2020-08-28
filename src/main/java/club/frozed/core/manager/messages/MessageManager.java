@@ -9,4 +9,5 @@ import java.util.UUID;
 public class MessageManager {
 
     private HashMap<UUID, UUID> lastReplied = new HashMap<>();
+
 }

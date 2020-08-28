@@ -53,4 +53,32 @@ public class ZoomAPI {
         }
         return false;
     }
+    /*
+    Coins API
+     */
+    public int getPlayerCoins(Player player){
+        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        if (data != null){
+            return data.getCoins();
+        }
+        return 0;
+    }
+    public void setPlayerCoins(Player player,int coins){
+        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        if (data != null){
+            data.setCoins(coins);
+        }
+    }
+    public void addPlayerCoins(Player player,int amount){
+        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        if (data != null){
+            data.setCoins(data.getCoins() + amount);
+        }
+    }
+    public void removePlayerCoins(Player player,int amount){
+        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        if (data != null){
+            data.setCoins(data.getCoins() - amount);
+        }
+    }
 }

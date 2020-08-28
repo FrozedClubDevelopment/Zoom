@@ -26,7 +26,7 @@ public class ZoomCommand extends BaseCMD {
         return null;
     }
 
-    @Command(name = "core", aliases = {"zoomcore", "zoom"})
+    @Command(name = "core", aliases = {"zoomcore", "zoom"},inGameOnly = true)
 
     @Override
     public void onCommand(CommandArgs cmd) {

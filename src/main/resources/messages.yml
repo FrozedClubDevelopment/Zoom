@@ -75,7 +75,11 @@ COMMANDS:
     WALK: '&eYou set your walk speed to <amount>'
     FLY: '&eYou set your fly speed to <amount>'
   FEED-MESSAGE: '&eSuccessfully regenerate food'
-  FLY-MESSAGE: '&eFly <status>&e.'
+  FLY-MESSAGE:
+    DEFAULT: '&7You have <status> &7your flight mode'
+    OTHER:
+      SENDER: '&7You have <status> &e<target>''s &7flight mode.'
+      TARGET: '&7&7Your flight mode has been <status> &7by &e<sender>''s'
   HEAL-MESSAGES:
     DEFAULT: '&eSuccessfully regenerate heal'
     OTHER: '&f<target>''s &eheal successfully regenerate'
@@ -90,3 +94,9 @@ COMMANDS:
     OTHER: '&e<target>''s &fping is&7: <ping>ms'
   TIME-MESSAGE: "&aYour time has been updated to <timeSetting>"
   GEO-IP-MESSAGE: '&f<player>''s &ecountry is &f<country>'
+  COINS-MESSAGE:
+    DEFAULT: '&6You have &e<amount> &6coins.'
+    TARGET: '&6<target> &ehave &6<amount> &ecoins'
+    MANAGER:
+      SET: '&eYou set <target>''s coints to <amount>'
+      ADD-REMOVE: '&eYou update <target>''s coins from <coins> to <amount>'

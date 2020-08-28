@@ -74,9 +74,9 @@ public final class Zoom extends JavaPlugin {
         loadCommands();
         loadListener();
 
-        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("TIPS.ENABLED")) {
-            TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsConfig().getConfig().getInt("TIPS.DELAY"));
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsConfig().getConfig().getString("TIPS.MODE"));
+        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.TIPS.ENABLED")) {
+            TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsConfig().getConfig().getInt("SETTINGS.TIPS.DELAY"));
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.TIPS.MODE"));
         }
 
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");

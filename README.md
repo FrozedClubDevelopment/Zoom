@@ -64,3 +64,9 @@
 - core.command.day
 - core.command.night
 - core.command.sunset
+
+> Coins
+- core.coins.manager
+- core.coins.add
+- core.coins.remove
+- core.coins.set

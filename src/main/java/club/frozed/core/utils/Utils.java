@@ -99,7 +99,7 @@ public class Utils {
     }
 
     public static void sendPlayerSound(Player p, String sound) {
-        if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
+        if (!(sound.equalsIgnoreCase("none") || sound == null)) {
             p.playSound(p.getLocation(), Sound.valueOf(sound), 2F, 2F);
         }
     }
