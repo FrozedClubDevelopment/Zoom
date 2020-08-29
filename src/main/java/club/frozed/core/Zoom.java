@@ -3,6 +3,7 @@ package club.frozed.core;
 import club.frozed.core.manager.chat.ChatListener;
 import club.frozed.core.manager.chat.ChatManager;
 import club.frozed.core.manager.database.mongo.MongoManager;
+import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
@@ -154,6 +155,8 @@ public final class Zoom extends JavaPlugin {
 
         // Player Join Message
         pluginManager.registerEvents(new GeneralPlayerListener(), this);
+        // Blocked Cmd Listener
+        pluginManager.registerEvents(new BlockCommandListener(), this);
     }
 
     public void shutdownMessage() {
