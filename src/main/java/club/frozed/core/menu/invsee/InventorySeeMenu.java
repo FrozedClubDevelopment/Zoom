@@ -7,6 +7,7 @@ import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.type.ChestMenu;
 import lombok.Getter;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
@@ -46,6 +47,18 @@ public class InventorySeeMenu extends ChestMenu<Zoom> {
                 List<ItemStack> armorContents = Arrays.asList(getTarget().getInventory().getArmorContents());
                 Collections.reverse(armorContents);
                 int index = inv.getSize() - 9;
+                if (getTarget().getInventory().getHelmet() == null) {
+                    inv.setItem(36, new ItemCreator(Material.LEATHER_HELMET).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
+                }
+                if (getTarget().getInventory().getChestplate() == null) {
+                    inv.setItem(37, new ItemCreator(Material.LEATHER_CHESTPLATE).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
+                }
+                if (getTarget().getInventory().getLeggings() == null) {
+                    inv.setItem(38, new ItemCreator(Material.LEATHER_LEGGINGS).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
+                }
+                if (getTarget().getInventory().getBoots() == null) {
+                    inv.setItem(39, new ItemCreator(Material.LEATHER_BOOTS).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
+                }
                 for (ItemStack item : armorContents) {
                     if (item == null || item.getType() == Material.AIR) {
                         index++;

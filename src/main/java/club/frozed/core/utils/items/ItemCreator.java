@@ -1,10 +1,14 @@
 package club.frozed.core.utils.items;
 
+import club.frozed.core.utils.lang.Lang;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
@@ -69,6 +73,17 @@ public class ItemCreator {
             return this;
         }
         throw new IllegalArgumentException("setOwner() only applicable for Skull Item");
+    }
+
+    public ItemCreator setArmorColor(Color color) {
+        try {
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) this.itemStack.getItemMeta();
+            leatherArmorMeta.setColor(color);
+            this.itemStack.setItemMeta(leatherArmorMeta);
+        } catch (Exception exception) {
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "Error set armor color.");
+        }
+        return this;
     }
 
     public ItemStack get() {
