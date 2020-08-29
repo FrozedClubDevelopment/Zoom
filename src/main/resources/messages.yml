@@ -42,7 +42,7 @@ NETWORK:
       - '&eWorlds:'
       - '<world>'
       - '&7&m---------------------'
-    WORLD-MESSAGE: '&7* e<name> &f*&eChunks &f*&e<chunks>  &f*&eEntities &f*&e<entities>'
+    WORLD-MESSAGE: '&7* &e<name> &f*&eChunks &f*&e<chunks>  &f*&eEntities &f*&e<entities>'
 
 COMMANDS:
   SOCIAL:

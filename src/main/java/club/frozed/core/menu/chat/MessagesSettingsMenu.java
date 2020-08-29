@@ -1,10 +1,10 @@
 package club.frozed.core.menu.chat;
 
+import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.Color;
 import club.frozed.core.utils.InventoryUtil;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Menu;
-import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -39,13 +39,13 @@ public class MessagesSettingsMenu implements Menu {
         this.inventory.setItem(0, new ItemCreator(Material.JUKEBOX).setName("§eToggle Sounds").setLore(Arrays.asList(data.isToggleSounds() ? "§aenabled" : "&cdisabled")).get());
         this.inventory.setItem(8, new ItemCreator(Material.SKULL_ITEM).setName("§eToggle Private Messages").setLore(Arrays.asList(data.isTogglePrivateMessages() ? "§aenabled" : "&cdisabled")).get());
         List<String> ignore = new ArrayList<>();
-        ignore.add(Color.CHAT_BAR);
+        ignore.add(Color.MENU_BAR);
         if (data.getIgnoredPlayersList().isEmpty()) {
             ignore.add("§cNo players found.");
         } else {
             data.getIgnoredPlayersList().forEach(name -> ignore.add("§7» §f" + name));
         }
-        ignore.add(Color.CHAT_BAR);
+        ignore.add(Color.MENU_BAR);
         this.inventory.setItem(4, new ItemCreator(Material.PAPER).setName("§eIgnore List").setLore(ignore).get());
     }
 
