@@ -2,6 +2,7 @@ package club.frozed.core.utils;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.lang.Lang;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -14,11 +15,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -129,6 +134,27 @@ public class Utils {
         stream.close();
         if (!(entirePage.toString().contains("\"country\":\""))) return null;
         return entirePage.toString().split("\"country\":\"")[1].split("\",")[0];
+    }
+
+    public static boolean checkPlayerVote(UUID uuid) {
+        String pageRequest = "https://api.namemc.com/server/" + Lang.SERVER_IP + "/likes?profile=" + uuid.toString();
+        try {
+            URL url = new URL(pageRequest);
+            ArrayList<Object> lines = new ArrayList();
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line;
+            while ((line = bufferedReader.readLine()) != null)
+                lines.add(line);
+            if (lines.contains("true")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException exception) {
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while checking vote on name-mc");
+        }
+        return false;
     }
 
     public static void fillInventory(Inventory inventory) {

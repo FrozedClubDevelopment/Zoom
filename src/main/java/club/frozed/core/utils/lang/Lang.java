@@ -13,6 +13,7 @@ public class Lang {
     public static String TWITTER = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TWITTER");
     public static String STORE = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.STORE");
 
+    public static String SERVER_IP = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SERVER-IP");
     public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.SERVER-NAME");
     public static String PREFIX = Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX") + " ");
 

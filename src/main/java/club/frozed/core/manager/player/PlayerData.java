@@ -1,6 +1,7 @@
 package club.frozed.core.manager.player;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
@@ -8,7 +9,6 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
 import lombok.Setter;
-import club.frozed.core.manager.database.mongo.MongoManager;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -49,6 +49,9 @@ public class PlayerData {
 
     // Coins System
     private int coins;
+
+    // Name MC
+    private boolean vote;
 
     public PlayerData(String name, UUID uuid) {
         this.name = name;
@@ -93,7 +96,11 @@ public class PlayerData {
         /*
         Coins
          */
-        document.put("coins",this.coins);
+        document.put("coins", this.coins);
+        /*
+        Name MC
+         */
+        document.put("name-mc-vote", this.vote);
         playersData.remove(uuid);
         playersDataNames.remove(name);
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
@@ -123,6 +130,9 @@ public class PlayerData {
 
             // Coins
             this.coins = document.getInteger("coins");
+
+            // Name MC
+            this.vote = document.getBoolean("name-mc-vote");
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");

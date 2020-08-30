@@ -34,6 +34,14 @@ public class GeneralPlayerListener implements Listener {
         }
         e.getPlayer().sendMessage(StringUtils.join(msg, "\n"));
         e.setJoinMessage(null);
+        if (!PlayerData.getByUuid(e.getPlayer().getUniqueId()).isVote()) {
+            List<String> voteMessage = Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
+            String voteSound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SOUND");
+            e.getPlayer().sendMessage(StringUtils.join(voteMessage, "\n"));
+            if (voteSound != null || !voteSound.equalsIgnoreCase("none")) {
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.valueOf(voteSound), 2F, 2F);
+            }
+        }
     }
 
     @EventHandler
