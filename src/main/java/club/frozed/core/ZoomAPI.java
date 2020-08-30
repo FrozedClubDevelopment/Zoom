@@ -84,4 +84,16 @@ public class ZoomAPI {
             data.setCoins(data.getCoins() - amount);
         }
     }
+
+    // Name MC
+
+    public boolean isLiked(Player player){
+        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        if (playerData == null) return false;
+        if (playerData.isVote()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
