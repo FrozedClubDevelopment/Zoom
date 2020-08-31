@@ -51,6 +51,7 @@ COMMANDS:
     DISCORD: 'https://discord.gg/invite'
     TEAMSPEAK: 'ts.example.com'
     MESSAGES: '&e<command>&f: &e<social>'
+  BROADCAST: '&7[&6ExampleServer&7] &e<text>'
   TELEPORT-MESSAGES:
     TP: '&eYou has been teleported to &f<target>'
     TOP: '&eYou has been teleported to the top.'
