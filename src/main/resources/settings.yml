@@ -44,7 +44,7 @@ SETTINGS:
     SOUND: 'ORB_PICKUP'
     JOIN-MSG:
       - '&7&m----------------------------------------------------'
-      - '&eVote for us in NameMC to get the &6Verified Prefix&e! &6https://namemc.com/server/dev.frozed.club'
+      - '&eVote for us in NameMC to get the &6Verified Prefix&e! &6https://namemc.com/server/frozed.club'
       - '&7&m----------------------------------------------------'
-    SERVER-IP: 'dev.frozed.club'
+    SERVER-IP: 'frozed.club'
     EXECUTE-CMD: 'setperm <player> tag.verfied'

@@ -14,8 +14,9 @@ public class BlockCommandListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent e) {
         List<String> blockedCommand = Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.COMMANDS-BLOCKED.LIST");
+
         blockedCommand.forEach(cmd -> {
-            if (e.getMessage().startsWith(cmd)) {
+            if (e.getMessage().equalsIgnoreCase(cmd)) {
                 if (e.getPlayer().hasPermission("core.blocked.bypass")) return;
                 if (e.getPlayer().isOp()) return;
                 e.setCancelled(true);
