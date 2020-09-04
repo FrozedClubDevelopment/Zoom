@@ -1,14 +1,12 @@
 package club.frozed.core.utils;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -155,14 +153,6 @@ public class Utils {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while checking vote on name-mc");
         }
         return false;
-    }
-
-    public static void fillInventory(Inventory inventory) {
-        for (int i = 0; i < inventory.getSize(); i++) {
-            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) {
-                inventory.setItem(i, new ItemCreator(Material.STAINED_GLASS_PANE, 7).setName(" ").get());
-            }
-        }
     }
 
     public static int randomNumber(int minimo, int maximo) {

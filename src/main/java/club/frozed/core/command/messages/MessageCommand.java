@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class MessageCommand extends BaseCMD {
-    @Command(name = "message", aliases = {"msg"})
+    @Command(name = "message", aliases = {"msg", "tell", "whisper", "decir"})
 
     @Override
     public void onCommand(CommandArgs cmd) {

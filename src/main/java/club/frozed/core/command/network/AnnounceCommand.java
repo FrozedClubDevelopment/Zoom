@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
  * Date: 08/27/2020 @ 21:14
  */
 public class AnnounceCommand extends BaseCMD {
-    @Command(name = "announce", aliases = {"announceserver", "alertserver"}, permission = "artic.network.announce")
+    @Command(name = "announce", aliases = {"announceserver", "alertserver"}, permission = "core.network.announce")
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
