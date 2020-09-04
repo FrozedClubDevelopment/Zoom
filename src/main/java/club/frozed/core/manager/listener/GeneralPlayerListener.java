@@ -11,8 +11,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -93,5 +95,15 @@ public class GeneralPlayerListener implements Listener {
         player.sendMessage(Color.translate(Lang.PREFIX + Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SKULL-CLICK-MESSAGE"))
                 .replace("<player>", skull.getOwner())
         );
+    }
+
+    // Sign Color :)
+
+    @EventHandler(priority = EventPriority.NORMAL,ignoreCancelled = true)
+    public void onSignChangeEvent(SignChangeEvent e){
+        String[] signLines = e.getLines();
+        for (int i = 0; i < signLines.length; ++i) {
+            e.setLine(i,Color.translate(signLines[i]));
+        }
     }
 }
