@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GamemodeCommand extends BaseCMD {
 
-    @Completer(name = "gamemode")
+    @Completer(name = "gamemode", aliases = {"gm"})
     public List<String> gamemodeCompleter(CommandArgs args) {
         if (args.length() == 1) {
             List<String> list = new ArrayList<String>();
