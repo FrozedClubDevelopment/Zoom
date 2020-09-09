@@ -11,4 +11,6 @@ MONGO:
 REDIS:
   HOST: ''
   PORT: 6379
-  PASSWORD: ''
+  AUTHENTICATION:
+    ENABLED: true
+    PASSWORD: ''
