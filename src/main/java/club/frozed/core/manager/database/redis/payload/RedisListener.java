@@ -60,7 +60,7 @@ public class RedisListener extends JedisPubSub {
                         break;
                     }
                     case STAFF_CHAT:{
-                        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.CHAT.STAFF-CHAT");
+                        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.STAFF-CHAT");
                         String server = redisMessage.getParam("SERVER");
                         String player = redisMessage.getParam("PLAYER");
                         String msg = redisMessage.getParam("TEXT");
@@ -72,7 +72,7 @@ public class RedisListener extends JedisPubSub {
                         break;
                     }
                     case ADMIN_CHAT:{
-                        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.CHAT.ADMIN-CHAT");
+                        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.ADMIN-CHAT");
                         String server = redisMessage.getParam("SERVER");
                         String player = redisMessage.getParam("PLAYER");
                         String msg = redisMessage.getParam("TEXT");
