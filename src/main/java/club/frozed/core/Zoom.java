@@ -58,6 +58,15 @@ public final class Zoom extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        /*
+        TODO
+        -> Rank System
+        -> Bans System
+        -> Rank Commands
+        -> Bans commands /alts ,etc
+        -> Server Manager Command
+        -> Server Data to manager server only redis
+         */
         instance = this;
         commandFramework = new CommandFramework(this);
         this.messagesConfig = new FileConfig(this, "messages.yml");
