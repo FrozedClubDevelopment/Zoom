@@ -3,14 +3,19 @@ package club.frozed.core;
 import club.frozed.core.manager.chat.ChatListener;
 import club.frozed.core.manager.chat.ChatManager;
 import club.frozed.core.manager.database.mongo.MongoManager;
+import club.frozed.core.manager.database.redis.RedisManager;
+import club.frozed.core.manager.database.redis.payload.Payload;
+import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerDataLoad;
+import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
+import club.frozed.core.utils.Color;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.command.CommandFramework;
@@ -23,6 +28,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -42,6 +48,7 @@ public final class Zoom extends JavaPlugin {
 
     private TagManager tagManager;
     private MongoManager mongoManager;
+    private RedisManager redisManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
 
@@ -58,6 +65,7 @@ public final class Zoom extends JavaPlugin {
         this.settingsConfig = new FileConfig(this, "settings.yml");
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.mongoManager = new MongoManager();
+        this.redisManager = new RedisManager();
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
         this.messageManager = new MessageManager();
@@ -68,6 +76,8 @@ public final class Zoom extends JavaPlugin {
         mongoManager.connect();
 
         if (!mongoManager.isConnect()) return;
+
+        redisManager.connect();
 
         getLogger().info("[Zoom Tags] Registering tags...");
         tagManager.registerTags();
@@ -88,37 +98,37 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aDatabase§f:");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
-//        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redis.isActive() ? "§aEnabled" : "§cDisabled"));
+        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redisManager.isActive() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-//        if (redis.isActive()) {
-//            servermanagerMSG();
-//        } else {
-//            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
-//                    .replace("<prefix>", Lang.PREFIX)
-//                    .replace("<server>", Lang.SERVER_NAME)
-//                    .replace("<status>", "&aonline"));
-//            StaffLang.sendRedisServerMsg(Color.translate(format));
-//        }
+        if (redisManager.isActive()) {
+            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","online").toJSON();
+            Zoom.getInstance().getRedisManager().write(json);
+        } else {
+            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
+                    .replace("<prefix>", Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
+                    .replace("<server>", Lang.SERVER_NAME)
+                    .replace("<status>", "&aonline"));
+            StaffLang.sendRedisServerMsg(Color.translate(format));
+        }
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     @Override
     public void onDisable() {
-//        if (Zoom.getInstance().getRedis().isActive()) {
-//            Zoom.getInstance().getRedis().write("SERVER_MANAGER", new GsonUtil()
-//                    .addProperty("SERVER", Lang.SERVER_NAME)
-//                    .addProperty("STATUS", "offline").get());
-//        }else {
-//            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
-//                    .replace("<prefix>", Lang.PREFIX)
-//                    .replace("<server>", Lang.SERVER_NAME)
-//                    .replace("<status>", "&coffline"));
-//            StaffLang.sendRedisServerMsg(Color.translate(format));
-//        }
+        if (Zoom.getInstance().getRedisManager().isActive()) {
+            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","offline").toJSON();
+            Zoom.getInstance().getRedisManager().write(json);
+        } else {
+            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
+                    .replace("<prefix>", Lang.PREFIX)
+                    .replace("<server>", Lang.SERVER_NAME)
+                    .replace("<status>", "&coffline"));
+            StaffLang.sendRedisServerMsg(Color.translate(format));
+        }
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
             if (playerData != null) {
@@ -127,6 +137,9 @@ public final class Zoom extends JavaPlugin {
         }
         mongoManager.disconnect();
 
+        if (redisManager.isActive()){
+            redisManager.disconnect();
+        }
         shutdownMessage();
     }
 

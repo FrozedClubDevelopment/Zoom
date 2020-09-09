@@ -60,14 +60,14 @@ public class StaffLang {
 
     public static void sendAdminChat(String msg) {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission("core.adminChat")) return;
+            if (!p.hasPermission("core.adminchat")) return;
             p.sendMessage(msg);
         }
     }
 
     public static void sendStaffChat(String msg) {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission("core.adminChat")) return;
+            if (!p.hasPermission("core.staffchat")) return;
             p.sendMessage(msg);
         }
     }

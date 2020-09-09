@@ -1,6 +1,9 @@
 package club.frozed.core.manager.chat;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.database.redis.payload.Payload;
+import club.frozed.core.manager.database.redis.payload.RedisMessage;
+import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.Color;
 import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.ConfigReplacement;
@@ -74,21 +77,18 @@ public class ChatListener implements Listener {
                 .replace("<server>", Lang.SERVER_NAME) // ERROR
                 .replace("<player>", playerData.getPlayer().getName())
                 .replace("<text>", e.getMessage()));
-//        if (staffChat && !adminChat) {
-//            e.setCancelled(true);
-//            if (Zoom.getInstance().getRedis().isActive()) {
-//                Zoom.getInstance().getRedis().write("STAFF_CHAT", new JsonUtil()
-//                        .addProperty("SERVER", Lang.SERVER_NAME)
-//                        .addProperty("PLAYER", playerData.getPlayer().getName())
-//                        .addProperty("TEXT", e.getMessage()).get());
-//            } else {
-//                for (Player p : Bukkit.getOnlinePlayers()) {
-//                    if (p.hasPermission("core.staffChat")) {
-//                        p.sendMessage(format);
-//                    }
-//                }
-//            }
-//        }
+        if (staffChat && !adminChat) {
+            e.setCancelled(true);
+            if (Zoom.getInstance().getRedisManager().isActive()) {
+                String json = new RedisMessage(Payload.STAFF_CHAT)
+                        .setParam("SERVER",Lang.SERVER_NAME)
+                        .setParam("PLAYER",playerData.getPlayer().getName())
+                        .setParam("TEXT",e.getMessage()).toJSON();
+                Zoom.getInstance().getRedisManager().write(json);
+            } else {
+                StaffLang.sendStaffChat(format);
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -103,18 +103,15 @@ public class ChatListener implements Listener {
                 .replace("<text>", e.getMessage()));
         if (adminChat && !staffChat || adminChat && staffChat) {
             e.setCancelled(true);
-//            if (Zoom.getInstance().getRedis().isActive()) {
-//                Zoom.getInstance().getRedis().write("ADMIN_CHAT", new GsonUtil()
-//                        .addProperty("SERVER", Lang.SERVER_NAME)
-//                        .addProperty("PLAYER", playerData.getPlayer().getName())
-//                        .addProperty("TEXT", e.getMessage()).get());
-//            } else {
-//                for (Player p : Bukkit.getOnlinePlayers()) {
-//                    if (p.hasPermission("core.adminChat")) {
-//                        p.sendMessage(format);
-//                    }
-//                }
-//            }
+            if (Zoom.getInstance().getRedisManager().isActive()) {
+                String json = new RedisMessage(Payload.ADMIN_CHAT)
+                        .setParam("SERVER",Lang.SERVER_NAME)
+                        .setParam("PLAYER",playerData.getPlayer().getName())
+                        .setParam("TEXT",e.getMessage()).toJSON();
+                Zoom.getInstance().getRedisManager().write(json);
+            } else {
+                StaffLang.sendAdminChat(format);
+            }
         }
     }
 
