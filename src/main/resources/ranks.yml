@@ -4,7 +4,7 @@ Owner:
   COLOR: DARK_RED
   DEFAULT: false
   PRIORITY: 500
-  PERMISSION:
+  PERMISSIONS:
     - 'core.owner.rank'
 Manager:
   NAME: Manager
@@ -12,7 +12,7 @@ Manager:
   COLOR: LIGHT_PURPLE
   DEFAULT: false
   PRIORITY: 400
-  PERMISSION:
+  PERMISSIONS:
     - 'core.owner.manager'
 Mod:
   NAME: Mod
@@ -20,7 +20,7 @@ Mod:
   COLOR: AQUA
   DEFAULT: false
   PRIORITY: 300
-  PERMISSION:
+  PERMISSIONS:
     - 'core.owner.mod'
 VIP:
   NAME: Vip
@@ -28,7 +28,7 @@ VIP:
   COLOR: DARK_GREEN
   DEFAULT: false
   PRIORITY: 200
-  PERMISSION:
+  PERMISSIONS:
     - 'core.owner.vip'
 Default:
   NAME: Default
@@ -36,5 +36,5 @@ Default:
   COLOR: GRAY
   DEFAULT: true
   PRIORITY: 100
-  PERMISSION:
+  PERMISSIONS:
     - 'core.owner.user'
