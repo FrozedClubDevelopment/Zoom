@@ -41,10 +41,7 @@ public final class Zoom extends JavaPlugin {
 
     private CommandFramework commandFramework;
 
-    private FileConfig messagesConfig;
-    private FileConfig databaseConfig;
-    private FileConfig settingsConfig;
-    private FileConfig tagsConfig;
+    private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig;
 
     private TagManager tagManager;
     private MongoManager mongoManager;
@@ -73,6 +70,7 @@ public final class Zoom extends JavaPlugin {
         this.databaseConfig = new FileConfig(this, "database.yml");
         this.settingsConfig = new FileConfig(this, "settings.yml");
         this.tagsConfig = new FileConfig(this, "tags.yml");
+        this.ranksConfig = new FileConfig(this,"ranks.yml");
         this.mongoManager = new MongoManager();
         this.redisManager = new RedisManager();
         this.chatManager = new ChatManager();
