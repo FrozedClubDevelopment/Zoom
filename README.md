@@ -18,6 +18,7 @@
 - core.essentials.speed
 - core.essentials.tps
 - core.essentials.fly
+- core.essentials.report
 - core.staff.join (To view staff joint msg)
 - core.blocked.bypass
 

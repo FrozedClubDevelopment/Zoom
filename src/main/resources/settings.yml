@@ -33,6 +33,12 @@ SETTINGS:
       SENDER: '&7(To &e<target>&7) -> &e<text>'
       TARGET: '&7(From &e<sender>&7) -> &e<text>'
       SOCIAL-SPY: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<target> &7» <text>'
+  REPORT:
+    COOLDOWN: 60
+    MSG:
+      SENDER: '&eYou reported &f<target> &eabout <text>.'
+      STAFF: '&7[&cReport&7] &7[<server>] &f<sender> &ereported &f<target> &eabout <reason>'
+      COOLDOWN: '&eYou must be wait &e<time> &f<left> &eto report another player.'
   COMMANDS-BLOCKED:
     MSG: '&cThis command is blocked.'
     LIST:

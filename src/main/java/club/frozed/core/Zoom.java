@@ -61,8 +61,6 @@ public final class Zoom extends JavaPlugin {
         -> Bans System
         -> Rank Commands
         -> Bans commands /alts ,etc
-        -> Server Manager Command
-        -> Server Data to manager server only redis
          */
         instance = this;
         commandFramework = new CommandFramework(this);

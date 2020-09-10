@@ -13,5 +13,6 @@ public enum  Payload {
     STAFF_CHAT,
     STAFF_JOIN,
     STAFF_LEAVE,
-    STAFF_SWITCH
+    STAFF_SWITCH,
+    REPORT
 }

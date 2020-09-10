@@ -33,6 +33,7 @@ public class PlayerData {
     private String country;
     private String ip;
     private Cooldown chatDelay = new Cooldown(0);
+    private Cooldown reportCooldown = new Cooldown(0);
 
     // Chat Stuff
     private String tag;

@@ -71,4 +71,16 @@ public class StaffLang {
             p.sendMessage(msg);
         }
     }
+
+    public static void sendReport(String sender, String target, String server, String reason) {
+        String format = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.REPORT.MSG.STAFF")
+                .replace("<server>", server)
+                .replace("<sender>", sender)
+                .replace("<target>", target)
+                .replace("<reason>", reason);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.hasPermission("core.staff.report")) return;
+            p.sendMessage(Color.translate(format));
+        }
+    }
 }

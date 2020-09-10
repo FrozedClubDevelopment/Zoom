@@ -83,6 +83,15 @@ public class RedisListener extends JedisPubSub {
                         StaffLang.sendAdminChat(format);
                         break;
                     }
+                    case REPORT:{
+                        String sender = redisMessage.getParam("SENDER");
+                        String target = redisMessage.getParam("TARGET");
+                        String server = redisMessage.getParam("SERVER");
+                        String reason = redisMessage.getParam("REASON");
+
+                        StaffLang.sendReport(sender,target,server,reason);
+                        break;
+                    }
                     default:
                         Zoom.getInstance().getLogger().info("[Redis] The message was received, but there was no response");
                         break;
