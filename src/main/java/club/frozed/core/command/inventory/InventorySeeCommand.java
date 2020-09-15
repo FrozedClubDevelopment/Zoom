@@ -1,7 +1,7 @@
 package club.frozed.core.command.inventory;
 
 import club.frozed.core.menu.invsee.InventorySeeMenu;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -17,9 +17,9 @@ public class InventorySeeCommand extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             p.sendMessage("§eUsage /" + cmd.getLabel() + " <player>");
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             return;
         }
 

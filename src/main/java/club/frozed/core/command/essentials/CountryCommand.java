@@ -2,7 +2,7 @@ package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -33,7 +33,7 @@ public class CountryCommand extends BaseCMD {
         if (playerData.getCountry() == null) return;
         String ip = playerData.getPlayer().getAddress().getAddress().toString().replaceAll("/", "");
         try {
-            p.sendMessage(Color.translate(configCursor.getString("GEO-IP-MESSAGE")
+            p.sendMessage(CC.translate(configCursor.getString("GEO-IP-MESSAGE")
                     .replace("<player>", playerData.getPlayer().getName())
                     .replace("<country>", Objects.requireNonNull(Utils.getCountry(ip))))
             );

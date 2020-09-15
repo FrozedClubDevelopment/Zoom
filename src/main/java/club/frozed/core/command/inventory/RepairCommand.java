@@ -1,7 +1,7 @@
 package club.frozed.core.command.inventory;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -33,9 +33,9 @@ public class RepairCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.FIX-MESSAGES");
 
         if (args.length == 0) {
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             p.sendMessage("§eUsage /" + cmd.getLabel() + "<all/iteminhand>");
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             return;
         }
 
@@ -46,7 +46,7 @@ public class RepairCommand extends BaseCMD {
                 if (material == null || material == Material.AIR || material == Material.POTION || material == Material.GOLDEN_APPLE || material.isBlock() || material.getMaxDurability() < 1)
                     return;
                 iteminhand.setDurability((short) 0);
-                p.sendMessage(Color.translate(messages.getString("HAND")));
+                p.sendMessage(CC.translate(messages.getString("HAND")));
                 break;
             case "all":
                 List<ItemStack> inventory = new ArrayList<>();
@@ -67,12 +67,12 @@ public class RepairCommand extends BaseCMD {
                 for (ItemStack items : inventory) {
                     items.setDurability((short) 0);
                 }
-                p.sendMessage(Color.translate(messages.getString("ALL")));
+                p.sendMessage(CC.translate(messages.getString("ALL")));
                 break;
             default:
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 p.sendMessage("§eUsage /" + cmd.getLabel() + "<all/iteminhand>");
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 break;
         }
     }

@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -28,7 +28,7 @@ public class BroadcastCommand extends BaseCMD {
 
         List<String> text = new ArrayList<>();
         Collections.addAll(text, args);
-        Bukkit.broadcastMessage(Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.BROADCAST")
+        Bukkit.broadcastMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.BROADCAST")
                 .replace("<text>", StringUtils.join(text, " "))));
     }
 }

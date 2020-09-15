@@ -3,7 +3,7 @@ package club.frozed.core.command.chat;
 import club.frozed.core.Zoom;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -23,7 +23,7 @@ public class StaffChatCommand extends BaseCMD {
             playerData.setStaffChat(!playerData.isStaffChat());
             String sound = configCursor.getString("SOUND");
             String status = (playerData.isStaffChat() ? "§aEnabled" : "§cDisabled");
-            player.sendMessage(Color.translate(configCursor.getString("TOGGLE").replace("<status>", status)));
+            player.sendMessage(CC.translate(configCursor.getString("TOGGLE").replace("<status>", status)));
             Utils.sendPlayerSound(player, sound);
         }
     }

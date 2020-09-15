@@ -1,7 +1,7 @@
 package club.frozed.core.command.inventory;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -37,9 +37,9 @@ public class RenameCommand extends BaseCMD {
         for (int i = 0; i < args.length; i++) {
             text.add(args[i]);
         }
-        itemMeta.setDisplayName(Color.translate(StringUtils.join(text, " ")));
+        itemMeta.setDisplayName(CC.translate(StringUtils.join(text, " ")));
         item.setItemMeta(itemMeta);
         p.updateInventory();
-        p.sendMessage(Color.translate(messages.getString("RENAME").replace("<text>", StringUtils.join(text, " "))));
+        p.sendMessage(CC.translate(messages.getString("RENAME").replace("<text>", StringUtils.join(text, " "))));
     }
 }

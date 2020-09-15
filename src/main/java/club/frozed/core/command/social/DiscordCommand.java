@@ -1,7 +1,7 @@
 package club.frozed.core.command.social;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -16,7 +16,7 @@ public class DiscordCommand extends BaseCMD {
         Player p = cmd.getPlayer();
 
         if (cmd.getArgs().length == 0) {
-            p.sendMessage(Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.MESSAGES")
+            p.sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.MESSAGES")
                     .replace("<command>", "Discord")
                     .replace("<social>", Lang.DISCORD))
             );

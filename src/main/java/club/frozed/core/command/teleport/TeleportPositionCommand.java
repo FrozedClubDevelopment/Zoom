@@ -1,7 +1,7 @@
 package club.frozed.core.command.teleport;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.NumberUtils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -38,7 +38,7 @@ public class TeleportPositionCommand extends BaseCMD {
         }
 
         p.teleport(loc);
-        p.sendMessage(Color.translate(messages.getString("TPPOS")
+        p.sendMessage(CC.translate(messages.getString("TPPOS")
                 .replace("<x>", String.valueOf(x))
                 .replace("<y>", String.valueOf(y))
                 .replace("<z>", String.valueOf(z)))

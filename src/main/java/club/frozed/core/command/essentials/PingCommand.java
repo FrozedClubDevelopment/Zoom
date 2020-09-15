@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -24,7 +24,7 @@ public class PingCommand extends BaseCMD {
         int ping = Utils.getPing(p);
 
         if (args.length == 0) {
-            p.sendMessage(Color.translate(messages.getString("PING-MESSAGES.DEFAULT").replace("<ping>", String.valueOf(ping))));
+            p.sendMessage(CC.translate(messages.getString("PING-MESSAGES.DEFAULT").replace("<ping>", String.valueOf(ping))));
             if (!(sound.equalsIgnoreCase("none") || sound == null)) {
                 p.playSound(p.getLocation(), Sound.valueOf(messages.getString("PING-MESSAGES.SOUND")), 2F, 2F);
             }
@@ -36,7 +36,7 @@ public class PingCommand extends BaseCMD {
             }
 
             int pingTarget = Utils.getPing(target);
-            p.sendMessage(Color.translate(messages.getString("PING-MESSAGES.OTHER")
+            p.sendMessage(CC.translate(messages.getString("PING-MESSAGES.OTHER")
                     .replace("<ping>", String.valueOf(pingTarget))
                     .replace("<target>", target.getName())));
             Utils.sendPlayerSound(p, sound);

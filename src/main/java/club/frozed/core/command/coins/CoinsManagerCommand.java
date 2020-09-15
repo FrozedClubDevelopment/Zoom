@@ -2,7 +2,7 @@ package club.frozed.core.command.coins;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.NumberUtils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -21,11 +21,11 @@ public class CoinsManagerCommand extends BaseCMD {
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.COINS-MESSAGE.MANAGER");
 
         if (args.length == 0){
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             p.sendMessage("§e/"+cmd.getLabel() + " <player> set <amount>");
             p.sendMessage("§e/"+cmd.getLabel() + " <player> add <amount>");
             p.sendMessage("§e/"+cmd.getLabel() + " <player> remove <amount>");
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null){
@@ -45,7 +45,7 @@ public class CoinsManagerCommand extends BaseCMD {
                     return;
                 }
                 amount = Integer.parseInt(args[2]);
-                p.sendMessage(Color.translate(configCursor.getString("SET")
+                p.sendMessage(CC.translate(configCursor.getString("SET")
                         .replace("<target>",target.getName())
                         .replace("<amount>",String.valueOf(amount))));
                 targetData.setCoins(amount);
@@ -56,7 +56,7 @@ public class CoinsManagerCommand extends BaseCMD {
                     return;
                 }
                 amount = Integer.parseInt(args[2]);
-                p.sendMessage(Color.translate(configCursor.getString("ADD-REMOVE")
+                p.sendMessage(CC.translate(configCursor.getString("ADD-REMOVE")
                         .replace("<target>",target.getName())
                         .replace("<coins>",String.valueOf(targetData.getCoins()))
                         .replace("<amount>",String.valueOf(targetData.getCoins() + amount))));
@@ -68,18 +68,18 @@ public class CoinsManagerCommand extends BaseCMD {
                     return;
                 }
                 amount = Integer.parseInt(args[2]);
-                p.sendMessage(Color.translate(configCursor.getString("ADD-REMOVE")
+                p.sendMessage(CC.translate(configCursor.getString("ADD-REMOVE")
                         .replace("<target>",target.getName())
                         .replace("<coins>",String.valueOf(targetData.getCoins()))
                         .replace("<amount>",String.valueOf(targetData.getCoins() - amount))));
                 targetData.setCoins(targetData.getCoins() - amount);
                 break;
             default:
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 p.sendMessage("§e/"+cmd.getLabel() + " <player> set <amount>");
                 p.sendMessage("§e/"+cmd.getLabel() + " <player> add <amount>");
                 p.sendMessage("§e/"+cmd.getLabel() + " <player> remove <amount>");
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 break;
         }
     }

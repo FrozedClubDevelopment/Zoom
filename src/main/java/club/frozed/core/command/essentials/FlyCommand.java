@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -9,7 +9,6 @@ import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 
 public class FlyCommand extends BaseCMD {
     @Command(name = "fly", permission = "core.essentials.fly", aliases = {"flying"}, inGameOnly = true)
@@ -22,27 +21,27 @@ public class FlyCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.setAllowFlight(!p.getAllowFlight());
-            p.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("DEFAULT")
+            p.sendMessage(CC.translate(Lang.PREFIX + configCursor.getString("DEFAULT")
                     .replace("<status>",(p.getAllowFlight() ? "&aenabled" : "&cdisabled"))));
             return;
         }
 
         if (args.length == 1) {
-            p.sendMessage(Color.translate("&cUsage: /fly <target>"));
+            p.sendMessage(CC.translate("&cUsage: /fly <target>"));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
         if (target != null) {
             target.setAllowFlight(!target.getAllowFlight());
-            p.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
+            p.sendMessage(CC.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
                     .replace("<status>",(target.getAllowFlight() ? "&aenabled" : "&cdisabled"))
                     .replace("<target>",target.getName())));
-            target.sendMessage(Color.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
+            target.sendMessage(CC.translate(Lang.PREFIX + configCursor.getString("OTHER.SENDER")
                     .replace("<status>",(target.getAllowFlight() ? "&aenabled" : "&cdisabled"))
                     .replace("<sender>",p.getName())));
         } else {
-            p.sendMessage(Color.translate(Lang.PREFIX + "&cPlayer not found."));
+            p.sendMessage(CC.translate(Lang.PREFIX + "&cPlayer not found."));
         }
     }
 }

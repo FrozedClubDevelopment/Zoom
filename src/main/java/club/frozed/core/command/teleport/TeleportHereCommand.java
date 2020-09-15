@@ -1,7 +1,7 @@
 package club.frozed.core.command.teleport;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -30,7 +30,7 @@ public class TeleportHereCommand extends BaseCMD {
         }
 
         target.teleport(p.getLocation());
-        p.sendMessage(Color.translate(messages.getString("SENDER").replace("<target>", target.getName())));
-        target.sendMessage(Color.translate(messages.getString("TARGET").replace("<player>", p.getName())));
+        p.sendMessage(CC.translate(messages.getString("SENDER").replace("<target>", target.getName())));
+        target.sendMessage(CC.translate(messages.getString("TARGET").replace("<player>", p.getName())));
     }
 }

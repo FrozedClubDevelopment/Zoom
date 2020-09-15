@@ -1,7 +1,7 @@
 package club.frozed.core.command.gamemode;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -63,7 +63,7 @@ public class GamemodeCommand extends BaseCMD {
                     p.sendMessage("§eYou already in gamemode survival");
                 } else {
                     p.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(Color.translate(messages.getString("DEFAULT").replace("<gamemode>", "survival")));
+                    p.sendMessage(CC.translate(messages.getString("DEFAULT").replace("<gamemode>", "survival")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             } else if (gamemode.equalsIgnoreCase("creative") || gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")) {
@@ -75,7 +75,7 @@ public class GamemodeCommand extends BaseCMD {
                     p.sendMessage("§eYou already in gamemode creative");
                 } else {
                     p.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(Color.translate(messages.getString("DEFAULT").replace("<gamemode>", "creative")));
+                    p.sendMessage(CC.translate(messages.getString("DEFAULT").replace("<gamemode>", "creative")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             } else if (gamemode.equalsIgnoreCase("adventure") || gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")) {
@@ -87,7 +87,7 @@ public class GamemodeCommand extends BaseCMD {
                     p.sendMessage("§eYou already in gamemode adventure");
                 } else {
                     p.setGameMode(GameMode.ADVENTURE);
-                    p.sendMessage(Color.translate(messages.getString("DEFAULT").replace("<gamemode>", "adventure")));
+                    p.sendMessage(CC.translate(messages.getString("DEFAULT").replace("<gamemode>", "adventure")));
                     p.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
                 }
             } else {
@@ -118,7 +118,7 @@ public class GamemodeCommand extends BaseCMD {
                     target.sendMessage(ChatColor.YELLOW + target.getName() + " gamemode already in gamemode survival");
                 } else {
                     target.setGameMode(GameMode.SURVIVAL);
-                    p.sendMessage(Color.translate(messages.getString("OTHER")
+                    p.sendMessage(CC.translate(messages.getString("OTHER")
                             .replace("<gamemode>", "survival")
                             .replace("<target>", target.getName())));
                     target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
@@ -128,7 +128,7 @@ public class GamemodeCommand extends BaseCMD {
                     target.sendMessage(ChatColor.YELLOW + target.getName() + " gamemode already in gamemode creative");
                 } else {
                     target.setGameMode(GameMode.CREATIVE);
-                    p.sendMessage(Color.translate(messages.getString("OTHER")
+                    p.sendMessage(CC.translate(messages.getString("OTHER")
                             .replace("<gamemode>", "creative")
                             .replace("<target>", target.getName())));
                     target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);
@@ -138,7 +138,7 @@ public class GamemodeCommand extends BaseCMD {
                     target.sendMessage(ChatColor.YELLOW + target.getName() + " gamemode already in gamemode adventure");
                 } else {
                     target.setGameMode(GameMode.ADVENTURE);
-                    p.sendMessage(Color.translate(messages.getString("OTHER")
+                    p.sendMessage(CC.translate(messages.getString("OTHER")
                             .replace("<gamemode>", "adventure")
                             .replace("<target>", target.getName())));
                     target.playSound(p.getLocation(), Sound.NOTE_PLING, 2F, 2F);

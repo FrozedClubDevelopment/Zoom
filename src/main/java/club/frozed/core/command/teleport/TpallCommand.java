@@ -1,7 +1,7 @@
 package club.frozed.core.command.teleport;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -20,6 +20,6 @@ public class TpallCommand extends BaseCMD {
         ConfigCursor message = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
 
         for (Player player : Bukkit.getOnlinePlayers()) player.teleport(p.getLocation());
-        Utils.sendAllMsg(Color.translate(message.getString("TPALL").replace("<player>", p.getDisplayName())));
+        Utils.sendAllMsg(CC.translate(message.getString("TPALL").replace("<player>", p.getDisplayName())));
     }
 }

@@ -1,7 +1,7 @@
 package club.frozed.core.command.time;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -19,7 +19,7 @@ public class DayCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.setPlayerTime(0L, false);
-            p.sendMessage(Color.translate(messages.getString("TIME-MESSAGE").replace("<timeSetting>", String.valueOf(p.getPlayerTime()))));
+            p.sendMessage(CC.translate(messages.getString("TIME-MESSAGE").replace("<timeSetting>", String.valueOf(p.getPlayerTime()))));
         }
     }
 }

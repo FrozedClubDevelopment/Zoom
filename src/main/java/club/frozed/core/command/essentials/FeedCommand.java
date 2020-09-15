@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -19,7 +19,7 @@ public class FeedCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.setFoodLevel(20);
-            p.sendMessage(Color.translate(messages.getString("FEED-MESSAGE")));
+            p.sendMessage(CC.translate(messages.getString("FEED-MESSAGE")));
         }
     }
 }

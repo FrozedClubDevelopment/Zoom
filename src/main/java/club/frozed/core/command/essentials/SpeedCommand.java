@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.NumberUtils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -50,7 +50,7 @@ public class SpeedCommand extends BaseCMD {
                     return;
                 }
                 p.setFlySpeed(speedVelocity * 0.1F);
-                p.sendMessage(Color.translate(messages.getString("FLY").replace("<amount>", String.valueOf(speedVelocity))));
+                p.sendMessage(CC.translate(messages.getString("FLY").replace("<amount>", String.valueOf(speedVelocity))));
                 break;
             case "walk":
                 if (!NumberUtils.checkNumber(args[1])) {
@@ -62,7 +62,7 @@ public class SpeedCommand extends BaseCMD {
                     return;
                 }
                 p.setWalkSpeed(speedVelocity * 0.1F);
-                p.sendMessage(Color.translate(messages.getString("WALK").replace("<amount>", String.valueOf(speedVelocity))));
+                p.sendMessage(CC.translate(messages.getString("WALK").replace("<amount>", String.valueOf(speedVelocity))));
                 break;
             default:
                 break;

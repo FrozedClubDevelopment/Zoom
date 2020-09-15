@@ -1,7 +1,7 @@
 package club.frozed.core.command.messages;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -40,11 +40,11 @@ public class IgnoreCommand extends BaseCMD {
         PlayerData data = PlayerData.getByUuid(p.getUniqueId());
 
         if (args.length == 0) {
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             p.sendMessage("§e/ignore list");
             p.sendMessage("§e/ignore add");
             p.sendMessage("§e/ignore remove");
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             return;
         }
 
@@ -57,11 +57,11 @@ public class IgnoreCommand extends BaseCMD {
                 } else {
                     data.getIgnoredPlayersList().forEach(name -> ignore.add("§7» §f" + name));
                 }
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 p.sendMessage("§eIgnore List");
                 p.sendMessage("");
                 p.sendMessage(StringUtils.join(ignore, "\n"));
-                p.sendMessage(Color.CHAT_BAR);
+                p.sendMessage(CC.CHAT_BAR);
                 break;
             case "add":
                 if (target == null) {

@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -29,7 +29,7 @@ public class SkullCommand extends BaseCMD {
         ItemStack itemStack = new ItemCreator(Material.SKULL_ITEM, 3).setOwner(args[0]).setName("§e" + args[0] + "'s skull").get();
         if (Utils.hasAvailableSlot(p)) {
             p.getInventory().addItem(itemStack);
-            p.sendMessage(Color.translate(messages.getString("SKULL-MESSAGE").replace("<target>", args[0])));
+            p.sendMessage(CC.translate(messages.getString("SKULL-MESSAGE").replace("<target>", args[0])));
         } else {
             p.sendMessage("§cYour inventory is full!");
         }

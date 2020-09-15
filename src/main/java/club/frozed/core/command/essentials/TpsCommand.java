@@ -1,7 +1,7 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -38,7 +38,7 @@ public class TpsCommand extends BaseCMD {
     }
 
     public String translate(String message, List<String> strings) {
-        message = Color.translate(message);
+        message = CC.translate(message);
         message = message
                 .replace("<tps>", Utils.getTps())
                 .replace("<uptime>", Utils.getUptime())
@@ -50,7 +50,7 @@ public class TpsCommand extends BaseCMD {
     }
 
     public String translateWorld(String message, World world) {
-        message = Color.translate(message);
+        message = CC.translate(message);
         message = message
                 .replace("<name>", world.getName())
                 .replace("<chunks>", String.valueOf(world.getLoadedChunks().length))

@@ -1,7 +1,7 @@
 package club.frozed.core.command.inventory;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -20,7 +20,7 @@ public class ClearInventoryCommand extends BaseCMD {
 
         if (args.length == 0) {
             cleanInventory(p);
-            p.sendMessage(Color.translate(messages.getString("DEFAULT")));
+            p.sendMessage(CC.translate(messages.getString("DEFAULT")));
         } else {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null) {
@@ -28,8 +28,8 @@ public class ClearInventoryCommand extends BaseCMD {
                 return;
             }
             cleanInventory(target);
-            target.sendMessage(Color.translate(messages.getString("OTHER.TARGET").replace("<player>", p.getDisplayName())));
-            p.sendMessage(Color.translate(messages.getString("OTHER.SENDER")).replace("<target>", target.getDisplayName()));
+            target.sendMessage(CC.translate(messages.getString("OTHER.TARGET").replace("<player>", p.getDisplayName())));
+            p.sendMessage(CC.translate(messages.getString("OTHER.SENDER")).replace("<target>", target.getDisplayName()));
         }
     }
 

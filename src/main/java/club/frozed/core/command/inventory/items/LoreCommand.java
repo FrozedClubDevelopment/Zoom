@@ -1,7 +1,7 @@
 package club.frozed.core.command.inventory.items;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.NumberUtils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -59,10 +59,10 @@ public class LoreCommand extends BaseCMD {
                     text.add(args[i]);
                 }
                 lore.add(StringUtils.join(text, " "));
-                itemMeta.setLore(Color.translate(lore));
+                itemMeta.setLore(CC.translate(lore));
                 item.setItemMeta(itemMeta);
                 p.updateInventory();
-                p.sendMessage(Color.translate(messages.getString("ADD")));
+                p.sendMessage(CC.translate(messages.getString("ADD")));
                 break;
             case "remove":
                 if (!NumberUtils.checkNumber(args[1])) {
@@ -77,7 +77,7 @@ public class LoreCommand extends BaseCMD {
                 itemMeta.setLore(lore);
                 item.setItemMeta(itemMeta);
                 p.updateInventory();
-                p.sendMessage(Color.translate(messages.getString("REMOVE")));
+                p.sendMessage(CC.translate(messages.getString("REMOVE")));
                 break;
             default:
                 p.sendMessage("§eUsage /" + cmd.getLabel() + " add/remove <text>");

@@ -2,7 +2,7 @@ package club.frozed.core.command.chat;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.chat.ChatManager;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.NumberUtils;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
@@ -38,12 +38,12 @@ public class ChatManagerCommand extends BaseCMD {
         ChatManager chatManager = Zoom.getInstance().getChatManager();
 
         if (args.length == 0) {
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             p.sendMessage("§e/chat clear");
             p.sendMessage("§e/chat mute");
             p.sendMessage("§e/chat unmute");
             p.sendMessage("§e/chat delay <amount>");
-            p.sendMessage(Color.CHAT_BAR);
+            p.sendMessage(CC.CHAT_BAR);
             return;
         }
 
@@ -52,23 +52,23 @@ public class ChatManagerCommand extends BaseCMD {
                 for (int i = 0; i < 120; i++) {
                     Utils.sendAllMsg("");
                 }
-                Utils.sendAllMsg(Color.translate(messages.getString("CLEAR").replace("<target>", p.getDisplayName())));
+                Utils.sendAllMsg(CC.translate(messages.getString("CLEAR").replace("<target>", p.getDisplayName())));
                 break;
             case "mute":
                 if (!chatManager.isMute()) {
                     chatManager.setMute(true);
-                    Bukkit.broadcastMessage(Color.translate(messages.getString("MUTE").replace("<player>", p.getName())));
+                    Bukkit.broadcastMessage(CC.translate(messages.getString("MUTE").replace("<player>", p.getName())));
                 } else {
-                    p.sendMessage(Color.translate(messages.getString("ALREADY").replace("<label>", "muted")));
+                    p.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "muted")));
                 }
                 chatManager.save();
                 break;
             case "unmute":
                 if (chatManager.isMute()) {
                     chatManager.setMute(false);
-                    Bukkit.broadcastMessage(Color.translate(messages.getString("UNMUTE").replace("<player>", p.getName())));
+                    Bukkit.broadcastMessage(CC.translate(messages.getString("UNMUTE").replace("<player>", p.getName())));
                 } else {
-                    p.sendMessage(Color.translate(messages.getString("ALREADY").replace("<label>", "unmuted")));
+                    p.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "unmuted")));
                 }
                 chatManager.save();
                 break;
@@ -78,7 +78,7 @@ public class ChatManagerCommand extends BaseCMD {
                     return;
                 }
                 chatManager.setDelay(Integer.parseInt(args[1]));
-                Bukkit.broadcastMessage(Color.translate(messages.getString("DELAY")
+                Bukkit.broadcastMessage(CC.translate(messages.getString("DELAY")
                         .replace("<delay>", args[1])
                         .replace("<player>", p.getName()))
                 );

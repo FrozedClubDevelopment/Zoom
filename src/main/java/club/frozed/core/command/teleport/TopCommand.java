@@ -1,7 +1,7 @@
 package club.frozed.core.command.teleport;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -18,7 +18,7 @@ public class TopCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "teleport");
         if (args.length == 0) {
             p.teleport(Utils.teleportToTop(p.getLocation()));
-            p.sendMessage(Color.translate(messages.getString("top")));
+            p.sendMessage(CC.translate(messages.getString("top")));
             return;
         }
     }

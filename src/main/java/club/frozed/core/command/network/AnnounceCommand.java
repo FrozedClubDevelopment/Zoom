@@ -1,6 +1,6 @@
 package club.frozed.core.command.network;
 
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -18,6 +18,6 @@ public class AnnounceCommand extends BaseCMD {
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
-        Utils.globalBroadcast(player, Color.translate(Lang.PREFIX + "&e" + player.getName() + "&7 is playing on &e" + Lang.SERVER_NAME + "&7. Use &e/join " + Lang.SERVER_NAME + "&7 to join."));
+        Utils.globalBroadcast(player, CC.translate(Lang.PREFIX + "&e" + player.getName() + "&7 is playing on &e" + Lang.SERVER_NAME + "&7. Use &e/join " + Lang.SERVER_NAME + "&7 to join."));
     }
 }
