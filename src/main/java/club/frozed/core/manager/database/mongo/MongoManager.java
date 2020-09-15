@@ -34,6 +34,8 @@ public class MongoManager {
 
     private MongoCollection<Document> playerData;
 
+    private MongoCollection<Document> ranksData;
+
     public void connect() {
         try {
             Zoom.getInstance().getLogger().info("Connecting to MongoDB...");
@@ -49,6 +51,7 @@ public class MongoManager {
             }
             this.mongoDatabase = this.client.getDatabase(this.database);
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
+            this.ranksData = this.mongoDatabase.getCollection("ZoomCore-RanksData");
         } catch (Exception e) {
             this.connect = false;
             Zoom.getInstance().setDisableMessage("An error has occured on -> MongoDB");
