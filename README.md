@@ -72,3 +72,6 @@
 - core.coins.add
 - core.coins.remove
 - core.coins.set
+
+> Ranks
+- core.rank.help
