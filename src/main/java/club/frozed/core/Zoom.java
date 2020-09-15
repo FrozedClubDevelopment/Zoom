@@ -11,12 +11,12 @@ import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerDataLoad;
-import club.frozed.core.manager.player.rank.Rank;
+import club.frozed.core.manager.ranks.RankManager;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.command.CommandFramework;
@@ -29,7 +29,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -54,6 +53,8 @@ public final class Zoom extends JavaPlugin {
 
     private static ZoomAPI zoomAPI;
 
+    private RankManager rankManager;
+
     @Override
     public void onEnable() {
         /*
@@ -75,6 +76,7 @@ public final class Zoom extends JavaPlugin {
         this.chatManager = new ChatManager();
         this.tagManager = new TagManager();
         this.messageManager = new MessageManager();
+        this.rankManager = new RankManager();
 
         zoomAPI = new ZoomAPI();
 
@@ -85,7 +87,10 @@ public final class Zoom extends JavaPlugin {
 
         redisManager.connect();
 
-        getLogger().info("[Zoom Tags] Registering tags...");
+        getLogger().info("[Zoom-Ranks] Registering ranks...");
+//        rankManager.loadRanks();
+
+        getLogger().info("[Zoom-Tags] Registering tags...");
         tagManager.registerTags();
 
         loadCommands();
@@ -113,11 +118,11 @@ public final class Zoom extends JavaPlugin {
             String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","online").toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
-            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
-                    .replace("<prefix>", Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
+            String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
+                    .replace("<prefix>", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
                     .replace("<server>", Lang.SERVER_NAME)
                     .replace("<status>", "&aonline"));
-            StaffLang.sendRedisServerMsg(Color.translate(format));
+            StaffLang.sendRedisServerMsg(CC.translate(format));
         }
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -129,11 +134,11 @@ public final class Zoom extends JavaPlugin {
             String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","offline").toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
-            String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
+            String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
                     .replace("<prefix>", Lang.PREFIX)
                     .replace("<server>", Lang.SERVER_NAME)
                     .replace("<status>", "&coffline"));
-            StaffLang.sendRedisServerMsg(Color.translate(format));
+            StaffLang.sendRedisServerMsg(CC.translate(format));
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
