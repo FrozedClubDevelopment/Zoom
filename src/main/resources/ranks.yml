@@ -1,40 +1,55 @@
 Owner:
   NAME: Owner
   PREFIX: '&7[&4&lOwner&7]'
+  SUFFIX: ''
   COLOR: DARK_RED
   DEFAULT: false
+  BOLD: true
+  ITALIC: false
   PRIORITY: 500
   PERMISSIONS:
-    - 'core.owner.rank'
+    - 'core.owner'
 Manager:
   NAME: Manager
   PREFIX: '&7[&49&lManager&7]'
+  SUFFIX: ''
   COLOR: LIGHT_PURPLE
   DEFAULT: false
+  BOLD: false
+  ITALIC: false
   PRIORITY: 400
   PERMISSIONS:
-    - 'core.owner.manager'
+    - 'core.manager'
 Mod:
   NAME: Mod
   PREFIX: '&7[&bMod&7]'
+  SUFFIX: ''
   COLOR: AQUA
   DEFAULT: false
+  BOLD: false
+  ITALIC: false
   PRIORITY: 300
   PERMISSIONS:
-    - 'core.owner.mod'
-VIP:
+    - 'core.mod'
+Vip:
   NAME: Vip
   PREFIX: '&7[&a&lVIP&7]'
+  SUFFIX: ''
   COLOR: DARK_GREEN
   DEFAULT: false
+  BOLD: false
+  ITALIC: false
   PRIORITY: 200
   PERMISSIONS:
-    - 'core.owner.vip'
+    - 'core.vip'
 Default:
   NAME: Default
   PREFIX: '&7[Default]'
+  SUFFIX: ''
   COLOR: GRAY
   DEFAULT: true
+  BOLD: false
+  ITALIC: false
   PRIORITY: 100
   PERMISSIONS:
-    - 'core.owner.user'
+    - 'core.default'
