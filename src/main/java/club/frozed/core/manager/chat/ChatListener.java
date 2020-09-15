@@ -4,7 +4,7 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.staff.StaffLang;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.ConfigReplacement;
 import club.frozed.core.utils.lang.Lang;
@@ -30,7 +30,7 @@ public class ChatListener implements Listener {
         if (!enabled) return;
 
         ConfigReplacement replacement = new ConfigReplacement(messageFormat);
-        replacement.add("<rank>", Color.translate("&7[&e+&7]"));
+        replacement.add("<rank>", CC.translate("&7[&e+&7]"));
         if (playerData.getTag() != null) {
             replacement.add("<tag>", " " + playerData.getTag());
         } else {
@@ -62,7 +62,7 @@ public class ChatListener implements Listener {
 
         String format = replacement.toString();
         if (playerData.getPlayer().hasPermission("core.chatcolor.format")) {
-            format = format.replace(message, Color.translate(message));
+            format = format.replace(message, CC.translate(message));
         }
         e.setFormat(format);
     }
@@ -73,7 +73,7 @@ public class ChatListener implements Listener {
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.STAFF-CHAT");
         boolean staffChat = playerData.isStaffChat();
         boolean adminChat = playerData.isAdminChat();
-        String format = Color.translate(configCursor.getString("FORMAT")
+        String format = CC.translate(configCursor.getString("FORMAT")
                 .replace("<server>", Lang.SERVER_NAME) // ERROR
                 .replace("<player>", playerData.getPlayer().getName())
                 .replace("<text>", e.getMessage()));
@@ -97,7 +97,7 @@ public class ChatListener implements Listener {
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.ADMIN-CHAT");
         boolean staffChat = playerData.isStaffChat();
         boolean adminChat = playerData.isAdminChat();
-        String format = Color.translate(configCursor.getString("FORMAT")
+        String format = CC.translate(configCursor.getString("FORMAT")
                 .replace("<server>", Lang.SERVER_NAME) // ERROR
                 .replace("<player>", playerData.getPlayer().getName())
                 .replace("<text>", e.getMessage()));
@@ -125,14 +125,14 @@ public class ChatListener implements Listener {
         if (chatManager.isMute()) {
             if (playerData.getPlayer().hasPermission("core.chat.bypass")) return;
             e.setCancelled(true);
-            playerData.getPlayer().sendMessage(Color.translate(msg.getString("MUTE")));
+            playerData.getPlayer().sendMessage(CC.translate(msg.getString("MUTE")));
             return;
         }
 
         if (playerData.getPlayer().hasPermission("core.chat.delaybypass")) return;
 
         if (!playerData.getChatDelay().hasExpired()) {
-            playerData.getPlayer().sendMessage(Color.translate(msg.getString("DELAY").replace("<time>", playerData.getChatDelay().getTimeMilisLeft())
+            playerData.getPlayer().sendMessage(CC.translate(msg.getString("DELAY").replace("<time>", playerData.getChatDelay().getTimeMilisLeft())
                             .replace("<left>", playerData.getChatDelay().getContextLeft()))
             );
             e.setCancelled(true);
@@ -146,7 +146,7 @@ public class ChatListener implements Listener {
         text = text
                 .replace("<rank>", "&7[&e+&7]")
                 .replace("<tag>", playerData.getTag())
-                .replace("<nameColor>", Color.translate("&b"))
+                .replace("<nameColor>", CC.translate("&b"))
                 .replace("<name>", player.getName())
                 .replace("<text>", message);
 
@@ -155,7 +155,7 @@ public class ChatListener implements Listener {
                     .replace("<rank>", "Not Available")
                     .replace("<tag>", playerData.getTag())
                     .replace("<name>", player.getName())
-                    .replace("<text>", Color.translate(message));
+                    .replace("<text>", CC.translate(message));
         }
         return text;
     }

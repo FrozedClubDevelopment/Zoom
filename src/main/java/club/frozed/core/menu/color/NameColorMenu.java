@@ -2,7 +2,7 @@ package club.frozed.core.menu.color;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.InventoryUtil;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Menu;
@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 
 import java.util.Arrays;
 
@@ -22,7 +21,7 @@ public class NameColorMenu implements Menu {
     private Inventory inventory;
 
     public NameColorMenu() {
-        this.inventory = Bukkit.createInventory(this, 9 * 5, Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.NAME-COLOR-MENU-TITLE")));
+        this.inventory = Bukkit.createInventory(this, 9 * 5, CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.NAME-COLOR-MENU-TITLE")));
     }
 
     @Override

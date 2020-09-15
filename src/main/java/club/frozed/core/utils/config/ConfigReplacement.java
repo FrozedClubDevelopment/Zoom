@@ -1,6 +1,6 @@
 package club.frozed.core.utils.config;
 
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class ConfigReplacement {
 
     public String toString() {
         this.replacements.keySet().forEach(current -> this.message = this.message.replace(String.valueOf(current), String.valueOf(this.replacements.get(current))));
-        return Color.translate(this.message);
+        return CC.translate(this.message);
     }
 
     public String toString(boolean ignored) {

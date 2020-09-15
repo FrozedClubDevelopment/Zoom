@@ -3,7 +3,7 @@ package club.frozed.core.menu.tags;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.tags.Tag;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.InventoryUtil;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Menu;
@@ -26,7 +26,7 @@ public class TagsMenu implements Menu {
     private final Inventory inventory;
 
     public TagsMenu() {
-        this.inventory = Bukkit.createInventory(this, 9 * 5, Color.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title")));
+        this.inventory = Bukkit.createInventory(this, 9 * 5, CC.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title")));
         this.page = 1;
     }
 
@@ -67,7 +67,7 @@ public class TagsMenu implements Menu {
                 }
             } else {
                 for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
-                    lore.add(Color.translate(msg));
+                    lore.add(CC.translate(msg));
                 }
             }
             itemCreator.setLore(lore);

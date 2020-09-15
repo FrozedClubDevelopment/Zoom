@@ -1,7 +1,7 @@
 package club.frozed.core.menu;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.InventoryUtil;
 import club.frozed.core.utils.menu.Menu;
 import club.frozed.core.manager.player.PlayerData;
@@ -21,7 +21,7 @@ public class ModeloXD implements Menu {
     private Inventory inventory;
 
     public ModeloXD() {
-        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 5, Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("chat.chat-color-menu")));
+        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 5, CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("chat.chat-color-menu")));
     }
 
     @Override

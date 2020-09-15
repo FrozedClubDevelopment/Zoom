@@ -2,7 +2,7 @@ package club.frozed.core.manager.listener;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.lang.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
@@ -37,7 +37,7 @@ public class GeneralPlayerListener implements Listener {
         e.getPlayer().sendMessage(StringUtils.join(msg, "\n"));
         e.setJoinMessage(null);
         if (!PlayerData.getByUuid(e.getPlayer().getUniqueId()).isVote()) {
-            List<String> voteMessage = Color.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
+            List<String> voteMessage = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
             String voteSound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SOUND");
             e.getPlayer().sendMessage(StringUtils.join(voteMessage, "\n"));
             if (voteSound != null || !voteSound.equalsIgnoreCase("none")) {
@@ -53,7 +53,7 @@ public class GeneralPlayerListener implements Listener {
 
     public String translate(String text, Player player) {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-        text = Color.translate(text);
+        text = CC.translate(text);
 
         if (playerData.getTag() != null) {
             text = text
@@ -92,7 +92,7 @@ public class GeneralPlayerListener implements Listener {
         Skull skull = (Skull) block.getState();
         if (!skull.hasOwner()) return;
 
-        player.sendMessage(Color.translate(Lang.PREFIX + Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SKULL-CLICK-MESSAGE"))
+        player.sendMessage(CC.translate(Lang.PREFIX + Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SKULL-CLICK-MESSAGE"))
                 .replace("<player>", skull.getOwner())
         );
     }
@@ -103,7 +103,7 @@ public class GeneralPlayerListener implements Listener {
     public void onSignChangeEvent(SignChangeEvent e){
         String[] signLines = e.getLines();
         for (int i = 0; i < signLines.length; ++i) {
-            e.setLine(i,Color.translate(signLines[i]));
+            e.setLine(i, CC.translate(signLines[i]));
         }
     }
 }

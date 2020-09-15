@@ -1,7 +1,7 @@
 package club.frozed.core.manager.messages;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import lombok.Getter;
 import lombok.Setter;
 import club.frozed.core.manager.player.PlayerData;
@@ -50,14 +50,14 @@ public class PlayerMessage {
             }
         }
 
-        this.sender.sendMessage(Color.translate(senderFormat));
-        this.target.sendMessage(Color.translate(targetFormat));
+        this.sender.sendMessage(CC.translate(senderFormat));
+        this.target.sendMessage(CC.translate(targetFormat));
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = PlayerData.getByUuid(p.getUniqueId());
             if (data == null) return;
             if (data.isSocialSpy() && p.hasPermission("core.chat.socialSpy")) {
-                p.sendMessage(Color.translate(socialSpyFormat));
+                p.sendMessage(CC.translate(socialSpyFormat));
             }
         }
     }

@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Color {
+public class CC {
 
     public static String MENU_BAR = ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH.toString() + "------------------------";
     public static String CHAT_BAR = ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH.toString() + "------------------------------------------------";
