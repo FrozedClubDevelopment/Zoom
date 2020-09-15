@@ -33,4 +33,8 @@ public class Rank {
     public static Rank getRankByName(String name){
         return Zoom.getInstance().getRankManager().getRanks().stream().filter(rank -> rank.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
+
+    public static boolean isRankExists(String rank){
+        return Zoom.getInstance().getRankManager().getRanks().contains(Rank.getRankByName(rank));
+    }
 }
