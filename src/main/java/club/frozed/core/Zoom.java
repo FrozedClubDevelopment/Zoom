@@ -11,6 +11,7 @@ import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerDataLoad;
+import club.frozed.core.manager.player.rank.Rank;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
