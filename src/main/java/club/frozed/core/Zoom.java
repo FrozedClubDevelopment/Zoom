@@ -59,7 +59,7 @@ public final class Zoom extends JavaPlugin {
     public void onEnable() {
         /*
         TODO
-        -> Rank System
+        -> Rank System [Setear permisos al jugador, assignar rango, la forma de guarda/editar rangos (base ya echa), seguiria los /grants, setperm idk ]
         -> Bans System
         -> Rank Commands
         -> Bans commands /alts ,etc
@@ -88,7 +88,7 @@ public final class Zoom extends JavaPlugin {
         redisManager.connect();
 
         getLogger().info("[Zoom-Ranks] Registering ranks...");
-//        rankManager.loadRanks();
+        rankManager.loadRanks();
 
         getLogger().info("[Zoom-Tags] Registering tags...");
         tagManager.registerTags();
