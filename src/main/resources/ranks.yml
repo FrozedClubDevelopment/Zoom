@@ -11,7 +11,7 @@ Owner:
     - 'core.owner'
 Manager:
   NAME: Manager
-  PREFIX: '&7[&49&lManager&7]'
+  PREFIX: '&7[&dManager&7]'
   SUFFIX: ''
   COLOR: LIGHT_PURPLE
   DEFAULT: false
@@ -44,7 +44,7 @@ Vip:
     - 'core.vip'
 Default:
   NAME: Default
-  PREFIX: '&7[Default]'
+  PREFIX: '&7[&e+&7]'
   SUFFIX: ''
   COLOR: GRAY
   DEFAULT: true
