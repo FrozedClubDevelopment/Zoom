@@ -12,24 +12,23 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class StaffListener implements Listener {
 
-    String json;
-
     @EventHandler
     public void onJoinStaffEvent(PlayerJoinEvent e) {
         PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
         if (playerData == null) return;
         if (Zoom.getInstance().getRedisManager().isActive()) {
             if (playerData.getLastServer().equals(Lang.SERVER_NAME)) {
-                json = new RedisMessage(Payload.STAFF_JOIN)
-                        .setParam("STAFF", e.getPlayer().getName())
-                        .setParam("SERVER", Lang.SERVER_NAME).toJSON();
+                String json = new RedisMessage(Payload.STAFF_JOIN)
+                        .setParam("STAFF",e.getPlayer().getName())
+                        .setParam("SERVER",Lang.SERVER_NAME).toJSON();
+                Zoom.getInstance().getRedisManager().write(json);
             } else {
-                json = new RedisMessage(Payload.STAFF_SWITCH)
-                        .setParam("STAFF", e.getPlayer().getName())
-                        .setParam("LAST_SERVER", playerData.getLastServer())
-                        .setParam("ACTUAL_SERVER", Lang.SERVER_NAME).toJSON();
+                String json = new RedisMessage(Payload.STAFF_SWITCH)
+                        .setParam("STAFF",e.getPlayer().getName())
+                        .setParam("LAST_SERVER",playerData.getLastServer())
+                        .setParam("ACTUAL_SERVER",Lang.SERVER_NAME).toJSON();
+                Zoom.getInstance().getRedisManager().write(json);
             }
-            Zoom.getInstance().getRedisManager().write(json);
         } else {
             StaffLang.StaffJoinMessage(e.getPlayer().getName(), Lang.SERVER_NAME);
         }
@@ -39,8 +38,8 @@ public class StaffListener implements Listener {
     public void onLeaveStaffEvent(PlayerQuitEvent e) {
         if (Zoom.getInstance().getRedisManager().isActive()) {
             String json = new RedisMessage(Payload.STAFF_LEAVE)
-                    .setParam("STAFF", e.getPlayer().getName())
-                    .setParam("SERVER", Lang.SERVER_NAME).toJSON();
+                    .setParam("STAFF",e.getPlayer().getName())
+                    .setParam("SERVER",Lang.SERVER_NAME).toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
             StaffLang.StaffLeaveMessage(e.getPlayer().getName(), Lang.SERVER_NAME);

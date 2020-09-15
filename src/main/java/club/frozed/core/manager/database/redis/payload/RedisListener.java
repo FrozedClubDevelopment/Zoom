@@ -2,10 +2,9 @@ package club.frozed.core.manager.database.redis.payload;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.staff.StaffLang;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.config.ConfigCursor;
 import com.google.gson.Gson;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
 
@@ -33,8 +32,8 @@ public class RedisListener extends JedisPubSub {
                         } else {
                             status = "&coffline";
                         }
-                        String format = Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
-                                .replace("<prefix>", Color.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
+                        String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
+                                .replace("<prefix>", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
                                 .replace("<server>", server)
                                 .replace("<status>", status));
                         StaffLang.sendRedisServerMsg(format);
@@ -64,7 +63,7 @@ public class RedisListener extends JedisPubSub {
                         String server = redisMessage.getParam("SERVER");
                         String player = redisMessage.getParam("PLAYER");
                         String msg = redisMessage.getParam("TEXT");
-                        String format = Color.translate(configCursor.getString("FORMAT")
+                        String format = CC.translate(configCursor.getString("FORMAT")
                                 .replace("<server>", server)
                                 .replace("<player>", player)
                                 .replace("<text>", msg));
@@ -76,7 +75,7 @@ public class RedisListener extends JedisPubSub {
                         String server = redisMessage.getParam("SERVER");
                         String player = redisMessage.getParam("PLAYER");
                         String msg = redisMessage.getParam("TEXT");
-                        String format = Color.translate(configCursor.getString("FORMAT")
+                        String format = CC.translate(configCursor.getString("FORMAT")
                                 .replace("<server>", server)
                                 .replace("<player>", player)
                                 .replace("<text>", msg));

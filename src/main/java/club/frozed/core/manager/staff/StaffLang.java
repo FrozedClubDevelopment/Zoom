@@ -1,7 +1,7 @@
 package club.frozed.core.manager.staff;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.Color;
+import club.frozed.core.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,10 +15,10 @@ public class StaffLang {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
-                p.sendMessage(Color.translate(format));
+                p.sendMessage(CC.translate(format));
             }
         }
-        Bukkit.getConsoleSender().sendMessage(Color.translate(format));
+        Bukkit.getConsoleSender().sendMessage(CC.translate(format));
     }
 
     public static void StaffLeaveMessage(String player, String server) {
@@ -29,10 +29,10 @@ public class StaffLang {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
-                p.sendMessage(Color.translate(format));
+                p.sendMessage(CC.translate(format));
             }
         }
-        Bukkit.getConsoleSender().sendMessage(Color.translate(format));
+        Bukkit.getConsoleSender().sendMessage(CC.translate(format));
     }
 
     public static void StaffSwitchMessage(String player, String lastserver, String actualserver) {
@@ -43,10 +43,10 @@ public class StaffLang {
         );
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
-                p.sendMessage(Color.translate(format));
+                p.sendMessage(CC.translate(format));
             }
         }
-        Bukkit.getConsoleSender().sendMessage(Color.translate(format));
+        Bukkit.getConsoleSender().sendMessage(CC.translate(format));
     }
 
     public static void sendRedisServerMsg(String string) {
@@ -80,7 +80,7 @@ public class StaffLang {
                 .replace("<reason>", reason);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!p.hasPermission("core.staff.report")) return;
-            p.sendMessage(Color.translate(format));
+            p.sendMessage(CC.translate(format));
         }
     }
 }
