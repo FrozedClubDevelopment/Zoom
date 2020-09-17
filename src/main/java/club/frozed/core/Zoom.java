@@ -130,6 +130,8 @@ public final class Zoom extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        rankManager.saveRanks();
+
         if (Zoom.getInstance().getRedisManager().isActive()) {
             String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","offline").toJSON();
             Zoom.getInstance().getRedisManager().write(json);
