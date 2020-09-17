@@ -114,12 +114,12 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 break;
             case "import":
-                Zoom.getInstance().getRankManager().loadRanks();
+                Zoom.getInstance().getRankManager().loadRanksFromConfig();
                 player.sendMessage(CC.translate("&aSuccessfully import ranks from ranks.yml"));
                 break;
             case "export":
                 Zoom.getInstance().getRankManager().saveFromMongo();
-                player.sendMessage(CC.translate("&aSuccessfully import ranks from MongoDB."));
+                player.sendMessage(CC.translate("&aSuccessfully export ranks from MongoDB."));
                 break;
             case "info":
                 if (rankGetterWithTwoArgs(player, args)) return;
@@ -205,6 +205,30 @@ public class RankCommand extends BaseCMD {
                     rank = Rank.getRankByName(args[1]);
                     rank.setItalic(Boolean.parseBoolean(args[2]));
                     player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Now " + rank.getColor() + rank.getName() + (rank.isItalic() ? "&7 is now italic!" : "&7 is no longer italic.")));
+                } else {
+                    player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
+                }
+                break;
+            case "addperm":
+                if (rankGetterWithTwoArgs(player, args)) return;
+                if (args[2] != null) {
+                    rank = Rank.getRankByName(args[1]);
+                    if (!rank.getPermissions().contains(args[2])){
+                        rank.getPermissions().add(args[2]);
+                    }
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&Success! &7Added " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
+                } else {
+                    player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
+                }
+                break;
+            case "removeperm":
+                if (rankGetterWithTwoArgs(player, args)) return;
+                if (args[2] != null) {
+                    rank = Rank.getRankByName(args[1]);
+                    if (rank.getPermissions().contains(args[2])){
+                        rank.getPermissions().remove(args[2]);
+                    }
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&Success! &7Remove " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
                 } else {
                     player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
                 }
