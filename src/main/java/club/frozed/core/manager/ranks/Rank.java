@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +18,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Rank {
+
+    @Getter public static List<Rank> ranks = new ArrayList<>();
 
     private String name, prefix, suffix;
     private ChatColor color;
@@ -26,15 +28,24 @@ public class Rank {
     private boolean defaultRank, bold, italic;
     private List<String> permissions;
 
-    public Rank() {
-
+    public Rank(String name, String prefix, String suffix, ChatColor rankColor, int priority, boolean defaultRank, boolean bold, boolean italic, List<String> permissions) {
+        this.name = name;
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.color = rankColor;
+        this.priority = priority;
+        this.defaultRank = defaultRank;
+        this.bold = bold;
+        this.italic = italic;
+        this.permissions = permissions;
+        ranks.add(this);
     }
 
     public static Rank getRankByName(String name){
-        return Zoom.getInstance().getRankManager().getRanks().stream().filter(rank -> rank.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return ranks.stream().filter(rank -> rank.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public static boolean isRankExists(String rank){
-        return Zoom.getInstance().getRankManager().getRanks().contains(Rank.getRankByName(rank));
+    public static boolean isRankExist(String rank){
+        return ranks.contains(Rank.getRankByName(rank));
     }
 }

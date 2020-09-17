@@ -22,8 +22,6 @@ import java.util.List;
 
 public class RankManager {
 
-    @Getter private List<Rank> ranks = new ArrayList<>();
-
     public void loadRanks() {
         if (Zoom.getInstance().getMongoManager().getRanksData().find().into(new ArrayList<>()).isEmpty()){
             loadRanksFromConfig();
@@ -34,7 +32,7 @@ public class RankManager {
     }
 
     public void loadRanksFromConfig() {
-            ranks.clear();
+            Rank.ranks.clear();
             try {
                 for (String rank : Zoom.getInstance().getRanksConfig().getConfig().getKeys(false)) {
                     String rankName = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".NAME");
@@ -50,9 +48,9 @@ public class RankManager {
                     int rankPriority = Zoom.getInstance().getRanksConfig().getConfig().getInt(rank + ".PRIORITY");
                     List<String> rankPermission = Zoom.getInstance().getRanksConfig().getConfig().getStringList(rank + ".PERMISSIONS");
 
-                    ranks.add(new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission));
+                    new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission);
                 }
-                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + ranks.size() + " §eranks from Ranks.yml");
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + Rank.ranks.size() + " §eranks from Ranks.yml");
             } catch (Exception e) {
                 Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your config!");
                 Bukkit.shutdown();
@@ -62,7 +60,8 @@ public class RankManager {
     public void saveRanks() {
         Document document = new Document();
         try {
-            for (Rank rank : ranks) {
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSaving ranks in MongoDB.");
+            for (Rank rank : Rank.ranks) {
                 document.put("NAME", rank.getName());
                 document.put("PREFIX", rank.getPrefix());
                 document.put("SUFFIX", rank.getSuffix());
@@ -81,7 +80,7 @@ public class RankManager {
     }
 
     public void loadRanksFromMongo(){
-        ranks.clear();
+        Rank.ranks.clear();
         try {
             List<Document> documents = Zoom.getInstance().getMongoManager().getRanksData().find().into(new ArrayList<>());
             for (Document document : documents) {
@@ -98,9 +97,9 @@ public class RankManager {
                 int rankPriority = document.getInteger("PRIORITY");
 
                 List<String> rankPermission = (List<String>) document.get("PERMISSIONS");
-                ranks.add(new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission));
+                new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission);
             }
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + ranks.size() + " §eranks from MongoDB");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + Rank.ranks.size() + " §eranks from MongoDB");
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your MongoDB!");
             Bukkit.shutdown();
