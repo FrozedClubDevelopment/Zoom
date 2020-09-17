@@ -60,6 +60,7 @@ public class RedisManager {
     public void disconnect() {
         Zoom.getInstance().getLogger().info("[Redis] Disconnecting...");
         this.redisListener.unsubscribe();
+        jedisPool.getResource().close();
         jedisPool.destroy();
         Zoom.getInstance().getLogger().info("[Redis] Disconnecting Successfully");
     }

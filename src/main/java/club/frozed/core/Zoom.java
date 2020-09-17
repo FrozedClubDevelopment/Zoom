@@ -130,6 +130,13 @@ public final class Zoom extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+            if (playerData != null) {
+                playerData.saveData();
+            }
+        }
+
         rankManager.saveRanks();
 
         if (Zoom.getInstance().getRedisManager().isActive()) {
@@ -142,17 +149,13 @@ public final class Zoom extends JavaPlugin {
                     .replace("<status>", "&coffline"));
             StaffLang.sendRedisServerMsg(CC.translate(format));
         }
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-            if (playerData != null) {
-                playerData.saveData();
-            }
-        }
+
         mongoManager.disconnect();
 
         if (redisManager.isActive()){
             redisManager.disconnect();
         }
+
         shutdownMessage();
     }
 
