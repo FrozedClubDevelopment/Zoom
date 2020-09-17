@@ -25,29 +25,38 @@ public class RankManager {
     @Getter private List<Rank> ranks = new ArrayList<>();
 
     public void loadRanks() {
-        ranks.clear();
-        try {
-            for (String rank : Zoom.getInstance().getRanksConfig().getConfig().getKeys(false)) {
-                String rankName = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".NAME");
-                String rankPrefix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".PREFIX");
-                String rankSuffix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".SUFFIX");
-                ChatColor rankColor = ChatColor.valueOf(Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".COLOR"));
-                if (rankColor == null){
-                    rankColor = ChatColor.WHITE;
-                }
-                boolean rankDefault = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".DEFAULT");
-                boolean rankBold = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".BOLD");
-                boolean rankItalic = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".ITALIC");
-                int rankPriority = Zoom.getInstance().getRanksConfig().getConfig().getInt(rank + ".PRIORITY");
-                List<String> rankPermission = Zoom.getInstance().getRanksConfig().getConfig().getStringList(rank + ".PERMISSIONS");
-
-                ranks.add(new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission));
-            }
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + ranks.size() + " §eranks.");
-        } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your config!");
-            Bukkit.shutdown();
+        if (Zoom.getInstance().getMongoManager().getRanksData().find().into(new ArrayList<>()).isEmpty()){
+            loadRanksFromConfig();
         }
+        else {
+            loadRanksFromMongo();
+        }
+    }
+
+    public void loadRanksFromConfig() {
+            ranks.clear();
+            try {
+                for (String rank : Zoom.getInstance().getRanksConfig().getConfig().getKeys(false)) {
+                    String rankName = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".NAME");
+                    String rankPrefix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".PREFIX");
+                    String rankSuffix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".SUFFIX");
+                    ChatColor rankColor = ChatColor.valueOf(Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".COLOR"));
+                    if (rankColor == null){
+                        rankColor = ChatColor.WHITE;
+                    }
+                    boolean rankDefault = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".DEFAULT");
+                    boolean rankBold = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".BOLD");
+                    boolean rankItalic = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".ITALIC");
+                    int rankPriority = Zoom.getInstance().getRanksConfig().getConfig().getInt(rank + ".PRIORITY");
+                    List<String> rankPermission = Zoom.getInstance().getRanksConfig().getConfig().getStringList(rank + ".PERMISSIONS");
+
+                    ranks.add(new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission));
+                }
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + ranks.size() + " §eranks from Ranks.yml");
+            } catch (Exception e) {
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your config!");
+                Bukkit.shutdown();
+            }
     }
 
     public void saveRanks() {
@@ -87,13 +96,13 @@ public class RankManager {
                 boolean rankBold = document.getBoolean("BOLD");
                 boolean rankItalic = document.getBoolean("ITALIC");
                 int rankPriority = document.getInteger("PRIORITY");
-                ;
-                List<String> rankPermission = (List<String>) document.get("PERMISSIONS");
 
+                List<String> rankPermission = (List<String>) document.get("PERMISSIONS");
                 ranks.add(new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission));
             }
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§eSuccessfully loaded §f" + ranks.size() + " §eranks from MongoDB");
         } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your config!");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while loading the ranks. Please check your MongoDB!");
             Bukkit.shutdown();
         }
     }
