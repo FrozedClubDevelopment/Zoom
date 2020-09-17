@@ -234,11 +234,15 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             default:
-                player.sendMessage(CC.MEDIUM_CHAT_BAR);
-                player.sendMessage(CC.translate("&eRank help [1/2]"));
+                player.sendMessage(CC.MENU_BAR);
+                player.sendMessage(CC.translate("&eRank help [1/2] | /rank help <page>"));
                 player.sendMessage(CC.translate("&e/rank list"));
-                player.sendMessage(CC.translate("&eUse /rank help <page>"));
-                player.sendMessage(CC.MEDIUM_CHAT_BAR);
+                player.sendMessage(CC.translate("&e/rank import » Load ranks from ranks.yml"));
+                player.sendMessage(CC.translate("&e/rank export » Export ranks form MongoDB"));
+                player.sendMessage(CC.translate("&e/rank info <rank>"));
+                player.sendMessage(CC.translate("&e/rank setprefix <rank> <prefix>"));
+                player.sendMessage(CC.translate("&e/rank setsuffix <rank> <suffix>"));
+                player.sendMessage(CC.MENU_BAR);
                 break;
         }
     }
