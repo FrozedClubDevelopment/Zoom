@@ -114,15 +114,15 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 break;
             case "import":
-                Zoom.getInstance().getRankManager().loadRanks();
+                Zoom.getInstance().getRankManager().loadRanksFromConfig();
                 player.sendMessage(CC.translate("&aSuccessfully import ranks from ranks.yml"));
                 break;
             case "export":
                 Zoom.getInstance().getRankManager().saveFromMongo();
-                player.sendMessage(CC.translate("&aSuccessfully import ranks from MongoDB."));
+                player.sendMessage(CC.translate("&aSuccessfully export ranks from MongoDB."));
                 break;
             case "info":
-                if (rankGetter(player, args, 2)) return;
+                if (rankGetterWithTwoArgs(player, args)) return;
                 rank = Rank.getRankByName(args[1]);
                 player.sendMessage(CC.MENU_BAR);
                 player.sendMessage(CC.translate(rank.getColor() + rank.getName() + " info."));
@@ -136,47 +136,51 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 break;
             case "setprefix":
-                if (rankGetter(player, args, 3)) return;
-                if (args[3] != null) {
+                if (rankGetterWithThreeArgs(player, args)) return;
+                if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    rank.setPrefix(args[3]);
-                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + " &7prefix to " + args[3]));
+                    rank.setPrefix(args[2]);
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + "&7prefix to " + args[2]));
                 } else {
                     player.sendMessage(CC.translate("&cThe rank prefix cannot be null!"));
                 }
                 break;
             case "setsuffix":
-                if (rankGetter(player, args, 3)) return;
-                if (args[3] != null) {
+                if (rankGetterWithThreeArgs(player, args)) return;
+                if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    rank.setSuffix(args[3]);
-                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + " &7suffix to " + args[3]));
+                    rank.setSuffix(args[2]);
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + "&7suffix to " + args[2]));
                 } else {
                     player.sendMessage(CC.translate("&cThe rank suffix cannot be null!"));
                 }
                 break;
             case "setcolor":
-                if (rankGetter(player, args, 3)) return;
-                if (args[3] != null) {
+                if (rankGetterWithThreeArgs(player, args)) return;
+                if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    rank.setColor(ChatColor.getByChar(args[3]));
-                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getName() + " &7color from " + rank.getColor().toString() + " &7to &a" + args[3]));
-                } else {
-                    player.sendMessage(CC.translate("&cThe rank priority cannot be lower than 0!"));
+                    String lastColor = rank.getColor() + rank.getColor().name();
+                    ChatColor color = ChatColor.getByChar(args[2]);
+                    if (color == null) {
+                        color = ChatColor.WHITE;
+                    }
+                    rank.setColor(color);
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getName() + " &7color from " + lastColor + " &7to " + rank.getColor() + rank.getColor().name()));
                 }
                 break;
             case "setpriority":
-                if (rankGetter(player, args, 3)) return;
-                if (args[3] != null) {
+                if (rankGetterWithThreeArgs(player, args)) return;
+                if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    rank.setPriority(Integer.parseInt(args[3]));
-                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + " &7priority from &c" + rank.getPriority() + " &7to &a" + args[3]));
+                    int lastPriority = rank.getPriority();
+                    rank.setPriority(Integer.parseInt(args[2]));
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getColor() + rank.getName() + " &7priority from &c" + lastPriority + " &7to &a" + args[2]));
                 } else {
                     player.sendMessage(CC.translate("&cThe rank priority cannot be lower than 0!"));
                 }
                 break;
             case "setdefault":
-                if (rankGetter(player, args, 2)) return;
+                if (rankGetterWithTwoArgs(player, args)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     if (!rank.isDefaultRank()) {
@@ -190,7 +194,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setbold":
-                if (rankGetter(player, args, 2)) return;
+                if (rankGetterWithTwoArgs(player, args)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setBold(Boolean.parseBoolean(args[2]));
@@ -200,7 +204,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setitalic":
-                if (rankGetter(player, args, 2)) return;
+                if (rankGetterWithTwoArgs(player, args)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setItalic(Boolean.parseBoolean(args[2]));
@@ -209,21 +213,59 @@ public class RankCommand extends BaseCMD {
                     player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
                 }
                 break;
+            case "addperm":
+                if (rankGetterWithTwoArgs(player, args)) return;
+                if (args[2] != null) {
+                    rank = Rank.getRankByName(args[1]);
+                    if (!rank.getPermissions().contains(args[2])){
+                        rank.getPermissions().add(args[2]);
+                    }
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
+                } else {
+                    player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
+                }
+                break;
+            case "removeperm":
+                if (rankGetterWithTwoArgs(player, args)) return;
+                if (args[2] != null) {
+                    rank = Rank.getRankByName(args[1]);
+                    if (rank.getPermissions().contains(args[2])){
+                        rank.getPermissions().remove(args[2]);
+                    }
+                    player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Remove " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
+                } else {
+                    player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
+                }
+                break;
             default:
-                player.sendMessage(CC.MEDIUM_CHAT_BAR);
-                player.sendMessage(CC.translate("&eRank help [1/2]"));
+                player.sendMessage(CC.MENU_BAR);
+                player.sendMessage(CC.translate("&eRank help [1/2] | /rank help <page>"));
                 player.sendMessage(CC.translate("&e/rank list"));
-                player.sendMessage(CC.translate("&eUse /rank help <page>"));
-                player.sendMessage(CC.MEDIUM_CHAT_BAR);
+                player.sendMessage(CC.translate("&e/rank import » Load ranks from ranks.yml"));
+                player.sendMessage(CC.translate("&e/rank export » Export ranks form MongoDB"));
+                player.sendMessage(CC.translate("&e/rank info <rank>"));
+                player.sendMessage(CC.translate("&e/rank setprefix <rank> <prefix>"));
+                player.sendMessage(CC.translate("&e/rank setsuffix <rank> <suffix>"));
+                player.sendMessage(CC.MENU_BAR);
                 break;
         }
     }
 
-    private boolean rankGetter(Player player, String[] args, int i) {
-        if (args.length < i) return true;
+    private boolean rankGetterWithThreeArgs(Player player, String[] args) {
+        if (args.length < 3) return true;
         if (args[1] == null) return true;
         if (!Rank.isRankExist(args[1])) {
-            player.sendMessage(CC.translate("&cThis rank doesn't exist"));
+            player.sendMessage(CC.translate("&cThis rank don't exist"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean rankGetterWithTwoArgs(Player player, String[] args) {
+        if (args.length < 2) return true;
+        if (args[1] == null) return true;
+        if (!Rank.isRankExist(args[1])) {
+            player.sendMessage(CC.translate("&cThis rank don't exist"));
             return true;
         }
         return false;
