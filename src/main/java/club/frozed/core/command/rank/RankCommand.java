@@ -67,7 +67,7 @@ public class RankCommand extends BaseCMD {
         switch (args[0]) {
             case "help":
                 if (args.length < 2) return;
-                if (args[1] == null) return;
+                if (args[1] == null) player.sendMessage(CC.translate("&e/rank help <page>"));
                 switch (args[1]) {
                     case "1":
                         player.sendMessage(CC.MENU_BAR);
@@ -102,12 +102,13 @@ public class RankCommand extends BaseCMD {
                 for (Rank ranks : Rank.getRanks()) {
                     List<String> rankInfo = new ArrayList<>();
                     rankInfo.add(CC.translate("&aPrefix&7 » " + ranks.getPrefix()));
-                    rankInfo.add(CC.translate("&aSuffix&7 » " + (ranks.getSuffix().isEmpty() ? "&cNone" : ranks.getSuffix())));
+                    rankInfo.add(CC.translate("&aSuffix&7 » " + (ranks.getSuffix() == null ? "&cNone" : ranks.getSuffix())));
                     rankInfo.add(CC.translate("&aColor&7 » " + ranks.getColor() + ranks.getColor().name()));
                     rankInfo.add(CC.translate("&aDefault&7 » " + (ranks.isDefaultRank() ? "&aYes" : "&cNo")));
                     rankInfo.add(CC.translate("&aBold&7 » " + (ranks.isBold() ? "&aYes" : "&cNo")));
                     rankInfo.add(CC.translate("&aItalic&7 » " + (ranks.isItalic() ? "&aYes" : "&cNo")));
                     rankInfo.add(CC.translate("&aTotal Permissions&7 » &f" + ranks.getPermissions().size()));
+
                     Clickable clickable = new Clickable(ranks.getColor() + ranks.getName() + CC.translate("&7(&a" + ranks.getPriority() + "&7)"), StringUtils.join(rankInfo, "\n"), null);
                     clickable.sendToPlayer(player);
                 }
@@ -122,7 +123,7 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.translate("&aSuccessfully export ranks from MongoDB."));
                 break;
             case "info":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 rank = Rank.getRankByName(args[1]);
                 player.sendMessage(CC.MENU_BAR);
                 player.sendMessage(CC.translate(rank.getColor() + rank.getName() + " info."));
@@ -136,7 +137,7 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 break;
             case "setprefix":
-                if (rankGetterWithThreeArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 3)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setPrefix(args[2]);
@@ -146,7 +147,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setsuffix":
-                if (rankGetterWithThreeArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 3)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setSuffix(args[2]);
@@ -156,7 +157,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setcolor":
-                if (rankGetterWithThreeArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 3)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     String lastColor = rank.getColor() + rank.getColor().name();
@@ -169,7 +170,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setpriority":
-                if (rankGetterWithThreeArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 3)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     int lastPriority = rank.getPriority();
@@ -180,7 +181,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setdefault":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     if (!rank.isDefaultRank()) {
@@ -194,7 +195,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setbold":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setBold(Boolean.parseBoolean(args[2]));
@@ -204,7 +205,7 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "setitalic":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     rank.setItalic(Boolean.parseBoolean(args[2]));
@@ -214,10 +215,10 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "addperm":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    if (!rank.getPermissions().contains(args[2])){
+                    if (!rank.getPermissions().contains(args[2])) {
                         rank.getPermissions().add(args[2]);
                     }
                     player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
@@ -226,10 +227,10 @@ public class RankCommand extends BaseCMD {
                 }
                 break;
             case "removeperm":
-                if (rankGetterWithTwoArgs(player, args)) return;
+                if (rankGetterWithArgs(player, args, 2)) return;
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
-                    if (rank.getPermissions().contains(args[2])){
+                    if (rank.getPermissions().contains(args[2])) {
                         rank.getPermissions().remove(args[2]);
                     }
                     player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Remove " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
@@ -251,18 +252,8 @@ public class RankCommand extends BaseCMD {
         }
     }
 
-    private boolean rankGetterWithThreeArgs(Player player, String[] args) {
-        if (args.length < 3) return true;
-        if (args[1] == null) return true;
-        if (!Rank.isRankExist(args[1])) {
-            player.sendMessage(CC.translate("&cThis rank don't exist"));
-            return true;
-        }
-        return false;
-    }
-
-    private boolean rankGetterWithTwoArgs(Player player, String[] args) {
-        if (args.length < 2) return true;
+    private boolean rankGetterWithArgs(Player player, String[] args, int argsSize) {
+        if (args.length < argsSize) return true;
         if (args[1] == null) return true;
         if (!Rank.isRankExist(args[1])) {
             player.sendMessage(CC.translate("&cThis rank don't exist"));
