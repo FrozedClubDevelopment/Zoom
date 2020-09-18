@@ -127,7 +127,7 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 player.sendMessage(CC.translate(rank.getColor() + rank.getName() + " info."));
                 player.sendMessage(CC.translate("&aPrefix&7 » " + rank.getPrefix()));
-                player.sendMessage(CC.translate("&aSuffix&7 » " + (rank.getSuffix().isEmpty() ? "&cNone" : rank.getSuffix())));
+                player.sendMessage(CC.translate("&aSuffix&7 » " + (rank.getSuffix() == null ? "&cNone" : rank.getSuffix())));
                 player.sendMessage(CC.translate("&aColor&7 » " + rank.getColor() + rank.getColor().name()));
                 player.sendMessage(CC.translate("&aDefault&7 » " + (rank.isDefaultRank() ? "&aYes" : "&cNo")));
                 player.sendMessage(CC.translate("&aBold&7 » " + (rank.isBold() ? "&aYes" : "&cNo")));
