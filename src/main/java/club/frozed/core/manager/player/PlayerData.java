@@ -23,7 +23,6 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -165,16 +164,28 @@ public class PlayerData {
         Document document = new Document();
         Player player = Bukkit.getPlayer(uuid);
         document.put("name", this.name);
-        document.put("name_lowercase", player.getName().toLowerCase());
+        if (player != null && player.isOnline()){
+            document.put("name_lowercase", player.getName().toLowerCase());
+        } else {
+            document.put("name_lowercase", this.name.toLowerCase());
+        }
         document.put("uuid", getUuid().toString());
         document.put("last-server", Lang.SERVER_NAME);
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
-        document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
-        try {
-            document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
-        } catch (Exception e) {
-            Bukkit.getLogger().info("Error in get player country");
+        if (player != null && player.isOnline()){
+            document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
+        } else {
+            document.put("ip",this.ip);
+        }
+        if (player != null && player.isOnline()){
+            try {
+                document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
+            } catch (Exception e) {
+                Bukkit.getLogger().info("Error in get player country");
+            }
+        } else {
+            document.put("country",this.country);
         }
         document.put("tag", this.tag);
         document.put("name-color", this.nameColor);
@@ -200,7 +211,7 @@ public class PlayerData {
         /*
         Rank
          */
-        document.put("grants", GrantUtil.grantsToBase64(grants));
+        document.put("grants", GrantUtil.savePlayerGrants(this.grants));
         document.put("permissions",this.permissions);
 
         playersData.remove(uuid);
@@ -237,11 +248,8 @@ public class PlayerData {
             this.vote = document.getBoolean("name-mc-vote");
 
             //Rank
-            try {
-                this.grants = GrantUtil.grantsFromBase64(document.getString("grants"));
-            } catch (IOException exception) {
-                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " Error in load grants.");
-            }
+            this.grants = GrantUtil.getPlayerGrants((List<String>) document.get("grants"));
+
             this.permissions = (List<String>) document.get("permissions");
 
         }
