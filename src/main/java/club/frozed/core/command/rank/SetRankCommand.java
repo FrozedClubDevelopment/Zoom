@@ -1,8 +1,18 @@
 package club.frozed.core.command.rank;
 
+import club.frozed.core.Zoom;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.PlayerOfflineData;
+import club.frozed.core.manager.ranks.Rank;
+import club.frozed.core.utils.CC;
+import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.core.utils.time.DateUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 
 /**
  * Created by Ryzeon
@@ -15,6 +25,54 @@ public class SetRankCommand extends BaseCMD {
     @Command(name = "setrank", permission = "core.rank.setrank", inGameOnly = false)
     @Override
     public void onCommand(CommandArgs cmd) {
-
+        CommandSender player = cmd.getSender();
+        String[] args = cmd.getArgs();
+        if (args.length < 4) {
+            player.sendMessage(CC.translate("&e/setrank <player> <rank> <duration> <reason>"));
+            return;
+        }
+        if (!Rank.isRankExist(args[1])){
+            player.sendMessage(CC.translate("&cThat  rank doesn't exists"));
+            return;
+        }
+        Rank rankData = Rank.getRankByName(args[1]);
+        String durationTime = "";
+        long duration = -1L;
+        if (args[2].equalsIgnoreCase("perm") || args[2].equalsIgnoreCase("permanent")) {
+            durationTime = "permanent";
+        } else {
+            try {
+                duration = DateUtils.getDuration(args[2]);
+            } catch (Exception e) {
+                player.sendMessage(CC.translate("&cThe duration isn't valid."));
+                return;
+            }
+        }
+        String reason = Utils.buildMessage(args, 3);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+        if (target.isOnline()) {
+            PlayerData targetData = PlayerData.getByName(target.getName());
+            if (targetData.hasRank(rankData)) {
+                player.sendMessage(CC.translate("&cError! &7That player already have " + rankData.getColor() + rankData.getName() + " &7rank."));
+                return;
+            }
+            Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
+        } else {
+            player.sendMessage(CC.translate("&eLoading player data....."));
+            if (!PlayerOfflineData.hasData(target.getName())){
+                player.sendMessage(CC.translate("&cThat player doesn't have data"));
+                return;
+            }
+            PlayerData targetData = PlayerOfflineData.loadData(target.getName());
+            if (targetData != null) {
+                if (targetData.hasRank(rankData)) {
+                    player.sendMessage(CC.translate("&cError! &7That player already have " + rankData.getColor() + rankData.getName() + " &7rank."));
+                    PlayerOfflineData.deleteData(targetData.getUuid());
+                    return;
+                }
+                Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
+                PlayerOfflineData.deleteData(targetData.getUuid());
+            }
+        }
     }
 }
