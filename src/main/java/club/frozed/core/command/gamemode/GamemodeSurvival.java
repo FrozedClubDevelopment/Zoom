@@ -6,7 +6,7 @@ import club.frozed.core.utils.command.CommandArgs;
 import org.bukkit.entity.Player;
 
 public class GamemodeSurvival extends BaseCMD {
-    @Command(name = "gm0", permission = "core.gamemode.survival", aliases = {"gms"}, inGameOnly = true)
+    @Command(name = "gms", permission = "core.gamemode.survival", aliases = {"gm0"}, inGameOnly = true)
 
     @Override
     public void onCommand(CommandArgs cmd) {
