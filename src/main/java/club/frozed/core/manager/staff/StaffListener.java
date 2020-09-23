@@ -16,6 +16,7 @@ public class StaffListener implements Listener {
     public void onJoinStaffEvent(PlayerJoinEvent e) {
         PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
         if (playerData == null) return;
+        if (!playerData.getPlayer().hasPermission("core.staff")) return;
         if (Zoom.getInstance().getRedisManager().isActive()) {
             if (playerData.getLastServer().equals(Lang.SERVER_NAME)) {
                 String json = new RedisMessage(Payload.STAFF_JOIN)
@@ -36,6 +37,7 @@ public class StaffListener implements Listener {
 
     @EventHandler
     public void onLeaveStaffEvent(PlayerQuitEvent e) {
+        if (!e.getPlayer().hasPermission("core.staff")) return;
         if (Zoom.getInstance().getRedisManager().isActive()) {
             String json = new RedisMessage(Payload.STAFF_LEAVE)
                     .setParam("STAFF",e.getPlayer().getName())
