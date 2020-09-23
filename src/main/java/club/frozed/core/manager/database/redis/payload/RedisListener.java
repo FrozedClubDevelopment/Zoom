@@ -2,6 +2,7 @@ package club.frozed.core.manager.database.redis.payload;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.CC;
@@ -17,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
 
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Created by Ryzeon
@@ -155,13 +157,24 @@ public class RedisListener extends JedisPubSub {
                     break;
                     case GRANT_UPDATE:{
                         Player player = Bukkit.getPlayer(redisMessage.getParam("NAME"));
+                        String grantmsg = redisMessage.getParam("GRANT");
+                        String[] grantsSplit = grantmsg.split(";");
                         if (player != null){
                             PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
                             if (playerData != null) {
-                                try {
-                                    playerData.setGrants(GrantUtil.grantsFromBase64(redisMessage.getParam("GRANTS")));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                Grant grant = new Grant(
+                                        grantsSplit[0],
+                                        Long.valueOf(grantsSplit[1]),
+                                        Long.valueOf(grantsSplit[2]),
+                                        Long.valueOf(grantsSplit[3]),
+                                        grantsSplit[4],
+                                        grantsSplit[5],
+                                        grantsSplit[6],
+                                        Boolean.valueOf(grantsSplit[7]),
+                                        Boolean.valueOf(grantsSplit[8]),
+                                        grantsSplit[9]);
+                                if (!playerData.getGrants().contains(grant)) {
+                                    playerData.getGrants().add(grant);
                                 }
                                 TaskUtil.runAsync(() -> playerData.loadPermissions(player));
                             }
