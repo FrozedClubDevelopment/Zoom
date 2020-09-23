@@ -2,18 +2,30 @@ package club.frozed.core.manager.player;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.mongo.MongoManager;
+import club.frozed.core.manager.player.grants.Grant;
+import club.frozed.core.manager.player.grants.GrantProcedure;
+import club.frozed.core.manager.ranks.Rank;
+import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter @Setter
 public class PlayerData {
@@ -54,6 +66,11 @@ public class PlayerData {
     // Name MC
     private boolean vote;
 
+    // Rank System
+    private List<String> permissions = new ArrayList<>();
+    private List<Grant> grants = new ArrayList<>();
+    private GrantProcedure grantProcedure;
+
     public PlayerData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
@@ -64,6 +81,84 @@ public class PlayerData {
 
     public Player getPlayer() {
         return Bukkit.getPlayer(this.uuid);
+    }
+
+
+    public void loadPermissions(Player player) {
+        try {
+            Set<PermissionAttachmentInfo> currentPermissions = new HashSet<>(player.getEffectivePermissions());
+            for (PermissionAttachmentInfo permissionInfo : currentPermissions) {
+                if (permissionInfo.getAttachment() == null)
+                    continue;
+                Iterator<String> permissions = permissionInfo.getAttachment().getPermissions().keySet().iterator();
+                while (permissions.hasNext()) {
+                    String permission = permissions.next();
+                    permissionInfo.getAttachment().unsetPermission(permission);
+                }
+            }
+        } catch (Exception exception) {
+        }
+        PermissionAttachment attachment = player.addAttachment((Plugin) Zoom.getInstance());
+        if (attachment == null)
+            return;
+        attachment.getPermissions().keySet().forEach(attachment::unsetPermission);
+        List<Grant> currentGrants = new ArrayList<>(this.grants);
+        Iterator<Grant> grantIterator = currentGrants.iterator();
+        while (grantIterator.hasNext()) {
+            Grant grant = grantIterator.next();
+            if (grant.hasExpired())
+                continue;
+            Rank rank = grant.getRank();
+            if (rank != null) {
+                List<String> rankPermissions = new ArrayList<>(rank.getPermissions());
+                rankPermissions.forEach(permission -> attachment.setPermission(permission, true));
+                List<String> inheritances = new ArrayList<>(rank.getInheritance());
+                inheritances.forEach(inheritance -> {
+                    Rank rankInheritance = Rank.getRankByName(inheritance);
+                    if (rankInheritance != null) {
+                        List<String> inheritancePermissions = new ArrayList<>(rankInheritance.getPermissions());
+                        inheritancePermissions.forEach(iPerms -> attachment.setPermission(iPerms, true));
+                    }
+                });
+            }
+        }
+        Rank defaultRank = Zoom.getInstance().getRankManager().getDefaultRank();
+        if (defaultRank != null) {
+            List<String> defaultPermissions = new ArrayList<>(defaultRank.getPermissions());
+            defaultPermissions.forEach(permission -> attachment.setPermission(permission, true));
+            List<String> inheritances = new ArrayList<>(defaultRank.getInheritance());
+            inheritances.forEach(inheritance -> {
+                Rank rankInheritance = Rank.getRankByName(inheritance);
+                if (rankInheritance != null) {
+                    List<String> inheritancePermissions = new ArrayList<>(rankInheritance.getPermissions());
+                    inheritancePermissions.forEach(iPermissions -> attachment.setPermission(iPermissions, true));
+                }
+            });
+        }
+        List<String> playerPermissions = new ArrayList<>(this.permissions);
+        if (!playerPermissions.isEmpty()) {
+            playerPermissions.forEach(permission -> attachment.setPermission(permission, true));
+        }
+        player.recalculatePermissions();
+        Rank rankData = getHighestRank();
+
+        if (!player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET))
+            player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
+    }
+
+    public void refreshPlayer(Player player){
+        loadPermissions(player);
+    }
+
+    public void deleteRank(Player player, Rank rank){
+        if (rank != null && hasRank(rank)){
+            PermissionAttachment attachment = player.addAttachment(Zoom.getInstance());
+            rank.getPermissions().forEach(perms -> attachment.unsetPermission(perms));
+
+            Rank Hightrank = getHighestRank();
+            String displayName = CC.translate(Hightrank.getPrefix() + " " + this.nameColor + this.name);
+            player.setDisplayName(displayName);
+        }
     }
 
     public void saveData() {
@@ -102,6 +197,12 @@ public class PlayerData {
         Name MC
          */
         document.put("name-mc-vote", this.vote);
+        /*
+        Rank
+         */
+        document.put("grants", GrantUtil.grantsToBase64(grants));
+        document.put("permissions",this.permissions);
+
         playersData.remove(uuid);
         playersDataNames.remove(name);
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
@@ -127,19 +228,53 @@ public class PlayerData {
             this.socialSpy = document.getBoolean("social-spy");
             this.toggleSounds = document.getBoolean("toggle-sounds");
             this.togglePrivateMessages = document.getBoolean("toggle-privatemsg");
-            this.ignoredPlayersList.addAll((List<String>) document.get("ignore-list"));
+            this.ignoredPlayersList  = (List<String>) document.get("ignore-list");
 
             // Coins
             this.coins = document.getInteger("coins");
 
             // Name MC
             this.vote = document.getBoolean("name-mc-vote");
+
+            //Rank
+            try {
+                this.grants = GrantUtil.grantsFromBase64(document.getString("grants"));
+            } catch (IOException exception) {
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " Error in load grants.");
+            }
+            this.permissions = (List<String>) document.get("permissions");
+
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
     }
 
-    public void destroy() {
+    public List<Grant> getActiveGrants() {
+        return (List<Grant>)this.grants.stream().filter(grant -> (!grant.hasExpired() && grant.getRank() != null)).collect(Collectors.toList());
+    }
+
+    public boolean hasRank(Rank rankData) {
+        for (Grant grant : getActiveGrants()) {
+            if (grant.getRank().getName().equalsIgnoreCase(rankData.getName()))
+                return true;
+        }
+        return false;
+    }
+
+    @NonNull
+    public Rank getHighestRank() {
+        Rank defaultRank = Zoom.getInstance().getRankManager().getDefaultRank();
+        List<String> perms = new ArrayList<>();
+        List<String> inheritance = new ArrayList<>();
+        if (defaultRank == null) {
+            defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms,inheritance);
+            defaultRank.setDefaultRank(true);
+        }
+        return getActiveGrants().stream().map(Grant::getRank)
+                .max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
+    }
+
+        public void destroy() {
         this.saveData();
     }
 
@@ -149,5 +284,9 @@ public class PlayerData {
 
     public static PlayerData getByName(String name) {
         return playersDataNames.get(name);
+    }
+
+    public boolean hasPermission(String permission) {
+        return (this.permissions.stream().filter(perm -> perm.equalsIgnoreCase(permission)).findFirst().orElse(null) != null);
     }
 }
