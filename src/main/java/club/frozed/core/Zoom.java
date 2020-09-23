@@ -36,8 +36,7 @@ import java.util.List;
 @Setter
 public final class Zoom extends JavaPlugin {
 
-    @Getter
-    private static Zoom instance;
+    @Getter private static Zoom instance;
 
     private CommandFramework commandFramework;
 

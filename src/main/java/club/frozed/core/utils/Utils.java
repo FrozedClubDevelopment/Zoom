@@ -20,6 +20,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -121,6 +122,66 @@ public class Utils {
         if (second < 10L)
             second_text = "0" + second_text;
         return (hours == 0L) ? (minute_text + ":" + second_text) : (hour_text + ":" + minute_text + ":" + second_text);
+    }
+
+    public static String formatTimeMillis(long millis) {
+        long seconds = millis / 1000L;
+        if (seconds <= 0L)
+            return "0 seconds";
+        long minutes = seconds / 60L;
+        seconds %= 60L;
+        long hours = minutes / 60L;
+        minutes %= 60L;
+        long day = hours / 24L;
+        hours %= 24L;
+        long years = day / 365L;
+        day %= 365L;
+        StringBuilder time = new StringBuilder();
+        if (years != 0L)
+            time.append(years).append((years == 1L) ? " year " : " years ");
+        if (day != 0L)
+            time.append(day).append((day == 1L) ? " day " : " days ");
+        if (hours != 0L)
+            time.append(hours).append((hours == 1L) ? " hour " : " hours ");
+        if (minutes != 0L)
+            time.append(minutes).append((minutes == 1L) ? " minute " : " minutes ");
+        if (seconds != 0L)
+            time.append(seconds).append((seconds == 1L) ? " second " : " seconds ");
+        return time.toString().trim();
+    }
+
+    public static String formatDateDiff(Calendar fromDate, Calendar toDate) {
+        boolean future = false;
+        if (toDate.equals(fromDate))
+            return "now";
+        if (toDate.after(fromDate))
+            future = true;
+        StringBuilder sb = new StringBuilder();
+        int[] types = { 1, 2, 5, 11, 12, 13 };
+        String[] names = {
+                "year", "years", "month", "months", "day", "days", "hour", "hours", "minute", "minutes",
+                "second", "seconds" };
+        int accuracy = 0;
+        for (int i = 0; i < types.length && accuracy <= 2; i++) {
+            int diff = dateDiff(types[i], fromDate, toDate, future);
+            if (diff > 0) {
+                accuracy++;
+                sb.append(" ").append(diff).append(" ").append(names[i * 2 + ((diff > 1) ? 1 : 0)]);
+            }
+        }
+        return (sb.length() == 0) ? "now" : sb.toString().trim();
+    }
+
+    static int dateDiff(int type, Calendar fromDate, Calendar toDate, boolean future) {
+        int diff = 0;
+        long savedDate = fromDate.getTimeInMillis();
+        while ((future && !fromDate.after(toDate)) || (!future && !fromDate.before(toDate))) {
+            savedDate = fromDate.getTimeInMillis();
+            fromDate.add(type, future ? 1 : -1);
+            diff++;
+        }
+        fromDate.setTimeInMillis(savedDate);
+        return --diff;
     }
 
     public static String getCountry(String ip) throws Exception {
