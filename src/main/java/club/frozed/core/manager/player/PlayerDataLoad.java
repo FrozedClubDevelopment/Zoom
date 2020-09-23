@@ -1,5 +1,7 @@
 package club.frozed.core.manager.player;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,6 +14,7 @@ public class PlayerDataLoad implements Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent e) {
         PlayerData playerData = PlayerData.getByName(e.getName());
+
         if (playerData == null) {
             playerData = new PlayerData(e.getName(), e.getUniqueId());
         }
@@ -26,8 +29,19 @@ public class PlayerDataLoad implements Listener {
         if (playerData == null) {
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
+            return;
         }
+        playerData.loadPermissions(e.getPlayer());
     }
+
+//    @EventHandler
+//    public void onPlayerJoinEvent(PlayerJoinEvent event){
+//        Player player = event.getPlayer();
+//        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+//        if (playerData == null) return;
+//
+//        playerData.loadPermissions(player);
+//    }
 
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
