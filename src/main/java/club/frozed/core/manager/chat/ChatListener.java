@@ -30,7 +30,7 @@ public class ChatListener implements Listener {
         if (!enabled) return;
 
         ConfigReplacement replacement = new ConfigReplacement(messageFormat);
-        replacement.add("<rank>", CC.translate("&7[&e+&7]"));
+        replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()));
         if (playerData.getTag() != null) {
             replacement.add("<tag>", " " + playerData.getTag());
         } else {
@@ -144,7 +144,7 @@ public class ChatListener implements Listener {
     public String translate(String text, Player player, String message) {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
         text = text
-                .replace("<rank>", "&7[&e+&7]")
+                .replace("<rank>", CC.translate(playerData.getHighestRank().getPrefix()))
                 .replace("<tag>", playerData.getTag())
                 .replace("<nameColor>", CC.translate("&b"))
                 .replace("<name>", player.getName())
@@ -152,7 +152,7 @@ public class ChatListener implements Listener {
 
         if (player.hasPermission("core.chatcolor")) {
             text = text
-                    .replace("<rank>", "Not Available")
+                    .replace("<rank>", CC.translate(playerData.getHighestRank().getPrefix()))
                     .replace("<tag>", playerData.getTag())
                     .replace("<name>", player.getName())
                     .replace("<text>", CC.translate(message));
