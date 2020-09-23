@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,10 +20,7 @@ import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -182,6 +180,12 @@ public class Utils {
         }
         fromDate.setTimeInMillis(savedDate);
         return --diff;
+    }
+
+    public static String buildMessage(String[] args, int start) {
+        if (start >= args.length)
+            return "";
+        return ChatColor.stripColor(String.join(" ", Arrays.<CharSequence>copyOfRange((CharSequence[])args, start, args.length)));
     }
 
     public static String getCountry(String ip) throws Exception {
