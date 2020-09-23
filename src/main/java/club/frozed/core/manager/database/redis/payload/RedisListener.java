@@ -1,12 +1,22 @@
 package club.frozed.core.manager.database.redis.payload;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.CC;
+import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.core.utils.grant.GrantUtil;
 import com.google.gson.Gson;
+import com.mongodb.client.model.Filters;
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
+
+import java.io.IOException;
 
 /**
  * Created by Ryzeon
@@ -91,6 +101,73 @@ public class RedisListener extends JedisPubSub {
                         StaffLang.sendReport(sender,target,server,reason);
                         break;
                     }
+                    case RANK_UPDATE_PERMS:{
+                        Rank rank = Rank.getRankByName(redisMessage.getParam("RANK"));
+                        Bukkit.getOnlinePlayers().forEach(player -> {
+                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            if (playerData != null){
+                                if (rank != null){
+                                    if (playerData.hasRank(rank)){
+                                        playerData.refreshPlayer(playerData.getPlayer());
+                                    }
+                                }
+                            }
+                        });
+                        break;
+                    }
+                    case RANK_DELETE:{
+                        Rank rank = Rank.getRankByName(redisMessage.getParam("RANK"));
+                        if (rank != null) {
+                            Bukkit.getOnlinePlayers().forEach(player -> {
+                                PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                                if (playerData != null) {
+                                    if (playerData.hasRank(rank)) {
+                                        playerData.deleteRank(playerData.getPlayer(),rank);
+                                    }
+                                }
+                            });
+                            Document document = Zoom.getInstance().getMongoManager().getRanksData().find(Filters.eq("NAME", rank.getName())).first();
+                            if (document != null) {
+                                Zoom.getInstance().getMongoManager().getRanksData().deleteOne(document);
+                            }
+                            Rank.ranks.remove(rank);
+                        }
+                        break;
+                    }
+                    case PLAYER_PERMISSION_UPDATE:{
+                        Player player = Bukkit.getPlayer(redisMessage.getParam("NAME"));
+                        String permission = redisMessage.getParam("PERMISSION");
+                        if (player != null){
+                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            if (playerData != null){
+                                playerData.getPermissions().add(permission);
+                                playerData.loadPermissions(player);
+                            }
+                        }
+                    }
+                    break;
+                    case GRANT_ADD:{
+                        Player player = Bukkit.getPlayer(redisMessage.getParam("NAME"));
+                        if (player != null){
+                            player.sendMessage(CC.translate(redisMessage.getParam("MESSAGE")));
+                        }
+                    }
+                    break;
+                    case GRANT_UPDATE:{
+                        Player player = Bukkit.getPlayer(redisMessage.getParam("NAME"));
+                        if (player != null){
+                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            if (playerData != null) {
+                                try {
+                                    playerData.setGrants(GrantUtil.grantsFromBase64(redisMessage.getParam("GRANTS")));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                TaskUtil.runAsync(() -> playerData.loadPermissions(player));
+                            }
+                        }
+                    }
+                    break;
                     default:
                         Zoom.getInstance().getLogger().info("[Redis] The message was received, but there was no response");
                         break;
