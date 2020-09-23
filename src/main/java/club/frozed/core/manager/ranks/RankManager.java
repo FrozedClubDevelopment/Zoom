@@ -224,8 +224,18 @@ public class RankManager {
             }
             Player target = Bukkit.getPlayer(targetData.getName());
             if (target == null) {
-                json = new RedisMessage(Payload.GRANT_UPDATE).setParam("NAME",targetData.getName())
-                        .setParam("GRANTS", GrantUtil.grantsToBase64(targetData.getGrants())).toJSON();
+                json = new RedisMessage(Payload.GRANT_UPDATE)
+                        .setParam("NAME",targetData.getName())
+                        .setParam("GRANT", grant.getRank().getName()
+                                + ";" + grant.getAddedDate()
+                                + ";" + grant.getDuration()
+                                + ";" + grant.getRemovedDate()
+                                + ";" + grant.getAddedBy()
+                                + ";" + grant.getReason()
+                                + ";" + grant.getRemovedBy()
+                                + ";" + grant.isActive()
+                                + ";" + grant.isPermanent()
+                                + ";" + grant.getServer()).toJSON();
                 if (Zoom.getInstance().getRedisManager().isActive()){
                     Zoom.getInstance().getRedisManager().write(json);
                 }
