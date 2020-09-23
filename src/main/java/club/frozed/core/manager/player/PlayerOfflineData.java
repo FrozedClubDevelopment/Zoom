@@ -35,6 +35,9 @@ public class PlayerOfflineData {
     public static PlayerData createPlayerData(UUID uuid, String name) {
         if (playerData.containsKey(uuid)) return playerData.get(uuid);
         playerData.put(uuid, new PlayerData(name, uuid));
+        if (!playerData.get(uuid).isDataLoaded()){
+            playerData.get(uuid).loadData();
+        }
         return playerData.get(uuid);
     }
 
@@ -45,6 +48,8 @@ public class PlayerOfflineData {
     public static void deleteData(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) return;
+        playerData.get(uuid).saveData();
+
         playerData.remove(uuid);
     }
 
@@ -54,7 +59,7 @@ public class PlayerOfflineData {
         if (document == null) {
             return null;
         }
-        createPlayerData(UUID.fromString(document.getString("name")), name);
+        createPlayerData(UUID.fromString(document.getString("uuid")), name);
         return playerData.get(UUID.fromString(document.getString("uuid")));
     }
 }
