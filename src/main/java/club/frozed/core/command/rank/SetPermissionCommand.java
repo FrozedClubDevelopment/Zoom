@@ -86,8 +86,7 @@ public class SetPermissionCommand extends BaseCMD {
         }
         Player target = Bukkit.getPlayer(playerData.getName());
         if (target == null){
-            String json = new RedisMessage(Payload.PLAYER_PERMISSION_UPDATE).setParam("NAME",target.getName()).setParam("PERMISSION",permission).toJSON();
-
+            String json = new RedisMessage(Payload.PLAYER_PERMISSION_UPDATE).setParam("NAME",playerData.getName()).setParam("PERMISSION",permission).toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         }
     }
