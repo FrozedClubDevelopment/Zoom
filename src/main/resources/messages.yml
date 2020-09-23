@@ -101,3 +101,6 @@ COMMANDS:
     MANAGER:
       SET: '&eYou set <target>''s coints to <amount>'
       ADD-REMOVE: '&eYou update <target>''s coins from <coins> to <amount>'
+  GRANT:
+    PERM: '&eYou have been permanently granted to <rank>.'
+    TEMP: '&eYou have been permanently granted to <rank> for <time>.'
