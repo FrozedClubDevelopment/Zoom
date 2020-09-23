@@ -1,14 +1,6 @@
 package club.frozed.core.utils.grant;
 
 import club.frozed.core.manager.player.grants.Grant;
-import club.frozed.core.utils.lang.Lang;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,54 +11,45 @@ import java.util.List;
  */
 
 public class GrantUtil {
-    public static String grantsToBase64(List<Grant> grants) throws IllegalStateException {
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
-            dataOutput.writeInt(grants.size());
-            for (Grant grant : grants) {
-                dataOutput.writeObject(grant.getRank());
-                dataOutput.writeObject(Long.valueOf(grant.getAddedBy()));
-                dataOutput.writeObject(Long.valueOf(grant.getDuration()));
-                dataOutput.writeObject(Long.valueOf(grant.getRemovedBy()));
-                dataOutput.writeObject(grant.getAddedBy());
-                dataOutput.writeObject(grant.getReason());
-                dataOutput.writeObject(grant.getRemovedBy());
-                dataOutput.writeObject(Boolean.valueOf(grant.isActive()));
-                dataOutput.writeObject(Boolean.valueOf(grant.isPermanent()));
-                dataOutput.writeObject(grant.getServer());
-            }
-            dataOutput.close();
-            return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (Exception e) {
-            throw new IllegalStateException(Lang.PREFIX + " Error in save grants.", e);
+
+    public static List<String> savePlayerGrants(List<Grant> grants){
+        List<String> playerGrants = new ArrayList<>();
+        for (Grant grant : grants){
+            playerGrants.add(
+                    grant.getRank().getName()
+                    + ";" + grant.getAddedDate()
+                    + ";" + grant.getDuration()
+                    + ";" + grant.getRemovedDate()
+                    + ";" + grant.getAddedBy()
+                    + ";" + grant.getReason()
+                    + ";" + grant.getRemovedBy()
+                    + ";" + grant.isActive()
+                    + ";" + grant.isPermanent()
+                    + ";" + grant.getServer());
         }
+        return playerGrants;
     }
 
-    public static List<Grant> grantsFromBase64(String data) throws IOException {
-        try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-            List<Grant> grants = new ArrayList<>();
-            int size = dataInput.readInt();
-            for (int i = 0; i < size; i++) {
-                Grant grant = new Grant(
-                        (String)dataInput.readObject(),
-                        (Long) dataInput.readObject(),
-                        (Long) dataInput.readObject(),
-                        (Long) dataInput.readObject(),
-                        (String)dataInput.readObject(),
-                        (String)dataInput.readObject(),
-                        (String)dataInput.readObject(),
-                        (Boolean) dataInput.readObject(),
-                        (Boolean) dataInput.readObject(),
-                        (String)dataInput.readObject());
-                grants.add(grant);
-            }
-            dataInput.close();
-            return grants;
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
+    public static List<Grant> getPlayerGrants(List<String> strings){
+        List<Grant> grants = new ArrayList<>();
+        for (String string : strings){
+            String[] grantsSplit = string.split(";");
+            /*
+            El split pa agarra cada wea a partir de un ; ekem hola;xd [0] es hola [1] xd
+             */
+            Grant grant = new Grant(
+                    grantsSplit[0],
+                    Long.valueOf(grantsSplit[1]),
+                    Long.valueOf(grantsSplit[2]),
+                    Long.valueOf(grantsSplit[3]),
+                    grantsSplit[4],
+                    grantsSplit[5],
+                    grantsSplit[6],
+                    Boolean.valueOf(grantsSplit[7]),
+                    Boolean.valueOf(grantsSplit[8]),
+                    grantsSplit[9]);
+            grants.add(grant);
         }
+        return grants;
     }
 }
