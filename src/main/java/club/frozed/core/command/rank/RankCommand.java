@@ -265,8 +265,8 @@ public class RankCommand extends BaseCMD {
         }
     }
 
-    private boolean rankGetterWithThreeArgs(CommandSender player, String[] args) {
-        if (args.length < 3) return true;
+    private boolean rankGetterWithArgs(CommandSender player, String[] args, int argsSize) {
+        if (args.length < argsSize) return true;
         if (args[1] == null) return true;
         if (!Rank.isRankExist(args[1])) {
             player.sendMessage(CC.translate("&cThis rank don't exist"));
