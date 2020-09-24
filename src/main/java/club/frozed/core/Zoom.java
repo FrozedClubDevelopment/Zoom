@@ -103,15 +103,12 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Author§f: §aRyzeon");
+        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Authors§f: §aRyzeon§7, §aElb1to");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Version§f: §av" + getDescription().getVersion());
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aDatabase§f:");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redisManager.isActive() ? "§aEnabled" : "§cDisabled"));
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         if (redisManager.isActive()) {
             String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","online").toJSON();

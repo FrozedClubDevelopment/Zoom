@@ -47,7 +47,7 @@ NETWORK:
 COMMANDS:
   SOCIAL:
     STORE: 'store.example.com'
-    TWITTER: 'https://twitter.com/ryzeon_'
+    TWITTER: 'https://twitter.com/Example'
     DISCORD: 'https://discord.gg/invite'
     TEAMSPEAK: 'ts.example.com'
     MESSAGES: '&e<command>&f: &e<social>'
