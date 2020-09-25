@@ -18,7 +18,7 @@ public interface Menu extends InventoryHolder {
         if (InventoryUtil.clickedTopInventory(event)) event.setCancelled(true);
     }
 
-    default void onInventoryClose(InventoryCloseEvent event) {
+    default void onInventoryClose(InventoryCloseEvent event){
 
     }
 }
