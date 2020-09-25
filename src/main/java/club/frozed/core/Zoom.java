@@ -16,6 +16,7 @@ import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
+import club.frozed.core.menu.grant.GrantListener;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
@@ -180,8 +181,12 @@ public final class Zoom extends JavaPlugin {
 
         // Player Join Message
         pluginManager.registerEvents(new GeneralPlayerListener(), this);
+
         // Blocked Cmd Listener
         pluginManager.registerEvents(new BlockCommandListener(), this);
+
+        //Grant Listeener
+        pluginManager.registerEvents(new GrantListener(),this);
     }
 
     public void shutdownMessage() {
