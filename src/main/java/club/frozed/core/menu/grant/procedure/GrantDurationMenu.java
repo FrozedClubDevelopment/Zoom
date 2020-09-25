@@ -1,17 +1,17 @@
 package club.frozed.core.menu.grant.procedure;
 
-import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.InventoryUtil;
+import club.frozed.core.utils.grant.WoolUtil;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Menu;
 import club.frozed.core.utils.time.DateUtils;
-import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,15 +28,15 @@ import org.bukkit.inventory.InventoryHolder;
  */
 public class GrantDurationMenu implements Menu {
     private Inventory inventory;
-    private PlayerData playerData;
+    private PlayerData targetPlayerData;
 
     private boolean custom;
 
     private boolean completed;
 
-    public GrantDurationMenu(PlayerData playerData) {
-        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 4, CC.translate("&aChoose duration."));
-        this.playerData = playerData;
+    public GrantDurationMenu(PlayerData targetPlayerData) {
+        this.inventory = Bukkit.createInventory((InventoryHolder) this, 9 * 3, CC.translate("&aChoose duration."));
+        this.targetPlayerData = targetPlayerData;
     }
 
     @Override
@@ -47,14 +47,18 @@ public class GrantDurationMenu implements Menu {
 
     public void update(Player player) {
         this.inventory.clear();
-        ItemCreator perm = new ItemCreator(Material.DIAMOND).setName("&4&lPermanent");
-        this.inventory.setItem(1,perm.get());
-        ItemCreator sixtyDays = new ItemCreator(Material.IRON_INGOT).setName("&c&l60 Days");
-        this.inventory.setItem(3,sixtyDays.get());
-        ItemCreator thirtyDays = new ItemCreator(Material.BEACON).setName("&6&l30 Days");
-        this.inventory.setItem(5,thirtyDays.get());
-        ItemCreator customDuration = new ItemCreator(Material.BEACON).setName("&e&lCustom Duration");
-        this.inventory.setItem(7,customDuration.get());
+        ItemCreator fourtyDays = new ItemCreator(Material.WOOL).setDurability(WoolUtil.convertChatColorToWoolData(ChatColor.GREEN)).setName("&a&l14 Days");
+        this.inventory.setItem(10,fourtyDays.get());
+
+        ItemCreator thirtyDays = new ItemCreator(Material.WOOL).setDurability(WoolUtil.convertChatColorToWoolData(ChatColor.YELLOW)).setName("&6&l30 Days");
+        this.inventory.setItem(12,thirtyDays.get());
+
+        ItemCreator perm = new ItemCreator(Material.WOOL).setDurability(WoolUtil.convertChatColorToWoolData(ChatColor.RED)).setName("&4&lPermanent");
+        this.inventory.setItem(14,perm.get());
+
+        ItemCreator customDuration = new ItemCreator(Material.SIGN).setName("&9&lCustom Duration");
+        this.inventory.setItem(16,customDuration.get());
+
         InventoryUtil.fillInventory(this.inventory);
     }
 
@@ -76,27 +80,13 @@ public class GrantDurationMenu implements Menu {
             if (!e.getCurrentItem().hasItemMeta()) return;
             int slots = e.getSlot();
             switch (slots) {
-                case 1:
+                case 10:
                     if (targetGrantProcedure == null) {
                         p.closeInventory();
                         p.sendMessage(CC.translate("&4Error! &cOpps"));
                         return;
                     }
-                    this.completed = true;
-                    targetGrantProcedure.setPermanent(true);
-                    data.getGrantProcedure().setEnteredDuration(1L);
-                    data.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
-                    p.closeInventory();
-                    p.sendMessage(CC.translate("&aPlease type a reason for grant."));
-                    playSound(p,true);
-                    break;
-                case 3:
-                    if (targetGrantProcedure == null) {
-                        p.closeInventory();
-                        p.sendMessage(CC.translate("&4Error! &cOpps"));
-                        return;
-                    }
-                    duration = DateUtils.getDuration("60d");
+                    duration = DateUtils.getDuration("14d");
                     this.completed = true;
                     data.getGrantProcedure().setEnteredDuration(duration);
                     data.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
@@ -104,7 +94,7 @@ public class GrantDurationMenu implements Menu {
                     p.sendMessage(CC.translate("&aPlease type a reason for grant."));
                     playSound(p,true);
                     break;
-                case 5:
+                case 12:
                     if (targetGrantProcedure == null) {
                         p.closeInventory();
                         p.sendMessage(CC.translate("&4Error! &cOpps"));
@@ -118,7 +108,21 @@ public class GrantDurationMenu implements Menu {
                     p.sendMessage(CC.translate("&aPlease type a reason for grant."));
                     playSound(p,true);
                     break;
-                case 7:
+                case 14:
+                    if (targetGrantProcedure == null) {
+                        p.closeInventory();
+                        p.sendMessage(CC.translate("&4Error! &cOpps"));
+                        return;
+                    }
+                    this.completed = true;
+                    targetGrantProcedure.setPermanent(true);
+                    data.getGrantProcedure().setEnteredDuration(1L);
+                    data.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
+                    p.closeInventory();
+                    p.sendMessage(CC.translate("&aPlease type a reason for grant."));
+                    playSound(p,true);
+                    break;
+                case 16:
                     if (targetGrantProcedure == null) {
                         p.closeInventory();
                         p.sendMessage(CC.translate("&4Error! &cOpps"));
@@ -142,8 +146,8 @@ public class GrantDurationMenu implements Menu {
             PlayerData playerData = PlayerData.getByUuid(event.getPlayer().getUniqueId());
             if (playerData.getGrantProcedure() != null && !this.custom && !this.completed)
                 playerData.setGrantProcedure(null);
-            if (!playerData.getPlayer().isOnline()){
-                PlayerOfflineData.deleteData(playerData.getUuid());
+            if (!targetPlayerData.getPlayer().isOnline()){
+                PlayerOfflineData.deleteData(targetPlayerData.getUuid());
             }
         }
     }
