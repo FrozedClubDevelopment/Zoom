@@ -1,7 +1,10 @@
 package club.frozed.core.utils.grant;
 
 import club.frozed.core.manager.player.grants.Grant;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,5 +54,9 @@ public class GrantUtil {
             grants.add(grant);
         }
         return grants;
+    }
+
+    public static String getDate(long value) {
+        return (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a")).format(new Date(value));
     }
 }
