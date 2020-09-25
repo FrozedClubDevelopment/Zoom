@@ -2,6 +2,7 @@ package club.frozed.core.menu.grant;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
+import club.frozed.core.menu.grant.procedure.GrantConfirmMenu;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.time.DateUtils;
 import org.bukkit.ChatColor;
@@ -50,11 +51,13 @@ public class GrantListener implements Listener {
             playerData.getGrantProcedure().setEnteredDuration(duration);
             player.sendMessage(CC.translate("&aSuccess! &7You have been duration to &a" + playerData.getGrantProcedure().getNiceDuration()));
             playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
+            player.sendMessage(CC.translate("&aPlease type a reason for grant."));
+            player.playSound(player.getLocation(), Sound.NOTE_PLING,2F,2F);
         } else if (playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.REASON) {
             event.setCancelled(true);
             playerData.getGrantProcedure().setEnteredReason(message);
             playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.CONFIRMATION);
-//            (new GrantConfirmMenu()).open(player);
+            (new GrantConfirmMenu()).open(player);
         }
     }
 }
