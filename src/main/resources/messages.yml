@@ -107,3 +107,22 @@ COMMANDS:
     GRANT-MENU:
       RANK:
         - '&aClick to grant &f<name>''s &a to <rank> rank!'
+      GRANTS:
+        LORE:
+          - '&7&m------------------------'
+          - '&eAdded by &7» &f<addedBy>'
+          - '&eAdded date &7» &f<addedDate>'
+          - '&eGrant duration &7» &f<duration>'
+          - '&eGrant reason &7» &f<reason>'
+          - '&eActive &7» &f<active>'
+          - '&eExpire &7» &f<expire>'
+          - '<not-expired>'
+          - '<if-removed>'
+          - '&7&m------------------------'
+        NOT-EXPIRED:
+          - ''
+          - '&cRight click to remove this grant!'
+        IF-REMOVED:
+          - ''
+          - '&eRemoved by &7 &f<removedBy>'
+          - '&eRemoved date &7 &f<removedDate>'
