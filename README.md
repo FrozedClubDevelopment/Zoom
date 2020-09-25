@@ -75,3 +75,7 @@
 
 > Ranks
 - core.rank.help
+- core.rank.setperm
+- core.rank.setrank
+- core.rank.grant
+- core.rank.grant.all
