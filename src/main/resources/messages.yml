@@ -104,3 +104,6 @@ COMMANDS:
   GRANT:
     PERM: '&eYou have been permanently granted to <rank>.'
     TEMP: '&eYou have been permanently granted to <rank> for <time>.'
+    GRANT-MENU:
+      RANK:
+        - '&aClick to grant &f<name>''s &a to <rank> rank!'
