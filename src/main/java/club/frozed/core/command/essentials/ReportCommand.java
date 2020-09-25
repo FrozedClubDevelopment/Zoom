@@ -3,6 +3,7 @@ package club.frozed.core.command.essentials;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
+import club.frozed.core.manager.event.PlayerReportEvent;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.CC;
@@ -55,8 +56,12 @@ public class ReportCommand extends BaseCMD {
                     .replace("<left>",playerData.getReportCooldown().getContextLeft())));
             return;
         }
-        playerData.setReportCooldown(cooldown);
         String text = StringUtils.join(args, ' ', 1, args.length);
+        PlayerReportEvent playerReportEvent = new PlayerReportEvent(p,targetPlayer.getName(),text);
+        Bukkit.getPluginManager().callEvent(playerReportEvent);
+        if (playerReportEvent.isCancelled()) return;
+
+        playerData.setReportCooldown(cooldown);
 
         p.sendMessage(CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.REPORT.MSG.SENDER")
                 .replace("<target>",targetPlayer.getName())
