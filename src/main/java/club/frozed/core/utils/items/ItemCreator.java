@@ -65,6 +65,16 @@ public class ItemCreator {
         return this;
     }
 
+    public ItemCreator setDurability(short dur) {
+        this.itemStack.setDurability(dur);
+        return this;
+    }
+
+    public ItemCreator setDurability(int dur) {
+        this.itemStack.setDurability((short)dur);
+        return this;
+    }
+
     public ItemCreator setOwner(String owner) {
         if (this.itemStack.getType() == Material.SKULL_ITEM) {
             SkullMeta meta = (SkullMeta) this.itemStack.getItemMeta();
