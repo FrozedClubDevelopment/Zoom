@@ -1,6 +1,7 @@
 package club.frozed.core.manager.listener;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.event.PlayerReportEvent;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.lang.Lang;
