@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -34,7 +35,7 @@ public class PlayerDataLoad implements Listener {
         playerData.loadPermissions(e.getPlayer());
     }
 
-//    @EventHandler
+    //    @EventHandler
 //    public void onPlayerJoinEvent(PlayerJoinEvent event){
 //        Player player = event.getPlayer();
 //        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
@@ -42,10 +43,19 @@ public class PlayerDataLoad implements Listener {
 //
 //        playerData.loadPermissions(player);
 //    }
+    private void handledSaveDate(Player player) {
+        PlayerData playerData = PlayerData.getByName(e.getPlayer().getName());
+        playerData.saveData();
+    }
+
 
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
-        PlayerData playerData = PlayerData.getByName(e.getPlayer().getName());
-        playerData.saveData();
+        handledSaveDate(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerKickEvent(PlayerKickEvent e){
+        handledSaveDate(e.getPlayer());
     }
 }
