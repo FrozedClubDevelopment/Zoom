@@ -137,22 +137,22 @@ public class GrantMenu implements Menu {
                     if (rank != null){
                         if (Zoom.getInstance().getRankManager().getDefaultRank() == rank){
                             p.sendMessage(CC.translate("&4Error! &cYou cannot grant this range as the default."));
-                            break;
+                            return;
                         }
                         if (targetplayerData.hasRank(rank)){
                             p.sendMessage(CC.translate("&4Error! &cThat player already has that rank."));
-                            break;
+                            return;
                         }
                         if (!senderData.canGrant(targetplayerData,rank) && !senderData.hasPermission("core.rank.grant.all")){
                             p.sendMessage(CC.translate("&4Error! &cYou cannot give yourself that rank as it is higher than yours."));
-                            break;
+                            return;
                         }
                         senderData.setGrantProcedure(new GrantProcedure(targetplayerData));
                         senderData.getGrantProcedure().setRankName(rank.getName());
                         senderData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.DURATION);
                         senderData.getGrantProcedure().setServer("Global");
-                        new GrantDurationMenu(targetplayerData).open(p);
                         p.closeInventory();
+                        new GrantDurationMenu(targetplayerData).open(p);
                     }
                     break;
             }
@@ -167,8 +167,8 @@ public class GrantMenu implements Menu {
             PlayerData playerData = PlayerData.getByUuid(event.getPlayer().getUniqueId());
             if (playerData.getGrantProcedure() != null && playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START)
                 playerData.setGrantProcedure(null);
-            if (!playerData.getPlayer().isOnline()){
-                PlayerOfflineData.deleteData(playerData.getUuid());
+            if (!targetplayerData.getPlayer().isOnline()){
+                PlayerOfflineData.deleteData(targetplayerData.getUuid());
             }
         }
     }
