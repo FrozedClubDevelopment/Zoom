@@ -5,7 +5,6 @@ import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerOfflineData;
-import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
