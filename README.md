@@ -79,3 +79,4 @@
 - core.rank.setrank
 - core.rank.grant
 - core.rank.grant.all
+- core.rank.grants
