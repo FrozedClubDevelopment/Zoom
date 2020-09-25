@@ -143,7 +143,7 @@ public class GrantMenu implements Menu {
                             p.sendMessage(CC.translate("&4Error! &cThat player already has that rank."));
                             return;
                         }
-                        if (!senderData.canGrant(targetplayerData,rank) && !senderData.hasPermission("core.rank.grant.all")){
+                        if (!senderData.canGrant(targetplayerData,rank) && !senderData.hasPermission("core.rank.grant.all") && !senderData.getPlayer().isOp()){
                             p.sendMessage(CC.translate("&4Error! &cYou cannot give yourself that rank as it is higher than yours."));
                             return;
                         }
