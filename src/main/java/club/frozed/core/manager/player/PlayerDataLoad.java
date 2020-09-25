@@ -35,16 +35,8 @@ public class PlayerDataLoad implements Listener {
         playerData.loadPermissions(e.getPlayer());
     }
 
-    //    @EventHandler
-//    public void onPlayerJoinEvent(PlayerJoinEvent event){
-//        Player player = event.getPlayer();
-//        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-//        if (playerData == null) return;
-//
-//        playerData.loadPermissions(player);
-//    }
     private void handledSaveDate(Player player) {
-        PlayerData playerData = PlayerData.getByName(e.getPlayer().getName());
+        PlayerData playerData = PlayerData.getByName(player.getName());
         playerData.saveData();
     }
 
