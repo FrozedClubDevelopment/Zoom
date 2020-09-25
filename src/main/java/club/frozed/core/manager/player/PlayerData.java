@@ -269,6 +269,11 @@ public class PlayerData {
         return false;
     }
 
+    public boolean canGrant(PlayerData granter, Rank rankData) {
+        Rank granterRank = granter.getHighestRank();
+        return (granterRank.getPriority() > rankData.getPriority());
+    }
+
     @NonNull
     public Rank getHighestRank() {
         Rank defaultRank = Zoom.getInstance().getRankManager().getDefaultRank();
