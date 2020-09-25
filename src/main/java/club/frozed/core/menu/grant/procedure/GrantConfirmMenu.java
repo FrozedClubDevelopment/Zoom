@@ -80,7 +80,7 @@ public class GrantConfirmMenu implements Menu {
                     p.closeInventory();
                     playSound(p,false);
                     break;
-                case 16:
+                case 15:
                     Rank rankData = Rank.getRankByName(playerData.getGrantProcedure().getRankName());
                     if (rankData == null) {
                         p.closeInventory();
@@ -88,7 +88,7 @@ public class GrantConfirmMenu implements Menu {
                         return;
                     }
                     Grant grant = new Grant(null, 1L, 1L, 1L, "", "", "", false, false, "Global");
-                    grant.setRank(rankData.getName());
+                    grant.setRankName(rankData.getName());
                     grant.setActive(true);
                     grant.setServer(playerData.getGrantProcedure().getServer());
                     grant.setAddedDate(System.currentTimeMillis());

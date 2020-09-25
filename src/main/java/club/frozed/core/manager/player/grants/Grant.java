@@ -19,7 +19,7 @@ import java.util.Date;
 @Getter @Setter
 public class Grant {
 
-    private String rank;
+    private String rankName;
 
     private long addedDate;
 
@@ -40,7 +40,7 @@ public class Grant {
     private String server = "Global";
 
     public Grant(String rank, long addedDate, long duration,long removedDate, String addedBy, String reason, String removedBy, boolean active, boolean permanent, String server) {
-        this.rank = rank;
+        this.rankName = rank;
         this.addedDate = addedDate;
         this.duration = duration;
         this.removedDate = removedDate;
@@ -56,7 +56,7 @@ public class Grant {
         if (this.server.equalsIgnoreCase("Global") || this.server.equalsIgnoreCase(Lang.SERVER_NAME)) {
             if (!isActive())
                 return true;
-            if (Rank.getRankByName(this.rank) == null)
+            if (Rank.getRankByName(this.rankName) == null)
                 return true;
             if (isPermanent())
                 return false;
@@ -86,6 +86,6 @@ public class Grant {
     }
 
     public Rank getRank(){
-        return Rank.getRankByName(this.rank);
+        return Rank.getRankByName(this.rankName);
     }
 }

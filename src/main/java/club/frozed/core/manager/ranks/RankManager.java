@@ -182,7 +182,7 @@ public class RankManager {
 
     public void giveRank(CommandSender sender, PlayerData targetData, long duration, boolean permanent, String reason, Rank rankData, String server) {
         Grant grant = new Grant(null, 1L, 1L, 1L, "", "", "", false, false, "Global");
-        grant.setRank(rankData.getName());
+        grant.setRankName(rankData.getName());
         grant.setActive(true);
         grant.setAddedDate(System.currentTimeMillis());
         grant.setAddedBy(sender.getName());
