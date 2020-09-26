@@ -143,6 +143,10 @@ public class PlayerData {
 
         if (!player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET))
             player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
+
+        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
+            Zoom.getInstance().getPermission().playerAddGroup(player,rankData.getPrefix());
+        }
     }
 
     public void refreshPlayer(Player player){

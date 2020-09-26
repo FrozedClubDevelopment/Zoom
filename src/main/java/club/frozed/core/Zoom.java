@@ -26,9 +26,11 @@ import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -48,6 +50,7 @@ public final class Zoom extends JavaPlugin {
     private RedisManager redisManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
+    private Permission permission = null;
 
     private String disableMessage = "null";
 
@@ -123,6 +126,18 @@ public final class Zoom extends JavaPlugin {
         }
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
+            if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
+                setupVault();
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSuccessfully enabling vault support.");
+            }
+        }
+    }
+
+    private void setupVault(){
+        RegisteredServiceProvider<Permission> permissionProvider =  Bukkit.getServicesManager().getRegistration(Permission.class);
+        permission = permissionProvider.getProvider();
     }
 
     @Override

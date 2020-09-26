@@ -3,6 +3,7 @@ version: 1.0-IN-DEV-[PRE-ORDER-COPY]
 main: club.frozed.core.Zoom
 description: All-in-Core
 website: www.frozed.club
+softdepend: [Vault]
 authors:
   - Ryzeon
   - Elb1to
