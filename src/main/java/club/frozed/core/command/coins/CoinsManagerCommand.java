@@ -26,6 +26,7 @@ public class CoinsManagerCommand extends BaseCMD {
             p.sendMessage("§e/"+cmd.getLabel() + " <player> add <amount>");
             p.sendMessage("§e/"+cmd.getLabel() + " <player> remove <amount>");
             p.sendMessage(CC.CHAT_BAR);
+            return;
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null){
