@@ -1,5 +1,6 @@
 package club.frozed.core;
 
+import club.frozed.core.hooks.placeholderapi.HookPlaceholderAPI;
 import club.frozed.core.manager.chat.ChatListener;
 import club.frozed.core.manager.chat.ChatManager;
 import club.frozed.core.manager.database.mongo.MongoManager;
@@ -73,7 +74,7 @@ public final class Zoom extends JavaPlugin {
         this.databaseConfig = new FileConfig(this, "database.yml");
         this.settingsConfig = new FileConfig(this, "settings.yml");
         this.tagsConfig = new FileConfig(this, "tags.yml");
-        this.ranksConfig = new FileConfig(this,"ranks.yml");
+        this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.mongoManager = new MongoManager();
         this.redisManager = new RedisManager();
         this.chatManager = new ChatManager();
@@ -114,8 +115,9 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redisManager.isActive() ? "§aEnabled" : "§cDisabled"));
         Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
+
         if (redisManager.isActive()) {
-            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","online").toJSON();
+            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER", Lang.SERVER_NAME).setParam("STATUS", "online").toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
             String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
@@ -124,8 +126,10 @@ public final class Zoom extends JavaPlugin {
                     .replace("<status>", "&aonline"));
             StaffLang.sendRedisServerMsg(CC.translate(format));
         }
+
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
             if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
@@ -133,10 +137,15 @@ public final class Zoom extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSuccessfully enabling vault support.");
             }
         }
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new HookPlaceholderAPI(this).register();
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&aPlaceholder API expansion successfully registered."));
+        }
     }
 
-    private void setupVault(){
-        RegisteredServiceProvider<Permission> permissionProvider =  Bukkit.getServicesManager().getRegistration(Permission.class);
+    private void setupVault() {
+        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServicesManager().getRegistration(Permission.class);
         permission = permissionProvider.getProvider();
     }
 
@@ -152,7 +161,7 @@ public final class Zoom extends JavaPlugin {
         rankManager.saveRanks();
 
         if (Zoom.getInstance().getRedisManager().isActive()) {
-            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER",Lang.SERVER_NAME).setParam("STATUS","offline").toJSON();
+            String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER", Lang.SERVER_NAME).setParam("STATUS", "offline").toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
             String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("server.format")
@@ -164,7 +173,7 @@ public final class Zoom extends JavaPlugin {
 
         mongoManager.disconnect();
 
-        if (redisManager.isActive()){
+        if (redisManager.isActive()) {
             redisManager.disconnect();
         }
 
@@ -201,7 +210,7 @@ public final class Zoom extends JavaPlugin {
         pluginManager.registerEvents(new BlockCommandListener(), this);
 
         //Grant Listeener
-        pluginManager.registerEvents(new GrantListener(),this);
+        pluginManager.registerEvents(new GrantListener(), this);
     }
 
     public void shutdownMessage() {
@@ -210,13 +219,13 @@ public final class Zoom extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core §7| §cDisabling");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Please check your database.yml");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fhttps://discord.frozed.club");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         } else {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core §7| §cDisabling");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fJoin to discord https://discord.gg/FXGQq96");
+            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fhttps://discord.frozed.club");
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
         }
     }
