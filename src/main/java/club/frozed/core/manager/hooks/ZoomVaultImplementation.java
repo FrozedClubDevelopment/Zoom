@@ -64,14 +64,14 @@ public class ZoomVaultImplementation extends Permission {
     public boolean groupAdd(String world, String group, String permission) {
         if (Rank.getRankByName(group) == null)
             return false;
-        
+
         Rank.getRankByName(group).getPermissions().add(permission);
         return true;
     }
 
     @Override
     public boolean groupRemove(String world, String group, String permission) {
-        if(Rank.getRankByName(group) == null)
+        if (Rank.getRankByName(group) == null)
             return false;
 
 
@@ -81,9 +81,9 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public boolean playerInGroup(String world, String player, String group) {
-        if(Rank.getRankByName(group) == null || PlayerData.getByName(player) == null)
+        if (Rank.getRankByName(group) == null || PlayerData.getByName(player) == null)
             return false;
-        
+
         return PlayerData.getByName(player).getActiveGrants().stream().anyMatch(grant -> grant.getRank().getName().equalsIgnoreCase(group));
     }
 
@@ -106,7 +106,7 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public String getPrimaryGroup(String world, String player) {
-        if(PlayerData.getByName(player) == null)
+        if (PlayerData.getByName(player) == null)
             return "no_data";
 
         return PlayerData.getByName(player).getHighestRank().getName();
