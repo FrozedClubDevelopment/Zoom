@@ -87,7 +87,7 @@ public class GeneralPlayerListener implements Listener {
         Block block = event.getClickedBlock();
 
         if (block == null) return;
-        if (block.getType() != Material.SKULL) return;
+        if (block.getType() != Material.SKULL_ITEM) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         Skull skull = (Skull) block.getState();
