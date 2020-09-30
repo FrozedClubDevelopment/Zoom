@@ -2,6 +2,7 @@ package club.frozed.core.manager.hooks;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
@@ -18,18 +19,17 @@ import java.util.stream.Collectors;
  * Project: Zoom
  * Date: 29/09/2020 @ 21:06
  */
-
 @Getter
 public class ZoomVaultImplementation extends Permission {
 
-    private boolean enabled;
-    private String name;
+    @Override
+    public String getName() {
+        return "Zoom";
+    }
 
-    public ZoomVaultImplementation() {
-        this.enabled = true;
-        this.name = "Zoom";
-
-        this.register();
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
@@ -39,9 +39,7 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public boolean playerHas(String s, String player, String permission) {
-        if (Bukkit.getPlayer(player) == null)
-            return false;
-
+        if (Bukkit.getPlayer(player) == null) return false;
         return Bukkit.getPlayer(player).hasPermission(permission) || Bukkit.getPlayer(player).isOp();
     }
 
@@ -62,8 +60,7 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public boolean groupAdd(String world, String group, String permission) {
-        if (Rank.getRankByName(group) == null)
-            return false;
+        if (Rank.getRankByName(group) == null) return false;
 
         Rank.getRankByName(group).getPermissions().add(permission);
         return true;
@@ -71,9 +68,7 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public boolean groupRemove(String world, String group, String permission) {
-        if (Rank.getRankByName(group) == null)
-            return false;
-
+        if (Rank.getRankByName(group) == null) return false;
 
         Rank.getRankByName(group).getPermissions().remove(permission);
         return false;
@@ -81,19 +76,46 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public boolean playerInGroup(String world, String player, String group) {
-        if (Rank.getRankByName(group) == null || PlayerData.getByName(player) == null)
-            return false;
+        if (Rank.getRankByName(group) == null || PlayerData.getByName(player) == null) return false;
 
         return PlayerData.getByName(player).getActiveGrants().stream().anyMatch(grant -> grant.getRank().getName().equalsIgnoreCase(group));
     }
 
-    @Override
-    public boolean playerAddGroup(String world, String player, String group) {
+    public boolean playerAddGroup(String s, String playerName, String group) {
+        if (Bukkit.getPlayer(playerName) != null) {
+            Rank rank = Rank.getRankByName(group);
+            if (rank != null) {
+                PlayerData playerData = PlayerData.getByUuid(Bukkit.getPlayer(playerName).getUniqueId());
+                if (playerData != null) {
+                    Grant grant = new Grant(null, 1L, 1L, 1L, "", "", "", false, false, "Global");
+                    grant.setActive(true);
+                    grant.setAddedBy("Console");
+                    grant.setReason("Added by Vault");
+                    grant.setRankName(rank.getName());
+                    grant.setPermanent(true);
+                    grant.setAddedDate(System.currentTimeMillis());
+                    playerData.getGrants().add(grant);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
-    @Override
-    public boolean playerRemoveGroup(String world, String player, String group) {
+    public boolean playerRemoveGroup(String s, String playerName, String group) {
+        if (Bukkit.getPlayer(playerName) != null) {
+            PlayerData playerData = PlayerData.getByUuid(Bukkit.getPlayer(playerName).getUniqueId());
+            if (playerData != null) {
+                for (Grant grant : playerData.getGrants()) {
+                    if (grant.getRankName().equalsIgnoreCase(group)) {
+                        grant.setActive(false);
+                        grant.setRemovedDate(System.currentTimeMillis());
+                        grant.setRemovedBy("Console [Vault]");
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -106,8 +128,7 @@ public class ZoomVaultImplementation extends Permission {
 
     @Override
     public String getPrimaryGroup(String world, String player) {
-        if (PlayerData.getByName(player) == null)
-            return "no_data";
+        if (PlayerData.getByName(player) == null) return "no_data";
 
         return PlayerData.getByName(player).getHighestRank().getName();
     }

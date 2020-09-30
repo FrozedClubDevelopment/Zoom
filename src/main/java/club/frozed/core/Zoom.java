@@ -6,6 +6,7 @@ import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
+import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.manager.hooks.ZoomVaultImplementation;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
@@ -18,7 +19,6 @@ import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.menu.grant.GrantListener;
-import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
@@ -61,21 +61,19 @@ public final class Zoom extends JavaPlugin {
 
     private RankManager rankManager;
 
-    /*
-    Vault Support
-     */
+    // Vault Support
     private Permission permission = null;
     private Chat chat = null;
 
     @Override
     public void onEnable() {
+
         /*
-        TODO
-        -> Rank System [Setear permisos al jugador, assignar rango, la forma de guarda/editar rangos (base ya echa), seguiria los /grants, setperm idk ]
-        -> Bans System
-        -> Rank Commands
-        -> Bans commands /alts ,etc
+         * TODO-LIST:
+         *      -> Bans System
+         *      -> Bans Commands
          */
+
         instance = this;
         commandFramework = new CommandFramework(this);
         this.messagesConfig = new FileConfig(this, "messages.yml");
@@ -153,7 +151,7 @@ public final class Zoom extends JavaPlugin {
     }
 
     private void setupVault() {
-        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Lowest);
+        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Highest);
         RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 
         if (permissionProvider != null) {
