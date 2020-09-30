@@ -21,12 +21,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Getter @Setter
+@Getter
+@Setter
 public class PlayerData {
 
     @Getter public static Map<UUID, PlayerData> playersData = new HashMap<>();
@@ -96,8 +96,9 @@ public class PlayerData {
                 }
             }
         } catch (Exception exception) {
+            //
         }
-        PermissionAttachment attachment = player.addAttachment((Plugin) Zoom.getInstance());
+        PermissionAttachment attachment = player.addAttachment(Zoom.getInstance());
         if (attachment == null)
             return;
         attachment.getPermissions().keySet().forEach(attachment::unsetPermission);
@@ -145,16 +146,16 @@ public class PlayerData {
             player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
 
         if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-            Zoom.getInstance().getPermission().playerAddGroup(player,rankData.getPrefix());
+            Zoom.getInstance().getPermission().playerAddGroup(player, rankData.getPrefix());
         }
     }
 
-    public void refreshPlayer(Player player){
+    public void refreshPlayer(Player player) {
         loadPermissions(player);
     }
 
-    public void deleteRank(Player player, Rank rank){
-        if (rank != null && hasRank(rank)){
+    public void deleteRank(Player player, Rank rank) {
+        if (rank != null && hasRank(rank)) {
             PermissionAttachment attachment = player.addAttachment(Zoom.getInstance());
             rank.getPermissions().forEach(perms -> attachment.unsetPermission(perms));
 
@@ -168,7 +169,7 @@ public class PlayerData {
         Document document = new Document();
         Player player = Bukkit.getPlayer(uuid);
         document.put("name", this.name);
-        if (player != null && player.isOnline()){
+        if (player != null && player.isOnline()) {
             document.put("name_lowercase", player.getName().toLowerCase());
         } else {
             document.put("name_lowercase", this.name.toLowerCase());
@@ -177,19 +178,19 @@ public class PlayerData {
         document.put("last-server", Lang.SERVER_NAME);
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
-        if (player != null && player.isOnline()){
+        if (player != null && player.isOnline()) {
             document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
         } else {
-            document.put("ip",this.ip);
+            document.put("ip", this.ip);
         }
-        if (player != null && player.isOnline()){
+        if (player != null && player.isOnline()) {
             try {
                 document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
             } catch (Exception e) {
                 Bukkit.getLogger().info("Error in get player country");
             }
         } else {
-            document.put("country",this.country);
+            document.put("country", this.country);
         }
         document.put("tag", this.tag);
         document.put("name-color", this.nameColor);
@@ -216,7 +217,7 @@ public class PlayerData {
         Rank
          */
         document.put("grants", GrantUtil.savePlayerGrants(this.grants));
-        document.put("permissions",this.permissions);
+        document.put("permissions", this.permissions);
 
         playersData.remove(uuid);
         playersDataNames.remove(name);
@@ -243,7 +244,7 @@ public class PlayerData {
             this.socialSpy = document.getBoolean("social-spy");
             this.toggleSounds = document.getBoolean("toggle-sounds");
             this.togglePrivateMessages = document.getBoolean("toggle-privatemsg");
-            this.ignoredPlayersList  = (List<String>) document.get("ignore-list");
+            this.ignoredPlayersList = (List<String>) document.get("ignore-list");
 
             // Coins
             this.coins = document.getInteger("coins");
@@ -262,7 +263,7 @@ public class PlayerData {
     }
 
     public List<Grant> getActiveGrants() {
-        return (List<Grant>)this.grants.stream().filter(grant -> (!grant.hasExpired() && grant.getRank() != null)).collect(Collectors.toList());
+        return (List<Grant>) this.grants.stream().filter(grant -> (!grant.hasExpired() && grant.getRank() != null)).collect(Collectors.toList());
     }
 
     public boolean hasRank(Rank rankData) {
@@ -284,14 +285,14 @@ public class PlayerData {
         List<String> perms = new ArrayList<>();
         List<String> inheritance = new ArrayList<>();
         if (defaultRank == null) {
-            defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms,inheritance);
+            defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms, inheritance);
             defaultRank.setDefaultRank(true);
         }
         return getActiveGrants().stream().map(Grant::getRank)
                 .max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
     }
 
-        public void destroy() {
+    public void destroy() {
         this.saveData();
     }
 

@@ -6,7 +6,6 @@ import club.frozed.core.utils.lang.Lang;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.beans.ConstructorProperties;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,7 +15,8 @@ import java.util.Date;
  * Date: 20/09/2020 @ 19:59
  * Template by Elp1to
  */
-@Getter @Setter
+@Getter
+@Setter
 public class Grant {
 
     private String rankName;
@@ -39,7 +39,7 @@ public class Grant {
 
     private String server = "Global";
 
-    public Grant(String rank, long addedDate, long duration,long removedDate, String addedBy, String reason, String removedBy, boolean active, boolean permanent, String server) {
+    public Grant(String rank, long addedDate, long duration, long removedDate, String addedBy, String reason, String removedBy, boolean active, boolean permanent, String server) {
         this.rankName = rank;
         this.addedDate = addedDate;
         this.duration = duration;
@@ -85,7 +85,7 @@ public class Grant {
         return Utils.formatDateDiff(from, to);
     }
 
-    public Rank getRank(){
+    public Rank getRank() {
         return Rank.getRankByName(this.rankName);
     }
 }

@@ -17,7 +17,7 @@ public class GrantUtil {
 
     public static List<String> savePlayerGrants(List<Grant> grants){
         List<String> playerGrants = new ArrayList<>();
-        for (Grant grant : grants){
+        for (Grant grant : grants) {
             playerGrants.add(
                     grant.getRank().getName()
                     + ";" + grant.getAddedDate()
@@ -37,9 +37,8 @@ public class GrantUtil {
         List<Grant> grants = new ArrayList<>();
         for (String string : strings){
             String[] grantsSplit = string.split(";");
-            /*
-            El split pa agarra cada wea a partir de un ; ekem hola;xd [0] es hola [1] xd
-             */
+
+            // El split pa agarra cada wea a partir de un ; ekem hola;xd [0] es hola [1] xd
             Grant grant = new Grant(
                     grantsSplit[0],
                     Long.valueOf(grantsSplit[1]),
