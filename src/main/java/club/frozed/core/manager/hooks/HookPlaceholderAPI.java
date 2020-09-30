@@ -1,4 +1,4 @@
-package club.frozed.core.hooks.placeholderapi;
+package club.frozed.core.manager.hooks;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;

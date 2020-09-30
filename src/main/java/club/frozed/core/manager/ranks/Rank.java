@@ -23,7 +23,8 @@ import java.util.List;
 @Setter
 public class Rank {
 
-    @Getter public static List<Rank> ranks = new ArrayList<>();
+    @Getter
+    public static List<Rank> ranks = new ArrayList<>();
 
     private String name, prefix, suffix;
     private ChatColor color;
@@ -45,18 +46,18 @@ public class Rank {
         ranks.add(this);
     }
 
-    public void update(){
+    public void update() {
         try {
             Document document = new Document();
             document.put("NAME", this.name);
             document.put("PREFIX", this.prefix);
             document.put("SUFFIX", this.suffix);
             document.put("COLOR", this.color.name());
-            document.put("PRIORITY",this.priority);
-            document.put("DEFAULT",this.defaultRank);
-            document.put("BOLD",this.bold);
+            document.put("PRIORITY", this.priority);
+            document.put("DEFAULT", this.defaultRank);
+            document.put("BOLD", this.bold);
             document.put("ITALIC", this.italic);
-            document.put("INHERITANCE",this.inheritance);
+            document.put("INHERITANCE", this.inheritance);
             document.put("PERMISSIONS", this.permissions);
             ranks.remove(this);
             MongoManager mongoManager = Zoom.getInstance().getMongoManager();
@@ -85,11 +86,12 @@ public class Rank {
             exception.printStackTrace();
         }
     }
-    public static Rank getRankByName(String name){
+
+    public static Rank getRankByName(String name) {
         return ranks.stream().filter(rank -> rank.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public static boolean isRankExist(String rank){
+    public static boolean isRankExist(String rank) {
         return ranks.contains(Rank.getRankByName(rank));
     }
 

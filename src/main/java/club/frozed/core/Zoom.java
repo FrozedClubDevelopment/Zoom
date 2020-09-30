@@ -1,12 +1,12 @@
 package club.frozed.core;
 
-import club.frozed.core.hooks.placeholderapi.HookPlaceholderAPI;
 import club.frozed.core.manager.chat.ChatListener;
 import club.frozed.core.manager.chat.ChatManager;
 import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
+import club.frozed.core.manager.hooks.ZoomVaultImplementation;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -18,6 +18,7 @@ import club.frozed.core.manager.staff.StaffListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.menu.grant.GrantListener;
+import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
@@ -27,11 +28,13 @@ import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -51,13 +54,18 @@ public final class Zoom extends JavaPlugin {
     private RedisManager redisManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
-    private Permission permission = null;
 
     private String disableMessage = "null";
 
     private static ZoomAPI zoomAPI;
 
     private RankManager rankManager;
+
+    /*
+    Vault Support
+     */
+    private Permission permission = null;
+    private Chat chat = null;
 
     @Override
     public void onEnable() {
@@ -145,8 +153,12 @@ public final class Zoom extends JavaPlugin {
     }
 
     private void setupVault() {
-        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServicesManager().getRegistration(Permission.class);
-        permission = permissionProvider.getProvider();
+        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Lowest);
+        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
+        }
     }
 
     @Override
