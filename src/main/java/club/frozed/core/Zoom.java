@@ -151,12 +151,13 @@ public final class Zoom extends JavaPlugin {
     }
 
     private void setupVault() {
-        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Highest);
-        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-
-        if (permissionProvider != null) {
-            permission = permissionProvider.getProvider();
-        }
+        TaskUtil.runLaterAsync(() -> {
+            Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Highest);
+            RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+            if (permissionProvider != null) {
+                permission = permissionProvider.getProvider();
+            }
+        }, 60L);
     }
 
     @Override
