@@ -36,7 +36,9 @@ public class PlayerDataLoad implements Listener {
 
     private void handledSaveDate(Player player) {
         PlayerData playerData = PlayerData.getByName(player.getName());
-        playerData.saveData();
+        if (playerData != null){
+            playerData.saveData();
+        }
     }
 
 
