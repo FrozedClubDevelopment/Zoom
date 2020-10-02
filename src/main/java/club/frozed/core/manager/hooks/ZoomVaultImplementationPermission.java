@@ -4,6 +4,7 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
+import club.frozed.core.utils.CC;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -21,6 +22,10 @@ import java.util.stream.Collectors;
  */
 @Getter
 public class ZoomVaultImplementation extends Permission {
+
+    public ZoomVaultImplementation(){
+        register();
+    }
 
     @Override
     public String getName() {
@@ -145,6 +150,7 @@ public class ZoomVaultImplementation extends Permission {
 
     public void register() {
         for (RegisteredServiceProvider<?> provider : Bukkit.getServicesManager().getRegistrations(Permission.class)) {
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&aSuccessfully register vault."));
             if (Permission.class.equals(provider.getService()) && provider.getPlugin().getName().equals("Vault") && PermissionImpl.class.isAssignableFrom(provider.getProvider().getClass()) && provider.getPriority() == ServicePriority.Highest) {
                 Zoom.getInstance().getLogger().warning("Removing default vault permission hook");
                 Bukkit.getServicesManager().unregister(Permission.class, provider.getProvider());
