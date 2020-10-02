@@ -5,12 +5,11 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
+import club.frozed.core.utils.lang.Lang;
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
-import sun.security.acl.PermissionImpl;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -21,11 +20,7 @@ import java.util.stream.Collectors;
  * Date: 29/09/2020 @ 21:06
  */
 @Getter
-public class ZoomVaultImplementation extends Permission {
-
-    public ZoomVaultImplementation(){
-        register();
-    }
+public class ZoomVaultImplementationPermission extends Permission {
 
     @Override
     public String getName() {
@@ -149,12 +144,7 @@ public class ZoomVaultImplementation extends Permission {
     }
 
     public void register() {
-        for (RegisteredServiceProvider<?> provider : Bukkit.getServicesManager().getRegistrations(Permission.class)) {
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&aSuccessfully register vault."));
-            if (Permission.class.equals(provider.getService()) && provider.getPlugin().getName().equals("Vault") && PermissionImpl.class.isAssignableFrom(provider.getProvider().getClass()) && provider.getPriority() == ServicePriority.Highest) {
-                Zoom.getInstance().getLogger().warning("Removing default vault permission hook");
-                Bukkit.getServicesManager().unregister(Permission.class, provider.getProvider());
-            }
-        }
+        Bukkit.getServer().getServicesManager().register(Permission.class, this , Zoom.getInstance(), ServicePriority.Highest);
+        Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX  + "&aSuccessfully register vault permissions."));
     }
 }
