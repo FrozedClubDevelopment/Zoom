@@ -7,7 +7,8 @@ import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
-import club.frozed.core.manager.hooks.ZoomVaultImplementation;
+import club.frozed.core.manager.hooks.ZoomVaultImplementationChat;
+import club.frozed.core.manager.hooks.ZoomVaultImplementationPermission;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -28,13 +29,9 @@ import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.menu.MenuListener;
 import lombok.Getter;
 import lombok.Setter;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -62,8 +59,8 @@ public final class Zoom extends JavaPlugin {
     private RankManager rankManager;
 
     // Vault Support
-    private Permission permission = null;
-    private Chat chat = null;
+    private ZoomVaultImplementationPermission permission;
+    private ZoomVaultImplementationChat chat;
 
     @Override
     public void onEnable() {
@@ -136,28 +133,24 @@ public final class Zoom extends JavaPlugin {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Broadcast");
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
-            if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
-                setupVault();
-                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSuccessfully enabling vault support.");
-            }
-        }
-
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HookPlaceholderAPI(this).register();
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&aPlaceholder API expansion successfully registered."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholder API expansion successfully registered."));
+        }
+        if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
+            if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
+                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
+                TaskUtil.runLater(this::loadVault,20 * 3);
+            }
         }
     }
 
-    private void setupVault() {
-        TaskUtil.runLaterAsync(() -> {
-            Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, new ZoomVaultImplementation(), Zoom.getInstance(), ServicePriority.Highest);
-            RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-            if (permissionProvider != null) {
-                permission = permissionProvider.getProvider();
-            }
-        }, 60L);
+    public void loadVault() {
+        permission = new ZoomVaultImplementationPermission();
+        permission.register();
+        chat = new ZoomVaultImplementationChat(permission);
+        chat.register();
+        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSuccessfully enabling vault support.");
     }
 
     @Override
