@@ -140,7 +140,7 @@ public final class Zoom extends JavaPlugin {
         if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
             if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
                 Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
-                TaskUtil.runLater(this::loadVault,20 * 3);
+                loadVault();
             }
         }
     }
