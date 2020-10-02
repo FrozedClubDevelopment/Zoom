@@ -145,9 +145,9 @@ public class PlayerData {
         if (!player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET))
             player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
 
-        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-            Zoom.getInstance().getPermission().playerAddGroup(player, rankData.getPrefix());
-        }
+//        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
+//            Zoom.getInstance().getPermission().playerAddGroup(player, rankData.getPrefix());
+//        }
     }
 
     public void refreshPlayer(Player player) {
@@ -235,7 +235,11 @@ public class PlayerData {
             this.country = document.getString("country");
             this.ip = document.getString("ip");
             this.tag = document.getString("tag");
-            this.nameColor = document.getString("name-color");
+            if (document.getString("name-color") == null){
+                this.nameColor = document.getString("name-color");
+            } else {
+                this.nameColor = ChatColor.WHITE.name();
+            }
             this.chatColor = document.getString("chat-color");
             this.bold = document.getBoolean("name-color-bold");
             this.italic = document.getBoolean("name-color-italic");
