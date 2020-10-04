@@ -21,10 +21,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
@@ -38,14 +34,6 @@
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/PaperSpigot-1.8.8-R0.1-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <!-- Vault-API-->
-        <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- PlaceholderAPI -->

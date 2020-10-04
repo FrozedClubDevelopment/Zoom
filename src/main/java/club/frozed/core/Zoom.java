@@ -7,8 +7,6 @@ import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
-import club.frozed.core.manager.hooks.ZoomVaultImplementationChat;
-import club.frozed.core.manager.hooks.ZoomVaultImplementationPermission;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -54,13 +52,7 @@ public final class Zoom extends JavaPlugin {
 
     private String disableMessage = "null";
 
-    private static ZoomAPI zoomAPI;
-
     private RankManager rankManager;
-
-    // Vault Support
-    private ZoomVaultImplementationPermission permission;
-    private ZoomVaultImplementationChat chat;
 
     @Override
     public void onEnable() {
@@ -84,8 +76,6 @@ public final class Zoom extends JavaPlugin {
         this.tagManager = new TagManager();
         this.messageManager = new MessageManager();
         this.rankManager = new RankManager();
-
-        zoomAPI = new ZoomAPI();
 
         chatManager.load();
         mongoManager.connect();
@@ -137,20 +127,6 @@ public final class Zoom extends JavaPlugin {
             new HookPlaceholderAPI(this).register();
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholder API expansion successfully registered."));
         }
-        if (getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-            if (Bukkit.getPluginManager().getPlugin("Vault").isEnabled() && Bukkit.getPluginManager().getPlugin("Vault") != null) {
-                Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aEnabling Vault Support.");
-                loadVault();
-            }
-        }
-    }
-
-    public void loadVault() {
-        permission = new ZoomVaultImplementationPermission();
-        permission.register();
-        chat = new ZoomVaultImplementationChat(permission);
-        chat.register();
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aSuccessfully enabling vault support.");
     }
 
     @Override
