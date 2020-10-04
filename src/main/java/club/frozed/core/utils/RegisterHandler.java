@@ -18,30 +18,41 @@ public class RegisterHandler {
         for (Class<?> clazz : getClassesInPackage(plugin, packageName)) {
             if (isListener(clazz)) {
                 try {
-                    plugin.getServer().getPluginManager().registerEvents((Listener)clazz.newInstance(), plugin);
-                } catch (Exception exception) {}
+                    plugin.getServer().getPluginManager().registerEvents((Listener) clazz.newInstance(), plugin);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 continue;
             }
             try {
                 clazz.newInstance();
-            } catch (Exception exception) {}
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
+
     public static void loadCommandsFromPackage(Plugin plugin, String packageName) {
         for (Class<?> clazz : getClassesInPackage(plugin, packageName)) {
             try {
                 clazz.newInstance();
-            } catch (Exception exception) {}
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
+
     // Check is listener
     public static boolean isListener(Class<?> clazz) {
         for (Class<?> interfaze : clazz.getInterfaces()) {
-            if (interfaze == Listener.class)
+            if (interfaze == Listener.class) {
                 return true;
+            }
         }
+
         return false;
     }
+
     public static Collection<Class<?>> getClassesInPackage(Plugin plugin, String packageName) {
         JarFile jarFile;
         Collection<Class<?>> classes = new ArrayList<>();
@@ -55,6 +66,7 @@ public class RegisterHandler {
         } catch (IOException e) {
             throw new RuntimeException("Unexpected IOException reading JAR File '" + jarPath + "'", e);
         }
+
         Enumeration<JarEntry> entries = jarFile.entries();
         while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
@@ -73,11 +85,13 @@ public class RegisterHandler {
                     classes.add(clazz);
             }
         }
+
         try {
             jarFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return (Collection<Class<?>>)ImmutableSet.copyOf(classes);
+
+        return ImmutableSet.copyOf(classes);
     }
 }
