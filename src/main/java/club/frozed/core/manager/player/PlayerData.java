@@ -82,16 +82,12 @@ public class PlayerData {
         return Bukkit.getPlayer(this.uuid);
     }
 
-
     public void loadPermissions(Player player) {
         try {
             Set<PermissionAttachmentInfo> currentPermissions = new HashSet<>(player.getEffectivePermissions());
             for (PermissionAttachmentInfo permissionInfo : currentPermissions) {
-                if (permissionInfo.getAttachment() == null)
-                    continue;
-                Iterator<String> permissions = permissionInfo.getAttachment().getPermissions().keySet().iterator();
-                while (permissions.hasNext()) {
-                    String permission = permissions.next();
+                if (permissionInfo.getAttachment() == null) continue;
+                for (String permission : permissionInfo.getAttachment().getPermissions().keySet()) {
                     permissionInfo.getAttachment().unsetPermission(permission);
                 }
             }
@@ -99,15 +95,11 @@ public class PlayerData {
             //
         }
         PermissionAttachment attachment = player.addAttachment(Zoom.getInstance());
-        if (attachment == null)
-            return;
+        if (attachment == null) return;
         attachment.getPermissions().keySet().forEach(attachment::unsetPermission);
         List<Grant> currentGrants = new ArrayList<>(this.grants);
-        Iterator<Grant> grantIterator = currentGrants.iterator();
-        while (grantIterator.hasNext()) {
-            Grant grant = grantIterator.next();
-            if (grant.hasExpired())
-                continue;
+        for (Grant grant : currentGrants) {
+            if (grant.hasExpired()) continue;
             Rank rank = grant.getRank();
             if (rank != null) {
                 List<String> rankPermissions = new ArrayList<>(rank.getPermissions());
@@ -197,25 +189,21 @@ public class PlayerData {
         document.put("chat-color", this.chatColor);
         document.put("name-color-bold", this.bold);
         document.put("name-color-italic", this.italic);
-        /*
-        pa los msg
-         */
+
+        // Messaging System
         document.put("social-spy", this.socialSpy);
         document.put("toggle-sounds", this.toggleSounds);
         document.put("toggle-privatemsg", this.togglePrivateMessages);
         document.put("ignore-list", this.ignoredPlayersList);
         this.dataLoaded = false;
-        /*
-        Coins
-         */
+
+        // Coins
         document.put("coins", this.coins);
-        /*
-        Name MC
-         */
+
+        // NameMC Vote
         document.put("name-mc-vote", this.vote);
-        /*
-        Rank
-         */
+
+        // Rank
         document.put("grants", GrantUtil.savePlayerGrants(this.grants));
         document.put("permissions", this.permissions);
 
@@ -260,14 +248,13 @@ public class PlayerData {
             this.grants = GrantUtil.getPlayerGrants((List<String>) document.get("grants"));
 
             this.permissions = (List<String>) document.get("permissions");
-
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
     }
 
     public List<Grant> getActiveGrants() {
-        return (List<Grant>) this.grants.stream().filter(grant -> (!grant.hasExpired() && grant.getRank() != null)).collect(Collectors.toList());
+        return this.grants.stream().filter(grant -> (!grant.hasExpired() && grant.getRank() != null)).collect(Collectors.toList());
     }
 
     public boolean hasRank(Rank rankData) {
@@ -292,8 +279,7 @@ public class PlayerData {
             defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms, inheritance);
             defaultRank.setDefaultRank(true);
         }
-        return getActiveGrants().stream().map(Grant::getRank)
-                .max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
+        return getActiveGrants().stream().map(Grant::getRank).max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
     }
 
     public void destroy() {
