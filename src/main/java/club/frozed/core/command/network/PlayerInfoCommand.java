@@ -14,17 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerInfoCommand extends BaseCMD {
-    @Command(name = "playerinfo", aliases = {"pinfo", "info", "getplayer"}, permission = "core.network.playerinfo", usage = "Usage: /playerinfo <player>")
+    @Command(name = "playerinfo", aliases = {"pinfo", "info", "getplayer"}, permission = "core.network.playerinfo", usage = "Usage: /playerinfo <serverName>")
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();
 
-<<<<<<< Updated upstream
         if (args.length < 1) {
-=======
-        if (args.length == 0) {
->>>>>>> Stashed changes
             player.sendMessage(CC.translate("&c" + command.getCommand().getUsage()));
             return;
         }
