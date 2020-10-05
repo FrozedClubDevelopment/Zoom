@@ -20,11 +20,7 @@ public class PlayerInfoCommand extends BaseCMD {
         Player player = command.getPlayer();
         String[] args = command.getArgs();
 
-<<<<<<< Updated upstream
-        if (args.length < 1) {
-=======
         if (args.length == 0) {
->>>>>>> Stashed changes
             player.sendMessage(CC.translate("&c" + command.getCommand().getUsage()));
             return;
         }

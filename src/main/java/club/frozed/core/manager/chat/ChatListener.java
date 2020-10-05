@@ -54,7 +54,7 @@ public class ChatListener implements Listener {
                 replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()));
             }
         } else {
-            replacement.add("<nameColor>", ChatColor.valueOf(chatColor));
+            replacement.add("<nameColor>", "");
         }
 
         replacement.add("<name>", playerData.getPlayer().getName());
@@ -146,7 +146,7 @@ public class ChatListener implements Listener {
         text = text
                 .replace("<rank>", CC.translate(playerData.getHighestRank().getPrefix()))
                 .replace("<tag>", playerData.getTag())
-                .replace("<nameColor>", CC.translate("&b"))
+                .replace("<nameColor>", "&" + ChatColor.valueOf(playerData.getChatColor()).getChar())
                 .replace("<name>", player.getName())
                 .replace("<text>", message);
 
@@ -154,6 +154,7 @@ public class ChatListener implements Listener {
             text = text
                     .replace("<rank>", CC.translate(playerData.getHighestRank().getPrefix()))
                     .replace("<tag>", playerData.getTag())
+                    .replace("<nameColor>", "&" + ChatColor.valueOf(playerData.getChatColor()).getChar())
                     .replace("<name>", player.getName())
                     .replace("<text>", CC.translate(message));
         }
