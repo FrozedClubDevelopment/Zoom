@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerInfoCommand extends BaseCMD {
-    @Command(name = "playerinfo", aliases = {"pinfo", "info", "getplayer"}, permission = "core.network.playerinfo", usage = "Usage: /playerinfo <player>")
+    @Command(name = "playerinfo", aliases = {"pinfo", "info", "getplayer"}, permission = "core.network.playerinfo", usage = "Usage: /playerinfo <serverName>")
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
@@ -37,7 +37,7 @@ public class PlayerInfoCommand extends BaseCMD {
         Clickable showPermsList = new Clickable();
         List<String> playerPerms = new ArrayList<>();
         playerData.getPermissions().forEach(perm -> playerPerms.add(CC.translate("&f ● &6" + perm)));
-        showPermsList.add(CC.translate("&8 ► &7Permissions&f: &e" + playerData.getPermissions().size() + "&8(&7Hover&8)"), StringUtils.join(playerPerms, "\n"), null);
+        showPermsList.add(CC.translate("&8 ► &7Permissions&f: &e" + playerData.getPermissions().size() + " &7(&fHover&7)"), StringUtils.join(playerPerms, "\n"), null);
         showPermsList.sendToPlayer(player);
 
         player.sendMessage(CC.translate("&8 ► &7Last Server&f: &e" + playerData.getLastServer()));
