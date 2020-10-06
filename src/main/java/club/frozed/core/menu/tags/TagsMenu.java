@@ -67,7 +67,7 @@ public class TagsMenu implements Menu {
                 }
             } else {
                 for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
-                    lore.add(CC.translate(msg));
+                    lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
                 }
             }
             itemCreator.setLore(lore);
