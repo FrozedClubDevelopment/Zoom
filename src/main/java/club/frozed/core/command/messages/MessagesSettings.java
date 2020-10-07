@@ -28,7 +28,7 @@ public class MessagesSettings extends BaseCMD {
                 CC = ChatColor.valueOf(defaultChatColor);
             }
 
-            new MessagesSettingsMenu(CC).open(p);
+            new MessagesSettingsMenu(CC).openMenu(p);
         }
     }
 }
