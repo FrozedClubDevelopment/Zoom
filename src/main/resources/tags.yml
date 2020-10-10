@@ -8,6 +8,7 @@ no-perms-lore:
 tags:
   verified:
     name: 'Verified'
+    displayName: '&2&kii&a&oVerified&2&kii&r'
     color: GREEN
     prefix: '&7[&a✔&7]'
     permission: 'core.tag.verified'
@@ -20,6 +21,7 @@ tags:
       - '&7&m------------------'
   heart:
     name: 'Heart'
+    displayName: '&2&kii&c&oHeart&2&kii&r'
     color: RED
     prefix: '&7[&c❤&7]'
     permission: 'core.tag.heart'
@@ -32,6 +34,7 @@ tags:
       - '&7&m------------------'
   dolar:
     name: 'Dolar'
+    displayName: '&2&kii&a&oDollar&2&kii&r'
     color: GREEN
     prefix: '&7[&a$$&7]'
     permission: 'core.tag.dolar'

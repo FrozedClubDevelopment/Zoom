@@ -59,7 +59,7 @@ public class TagsMenu implements Menu {
         while (slot < 36 && Zoom.getInstance().getTagManager().getTags().size() > index) {
             Tag tag = Zoom.getInstance().getTagManager().getTags().get(index);
             ItemCreator itemCreator = new ItemCreator(tag.getTagIcon());
-            itemCreator.setName(CC.translate(tag.getChatColor() + tag.getTagName()));
+            itemCreator.setName(tag.getTagDisplayName());
             List<String> lore = new ArrayList<>();
             if (player.hasPermission(tag.getTagPermission())) {
                 for (String msg : tag.getTagLore()) {
@@ -134,12 +134,11 @@ public class TagsMenu implements Menu {
                     if (p.hasPermission(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPermission())) {
                         data.setTag(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPrefix());
                         playSound(p, true);
-                        p.closeInventory();
                     } else {
                         p.sendMessage("§cYou don't have this prefix");
                         playSound(p, false);
-                        p.closeInventory();
                     }
+                    p.closeInventory();
                     break;
             }
         } else if ((!topInventory.equals(clickedInventory) && e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) || e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {

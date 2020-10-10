@@ -11,14 +11,16 @@ import java.util.List;
 public class Tag {
 
     private String tagName;
+    private String tagDisplayName;
     private String tagPrefix;
     private ItemStack tagIcon;
     private List<String> tagLore;
     private String tagPermission;
     private ChatColor chatColor;
 
-    public Tag(String tagName, String tagPrefix, ItemStack tagIcon, List<String> tagLore, String tagPermission, ChatColor chatColor) {
+    public Tag(String tagName, String tagDisplayName, String tagPrefix, ItemStack tagIcon, List<String> tagLore, String tagPermission, ChatColor chatColor) {
         this.tagName = tagName;
+        this.tagDisplayName = CC.translate(tagDisplayName);
         this.tagPrefix = CC.translate(tagPrefix);
         this.tagIcon = tagIcon;
         this.tagLore = tagLore;
