@@ -56,14 +56,14 @@ public class GeneralPlayerListener implements Listener {
 
     public String translate(String text, Player player) {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-        Rank rankData = Rank.getRankByName(playerData.getName());
+        //Rank rankData = Rank.getRankByName(playerData.getName());
         text = CC.translate(text);
 
         if (playerData.getTag() != null) {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-                    .replace("<rank>", rankData.getName())
+                    //.replace("<rank>", rankData.getName())
                     .replace("<prefix>", playerData.getTag())
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
@@ -73,7 +73,7 @@ public class GeneralPlayerListener implements Listener {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-                    .replace("<rank>", rankData.getName())
+                    //.replace("<rank>", rankData.getName())
                     .replace("<prefix>", "")
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
