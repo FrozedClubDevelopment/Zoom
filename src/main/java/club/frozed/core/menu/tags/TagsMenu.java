@@ -59,11 +59,11 @@ public class TagsMenu implements Menu {
         while (slot < 36 && Zoom.getInstance().getTagManager().getTags().size() > index) {
             Tag tag = Zoom.getInstance().getTagManager().getTags().get(index);
             ItemCreator itemCreator = new ItemCreator(tag.getTagIcon());
-            itemCreator.setName(tag.getChatColor() + tag.getTagName());
+            itemCreator.setName(CC.translate(tag.getChatColor() + tag.getTagName()));
             List<String> lore = new ArrayList<>();
             if (player.hasPermission(tag.getTagPermission())) {
                 for (String msg : tag.getTagLore()) {
-                    lore.add(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix()));
+                    lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
                 }
             } else {
                 for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
