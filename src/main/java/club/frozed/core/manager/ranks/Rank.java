@@ -18,13 +18,11 @@ import java.util.List;
  * Date: 14/09/2020 @ 20:44
  * Template by Elp1to
  */
-
 @Getter
 @Setter
 public class Rank {
 
-    @Getter
-    public static List<Rank> ranks = new ArrayList<>();
+    @Getter public static List<Rank> ranks = new ArrayList<>();
 
     private String name, prefix, suffix;
     private ChatColor color;
