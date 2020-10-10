@@ -3,20 +3,19 @@ package club.frozed.core.manager.chat;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
+import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.ConfigReplacement;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
-import club.frozed.core.manager.player.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 
 public class ChatListener implements Listener {
 
@@ -81,9 +80,9 @@ public class ChatListener implements Listener {
             e.setCancelled(true);
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 String json = new RedisMessage(Payload.STAFF_CHAT)
-                        .setParam("SERVER",Lang.SERVER_NAME)
-                        .setParam("PLAYER",playerData.getPlayer().getName())
-                        .setParam("TEXT",e.getMessage()).toJSON();
+                        .setParam("SERVER", Lang.SERVER_NAME)
+                        .setParam("PLAYER", playerData.getPlayer().getName())
+                        .setParam("TEXT", e.getMessage()).toJSON();
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
                 StaffLang.sendStaffChat(format);
@@ -105,9 +104,9 @@ public class ChatListener implements Listener {
             e.setCancelled(true);
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 String json = new RedisMessage(Payload.ADMIN_CHAT)
-                        .setParam("SERVER",Lang.SERVER_NAME)
-                        .setParam("PLAYER",playerData.getPlayer().getName())
-                        .setParam("TEXT",e.getMessage()).toJSON();
+                        .setParam("SERVER", Lang.SERVER_NAME)
+                        .setParam("PLAYER", playerData.getPlayer().getName())
+                        .setParam("TEXT", e.getMessage()).toJSON();
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
                 StaffLang.sendAdminChat(format);
@@ -132,8 +131,9 @@ public class ChatListener implements Listener {
         if (playerData.getPlayer().hasPermission("core.chat.delaybypass")) return;
 
         if (!playerData.getChatDelay().hasExpired()) {
-            playerData.getPlayer().sendMessage(CC.translate(msg.getString("DELAY").replace("<time>", playerData.getChatDelay().getTimeMilisLeft())
-                            .replace("<left>", playerData.getChatDelay().getContextLeft()))
+            playerData.getPlayer().sendMessage(CC.translate(msg.getString("DELAY")
+                    .replace("<time>", playerData.getChatDelay().getTimeMilisLeft())
+                    .replace("<left>", playerData.getChatDelay().getContextLeft()))
             );
             e.setCancelled(true);
             return;
