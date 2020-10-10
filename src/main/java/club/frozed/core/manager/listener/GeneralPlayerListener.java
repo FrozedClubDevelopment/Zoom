@@ -1,8 +1,8 @@
 package club.frozed.core.manager.listener;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.manager.event.PlayerReportEvent;
 import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.lang.Lang;
 import org.apache.commons.lang.StringUtils;
@@ -31,10 +31,12 @@ public class GeneralPlayerListener implements Listener {
         for (String string : Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE")) {
             msg.add(translate(string, e.getPlayer()));
         }
+
         String sound = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.JOIN-SOUND");
         if (sound != null || sound.equalsIgnoreCase("none")) {
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.valueOf(sound), 2F, 2F);
         }
+
         e.getPlayer().sendMessage(StringUtils.join(msg, "\n"));
         e.setJoinMessage(null);
         if (!PlayerData.getByUuid(e.getPlayer().getUniqueId()).isVote()) {
@@ -54,13 +56,14 @@ public class GeneralPlayerListener implements Listener {
 
     public String translate(String text, Player player) {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        Rank rankData = Rank.getRankByName(playerData.getName());
         text = CC.translate(text);
 
         if (playerData.getTag() != null) {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-//                .replace("<rank>",el rank pero todavia hay xd)
+                    .replace("<rank>", rankData.getName())
                     .replace("<prefix>", playerData.getTag())
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
@@ -70,7 +73,7 @@ public class GeneralPlayerListener implements Listener {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-//                .replace("<rank>",el rank pero todavia hay xd)
+                    .replace("<rank>", rankData.getName())
                     .replace("<prefix>", "")
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
@@ -100,8 +103,8 @@ public class GeneralPlayerListener implements Listener {
 
     // Sign Color :)
 
-    @EventHandler(priority = EventPriority.NORMAL,ignoreCancelled = true)
-    public void onSignChangeEvent(SignChangeEvent e){
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onSignChangeEvent(SignChangeEvent e) {
         String[] signLines = e.getLines();
         for (int i = 0; i < signLines.length; ++i) {
             e.setLine(i, CC.translate(signLines[i]));
