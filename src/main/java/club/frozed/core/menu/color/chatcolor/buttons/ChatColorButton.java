@@ -25,7 +25,7 @@ public class ChatColorButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {
-        String name = color + WordUtils.capitalize(color.name()).replace("_","");
+        String name = color + WordUtils.capitalize(color.name().replace("_", " ").toLowerCase());
         return new ItemCreator(getMaterial(material))
                 .setName(name)
                 .setDurability(getDurability(color))
@@ -37,17 +37,14 @@ public class ChatColorButton extends Button {
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         String permission = "core.chatcolor." + color.name().replace("_", "").toLowerCase();
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-        if (clickType.isLeftClick()){
-            if (player.hasPermission(permission) || player.hasPermission("core.chatcolor.all")){
-                playerData.setChatColor(color.name());
-                playSuccess(player);
-                player.closeInventory();
-            } else {
-                player.sendMessage("§cYou don't have permission for this color");
-                playFail(player);
-                player.closeInventory();
-            }
+        if (player.hasPermission(permission) || player.hasPermission("core.chatcolor.all")) {
+            playerData.setChatColor(color.name());
+            playSuccess(player);
+        } else {
+            player.sendMessage("§cYou don't have permission for this color");
+            playFail(player);
         }
+        player.closeInventory();
     }
 
     private Material getMaterial(int i){

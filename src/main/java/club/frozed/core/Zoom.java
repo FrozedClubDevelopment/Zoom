@@ -23,6 +23,7 @@ import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.command.CommandFramework;
 import club.frozed.core.utils.config.FileConfig;
+import club.frozed.core.utils.gui.ButtonListener;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.menu.MenuListener;
 import lombok.Getter;
@@ -179,6 +180,7 @@ public final class Zoom extends JavaPlugin {
 
         //Important to work menus
         pluginManager.registerEvents(new MenuListener(), this);
+        pluginManager.registerEvents(new ButtonListener(), this);
 
         // Staff Listener
         pluginManager.registerEvents(new StaffListener(), this);

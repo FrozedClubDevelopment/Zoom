@@ -23,15 +23,13 @@ public class ResetButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         PlayerData data = PlayerData.getByUuid(player.getUniqueId());
-        if (clickType.isLeftClick()){
-            if (data.getChatColor() != null) {
-                data.setChatColor(null);
-                playSuccess(player);
-            } else {
-                player.sendMessage("§cYou don't have any chat color");
-                playNeutral(player);
-                player.closeInventory();
-            }
+        if (data.getChatColor() != null) {
+            data.setChatColor(null);
+            playSuccess(player);
+        } else {
+            player.sendMessage("§cYou don't have any chat color");
+            playNeutral(player);
+            player.closeInventory();
         }
     }
 }
