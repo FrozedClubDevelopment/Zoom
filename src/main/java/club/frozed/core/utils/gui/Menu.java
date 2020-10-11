@@ -22,7 +22,7 @@ public abstract class Menu {
     private boolean updateAfterClick = true;
     private boolean closedByMenu = false;
     private boolean placeholder = false;
-    private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 15, " ");
+    private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 7, " ");
 
     private ItemStack createItemStack(Player player, Button button) {
         ItemStack item = button.getButtonItem(player);
