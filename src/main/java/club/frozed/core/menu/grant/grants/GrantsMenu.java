@@ -1,15 +1,17 @@
 package club.frozed.core.menu.grant.grants;
 
 import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.Grant;
-import club.frozed.core.menu.grant.grants.button.GrantInfoButton;
+import club.frozed.core.menu.grant.grants.button.GrantsInfoButton;
+import club.frozed.core.menu.grant.grants.button.AllGrantsButton;
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.buttons.AirButton;
-import club.frozed.core.utils.gui.buttons.CloseButton;
-import club.frozed.core.utils.gui.buttons.PageInfoButton;
-import club.frozed.core.utils.gui.pagination.PageButton;
-import club.frozed.core.utils.gui.pagination.PaginatedMenu;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.buttons.AirButton;
+import club.frozed.core.utils.menu.buttons.CloseButton;
+import club.frozed.core.utils.menu.buttons.PageInfoButton;
+import club.frozed.core.utils.menu.pagination.PageButton;
+import club.frozed.core.utils.menu.pagination.PaginatedMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -21,13 +23,11 @@ import java.util.*;
  * Date: 11/10/2020 @ 22:12
  */
 
-public class GrantMenu extends PaginatedMenu {
+public class GrantsMenu extends PaginatedMenu {
 
     private PlayerData targetplayerData;
 
-    private List<Grant> grants = new ArrayList<>();
-
-    public GrantMenu(PlayerData playerData){
+    public GrantsMenu(PlayerData playerData){
         this.targetplayerData = playerData;
     }
 
@@ -39,24 +39,29 @@ public class GrantMenu extends PaginatedMenu {
     private Comparator<Grant> GRANT_COMPARATOR = Comparator.comparingLong(Grant::getAddedDate).reversed();
 
     @Override
-    public Map<Integer, Button> getGlobalButtons(Player player) {
+    public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-        targetplayerData.getGrants().stream().sorted(GRANT_COMPARATOR).forEach(grant -> {
-            if (grant.isActive() && !grant.hasExpired()){
-                grants.add(grant);
-            }
-        });
 
-        for (int i = 0; i < grants.size(); i++){
-            Grant grant = grants.get(i);
-            buttons.put(i, new GrantInfoButton(grant, targetplayerData));
+        for (int i = 0; i < getGrants().size(); i++){
+            Grant grant = getGrants().get(i);
+            buttons.put(i, new GrantsInfoButton(grant, targetplayerData));
         }
 
         return buttons;
     }
 
+    private List<Grant> getGrants(){
+        List<Grant> grants = new ArrayList<>();
+        targetplayerData.getGrants().stream().sorted(GRANT_COMPARATOR).forEach(grant -> {
+            if (grant.isActive() && !grant.hasExpired()){
+                grants.add(grant);
+            }
+        });
+        return grants;
+    }
+
     @Override
-    public Map<Integer, Button> getAllPagesButtons(Player player) {
+    public Map<Integer, Button> getGlobalButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
 
         // Remove Button
@@ -71,7 +76,7 @@ public class GrantMenu extends PaginatedMenu {
         buttons.put(1, new AirButton());
         buttons.put(2, new AirButton());
         buttons.put(3, new AirButton());
-        buttons.put(4, new AirButton());
+        buttons.put(4, new AllGrantsButton(targetplayerData));
         buttons.put(5, new AirButton());
         buttons.put(6, new AirButton());
         buttons.put(7, new AirButton());
@@ -95,7 +100,17 @@ public class GrantMenu extends PaginatedMenu {
     }
 
     @Override
+    public void onClose(Player player) {
+        PlayerOfflineData.deleteData(targetplayerData.getUuid());
+    }
+
+    @Override
     public boolean isPlaceholder() {
+        return true;
+    }
+
+    @Override
+    public boolean isUpdateAfterClick() {
         return true;
     }
 

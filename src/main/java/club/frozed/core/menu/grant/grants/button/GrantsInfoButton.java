@@ -10,7 +10,7 @@ import club.frozed.core.utils.CC;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.grant.WoolUtil;
-import club.frozed.core.utils.gui.Button;
+import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 @AllArgsConstructor
-public class GrantInfoButton extends Button {
+public class GrantsInfoButton extends Button {
 
     private Grant grant;
 

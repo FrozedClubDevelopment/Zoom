@@ -2,7 +2,7 @@ package club.frozed.core.menu.grant.grants.button;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.grant.grants.AllGrantsMenu;
-import club.frozed.core.utils.gui.Button;
+import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
  * Date: 11/10/2020 @ 22:31
  */
 @AllArgsConstructor
-public class GrantsButton extends Button {
+public class AllGrantsButton extends Button {
 
     private PlayerData targetData;
 

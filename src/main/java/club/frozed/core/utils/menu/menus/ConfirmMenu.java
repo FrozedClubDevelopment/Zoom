@@ -1,9 +1,9 @@
-package club.frozed.core.utils.gui.menus;
+package club.frozed.core.utils.menu.menus;
 
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.Menu;
-import club.frozed.core.utils.gui.buttons.ConfirmationButton;
-import club.frozed.core.utils.gui.callback.TypeCallback;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.Menu;
+import club.frozed.core.utils.menu.buttons.ConfirmationButton;
+import club.frozed.core.utils.menu.callback.TypeCallback;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

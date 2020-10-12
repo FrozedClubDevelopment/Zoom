@@ -1,8 +1,8 @@
-package club.frozed.core.utils.gui.buttons;
+package club.frozed.core.utils.menu.buttons;
 
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.callback.TypeCallback;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.callback.TypeCallback;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.Sound;

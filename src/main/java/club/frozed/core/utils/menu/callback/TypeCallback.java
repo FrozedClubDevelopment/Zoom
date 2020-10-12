@@ -1,4 +1,4 @@
-package club.frozed.core.utils.gui.callback;
+package club.frozed.core.utils.menu.callback;
 
 import java.io.Serializable;
 
