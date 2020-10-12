@@ -1,7 +1,7 @@
-package club.frozed.core.utils.gui;
+package club.frozed.core.utils.menu;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.gui.pagination.PaginatedMenu;
+import club.frozed.core.utils.menu.pagination.PaginatedMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

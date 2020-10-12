@@ -4,9 +4,9 @@ import club.frozed.core.Zoom;
 import club.frozed.core.menu.color.chatcolor.buttons.ChatColorButton;
 import club.frozed.core.menu.color.chatcolor.buttons.ResetButton;
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.Menu;
-import club.frozed.core.utils.gui.buttons.CloseButton;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.Menu;
+import club.frozed.core.utils.menu.buttons.CloseButton;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

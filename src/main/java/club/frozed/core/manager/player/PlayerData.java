@@ -55,7 +55,7 @@ public class PlayerData {
 
     // Messages System
     private boolean toggleSounds;
-    private boolean togglePrivateMessages;
+    private boolean togglePrivateMessages = true;
     private List<String> ignoredPlayersList = new ArrayList<>();
     private boolean socialSpy;
 
@@ -146,6 +146,10 @@ public class PlayerData {
         loadPermissions(player);
     }
 
+    public boolean isOnline() {
+        return (Bukkit.getPlayer(this.uuid) != null);
+    }
+
     public void deleteRank(Player player, Rank rank) {
         if (rank != null && hasRank(rank)) {
             PermissionAttachment attachment = player.addAttachment(Zoom.getInstance());
@@ -224,9 +228,9 @@ public class PlayerData {
             this.ip = document.getString("ip");
             this.tag = document.getString("tag");
             if (document.getString("name-color") == null) {
-                this.nameColor = document.getString("name-color");
-            } else {
                 this.nameColor = ChatColor.WHITE.name();
+            } else {
+                this.nameColor = document.getString("name-color");
             }
             this.chatColor = document.getString("chat-color");
             this.bold = document.getBoolean("name-color-bold");

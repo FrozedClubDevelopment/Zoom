@@ -48,7 +48,9 @@ public class PlayerOfflineData {
     public static void deleteData(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) return;
-        playerData.get(uuid).saveData();
+        if (playerData.containsKey(uuid)) {
+            playerData.get(uuid).saveData();
+        }
 
         playerData.remove(uuid);
     }

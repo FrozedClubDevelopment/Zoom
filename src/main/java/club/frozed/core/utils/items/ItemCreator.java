@@ -6,11 +6,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,68 @@ public class ItemCreator {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "Error set armor color.");
         }
         return this;
+    }
+
+    public ItemCreator glow() {
+        ItemMeta meta = this.itemStack.getItemMeta();
+
+        meta.addEnchant(new Glow(), 1, true);
+        this.itemStack.setItemMeta(meta);
+        return this;
+    }
+
+    public static void registerGlow() {
+        try {
+            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Glow glow = new Glow();
+            Enchantment.registerEnchantment(glow);
+        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static class Glow extends Enchantment {
+
+        public Glow() {
+            super(25);
+        }
+
+        @Override
+        public boolean canEnchantItem(ItemStack arg0) {
+            return false;
+        }
+
+        @Override
+        public boolean conflictsWith(Enchantment arg0) {
+            return false;
+        }
+
+        @Override
+        public EnchantmentTarget getItemTarget() {
+            return null;
+        }
+
+        @Override
+        public int getMaxLevel() {
+            return 2;
+        }
+
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        public int getStartLevel() {
+            return 1;
+        }
     }
 
     public ItemStack get() {

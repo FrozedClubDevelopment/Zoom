@@ -1,7 +1,7 @@
-package club.frozed.core.utils.gui.pagination;
+package club.frozed.core.utils.menu.pagination;
 
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.gui.Button;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

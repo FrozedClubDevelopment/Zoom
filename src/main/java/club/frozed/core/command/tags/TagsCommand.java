@@ -33,7 +33,7 @@ public class TagsCommand extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            new TagsMenu().open(p);
+            new TagsMenu().openMenu(p);
             return;
         }
 

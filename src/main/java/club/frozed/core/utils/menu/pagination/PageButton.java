@@ -1,7 +1,7 @@
-package club.frozed.core.utils.gui.pagination;
+package club.frozed.core.utils.menu.pagination;
 
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.gui.Button;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,6 +20,11 @@ public class PageButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         ItemStack itemStack = new ItemStack(Material.CARPET);
+        if (mod > 0){
+            itemStack.setDurability((short) 13);
+        } else {
+            itemStack.setDurability((short) 14);
+        }
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (this.hasNext(player)) {
@@ -30,8 +35,8 @@ public class PageButton extends Button {
 
         itemMeta.setLore(Arrays.asList(
                 "",
-                CC.translate("&cRight click to"),
-                CC.translate("&cjump to a page")
+                CC.translate("&eRight click to"),
+                CC.translate("&ejump to a page")
         ));
 
         itemStack.setItemMeta(itemMeta);

@@ -22,11 +22,11 @@ public class TipsRunnable extends BukkitRunnable {
                 if (this.normalTip.get() >= this.messageTips.size()) {
                     this.normalTip.set(0);
                 }
-                Bukkit.broadcastMessage(CC.translate(this.messageTips.get(this.normalTip.get())));
+                Bukkit.broadcastMessage(CC.translate(this.messageTips.get(this.normalTip.get()).replace("{0}", "\n")));
                 this.normalTip.getAndIncrement();
                 break;
             case "random":
-                Bukkit.broadcastMessage(CC.translate(this.messageTips.get(Utils.randomNumber(0, this.messageTips.size()))));
+                Bukkit.broadcastMessage(CC.translate(this.messageTips.get(Utils.randomNumber(0, this.messageTips.size()))).replace("{0}", "\n"));
                 break;
             default:
                 Bukkit.getConsoleSender().sendMessage("§cInvalid mode! Available modes: 'normal' and 'random'");

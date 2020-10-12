@@ -31,8 +31,8 @@ public class GrantCommand extends BaseCMD {
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         if (target.isOnline()) {
-            PlayerData targetData = PlayerData.getByUuid(target.getUniqueId());
-            (new GrantMenu(targetData)).open(player);
+            PlayerData targetData = PlayerData.getByUuid(Bukkit.getPlayer(args[0]).getUniqueId());
+            (new GrantMenu(targetData)).openMenu(player);
         } else {
             player.sendMessage(CC.translate("&eLoading player data....."));
             if (!PlayerOfflineData.hasData(target.getName())){
@@ -40,10 +40,7 @@ public class GrantCommand extends BaseCMD {
                 return;
             }
             PlayerData targetData = PlayerOfflineData.loadData(target.getName());
-            (new GrantMenu(targetData)).open(player);
+            (new GrantMenu(targetData)).openMenu(player);
         }
-
-        PlayerData playerData = PlayerData.getByUuid(Bukkit.getPlayer(args[0]).getUniqueId());
-        new GrantMenu(playerData).open(player);
     }
 }

@@ -28,6 +28,15 @@ public final class InventoryUtil {
         return cloned;
     }
 
+    public static ItemStack[] fixInventoryOrder(ItemStack[] source) {
+        ItemStack[] fixed = new ItemStack[36];
+
+        System.arraycopy(source, 0, fixed, 27, 9);
+        System.arraycopy(source, 9, fixed, 0, 27);
+
+        return fixed;
+    }
+
     public static int getSafestInventorySize(int initialSize) {
         return (initialSize + 8) / 9 * 9;
     }

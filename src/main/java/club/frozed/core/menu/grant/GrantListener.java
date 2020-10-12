@@ -57,7 +57,7 @@ public class GrantListener implements Listener {
             event.setCancelled(true);
             playerData.getGrantProcedure().setEnteredReason(message);
             playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.CONFIRMATION);
-            (new GrantConfirmMenu()).open(player);
+            (new GrantConfirmMenu()).openMenu(player);
         }
     }
 }

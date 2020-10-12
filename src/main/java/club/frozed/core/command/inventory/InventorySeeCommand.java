@@ -28,6 +28,6 @@ public class InventorySeeCommand extends BaseCMD {
             p.sendMessage("§cThat players isn't online");
             return;
         }
-        new InventorySeeMenu(target).open(p);
+        new InventorySeeMenu(target).openMenu(p);
     }
 }

@@ -1,6 +1,6 @@
 package club.frozed.core.command.color;
 
-import club.frozed.core.menu.color.NameColorMenu;
+import club.frozed.core.menu.color.namecolor.NameColorMenu;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
@@ -15,7 +15,7 @@ public class NameColorCommand extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            new NameColorMenu().open(p);
+            new NameColorMenu().openMenu(p);
         }
     }
 }

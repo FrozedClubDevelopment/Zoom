@@ -1,4 +1,4 @@
-package club.frozed.core.utils.gui;
+package club.frozed.core.utils.menu;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;

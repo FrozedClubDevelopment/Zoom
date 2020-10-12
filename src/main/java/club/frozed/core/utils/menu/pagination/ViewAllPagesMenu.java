@@ -1,8 +1,8 @@
-package club.frozed.core.utils.gui.pagination;
+package club.frozed.core.utils.menu.pagination;
 
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.Menu;
-import club.frozed.core.utils.gui.buttons.BackButton;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.Menu;
+import club.frozed.core.utils.menu.buttons.BackButton;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

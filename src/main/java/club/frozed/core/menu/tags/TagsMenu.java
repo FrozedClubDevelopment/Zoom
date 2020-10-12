@@ -1,160 +1,94 @@
 package club.frozed.core.menu.tags;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.tags.Tag;
+import club.frozed.core.utils.menu.buttons.PageInfoButton;
+import club.frozed.core.menu.tags.buttons.RemoveTagButton;
+import club.frozed.core.menu.tags.buttons.TagButton;
 import club.frozed.core.utils.CC;
-import club.frozed.core.utils.InventoryUtil;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Menu;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.buttons.AirButton;
+import club.frozed.core.utils.menu.pagination.PageButton;
+import club.frozed.core.utils.menu.pagination.PaginatedMenu;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class TagsMenu implements Menu {
+/**
+ * Created by Ryzeon
+ * Project: Zoom [Core]
+ * Date: 11/10/2020 @ 19:43
+ */
 
-    private int page;
-    private final Inventory inventory;
-
-    public TagsMenu() {
-        this.inventory = Bukkit.createInventory(this, 9 * 5, CC.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title")));
-        this.page = 1;
-    }
-
-    private int getTotalPages() {
-        return Zoom.getInstance().getTagManager().getTags().size() / 28 + 1;
+public class TagsMenu extends PaginatedMenu {
+    @Override
+    public String getPrePaginatedTitle(Player player) {
+        return CC.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title"));
     }
 
     @Override
-    public void open(Player player) {
-        this.update(player);
-        player.openInventory(this.inventory);
-        InventoryUtil.fillInventory(this.inventory);
-    }
+    public Map<Integer, Button> getAllPagesButtons(Player player) {
+        Map<Integer, Button> buttons = new HashMap<>();
 
-    public void update(Player player) {
-        this.inventory.clear();
-        ItemStack glass = new ItemCreator(Material.STAINED_GLASS_PANE, 7).setName(" ").get();
-        this.inventory.setItem(0, new ItemCreator(Material.RED_ROSE).setName("&cRemove").get());
-        this.inventory.setItem(1, glass);
-        this.inventory.setItem(2, glass);
-        this.inventory.setItem(3, glass);
-        this.inventory.setItem(4, glass);
-        this.inventory.setItem(5, glass);
-        this.inventory.setItem(6, glass);
-        this.inventory.setItem(7, glass);
-        this.inventory.setItem(8, new ItemCreator(Material.RED_ROSE).setName("&cRemove").get());
-        int slot = 9;
-        int index = ((page * 27) - 27);
-
-        while (slot < 36 && Zoom.getInstance().getTagManager().getTags().size() > index) {
-            Tag tag = Zoom.getInstance().getTagManager().getTags().get(index);
-            ItemCreator itemCreator = new ItemCreator(tag.getTagIcon());
-            itemCreator.setName(tag.getTagDisplayName());
-            List<String> lore = new ArrayList<>();
-            if (player.hasPermission(tag.getTagPermission())) {
-                for (String msg : tag.getTagLore()) {
-                    lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
-                }
-            } else {
-                for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
-                    lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
-                }
-            }
-            itemCreator.setLore(lore);
-            this.inventory.addItem(itemCreator.get());
-            index++;
-            slot++;
+        for (int i = 0; i < Zoom.getInstance().getTagManager().getTags().size(); i++){
+            Tag tag = Zoom.getInstance().getTagManager().getTags().get(i);
+            buttons.put(i, new TagButton(tag));
         }
-        this.inventory.setItem(36, new ItemCreator(Material.RED_ROSE).setName("&cRemove").get());
-        this.inventory.setItem(37, new ItemCreator(Material.CARPET, 14).setName("&ePrevious").get());
-        this.inventory.setItem(43, new ItemCreator(Material.CARPET, 13).setName("&eNext").get());
-        this.inventory.setItem(44, new ItemCreator(Material.RED_ROSE).setName("&cRemove").get());
-        InventoryUtil.fillInventory(this.inventory);
+
+        return buttons;
     }
 
     @Override
-    public void onInventoryClick(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
-        PlayerData data = PlayerData.getByUuid(p.getUniqueId());
-        final Inventory clickedInventory = e.getClickedInventory();
-        final Inventory topInventory = e.getView().getTopInventory();
-        if (!topInventory.equals(this.inventory)) {
-            return;
-        }
-        if (topInventory.equals(clickedInventory)) {
-            e.setCancelled(true);
-            if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.AIR) || e.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE))
-                return;
-            if (!e.getCurrentItem().hasItemMeta()) return;
-            int slots = e.getSlot();
-            switch (slots) {
-                case 37:
-                    if (page == 1) {
-                        p.playSound(p.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
-                        return;
-                    }
-                    page--;
-                    p.playSound(p.getLocation(), Sound.CLICK, 2F, 2F);
-                    update(p);
-                    break;
-                case 43:
-                    if (page == getTotalPages()) {
-                        p.playSound(p.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
-                        return;
-                    }
-                    page++;
-                    p.playSound(p.getLocation(), Sound.CLICK, 2F, 2F);
-                    update(p);
-                    break;
-                case 0:
-                case 8:
-                case 36:
-                case 44:
-                    if (data.getTag() != null) {
-                        data.setTag(null);
-                        playSound(p, true);
-                        p.closeInventory();
-                    } else {
-                        p.sendMessage("§cYou don't have a prefix");
-                        playSound(p, false);
-                        p.closeInventory();
-                    }
-                    break;
-                default:
-                    if (p.hasPermission(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPermission())) {
-                        data.setTag(Zoom.getInstance().getTagManager().getTagByName(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())).getTagPrefix());
-                        playSound(p, true);
-                    } else {
-                        p.sendMessage("§cYou don't have this prefix");
-                        playSound(p, false);
-                    }
-                    p.closeInventory();
-                    break;
-            }
-        } else if ((!topInventory.equals(clickedInventory) && e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) || e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
-            e.setCancelled(true);
-        }
+    public Map<Integer, Button> getGlobalButtons(Player player) {
+        Map<Integer, Button> buttons = new HashMap<>();
+
+        // Remove Button
+        buttons.put(0, new RemoveTagButton());
+        buttons.put(8, new RemoveTagButton());
+        buttons.put(36, new RemoveTagButton());
+        buttons.put(44, new RemoveTagButton());
+
+        /*
+        First Line Glass Button
+         */
+        buttons.put(1, new AirButton());
+        buttons.put(2, new AirButton());
+        buttons.put(3, new AirButton());
+        buttons.put(4, new AirButton());
+        buttons.put(5, new AirButton());
+        buttons.put(6, new AirButton());
+        buttons.put(7, new AirButton());
+        /*
+        Second line button
+         */
+        buttons.put(42, new AirButton());
+        buttons.put(41, new AirButton());
+        buttons.put(39, new AirButton());
+        buttons.put(38, new AirButton());
+
+        // Pages Button
+        buttons.put(43, new PageButton(1, this));
+        buttons.put(37, new PageButton(-1, this));
+
+        // Page Info Button
+        buttons.put(40, new PageInfoButton(this));
+
+        return buttons;
     }
 
-    public void playSound(Player player, boolean confirmation) {
-        if (confirmation) {
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 2F, 2F);
-        } else {
-            player.playSound(player.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
-        }
+    @Override
+    public boolean isPlaceholder() {
+        return true;
     }
 
-    public Inventory getInventory() {
-        return this.inventory;
+    @Override
+    public int getSize() {
+        return 9 * 5;
+    }
+
+    @Override
+    public int getMaxItemsPerPage(Player player) {
+        return 9 * 3;
     }
 }

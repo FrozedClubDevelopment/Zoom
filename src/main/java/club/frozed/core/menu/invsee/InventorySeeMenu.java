@@ -1,102 +1,10 @@
 package club.frozed.core.menu.invsee;
 
-import club.frozed.core.Zoom;
-import club.frozed.core.utils.InventoryUtil;
-import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.type.ChestMenu;
-import lombok.Getter;
-import org.apache.commons.lang.WordUtils;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+/**
+ * Created by Ryzeon
+ * Project: Zoom [Core]
+ * Date: 11/10/2020 @ 17:41
+ */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-public class InventorySeeMenu extends ChestMenu<Zoom> {
-
-    @Getter
-    private Player target;
-
-    private BukkitTask runnable;
-
-    public InventorySeeMenu(Player target) {
-        super("§e" + target.getName() + "'s §aInventory", 5);
-        this.target = target;
-        update();
-    }
-
-    private void update() {
-        this.runnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                Inventory inv = getInventory();
-                inv.clear();
-                inv.setContents(getTarget().getInventory().getContents());
-                List<ItemStack> armorContents = Arrays.asList(getTarget().getInventory().getArmorContents());
-                Collections.reverse(armorContents);
-                int index = inv.getSize() - 9;
-                if (getTarget().getInventory().getHelmet() == null) {
-                    inv.setItem(36, new ItemCreator(Material.LEATHER_HELMET).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
-                }
-                if (getTarget().getInventory().getChestplate() == null) {
-                    inv.setItem(37, new ItemCreator(Material.LEATHER_CHESTPLATE).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
-                }
-                if (getTarget().getInventory().getLeggings() == null) {
-                    inv.setItem(38, new ItemCreator(Material.LEATHER_LEGGINGS).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
-                }
-                if (getTarget().getInventory().getBoots() == null) {
-                    inv.setItem(39, new ItemCreator(Material.LEATHER_BOOTS).setArmorColor(Color.fromRGB(50, 50, 50)).setName("&cNo Armor Equipped").get());
-                }
-                for (ItemStack item : armorContents) {
-                    if (item == null || item.getType() == Material.AIR) {
-                        index++;
-                        continue;
-                    }
-                    inv.setItem(index++, item);
-                }
-                if (!getTarget().getActivePotionEffects().isEmpty()) {
-                    List<String> potions = new ArrayList<>();
-                    for (PotionEffect effect : getTarget().getActivePotionEffects()) {
-                        String potionName = WordUtils.capitalize(effect.getType().getName().replace("_", "").toLowerCase());
-                        potions.add("§a" + potionName + " " + (effect.getAmplifier() + 1) + " §efor " + Utils.timeCalculate(effect.getDuration() / 20));
-                    }
-                    getInventory().setItem(42, new ItemCreator(Material.POTION).setName("§ePotions Effects").setLore(potions).get());
-                }
-                getInventory().setItem(43, new ItemCreator(Material.REDSTONE).setName("§eHealth: " + getTarget().getHealth() / 2 + " §4§l❤").get());
-                getInventory().setItem(44, new ItemCreator(Material.COOKED_BEEF).setName("§eFood: " + getTarget().getFoodLevel()).get());
-
-                InventoryUtil.fillInventory(inv);
-            }
-        }.runTaskTimerAsynchronously(Zoom.getInstance(), 0, 20);
-    }
-
-    public void onInventoryClose(InventoryCloseEvent e) {
-        this.runnable.cancel();
-    }
-
-    public void onInventoryClick(InventoryClickEvent event) {
-        Inventory clickedInventory = event.getClickedInventory();
-        Inventory topInventory = event.getView().getTopInventory();
-        if (!topInventory.equals(this.getInventory())) return;
-        if (topInventory.equals(clickedInventory)) {
-            event.setCancelled(true);
-            ItemStack item = event.getCurrentItem();
-            if (item == null || item.getType() == Material.AIR || item.getType() == Material.STAINED_GLASS_PANE) return;
-            if (item.getType() == Material.ARROW) event.getWhoClicked().closeInventory();
-        } else if ((!topInventory.equals(clickedInventory) && event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) || event.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
-            event.setCancelled(true);
-        }
-    }
+public class InventorySeeMenu {
 }

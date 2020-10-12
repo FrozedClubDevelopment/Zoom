@@ -1,7 +1,7 @@
 package club.frozed.core.menu.chat.buttons;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.gui.Button;
+import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

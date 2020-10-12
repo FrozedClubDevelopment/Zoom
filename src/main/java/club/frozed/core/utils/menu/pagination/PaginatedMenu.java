@@ -1,7 +1,7 @@
-package club.frozed.core.utils.gui.pagination;
+package club.frozed.core.utils.menu.pagination;
 
-import club.frozed.core.utils.gui.Button;
-import club.frozed.core.utils.gui.Menu;
+import club.frozed.core.utils.menu.Button;
+import club.frozed.core.utils.menu.Menu;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -42,9 +42,6 @@ public abstract class PaginatedMenu extends Menu {
         int maxIndex = (int) ((double) (page) * getMaxItemsPerPage(player));
 
         HashMap<Integer, Button> buttons = new HashMap<>();
-
-        buttons.put(0, new PageButton(-1, this));
-        buttons.put(8, new PageButton(1, this));
 
         for (Map.Entry<Integer, Button> entry : getAllPagesButtons(player).entrySet()) {
             int ind = entry.getKey();

@@ -2,7 +2,7 @@ package club.frozed.core.command.rank.grant;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerOfflineData;
-import club.frozed.core.menu.grant.GrantsMenu;
+import club.frozed.core.menu.grant.grants.GrantsMenu;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -30,7 +30,7 @@ public class GrantsCommand extends BaseCMD {
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         if (target.isOnline()) {
             PlayerData targetData = PlayerData.getByName(target.getName());
-            (new GrantsMenu(targetData)).open(player);
+            (new GrantsMenu(targetData)).openMenu(player);
         } else {
             player.sendMessage(CC.translate("&eLoading player data....."));
             if (!PlayerOfflineData.hasData(target.getName())){
@@ -38,7 +38,7 @@ public class GrantsCommand extends BaseCMD {
                 return;
             }
             PlayerData targetData = PlayerOfflineData.loadData(target.getName());
-            (new GrantsMenu(targetData)).open(player);
+            (new GrantsMenu(targetData)).openMenu(player);
         }
     }
 }
