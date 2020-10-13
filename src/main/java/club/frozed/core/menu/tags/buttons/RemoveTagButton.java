@@ -1,8 +1,8 @@
 package club.frozed.core.menu.tags.buttons;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

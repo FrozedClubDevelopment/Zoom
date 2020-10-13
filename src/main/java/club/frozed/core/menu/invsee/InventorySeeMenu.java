@@ -47,29 +47,29 @@ public class InventorySeeMenu extends Menu {
 
             if (itemStack != null) {
                 if (itemStack.getType() != Material.AIR)
-                buttons.put(i, new ItemButton(itemStack));
+                    buttons.put(i, new ItemButton(itemStack));
             }
         }
 
-        if (this.target.getInventory().getHelmet() == null){
+        if (this.target.getInventory().getHelmet() == null) {
             buttons.put(36, new NoArmorButton("helmet"));
         } else {
             buttons.put(36, new ItemButton(this.target.getInventory().getHelmet()));
         }
 
-        if (this.target.getInventory().getChestplate() == null){
+        if (this.target.getInventory().getChestplate() == null) {
             buttons.put(37, new NoArmorButton("chestplate"));
         } else {
             buttons.put(37, new ItemButton(this.target.getInventory().getChestplate()));
         }
 
-        if (this.target.getInventory().getLeggings() == null){
+        if (this.target.getInventory().getLeggings() == null) {
             buttons.put(38, new NoArmorButton("leggings"));
         } else {
             buttons.put(38, new ItemButton(this.target.getInventory().getLeggings()));
         }
 
-        if (this.target.getInventory().getBoots() == null){
+        if (this.target.getInventory().getBoots() == null) {
             buttons.put(39, new NoArmorButton("boots"));
         } else {
             buttons.put(39, new ItemButton(this.target.getInventory().getBoots()));

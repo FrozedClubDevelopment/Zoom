@@ -2,12 +2,12 @@ package club.frozed.core.menu.tags;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.tags.Tag;
-import club.frozed.core.utils.menu.buttons.PageInfoButton;
 import club.frozed.core.menu.tags.buttons.RemoveTagButton;
 import club.frozed.core.menu.tags.buttons.TagButton;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.menu.buttons.AirButton;
+import club.frozed.core.utils.menu.buttons.PageInfoButton;
 import club.frozed.core.utils.menu.pagination.PageButton;
 import club.frozed.core.utils.menu.pagination.PaginatedMenu;
 import org.bukkit.entity.Player;
@@ -20,7 +20,6 @@ import java.util.Map;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 19:43
  */
-
 public class TagsMenu extends PaginatedMenu {
     @Override
     public String getPrePaginatedTitle(Player player) {
@@ -31,7 +30,7 @@ public class TagsMenu extends PaginatedMenu {
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
 
-        for (int i = 0; i < Zoom.getInstance().getTagManager().getTags().size(); i++){
+        for (int i = 0; i < Zoom.getInstance().getTagManager().getTags().size(); i++) {
             Tag tag = Zoom.getInstance().getTagManager().getTags().get(i);
             buttons.put(i, new TagButton(tag));
         }
