@@ -53,10 +53,10 @@ public class ChatListener implements Listener {
                 replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()));
             }
         } else {
-            replacement.add("<nameColor>", "");
+            replacement.add("<nameColor>", playerData.getHighestRank().getColor());
         }
 
-        replacement.add("<name>", playerData.getPlayer().getName());
+        replacement.add("<name>", playerData.getHighestRank().formatName(e.getPlayer()));
         replacement.add("<text>", ChatColor.stripColor(message));
 
         String format = replacement.toString();

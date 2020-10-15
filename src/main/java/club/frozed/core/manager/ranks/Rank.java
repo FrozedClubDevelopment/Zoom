@@ -2,12 +2,14 @@ package club.frozed.core.manager.ranks;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.mongo.MongoManager;
+import club.frozed.core.manager.player.PlayerData;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.Document;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +85,27 @@ public class Rank {
         } catch (IllegalArgumentException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public String formatName(Player player) {
+        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        String nameColor = this.getColor().toString();
+        if (playerData != null && playerData.getNameColor() != null) {
+            nameColor = playerData.getNameColor();
+        }
+        if (this.isItalic() && this.isBold()) {
+            return nameColor + ChatColor.BOLD.toString() + ChatColor.ITALIC.toString() + player.getName();
+        }
+        if (this.isBold() && this.isItalic()){
+            return nameColor + ChatColor.BOLD.toString() + ChatColor.ITALIC.toString() + player.getName();
+        }
+        if (this.isBold()) {
+            return nameColor + ChatColor.BOLD.toString() + player.getName();
+        }
+        if (this.isItalic()) {
+            return nameColor + ChatColor.ITALIC.toString() + player.getName();
+        }
+        return nameColor + player.getName();
     }
 
     public static Rank getRankByName(String name) {
