@@ -70,9 +70,11 @@ public class Rank {
             String rankName = document.getString("NAME");
             String rankPrefix = document.getString("PREFIX");
             String rankSuffix = document.getString("SUFFIX");
-            ChatColor rankColor = ChatColor.valueOf(document.getString("COLOR"));
-            if (rankColor == null) {
+            ChatColor rankColor;
+            if (document.getString("COLOR") == null){
                 rankColor = ChatColor.WHITE;
+            } else {
+                rankColor = ChatColor.valueOf(document.getString("COLOR"));
             }
             boolean rankDefault = document.getBoolean("DEFAULT");
             boolean rankBold = document.getBoolean("BOLD");
@@ -91,7 +93,7 @@ public class Rank {
         PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
         String nameColor = this.getColor().toString();
         if (playerData != null && playerData.getNameColor() != null) {
-            nameColor = playerData.getNameColor();
+            nameColor = ChatColor.valueOf(playerData.getNameColor()).toString();
         }
         if (this.isItalic() && this.isBold()) {
             return nameColor + ChatColor.BOLD.toString() + ChatColor.ITALIC.toString() + player.getName();
