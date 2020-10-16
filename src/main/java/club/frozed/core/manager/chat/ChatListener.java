@@ -148,9 +148,11 @@ public class ChatListener implements Listener {
 //        String[] args = event.getMessage().split(" ");
 //        String text = StringUtils.join(args, ' ', 0, args.length);
         if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")){
-            event.getPlayer().performCommand(event.getMessage()
-                    .replace("/msg","message")
-                    .replace("/tell","message"));
+            event.setCancelled(true);
+            System.out.println("DETECTO KOMANDO");
+            event.getPlayer().chat(event.getMessage()
+                    .replace("/msg","/message")
+                    .replace("/tell","/message"));
         }
     }
 
