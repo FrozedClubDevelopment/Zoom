@@ -10,6 +10,8 @@ import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.ConfigReplacement;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -139,6 +141,17 @@ public class ChatListener implements Listener {
             return;
         }
         playerData.setChatDelay(cooldown);
+    }
+
+    @EventHandler
+    public void onCommandReplace(AsyncPlayerChatEvent event){
+//        String[] args = event.getMessage().split(" ");
+//        String text = StringUtils.join(args, ' ', 0, args.length);
+        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")){
+            event.getPlayer().performCommand(event.getMessage()
+                    .replace("/msg","message")
+                    .replace("/tell","message"));
+        }
     }
 
     public String translate(String text, Player player, String message) {
