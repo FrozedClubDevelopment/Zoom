@@ -145,9 +145,8 @@ public class ChatListener implements Listener {
     }
 
     @EventHandler
-    public void onCommandReplace(PlayerCommandPreprocessEvent event){
-        if (event.getMessage().startsWith("/msg")
-                || event.getMessage().startsWith("/tell")){
+    public void onCommandReplace(PlayerCommandPreprocessEvent event) {
+        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")) {
             event.setCancelled(true);
             event.getPlayer().chat(event.getMessage()
                     .replace("/msg","/message")

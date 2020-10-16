@@ -172,26 +172,12 @@ public final class Zoom extends JavaPlugin {
 
     private void loadListener() {
         PluginManager pluginManager = Bukkit.getPluginManager();
-
-        //Important to load player data
         pluginManager.registerEvents(new PlayerDataLoad(), this);
-
-        //General Players Listener
         pluginManager.registerEvents(new ChatListener(), this);
-
-        //Important to work menus
         pluginManager.registerEvents(new ButtonListener(), this);
-
-        // Staff Listener
         pluginManager.registerEvents(new StaffListener(), this);
-
-        // Player Join Message
         pluginManager.registerEvents(new GeneralPlayerListener(), this);
-
-        // Blocked Cmd Listener
         pluginManager.registerEvents(new BlockCommandListener(), this);
-
-        //Grant Listeener
         pluginManager.registerEvents(new GrantListener(), this);
     }
 
