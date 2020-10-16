@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class ChatListener implements Listener {
 
@@ -144,12 +145,21 @@ public class ChatListener implements Listener {
     }
 
     @EventHandler
-    public void onCommandReplace(AsyncPlayerChatEvent event){
+    public void onCommandReplace(PlayerCommandPreprocessEvent event){
 //        String[] args = event.getMessage().split(" ");
 //        String text = StringUtils.join(args, ' ', 0, args.length);
-        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")){
+        if (event.getMessage().startsWith("/msg")
+                || event.getMessage().startsWith("/tell")){
             event.setCancelled(true);
             System.out.println("DETECTO KOMANDO");
+            event.getPlayer().chat(event.getMessage()
+                    .replace("/msg","/message")
+                    .replace("/tell","/message"));
+        }
+        if (event.getMessage().startsWith("msg")
+                || event.getMessage().startsWith("tell")){
+            event.setCancelled(true);
+            System.out.println("DETECTO KOMANDO DOS");
             event.getPlayer().chat(event.getMessage()
                     .replace("/msg","/message")
                     .replace("/tell","/message"));
