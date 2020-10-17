@@ -227,11 +227,7 @@ public class PlayerData {
             this.country = document.getString("country");
             this.ip = document.getString("ip");
             this.tag = document.getString("tag");
-            if (document.getString("name-color") == null) {
-                this.nameColor = ChatColor.WHITE.name();
-            } else {
-                this.nameColor = document.getString("name-color");
-            }
+            this.nameColor = document.getString("name-color");
             this.chatColor = document.getString("chat-color");
             this.bold = document.getBoolean("name-color-bold");
             this.italic = document.getBoolean("name-color-italic");
