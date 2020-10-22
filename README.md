@@ -80,3 +80,6 @@
 - core.rank.grant
 - core.rank.grant.all
 - core.rank.grants
+
+> Punisments
+- core.punishments.silent.see
