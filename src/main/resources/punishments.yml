@@ -1,0 +1,19 @@
+PUNISHMENT-MESSAGES:
+  MESSAGE-IN-CONSOLE: true
+  PUBLIC:
+    - '&7&m---------------------'
+    - '&e<player> &fhas been &e<context> &fby &e<sender>'
+    - '&eReason&7: &f<reason>'
+    - '&7&m---------------------'
+  SILENT:
+    - '&7[&aSilent&7] &7&m---------------------'
+    - '&7[&aSilent&7] &e<player> &fhas been &e<context> &fby &e<sender>'
+    - '&7[&aSilent&7] &eReason&7: &f<reason>'
+    - '&7[&aSilent&7] &7&m---------------------'
+KICK-PUNISHMENT-MESSAGES:
+  KICK:
+    - '&7&m--------------------'
+    - '&eYou have benn kick from ExampleNetwork'
+    - '&eYou were kicked by <sender>'
+    - ''
+    - '&7&m--------------------'
