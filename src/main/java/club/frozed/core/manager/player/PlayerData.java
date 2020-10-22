@@ -70,6 +70,10 @@ public class PlayerData {
     private List<Grant> grants = new ArrayList<>();
     private GrantProcedure grantProcedure;
 
+    public String getNameColor(){
+        return nameColor == null ? getHighestRank().getColor().name() : nameColor;
+    }
+
     public PlayerData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
