@@ -2,13 +2,14 @@ package club.frozed.core.utils;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.time.DateUtils;
+import com.google.common.base.Joiner;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang.time.DurationFormatUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
@@ -24,6 +26,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
+
+    public static final Type LIST_STRING = new TypeToken<List<String>>() {}.getType();
 
     public static int getPing(Player p) {
         try {
@@ -36,6 +40,10 @@ public class Utils {
         }
     }
 
+    public static long parse(String source, TimeUnit unit) {
+        return TimeUnit.MILLISECONDS.convert(DateUtils.fromString(source), unit);
+    }
+
     public static void globalBroadcast(Player player, String message) {
         ByteArrayDataOutput output = ByteStreams.newDataOutput();
         output.writeUTF("Message");
@@ -43,6 +51,23 @@ public class Utils {
         output.writeUTF(message);
 
         player.sendPluginMessage(Zoom.getInstance(), "BungeeCord", output.toByteArray());
+    }
+
+    public static String getDisplayName(UUID uuid) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        if (offlinePlayer != null){
+            return offlinePlayer.getName();
+        } else {
+            return "Console";
+        }
+    }
+
+    public static String getStaffName(CommandSender sender) {
+        return sender instanceof Player ? ((Player) sender).getPlayer().getDisplayName() : "§4§lConsole";
+    }
+
+    public static String getCommandWithIgnoreArgsOne(String[] args){
+        return Joiner.on(" ").skipNulls().join(Arrays.copyOfRange(args, 1 , args.length));
     }
 
     public static void sendAllMsg(String string) {
