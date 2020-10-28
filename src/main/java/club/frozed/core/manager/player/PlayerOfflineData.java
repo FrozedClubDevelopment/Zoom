@@ -50,6 +50,7 @@ public class PlayerOfflineData {
         if (player != null) return;
         if (playerData.containsKey(uuid)) {
             playerData.get(uuid).saveData();
+            playerData.get(uuid).removeData();
         }
 
         playerData.remove(uuid);
@@ -63,5 +64,15 @@ public class PlayerOfflineData {
         }
         createPlayerData(UUID.fromString(document.getString("uuid")), name);
         return playerData.get(UUID.fromString(document.getString("uuid")));
+    }
+
+    public static PlayerData loadData(UUID uuid) {
+        Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("uuid", uuid.toString())).first();
+
+        if (document == null) {
+            return null;
+        }
+        createPlayerData(uuid, Bukkit.getOfflinePlayer(uuid).getName());
+        return playerData.get(uuid);
     }
 }
