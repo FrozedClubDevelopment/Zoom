@@ -12,6 +12,7 @@ import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerDataLoad;
+import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.ranks.RankManager;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
@@ -26,6 +27,9 @@ import club.frozed.core.utils.config.FileConfig;
 import club.frozed.core.utils.menu.ButtonListener;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.punishment.PunishmentAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -38,6 +42,12 @@ import java.util.List;
 @Getter
 @Setter
 public final class Zoom extends JavaPlugin {
+
+    public static final Gson GSON = new GsonBuilder()
+            .registerTypeHierarchyAdapter(Punishment.class, new PunishmentAdapter())
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
 
     @Getter private static Zoom instance;
 
