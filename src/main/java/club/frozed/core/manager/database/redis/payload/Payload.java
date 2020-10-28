@@ -19,5 +19,7 @@ public enum  Payload {
     RANK_DELETE,
     PLAYER_PERMISSION_UPDATE,
     GRANT_ADD,
-    GRANT_UPDATE
+    GRANT_UPDATE,
+    // Ban
+    PUNISHMENTS_ADDED
 }

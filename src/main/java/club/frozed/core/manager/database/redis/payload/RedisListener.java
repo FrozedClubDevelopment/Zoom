@@ -3,13 +3,15 @@ package club.frozed.core.manager.database.redis.payload;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
+import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.config.ConfigCursor;
-import club.frozed.core.utils.grant.GrantUtil;
+import club.frozed.core.utils.punishment.PunishmentUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -17,8 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
 
-import java.io.IOException;
-import java.util.Collections;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by Ryzeon
@@ -181,6 +183,26 @@ public class RedisListener extends JedisPubSub {
                         }
                     }
                     break;
+                    case PUNISHMENTS_ADDED:
+                        Punishment punishment = PunishmentUtil.stringToPunishment(redisMessage.getParam("PUNISHMENT"));
+                        String staffName = redisMessage.getParam("STAFF");
+                        String targetName = redisMessage.getParam("TARGET");
+                        UUID uuid = UUID.fromString(redisMessage.getParam("TARGET_UUID"));
+                        boolean silent = Boolean.valueOf(redisMessage.getParam("SILENT"));
+
+                        punishment.broadcast(staffName, targetName, silent);
+                        final Player player = Bukkit.getPlayer(uuid);
+                        if (player != null){
+                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            playerData.getPunishments().removeIf(other -> Objects.equals(other, punishment));
+                            playerData.getPunishments().add(punishment);
+                            if (punishment.getType().isBan() && !punishment.isRemoved() && !punishment.hasExpired()) {
+                                TaskUtil.run(() -> {
+                                    player.kickPlayer(punishment.getKickMessage());
+                                });
+                            }
+                        }
+                        break;
                     default:
                         Zoom.getInstance().getLogger().info("[Redis] The message was received, but there was no response");
                         break;

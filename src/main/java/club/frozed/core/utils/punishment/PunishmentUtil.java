@@ -1,4 +1,4 @@
-package club.frozed.core.manager.punishments;
+package club.frozed.core.utils.punishment;
 
 /**
  * Created by Ryzeon
@@ -6,6 +6,6 @@ package club.frozed.core.manager.punishments;
  * Date: 19/10/2020 @ 18:50
  */
 
-public class PunishmentUtils {
+public class PunishmentUtil {
 
 }
