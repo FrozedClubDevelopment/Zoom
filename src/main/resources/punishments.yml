@@ -1,19 +1,92 @@
 PUNISHMENT-MESSAGES:
   MESSAGE-IN-CONSOLE: true
+  TIME: '&ffor &e<punish-time>&f.'
   PUBLIC:
     - '&7&m---------------------'
-    - '&e<player> &fhas been &e<context> &fby &e<sender>'
+    - '&e<player> &fhas been &e<context> &fby &e<sender> <time>'
     - '&eReason&7: &f<reason>'
     - '&7&m---------------------'
   SILENT:
     - '&7[&aSilent&7] &7&m---------------------'
-    - '&7[&aSilent&7] &e<player> &fhas been &e<context> &fby &e<sender>'
+    - '&7[&aSilent&7] &e<player> &fhas been &e<context> &fby &e<sender> <time>'
     - '&7[&aSilent&7] &eReason&7: &f<reason>'
     - '&7[&aSilent&7] &7&m---------------------'
+  PLAYER:
+    WARN:
+      - '&eYou has been warned by &f<sender>&e.'
+      - '&eReason&7: &f<reason>'
+    MUTE:
+      - '&eYou has been <context> by &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&eDuration&7: &f<duration>'
+    CHAT:
+      PERMANENT:
+        - '&cYou have muted permanent for this server.'
+      TEMP:
+        - '&cYou have muted for this <mute-time>'
 KICK-PUNISHMENT-MESSAGES:
+  ALT-RELATION:
+    - '&eThis punishment is in relacion to <alt-name>'
   KICK:
     - '&7&m--------------------'
     - '&eYou have benn kick from ExampleNetwork'
-    - '&eYou were kicked by <sender>'
+    - '&eYou were kicked by <punishSender>'
+    - '&eReason&7: &f<punishReason>'
     - ''
     - '&7&m--------------------'
+  IP-BAN:
+    - '&7&m--------------------'
+    - '&eYou have been blacklist from ExampleNetwork'
+#    - '&eSender&7: &f<punishSender>'
+    - '&ePunish date&7: &f<punishDate>'
+#    - '&eBan expires in&7: &f<punishRemain>'
+#    - '&eReason&7: &f<punishReason>'
+    - '<alt-relation>'
+    - ''
+    - '&astore.frozed.club'
+    - '&7&m--------------------'
+  BAN:
+    - '&7&m--------------------'
+    - '&eYou have been banned from ExampleNetwork'
+#    - '&eSender&7: &f<punishSender>'
+#    - '&ePunish date&7: &f<punishDate>'
+    - '&eBan expires in&7: &f<punishRemain>'
+    - '&eReason&7: &f<punishReason>'
+    - '<alt-relation>'
+    - ''
+    - '&astore.frozed.club'
+    - '&7&m--------------------'
+  TEMP-BAN:
+    - '&7&m--------------------'
+    - '&eYou have been temporaly banned from ExampleNetwork'
+#    - '&eSender&7: &f<punishSender>'
+#    - '&ePunish date&7: &f<punishDate>'
+    - '&eBan expires in&7: &f<punishRemain>'
+    - '&eReason&7: &f<punishReason>'
+    - '<alt-relation>'
+    - ''
+    - '&astore.frozed.club'
+    - '&7&m--------------------'
+PUNISHMENTS-MENU:
+  ITEM:
+    NANE: '&ePunishment ID &f# <id> &7(<status>&7)'
+    TIME-LEFT:
+      - ''
+      - '&eTime Left&7: &f <time>'
+    PARDONED:
+      EXPIRED:
+        - ''
+        - '&ePardoned at&7: &f<pardonedDate>'
+        - '&ePardoned by&7: &f<pardonedBy>'
+        - '&ePardoned Reason&7: &f<pardonedReason>'
+      ACTIVE:
+        - ''
+        - '&eExpired in&7: &f<expiredIn>'
+    LORE:
+      - ''
+      - '&eAdded at&7: &f<addedDate>'
+      - '&eAdded by&7: &f<addedBy>'
+      - '&eAdded reason&7: &f<reason>'
+      - '<time-left>'
+      - '<punishment-pardoned>'
+      - ''

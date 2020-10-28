@@ -11,7 +11,6 @@ import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -184,23 +183,28 @@ public class RedisListener extends JedisPubSub {
                     }
                     break;
                     case PUNISHMENTS_ADDED:
-                        Punishment punishment = PunishmentUtil.stringToPunishment(redisMessage.getParam("PUNISHMENT"));
+                        Punishment punishment = PunishmentUtil.jsonStringToPunishment(redisMessage.getParam("PUNISHMENT"));
                         String staffName = redisMessage.getParam("STAFF");
                         String targetName = redisMessage.getParam("TARGET");
                         UUID uuid = UUID.fromString(redisMessage.getParam("TARGET_UUID"));
+                        String targetIP = redisMessage.getParam("TARGET_IP");
                         boolean silent = Boolean.valueOf(redisMessage.getParam("SILENT"));
 
                         punishment.broadcast(staffName, targetName, silent);
-                        final Player player = Bukkit.getPlayer(uuid);
-                        if (player != null){
-                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
-                            playerData.getPunishments().removeIf(other -> Objects.equals(other, punishment));
-                            playerData.getPunishments().add(punishment);
-                            if (punishment.getType().isBan() && !punishment.isRemoved() && !punishment.hasExpired()) {
-                                TaskUtil.run(() -> {
-                                    player.kickPlayer(punishment.getKickMessage());
-                                });
+
+                        if (punishment.getType().isBannable()) {
+                            for (Player player : Zoom.getInstance().getServer().getOnlinePlayers()) {
+                                if (player.getAddress().getAddress().getHostAddress().equalsIgnoreCase(targetIP)) {
+                                    TaskUtil.run(() -> player.kickPlayer(punishment.toKickMessage(CC.strip(targetName).equalsIgnoreCase(player.getName()) ? null : targetName)));
+                                }
                             }
+                        }
+
+                        Player player = Zoom.getInstance().getServer().getPlayer(uuid);
+                        if (player != null){
+                            PlayerData profile = PlayerData.getByUuid(player.getUniqueId());
+                            profile.getPunishments().removeIf(other -> Objects.equals(other, punishment));
+                            profile.getPunishments().add(punishment);
                         }
                         break;
                     default:
