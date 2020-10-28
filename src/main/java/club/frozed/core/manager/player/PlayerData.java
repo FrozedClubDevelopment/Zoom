@@ -4,12 +4,16 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.player.grants.GrantProcedure;
+import club.frozed.core.manager.player.punishments.Punishment;
+import club.frozed.core.manager.player.punishments.PunishmentType;
+import club.frozed.core.manager.player.punishments.menu.PunishmentFilter;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
@@ -24,6 +28,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -42,7 +47,6 @@ public class PlayerData {
     private boolean staffChat;
     private boolean adminChat;
     private String country;
-    private String ip;
     private Cooldown chatDelay = new Cooldown(0);
     private Cooldown reportCooldown = new Cooldown(0);
 
@@ -54,7 +58,7 @@ public class PlayerData {
     private boolean italic;
 
     // Messages System
-    private boolean toggleSounds;
+    private boolean toggleSounds = true;
     private boolean togglePrivateMessages = true;
     private List<String> ignoredPlayersList = new ArrayList<>();
     private boolean socialSpy;
@@ -69,6 +73,13 @@ public class PlayerData {
     private List<String> permissions = new ArrayList<>();
     private List<Grant> grants = new ArrayList<>();
     private GrantProcedure grantProcedure;
+
+    //Ban System
+    private String ip;
+    private List<String> ipAddresses = new ArrayList<>();
+    private final List<Punishment> punishments = new ArrayList<>();
+
+    private List<UUID> alts = new ArrayList<>();
 
     public String getNameColor(){
         return nameColor == null ? getHighestRank().getColor().name() : nameColor;
@@ -179,11 +190,6 @@ public class PlayerData {
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
         if (player != null && player.isOnline()) {
-            document.put("ip", player.getAddress().getAddress().toString().replaceAll("/", ""));
-        } else {
-            document.put("ip", this.ip);
-        }
-        if (player != null && player.isOnline()) {
             try {
                 document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
             } catch (Exception e) {
@@ -215,10 +221,19 @@ public class PlayerData {
         document.put("grants", GrantUtil.savePlayerGrants(this.grants));
         document.put("permissions", this.permissions);
 
-        playersData.remove(uuid);
-        playersDataNames.remove(name);
+        // Ban
+        document.put("ip", this.ip);
+        document.put("ipAddresses", this.ignoredPlayersList);
+
+        document.put("punishments", Zoom.GSON.toJson(this.punishments.stream().map(punishment -> punishment.toJSON().toJson()).collect(Collectors.toList()), Utils.LIST_STRING));
+
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerData().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
+    }
+
+    public void removeData(){
+        playersData.remove(uuid);
+        playersDataNames.remove(name);
     }
 
     public void loadData() {
@@ -229,7 +244,6 @@ public class PlayerData {
             this.staffChat = document.getBoolean("staff-chat");
             this.adminChat = document.getBoolean("admin-chat");
             this.country = document.getString("country");
-            this.ip = document.getString("ip");
             this.tag = document.getString("tag");
             this.nameColor = document.getString("name-color");
             this.chatColor = document.getString("chat-color");
@@ -250,8 +264,15 @@ public class PlayerData {
 
             //Rank
             this.grants = GrantUtil.getPlayerGrants((List<String>) document.get("grants"));
-
             this.permissions = (List<String>) document.get("permissions");
+
+            //Ban
+            this.ip = document.getString("ip");
+            this.ipAddresses = (List<String>) document.get("ipAddresses");
+
+
+            List<String> punishments = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
+            this.punishments.addAll(punishments.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
@@ -286,8 +307,103 @@ public class PlayerData {
         return getActiveGrants().stream().map(Grant::getRank).max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
     }
 
+    public List<Punishment> getPunishmentsByFilter(PunishmentType punishmentType, PunishmentFilter punishmentFilter) {
+        Stream<Punishment> punishmentStream = this.getPunishmentsByType(punishmentType).stream();
+
+        switch(punishmentFilter) {
+
+            case ACTIVE: {
+                punishmentStream = punishmentStream.filter(Punishment::hasExpired);
+            }
+
+            case INACTIVE: {
+                punishmentStream = punishmentStream.filter(punishment -> !punishment.hasExpired());
+            }
+            case LIFETIME: {
+                punishmentStream = punishmentStream.filter(punishment -> punishment.hasExpired() && !punishment.isLifetime());
+            }
+
+            case TEMPORARILY: {
+                punishmentStream = punishmentStream.filter(punishment -> punishment.hasExpired() && punishment.isLifetime());
+            }
+
+            default: {
+                break;
+            }
+        }
+        List<Punishment> punishments = punishmentStream.sorted(Comparator.comparingLong(Punishment::getAddedAt)).collect(Collectors.toList());;
+        Collections.reverse(punishments);
+        return punishments;
+    }
+
+    public Punishment getActivePunishment(PunishmentType punishmentType) {
+        for (Punishment punishment : punishments) {
+            if (punishment.getType() == punishmentType && !punishment.hasExpired()) {
+                return punishment;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Punishment> getPunishmentsByType(PunishmentType punishmentType) {
+        return this.punishments
+                .stream()
+                .filter(punishment -> punishment.getType() == punishmentType)
+                .sorted(Comparator.comparingLong(Punishment::getAddedAt))
+                .collect(Collectors.toList());
+    }
+
+    public Punishment getBannablePunishment() {
+        for (Punishment punishment : punishments) {
+            if (punishment.getType().isBannable() && !punishment.hasExpired()) {
+                return punishment;
+            }
+        }
+        return null;
+    }
+
+    public int getPunishmentCountByType(PunishmentType type) {
+        int c = 0;
+        for (Punishment punishment : punishments) {
+            if (punishment.getType() == type) c++;
+        }
+        return c;
+    }
+
+//    public Punishment getActivePunishmentByType(PunishmentType type) {
+//        for (Punishment punishment : this.punishments) {
+//            if (punishment.getType() == type && !punishment.isRemoved() && !punishment.hasExpired())
+//                return punishment;
+//        }
+//        return null;
+//    }
+//
+//    public int getPunishmentCountByType(PunishmentType type) {
+//        int i = 0;
+//        for (Punishment punishment : this.punishments) {
+//            if (punishment.getType() == type)
+//                i++;
+//        }
+//        return i;
+//    }
+
+    public void findAlts() {
+        if (this.ip == null)
+            return;
+        this.alts.clear();
+        try (MongoCursor<Document> cursor = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("ip", this.ip)).iterator()) {
+            cursor.forEachRemaining(document -> {
+                UUID uuid = UUID.fromString(document.getString("uuid"));
+                if (!uuid.equals(getUuid()) && !this.alts.contains(uuid))
+                    this.alts.add(uuid);
+            });
+        }
+    }
+
     public void destroy() {
         this.saveData();
+        this.removeData();
     }
 
     public static PlayerData getByUuid(UUID uuid) {
