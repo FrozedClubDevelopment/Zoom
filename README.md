@@ -82,4 +82,11 @@
 - core.rank.grants
 
 > Punisments
+- core.punishments.limit
 - core.punishments.silent.see
+- core.punishments.warn
+- core.punishments.unwarn
+
+
+Punishments Usage: {} Necessary , [] Optional
+- Warn -> /warn {player} [reason] [-s]
