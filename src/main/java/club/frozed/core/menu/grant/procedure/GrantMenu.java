@@ -13,8 +13,7 @@ import club.frozed.core.utils.menu.pagination.PaginatedMenu;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ryzeon
@@ -35,10 +34,18 @@ public class GrantMenu extends PaginatedMenu {
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-        for (int i = 0; i < Rank.getRanks().size(); i++){
-            buttons.put(i, new RankButton(Rank.getRanks().get(i), targetData));
+
+        for (int i = 0; i < getRanks().size(); i++){
+            Rank rank = getRanks().get(i);
+            buttons.put(i, new RankButton(rank, targetData));
         }
         return buttons;
+    }
+
+    private List<Rank> getRanks(){
+        List<Rank> ranks = new ArrayList<>();
+        Rank.getRanks().stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).forEach(ranks::add);
+        return ranks;
     }
 
     @Override
