@@ -69,21 +69,21 @@ public class ChatListener implements Listener {
         e.setFormat(format);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onMuteChat(AsyncPlayerChatEvent event){
-        PlayerData data = PlayerData.getPlayerData(event.getPlayer().getUniqueId());
-        if (data == null) return;
-        Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
-        if (punishment != null){
-            if (punishment.isLifetime()){
-                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT")));
-            } else {
-                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP")
-                        .replace("<mute-time>", punishment.getTimeLeft(true))));
-            }
-            event.setCancelled(true);
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGH)
+//    public void onMuteChat(AsyncPlayerChatEvent event){
+//        PlayerData data = PlayerData.getPlayerData(event.getPlayer().getUniqueId());
+//        if (data == null) return;
+//        Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
+//        if (punishment != null){
+//            if (punishment.isLifetime()){
+//                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT")));
+//            } else {
+//                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP")
+//                        .replace("<mute-time>", punishment.getTimeLeft(true))));
+//            }
+//            event.setCancelled(true);
+//        }
+//    }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onStaffChat(AsyncPlayerChatEvent e) {

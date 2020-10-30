@@ -32,16 +32,11 @@ public class PlayerDataLoad implements Listener {
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
         }
 
-        if (!playerData.isDataLoaded()) {
-            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-            e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
-        }
-
-        if (playerData.getBannablePunishment() != null) {
-            e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
-            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-            return;
-        }
+//        if (playerData.getBannablePunishment() != null) {
+//            e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
+//            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+//            return;
+//        }
         if (playerData.getIp() == null){
             playerData.setIp(e.getAddress().getHostAddress());
         }
@@ -53,16 +48,16 @@ public class PlayerDataLoad implements Listener {
         }
         playerData.findAlts();
 
-        for (UUID uuid : playerData.getAlts()){
-            PlayerData altsData = PlayerData.loadData(uuid);
-            if (altsData != null) {
-                if (altsData.getBannablePunishment() != null) {
-                    e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
-                    e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                }
-            }
-            PlayerData.deleteData(uuid);
-        }
+//        for (UUID uuid : playerData.getAlts()){
+//            PlayerData altsData = PlayerData.loadData(uuid);
+//            if (altsData != null) {
+//                if (altsData.getBannablePunishment() != null) {
+//                    e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
+//                    e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+//                }
+//            }
+//            PlayerData.deleteData(uuid);
+//        }
         playerData.saveData();
     }
 

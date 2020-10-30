@@ -224,7 +224,7 @@ public class PlayerData {
         document.put("ip", this.ip);
         document.put("ipAddresses", this.ignoredPlayersList);
 
-        document.put("punishments", Zoom.GSON.toJson(this.punishments.stream().map(punishment -> punishment.toJSON().toJson()).collect(Collectors.toList()), Utils.LIST_STRING));
+//        document.put("punishments", Zoom.GSON.toJson(this.punishments.stream().map(punishment -> punishment.toJSON().toJson()).collect(Collectors.toList()), Utils.LIST_STRING));
 
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerData().replaceOne(Filters.eq("uuid", this.uuid.toString()), document, (new UpdateOptions()).upsert(true));
@@ -269,8 +269,8 @@ public class PlayerData {
             this.ipAddresses = (List<String>) document.get("ipAddresses");
 
 
-            List<String> punishmentsList = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
-            this.punishments.addAll(punishmentsList.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
+//            List<String> punishmentsList = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
+//            this.punishments.addAll(punishmentsList.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
