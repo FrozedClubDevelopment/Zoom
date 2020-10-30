@@ -107,7 +107,7 @@ public class RedisListener extends JedisPubSub {
                     case RANK_UPDATE_PERMS:{
                         Rank rank = Rank.getRankByName(redisMessage.getParam("RANK"));
                         Bukkit.getOnlinePlayers().forEach(player -> {
-                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
                             if (playerData != null){
                                 if (rank != null){
                                     if (playerData.hasRank(rank)){
@@ -122,7 +122,7 @@ public class RedisListener extends JedisPubSub {
                         Rank rank = Rank.getRankByName(redisMessage.getParam("RANK"));
                         if (rank != null) {
                             Bukkit.getOnlinePlayers().forEach(player -> {
-                                PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                                PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
                                 if (playerData != null) {
                                     if (playerData.hasRank(rank)) {
                                         playerData.deleteRank(playerData.getPlayer(),rank);
@@ -141,7 +141,7 @@ public class RedisListener extends JedisPubSub {
                         Player player = Bukkit.getPlayer(redisMessage.getParam("NAME"));
                         String permission = redisMessage.getParam("PERMISSION");
                         if (player != null){
-                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
                             if (playerData != null){
                                 playerData.getPermissions().add(permission);
                                 playerData.loadPermissions(player);
@@ -161,7 +161,7 @@ public class RedisListener extends JedisPubSub {
                         String grantmsg = redisMessage.getParam("GRANT");
                         String[] grantsSplit = grantmsg.split(";");
                         if (player != null){
-                            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+                            PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
                             if (playerData != null) {
                                 Grant grant = new Grant(
                                         grantsSplit[0],
@@ -202,7 +202,7 @@ public class RedisListener extends JedisPubSub {
 
                         Player player = Zoom.getInstance().getServer().getPlayer(uuid);
                         if (player != null){
-                            PlayerData profile = PlayerData.getByUuid(player.getUniqueId());
+                            PlayerData profile = PlayerData.getPlayerData(player.getUniqueId());
                             profile.getPunishments().removeIf(other -> Objects.equals(other, punishment));
                             profile.getPunishments().add(punishment);
                         }

@@ -13,6 +13,7 @@ import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
+import com.google.common.collect.Maps;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
@@ -34,8 +35,8 @@ import java.util.stream.Stream;
 @Setter
 public class PlayerData {
 
-    @Getter public static Map<UUID, PlayerData> playersData = new HashMap<>();
-    @Getter public static Map<String, PlayerData> playersDataNames = new HashMap<>();
+    @Getter
+    private static Map<UUID, PlayerData> playerData = Maps.newHashMap();
 
     // Player identification
     private String name;
@@ -81,16 +82,15 @@ public class PlayerData {
 
     private List<UUID> alts = new ArrayList<>();
 
-    public String getNameColor(){
+    public String getNameColor() {
         return nameColor == null ? getHighestRank().getColor().name() : nameColor;
     }
 
     public PlayerData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
-        playersData.put(uuid, this);
-        playersDataNames.put(name, this);
         this.dataLoaded = false;
+        loadData();
     }
 
     public Player getPlayer() {
@@ -178,10 +178,9 @@ public class PlayerData {
 
     public void saveData() {
         Document document = new Document();
-        Player player = Bukkit.getPlayer(uuid);
         document.put("name", this.name);
-        if (player != null && player.isOnline()) {
-            document.put("name_lowercase", player.getName().toLowerCase());
+        if (getPlayer() != null) {
+            document.put("name_lowercase", getPlayer().getName().toLowerCase());
         } else {
             document.put("name_lowercase", this.name.toLowerCase());
         }
@@ -189,9 +188,9 @@ public class PlayerData {
         document.put("last-server", Lang.SERVER_NAME);
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
-        if (player != null && player.isOnline()) {
+        if (getPlayer() != null) {
             try {
-                document.put("country", Utils.getCountry(player.getAddress().getAddress().toString().replaceAll("/", "")));
+                document.put("country", Utils.getCountry(getPlayer().getAddress().getAddress().toString().replaceAll("/", "")));
             } catch (Exception e) {
                 Bukkit.getLogger().info("Error in get player country");
             }
@@ -228,17 +227,16 @@ public class PlayerData {
         document.put("punishments", Zoom.GSON.toJson(this.punishments.stream().map(punishment -> punishment.toJSON().toJson()).collect(Collectors.toList()), Utils.LIST_STRING));
 
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
-        mongoManager.getPlayerData().replaceOne(Filters.eq("name", this.name), document, (new UpdateOptions()).upsert(true));
+        mongoManager.getPlayerData().replaceOne(Filters.eq("uuid", this.uuid.toString()), document, (new UpdateOptions()).upsert(true));
     }
 
-    public void removeData(){
-        playersData.remove(uuid);
-        playersDataNames.remove(name);
+    public void removeData() {
+        deleteData(this.uuid);
     }
 
     public void loadData() {
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
-        Document document = mongoManager.getPlayerData().find(Filters.eq("name", this.name)).first();
+        Document document = mongoManager.getPlayerData().find(Filters.eq("uuid", this.uuid.toString())).first();
         if (document != null) {
             this.lastServer = document.getString("last-server");
             this.staffChat = document.getBoolean("staff-chat");
@@ -271,8 +269,8 @@ public class PlayerData {
             this.ipAddresses = (List<String>) document.get("ipAddresses");
 
 
-            List<String> punishments = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
-            this.punishments.addAll(punishments.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
+            List<String> punishmentsList = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
+            this.punishments.addAll(punishmentsList.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
@@ -310,7 +308,7 @@ public class PlayerData {
     public List<Punishment> getPunishmentsByFilter(PunishmentType punishmentType, PunishmentFilter punishmentFilter) {
         Stream<Punishment> punishmentStream = this.getPunishmentsByType(punishmentType).stream();
 
-        switch(punishmentFilter) {
+        switch (punishmentFilter) {
 
             case ACTIVE: {
                 punishmentStream = punishmentStream.filter(Punishment::hasExpired);
@@ -331,7 +329,8 @@ public class PlayerData {
                 break;
             }
         }
-        List<Punishment> punishments = punishmentStream.sorted(Comparator.comparingLong(Punishment::getAddedAt)).collect(Collectors.toList());;
+        List<Punishment> punishments = punishmentStream.sorted(Comparator.comparingLong(Punishment::getAddedAt)).collect(Collectors.toList());
+        ;
         Collections.reverse(punishments);
         return punishments;
     }
@@ -371,24 +370,8 @@ public class PlayerData {
         return c;
     }
 
-//    public Punishment getActivePunishmentByType(PunishmentType type) {
-//        for (Punishment punishment : this.punishments) {
-//            if (punishment.getType() == type && !punishment.isRemoved() && !punishment.hasExpired())
-//                return punishment;
-//        }
-//        return null;
-//    }
-//
-//    public int getPunishmentCountByType(PunishmentType type) {
-//        int i = 0;
-//        for (Punishment punishment : this.punishments) {
-//            if (punishment.getType() == type)
-//                i++;
-//        }
-//        return i;
-//    }
-
     public void findAlts() {
+        System.out.println("Buscando alts de " + this.name);
         if (this.ip == null)
             return;
         this.alts.clear();
@@ -399,19 +382,66 @@ public class PlayerData {
                     this.alts.add(uuid);
             });
         }
+        System.out.println("Total -> " + this.alts.size());
     }
 
-    public void destroy() {
-        this.saveData();
-        this.removeData();
+    //    public void destroy() {
+//        this.saveData();
+//        this.removeData();
+//    }
+    /*
+    Data Hadnler
+     */
+    public static PlayerData createPlayerData(UUID uuid, String name) {
+        if (playerData.containsKey(uuid)) return getPlayerData(uuid);
+        playerData.put(uuid, new PlayerData(name, uuid));
+        return getPlayerData(uuid);
     }
 
-    public static PlayerData getByUuid(UUID uuid) {
-        return playersData.get(uuid);
+    public static PlayerData getPlayerData(UUID uuid) {
+        return playerData.get(uuid);
     }
 
-    public static PlayerData getByName(String name) {
-        return playersDataNames.get(name);
+    public static PlayerData getPlayerData(String name) {
+        Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("name", name)).first();
+        if (document == null) return null;
+        return playerData.get(UUID.fromString(document.getString("uuid")));
+    }
+
+    public static void deleteProfile(PlayerData profile) {
+        if (Bukkit.getPlayer(profile.getUuid()) == null) {
+            profile.saveData();
+            playerData.remove(profile.getUuid());
+        }
+    }
+
+    public static void deleteData(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null) return;
+        playerData.get(uuid).saveData();
+        playerData.remove(uuid);
+    }
+
+    public static boolean hasData(UUID uuid) {
+        Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("uuid", uuid.toString())).first();
+
+        return document != null;
+    }
+
+    public static boolean hasData(String name) {
+        Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("name", name)).first();
+
+        return document != null;
+    }
+
+    public static PlayerData loadData(UUID uuid) {
+        Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("uuid", uuid.toString())).first();
+
+        if (document == null) {
+            return null;
+        }
+        createPlayerData(uuid, document.getString("name"));
+        return getPlayerData(uuid);
     }
 
     public boolean hasPermission(String permission) {

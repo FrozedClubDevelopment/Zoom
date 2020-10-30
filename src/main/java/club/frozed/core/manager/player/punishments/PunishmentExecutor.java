@@ -27,7 +27,9 @@ public class PunishmentExecutor {
 
     public PunishmentExecutor(String source, CommandSender sender){
         String[] parser = source.split(" ");
-        this.duration = Utils.parse(parser[1], TimeUnit.MILLISECONDS);
+        if (parser.length != 0) {
+            this.duration = Utils.parse(parser[1], TimeUnit.MILLISECONDS);
+        }
         if (this.duration > 0L) {
             this.reason = parser.length <= 1 ? "" : source.replaceFirst(parser[0], "").replaceFirst(" ", "");
         } else {
@@ -95,7 +97,7 @@ public class PunishmentExecutor {
                         player.sendMessage(CC.translate(s)
                                 .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
                                 .replace("<duration>", punishment.getTimeLeft(false))
-                                .replace("<reason>", (punishment.getReason() == null || punishment.getReason().isEmpty() ? "No reason provided" : punishment.getReason()))
+                                .replace("<reason>", (punishment.getReason() == null || punishment.getReason().equals("") || punishment.getReason().isEmpty() ? "No reason provided" : punishment.getReason()))
                         ));
             }
         }

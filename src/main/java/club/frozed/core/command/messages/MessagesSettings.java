@@ -18,7 +18,7 @@ public class MessagesSettings extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            PlayerData playerData = PlayerData.getByUuid(p.getUniqueId());
+            PlayerData playerData = PlayerData.getPlayerData(p.getUniqueId());
             String defaultChatColor = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
             ChatColor CC;
 

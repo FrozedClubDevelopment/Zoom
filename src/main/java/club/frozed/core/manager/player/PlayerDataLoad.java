@@ -22,14 +22,21 @@ public class PlayerDataLoad implements Listener {
             Zoom.getInstance().getServer().getScheduler().runTask(Zoom.getInstance(), () -> player.kickPlayer(CC.translate("&cDuplicate login :/.")));
             return;
         }
-        PlayerData playerData = PlayerData.getByName(e.getName());
-        if (playerData == null) {
-            playerData = new PlayerData(e.getName(), e.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getUniqueId());
+        if (playerData == null){
+            playerData = PlayerData.createPlayerData(e.getUniqueId(), e.getName());
         }
+
         if (!playerData.isDataLoaded()) {
-            playerData.loadData();
-            playerData.findAlts();
+            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+            e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
         }
+
+        if (!playerData.isDataLoaded()) {
+            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+            e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
+        }
+
         if (playerData.getBannablePunishment() != null) {
             e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
             e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
@@ -44,24 +51,24 @@ public class PlayerDataLoad implements Listener {
         if (!playerData.getIp().equalsIgnoreCase(e.getAddress().getHostAddress())){
             playerData.setIp(e.getAddress().getHostAddress());
         }
+        playerData.findAlts();
 
-        if (!playerData.getIp().equals(e.getAddress().getHostAddress())) {
-            for (UUID uuid : playerData.getAlts()){
-                PlayerData targetData = PlayerOfflineData.loadData(uuid);
-                if (targetData != null) {
-                    if (targetData.getBannablePunishment() != null) {
-                        e.setKickMessage(targetData.getBannablePunishment().toKickMessage(targetData.getName()));
-                        e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                    }
+        for (UUID uuid : playerData.getAlts()){
+            PlayerData altsData = PlayerData.loadData(uuid);
+            if (altsData != null) {
+                if (altsData.getBannablePunishment() != null) {
+                    e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
+                    e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 }
-                PlayerOfflineData.deleteData(uuid);
             }
+            PlayerData.deleteData(uuid);
         }
+        playerData.saveData();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerLoginEvent(PlayerLoginEvent e) {
-        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         if (playerData == null) {
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
@@ -71,7 +78,7 @@ public class PlayerDataLoad implements Listener {
     }
 
     private void handledSaveDate(Player player) {
-        PlayerData playerData = PlayerData.getByName(player.getName());
+        PlayerData playerData =  PlayerData.getPlayerData(player.getName());
         if (playerData != null){
             playerData.saveData();
             playerData.removeData();

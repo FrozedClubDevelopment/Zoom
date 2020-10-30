@@ -22,7 +22,7 @@ public class RemoveTagButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
         if (data.getTag() != null) {
             data.setTag(null);
             playSuccess(player);

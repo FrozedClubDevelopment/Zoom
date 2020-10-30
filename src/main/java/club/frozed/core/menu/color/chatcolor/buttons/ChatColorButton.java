@@ -36,7 +36,7 @@ public class ChatColorButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         String permission = "core.chatcolor." + color.name().replace("_", "").toLowerCase();
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (player.hasPermission(permission) || player.hasPermission("core.chatcolor.all")) {
             playerData.setChatColor(color.name());
             playSuccess(player);

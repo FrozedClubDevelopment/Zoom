@@ -30,7 +30,7 @@ public class ReportCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        PlayerData playerData = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(p.getUniqueId());
         Cooldown cooldown = new Cooldown(Zoom.getInstance().getSettingsConfig().getConfig().getInt("SETTINGS.REPORT.COOLDOWN"));
 
         if (args.length == 0){

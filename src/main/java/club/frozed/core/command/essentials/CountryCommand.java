@@ -28,7 +28,8 @@ public class CountryCommand extends BaseCMD {
             return;
         }
 
-        playerData = PlayerData.getByUuid(Bukkit.getPlayer(args[0]).getUniqueId());
+//        playerData = PlayerData.getByUuid(Bukkit.getPlayer(args[0]).getUniqueId());
+        playerData = PlayerData.getPlayerData(Bukkit.getPlayer(args[0]).getUniqueId());
         if (playerData == null) return;
         if (playerData.getCountry() == null) return;
         String ip = playerData.getPlayer().getAddress().getAddress().toString().replaceAll("/", "");

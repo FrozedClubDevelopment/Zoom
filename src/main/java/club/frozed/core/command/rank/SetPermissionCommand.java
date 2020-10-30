@@ -4,7 +4,6 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.command.BaseCMD;
 import club.frozed.core.utils.command.Command;
@@ -32,18 +31,13 @@ public class SetPermissionCommand extends BaseCMD {
 
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
         if (offlinePlayer.isOnline()) {
-            PlayerData playerData = PlayerData.getByName(offlinePlayer.getName());
+            PlayerData playerData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
             setPermission(player, playerData, args[1], args[2].equalsIgnoreCase("true"));
             playerData.loadPermissions(playerData.getPlayer());
         } else {
             player.sendMessage(CC.translate("&eLoading player data....."));
-            if (!PlayerOfflineData.hasData(offlinePlayer.getName())){
-                player.sendMessage(CC.translate("&cThat player doesn't have data"));
-                return;
-            }
-            PlayerData targetData = PlayerOfflineData.loadData(offlinePlayer.getName());
+            PlayerData targetData = PlayerData.loadData(offlinePlayer.getUniqueId());
             setPermission(player, targetData, args[1], args[2].equalsIgnoreCase("true"));
-            PlayerOfflineData.deleteData(targetData.getUuid());
         }
     }
 
@@ -90,5 +84,6 @@ public class SetPermissionCommand extends BaseCMD {
                 Zoom.getInstance().getRedisManager().write(json);
             }
         }
+        PlayerData.deleteProfile(playerData);
     }
 }

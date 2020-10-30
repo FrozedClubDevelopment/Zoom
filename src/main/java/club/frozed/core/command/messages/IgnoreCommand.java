@@ -37,7 +37,7 @@ public class IgnoreCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        PlayerData data = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(p.getUniqueId());
 
         if (args.length == 0) {
             p.sendMessage(CC.CHAT_BAR);

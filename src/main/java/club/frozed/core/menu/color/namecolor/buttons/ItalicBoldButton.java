@@ -26,7 +26,7 @@ public class ItalicBoldButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {
-        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
         return getMaterial(type, data);
     }
 
@@ -52,7 +52,7 @@ public class ItalicBoldButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
         switch (this.type){
             case 1:
                 if (player.hasPermission("core.namecolor.italic")) {

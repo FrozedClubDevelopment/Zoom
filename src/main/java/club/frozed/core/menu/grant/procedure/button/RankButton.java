@@ -46,7 +46,7 @@ public class RankButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        PlayerData senderData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData senderData = PlayerData.getPlayerData(player.getUniqueId());
         if (Zoom.getInstance().getRankManager().getDefaultRank() == rank){
             player.sendMessage(CC.translate("&4Error! &cYou cannot grant this range as the default."));
             return;

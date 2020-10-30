@@ -14,7 +14,7 @@ public class SocialSpyCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        PlayerData data = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(p.getUniqueId());
 
         if (data == null) return;
         String status = !data.isSocialSpy() ? "§aenabled" : "§cdisabled";

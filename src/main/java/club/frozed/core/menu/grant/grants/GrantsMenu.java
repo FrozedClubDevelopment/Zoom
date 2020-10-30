@@ -1,7 +1,6 @@
 package club.frozed.core.menu.grant.grants;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.menu.grant.grants.button.GrantsInfoButton;
 import club.frozed.core.menu.grant.grants.button.AllGrantsButton;
@@ -37,6 +36,11 @@ public class GrantsMenu extends PaginatedMenu {
     }
 
     private Comparator<Grant> GRANT_COMPARATOR = Comparator.comparingLong(Grant::getAddedDate).reversed();
+
+    @Override
+    public void onClose(Player player) {
+        PlayerData.deleteProfile(targetplayerData);
+    }
 
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
@@ -97,11 +101,6 @@ public class GrantsMenu extends PaginatedMenu {
 
 
         return buttons;
-    }
-
-    @Override
-    public void onClose(Player player) {
-        PlayerOfflineData.deleteData(targetplayerData.getUuid());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package club.frozed.core.menu.grant.grants;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.menu.grant.grants.button.GrantsInfoButton;
 import club.frozed.core.utils.CC;
@@ -55,6 +54,11 @@ public class AllGrantsMenu extends PaginatedMenu {
     }
 
     @Override
+    public void onClose(Player player) {
+        PlayerData.deleteProfile(targetplayerData);
+    }
+
+    @Override
     public Map<Integer, Button> getGlobalButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
 
@@ -90,11 +94,6 @@ public class AllGrantsMenu extends PaginatedMenu {
         buttons.put(40, new PageInfoButton(this));
 
         return buttons;
-    }
-
-    @Override
-    public void onClose(Player player) {
-        PlayerOfflineData.deleteData(targetplayerData.getUuid());
     }
 
     @Override

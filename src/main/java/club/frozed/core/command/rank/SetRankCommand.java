@@ -2,7 +2,6 @@ package club.frozed.core.command.rank;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
@@ -51,7 +50,7 @@ public class SetRankCommand extends BaseCMD {
         String reason = Utils.buildMessage(args, 3);
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         if (target.isOnline()) {
-            PlayerData targetData = PlayerData.getByName(target.getName());
+            PlayerData targetData = PlayerData.getPlayerData(target.getUniqueId());
             if (targetData.hasRank(rankData)) {
                 player.sendMessage(CC.translate("&cError! &7That player already have " + rankData.getColor() + rankData.getName() + " &7rank."));
                 return;
@@ -59,19 +58,19 @@ public class SetRankCommand extends BaseCMD {
             Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
         } else {
             player.sendMessage(CC.translate("&eLoading player data....."));
-            if (!PlayerOfflineData.hasData(target.getName())){
+            if (!PlayerData.hasData(target.getName())){
                 player.sendMessage(CC.translate("&cThat player doesn't have data"));
                 return;
             }
-            PlayerData targetData = PlayerOfflineData.loadData(target.getName());
+            PlayerData targetData = PlayerData.loadData(target.getUniqueId());
             if (targetData != null) {
                 if (targetData.hasRank(rankData)) {
                     player.sendMessage(CC.translate("&cError! &7That player already have " + rankData.getColor() + rankData.getName() + " &7rank."));
-                    PlayerOfflineData.deleteData(targetData.getUuid());
+                    targetData.removeData();
                     return;
                 }
                 Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
-                PlayerOfflineData.deleteData(targetData.getUuid());
+                targetData.removeData();
             }
         }
     }

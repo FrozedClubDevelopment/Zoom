@@ -14,7 +14,7 @@ public class StaffListener implements Listener {
 
     @EventHandler
     public void onJoinStaffEvent(PlayerJoinEvent e) {
-        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         if (playerData == null) return;
         if (!playerData.getPlayer().hasPermission("core.staff")) return;
         if (Zoom.getInstance().getRedisManager().isActive()) {

@@ -90,7 +90,7 @@ public class Rank {
     }
 
     public String formatName(Player player) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         String nameColor = this.getColor().toString();
         if (playerData != null && playerData.getNameColor() != null) {
             nameColor = ChatColor.valueOf(playerData.getNameColor()).toString();

@@ -189,7 +189,7 @@ public class Punishment {
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
                                 .replace("<context>", getContext())
-                                .replace("<reason>", this.reason)
+                                .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                 .replace("<time>", getTime())
                         ));
             });
@@ -200,7 +200,7 @@ public class Punishment {
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
                                 .replace("<context>", getContext())
-                                .replace("<reason>", this.reason)
+                                .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                 .replace("<time>", getTime())
                         ));
             } else {
@@ -210,7 +210,7 @@ public class Punishment {
                                     .replace("<player>", targetName)
                                     .replace("<sender>", senderName)
                                     .replace("<context>", getContext())
-                                    .replace("<reason>", this.reason)
+                                    .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                     .replace("<time>", getTime()))
                             );
                 });
@@ -234,7 +234,7 @@ public class Punishment {
                                 lore.add(CC.translate(textRemoved)
                                 .replace("<pardonedDate>",TimeUtil.formatIntoCalendarString(new Date(this.pardonedAt)))
                                 .replace("<pardonedBy>",Utils.getDisplayName(this.pardonedBy))
-                                .replace("<pardonedReason>", (this.pardonedReason == null || this.pardonedReason.isEmpty() ? "No reason provided" : this.pardonedReason))));
+                                .replace("<pardonedReason>", (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason == "" ? "No reason provided" : this.pardonedReason))));
                     } else {
                         Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.PARDONED.ACTIVE").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
@@ -263,7 +263,7 @@ public class Punishment {
         text = text
                 .replace("<addedBy>", Utils.getDisplayName(this.addedBy))
                 .replace("<addedDate>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt)))
-                .replace("<reason>",(this.reason == null || this.reason.isEmpty() ? "No reason provided" : this.reason))
+                .replace("<reason>",(this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                 ;
         return text;
     }
@@ -275,7 +275,7 @@ public class Punishment {
             case KICK:
                 Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.KICK").forEach(text -> {
                     kickMessage.add(CC.translate(text)
-                            .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() ? "No reason provided" : this.reason))
+                            .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                             .replace("<punishSender>", Utils.getDisplayName(this.addedBy)))
                             ;
                 });
@@ -297,7 +297,7 @@ public class Punishment {
                                         .replace("<punishDate>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt)))
                                         .replace("<punishRemain>", this.getTimeLeft(false))
                                         .replace("<punishSender>", Utils.getDisplayName(this.addedBy))
-                                        .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() ? "No reason provided" : this.reason))
+                                        .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                 );
                                 break;
                         }
@@ -318,7 +318,7 @@ public class Punishment {
                                         .replace("<punishDate>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt)))
                                         .replace("<punishRemain>", this.getTimeLeft(false))
                                         .replace("<punishSender>", Utils.getDisplayName(this.addedBy))
-                                        .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() ? "No reason provided" : this.reason))
+                                        .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                 );
                                 break;
                         }
@@ -341,7 +341,7 @@ public class Punishment {
                                     .replace("<punishDate>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt)))
                                     .replace("<punishRemain>", this.getTimeLeft(false))
                                     .replace("<punishSender>", Utils.getDisplayName(this.addedBy))
-                                    .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() ? "No reason provided" : this.reason))
+                                    .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                             );
                             break;
                     }

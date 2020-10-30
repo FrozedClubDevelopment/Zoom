@@ -15,7 +15,7 @@ public class MessageCommand extends BaseCMD {
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
-        PlayerData data = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(p.getUniqueId());
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
@@ -37,7 +37,8 @@ public class MessageCommand extends BaseCMD {
             return;
         }
 
-        PlayerData targetdata = PlayerData.getByUuid(target.getUniqueId());
+//        PlayerData targetdata = PlayerData.getByUuid(target.getUniqueId());
+        PlayerData targetdata = PlayerData.getPlayerData(target.getUniqueId());
         if (targetdata == null) return;
         if (targetdata.getIgnoredPlayersList().contains(p.getName())) {
             p.sendMessage("§cYou cannot message this player, because you are on his ignore list");

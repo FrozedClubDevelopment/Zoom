@@ -43,23 +43,23 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
 
         // %zoom_rank_name%
         if (identifier.equalsIgnoreCase("rank_name")) {
-            if (PlayerData.getByName(player.getName()).getHighestRank().getName() == null) {
+            if (PlayerData.getPlayerData(player.getName()).getHighestRank().getName() == null) {
                 return Zoom.getInstance().getRankManager().getDefaultRank().getName();
             }
-            return PlayerData.getByName(player.getName()).getHighestRank().getName();
+            return PlayerData.getPlayerData(player.getName()).getHighestRank().getName();
         }
 
         // %zoom_rank_color%
         if (identifier.equalsIgnoreCase("rank_color")) {
-            return "&" + PlayerData.getByName(player.getName()).getHighestRank().getColor().getChar();
+            return "&" + PlayerData.getPlayerData(player.getName()).getHighestRank().getColor().getChar();
         }
 
         // %zoom_rank_prefix%
         if (identifier.equalsIgnoreCase("rank_prefix")) {
-            if (PlayerData.getByName(player.getName()).getHighestRank().getPrefix() == null) {
+            if (PlayerData.getPlayerData(player.getName()).getHighestRank().getPrefix() == null) {
                 return Zoom.getInstance().getRankManager().getDefaultRank().getPrefix();
             }
-            return PlayerData.getByName(player.getName()).getHighestRank().getPrefix();
+            return PlayerData.getPlayerData(player.getName()).getHighestRank().getPrefix();
         }
 
         return null;

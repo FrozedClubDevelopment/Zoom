@@ -42,7 +42,7 @@ public class PlayerMessage {
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
 
-        PlayerData targetData = PlayerData.getByUuid(this.target.getUniqueId());
+        PlayerData targetData = PlayerData.getPlayerData(this.target.getUniqueId());
         if (targetData.isToggleSounds()) {
             String sound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
             if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
@@ -54,7 +54,7 @@ public class PlayerMessage {
         this.target.sendMessage(CC.translate(targetFormat));
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerData data = PlayerData.getByUuid(p.getUniqueId());
+            PlayerData data = PlayerData.getPlayerData(p.getUniqueId());
             if (data == null) return;
             if (data.isSocialSpy() && p.hasPermission("core.chat.socialSpy")) {
                 p.sendMessage(CC.translate(socialSpyFormat));

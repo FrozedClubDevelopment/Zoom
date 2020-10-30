@@ -90,3 +90,12 @@ PUNISHMENTS-MENU:
       - '<time-left>'
       - '<punishment-pardoned>'
       - ''
+ALTS-FORMAT:
+  ALT-FORMAT: '&e » &f<player> <status>'
+  FORMAT:
+    - '&6&lZoom &7- &ePlayer Alts'
+    - '&7&m----------------------'
+    - '&6Player&7: &f<player>'
+    - '&6Alts&7:'
+    - '<alts>'
+    - '&7&m----------------------'

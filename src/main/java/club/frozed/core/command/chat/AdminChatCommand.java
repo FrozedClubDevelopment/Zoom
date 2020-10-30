@@ -18,7 +18,7 @@ public class AdminChatCommand extends BaseCMD {
         Player player = cmd.getPlayer();
         String[] args = cmd.getArgs();
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.ADMIN-CHAT");
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (args.length == 0) {
             playerData.setAdminChat(!playerData.isAdminChat());
             String sound = configCursor.getString("SOUND");

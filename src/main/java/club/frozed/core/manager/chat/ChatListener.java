@@ -24,7 +24,7 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent e) {
-        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         String message = e.getMessage();
         String messageFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.FORMAT");
         String chatColor = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
@@ -71,7 +71,7 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onMuteChat(AsyncPlayerChatEvent event){
-        PlayerData data = PlayerData.getByUuid(event.getPlayer().getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(event.getPlayer().getUniqueId());
         if (data == null) return;
         Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
         if (punishment != null){
@@ -87,7 +87,7 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onStaffChat(AsyncPlayerChatEvent e) {
-        PlayerData playerData = PlayerData.getByName(e.getPlayer().getName());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getName());
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.STAFF-CHAT");
         boolean staffChat = playerData.isStaffChat();
         boolean adminChat = playerData.isAdminChat();
@@ -111,7 +111,7 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onAdminChat(AsyncPlayerChatEvent e) {
-        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getSettingsConfig(), "SETTINGS.ADMIN-CHAT");
         boolean staffChat = playerData.isStaffChat();
         boolean adminChat = playerData.isAdminChat();
@@ -135,7 +135,7 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onChatDelay(AsyncPlayerChatEvent e) {
-        PlayerData playerData = PlayerData.getByUuid(e.getPlayer().getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         ChatManager chatManager = Zoom.getInstance().getChatManager();
         ConfigCursor msg = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "NETWORK.CHAT-MANAGER.PLAYER-MESSAGE");
         Cooldown cooldown = new Cooldown(chatManager.getDelay());
@@ -171,7 +171,7 @@ public class ChatListener implements Listener {
     }
 
     public String translate(String text, Player player, String message) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         text = text
                 .replace("<rank>", CC.translate(playerData.getHighestRank().getPrefix()))
                 .replace("<tag>", playerData.getTag())

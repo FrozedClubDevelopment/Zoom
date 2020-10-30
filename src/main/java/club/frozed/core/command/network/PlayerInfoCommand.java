@@ -26,7 +26,7 @@ public class PlayerInfoCommand extends BaseCMD {
         }
 
         Player target = Bukkit.getPlayer(args[0]);
-        PlayerData playerData = PlayerData.getByName(target.getName());
+        PlayerData playerData = PlayerData.getPlayerData(target.getName());
         player.sendMessage(CC.CHAT_BAR);
         player.sendMessage(CC.translate("&6&lZoom &7- &fPlayer Info"));
         player.sendMessage(CC.CHAT_BAR);

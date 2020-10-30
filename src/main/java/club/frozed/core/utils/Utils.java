@@ -67,7 +67,7 @@ public class Utils {
     }
 
     public static String getCommandWithIgnoreArgsOne(String[] args){
-        return Joiner.on(" ").skipNulls().join(Arrays.copyOfRange(args, 1 , args.length));
+        return Joiner.on(" ").skipNulls().join(Arrays.copyOfRange(args, 0 , args.length));
     }
 
     public static void sendAllMsg(String string) {

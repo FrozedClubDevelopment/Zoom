@@ -16,7 +16,7 @@ public class CheckVoteCommand extends BaseCMD {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        PlayerData data = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(p.getUniqueId());
         String command = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.EXECUTE-CMD").replace("<player>", p.getName());
 
         if (args.length == 0) {

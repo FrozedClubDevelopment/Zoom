@@ -4,7 +4,6 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
@@ -75,9 +74,9 @@ public class ConfirmCancelButton extends Button {
                 grant.setReason(data.getGrantProcedure().getEnteredReason());
                 player.closeInventory();
                 TaskUtil.runAsync(() ->{
-                    PlayerData targetData = PlayerData.getByUuid(data.getGrantProcedure().getPlayerData().getUuid());
+                    PlayerData targetData = PlayerData.getPlayerData(data.getGrantProcedure().getPlayerData().getUuid());
                     if (targetData == null) {
-                        targetData = PlayerOfflineData.loadData(data.getGrantProcedure().getPlayerData().getName());
+                        targetData = PlayerData.loadData(data.getGrantProcedure().getPlayerData().getUuid());
                     }
                     if (targetData == null) return;
                     targetData.getGrants().add(grant);
@@ -129,10 +128,10 @@ public class ConfirmCancelButton extends Button {
                             Zoom.getInstance().getRedisManager().write(json);
                         }
                     } else {
-                        PlayerData targetPlayerData = PlayerData.getByUuid(target.getUniqueId());
+                        PlayerData targetPlayerData = PlayerData.getPlayerData(target.getUniqueId());
                         targetPlayerData.loadPermissions(target);
                     }
-                    PlayerOfflineData.deleteData(targetData.getUuid());
+                    PlayerData.deleteProfile(targetData);
                 });
                 break;
         }

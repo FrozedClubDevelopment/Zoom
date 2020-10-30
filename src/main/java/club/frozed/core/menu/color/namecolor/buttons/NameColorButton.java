@@ -37,7 +37,7 @@ public class NameColorButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         String permission = "core.namecolor." + color.name().replace("_", "").toLowerCase();
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (player.hasPermission(permission) || player.hasPermission("core.namecolor.all")) {
             playerData.setNameColor(color.name());
             playSuccess(player);

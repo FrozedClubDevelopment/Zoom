@@ -33,7 +33,7 @@ public class MessagesSettingsMenu extends Menu {
 
     @Override
     public Map<Integer, Button> getButtons(Player player) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         Map<Integer, Button> buttons = new HashMap<>();
 
         buttons.put(0, new ToggleSoundButton(playerData));

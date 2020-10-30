@@ -45,7 +45,7 @@ public class TagButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
         if (player.hasPermission(tag.getTagPermission())) {
             data.setTag(tag.getTagPrefix());
             playSuccess(player);

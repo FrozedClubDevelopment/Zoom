@@ -39,7 +39,7 @@ public class GeneralPlayerListener implements Listener {
 
         e.getPlayer().sendMessage(StringUtils.join(msg, "\n"));
         e.setJoinMessage(null);
-        if (!PlayerData.getByUuid(e.getPlayer().getUniqueId()).isVote()) {
+        if (!PlayerData.getPlayerData(e.getPlayer().getUniqueId()).isVote()) {
             List<String> voteMessage = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
             String voteSound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SOUND");
             e.getPlayer().sendMessage(StringUtils.join(voteMessage, "\n"));
@@ -55,7 +55,7 @@ public class GeneralPlayerListener implements Listener {
     }
 
     public String translate(String text, Player player) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         //Rank rankData = Rank.getRankByName(playerData.getName());
         text = CC.translate(text);
 

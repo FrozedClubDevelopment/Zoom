@@ -1,7 +1,6 @@
 package club.frozed.core.menu.grant.procedure;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.menu.grant.procedure.button.ConfirmCancelButton;
 import club.frozed.core.menu.grant.procedure.button.GrantInfoButton;
 import club.frozed.core.utils.CC;
@@ -26,7 +25,7 @@ public class GrantConfirmMenu extends Menu {
 
     @Override
     public Map<Integer, Button> getButtons(Player player) {
-        PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
         Map<Integer, Button> buttons = new HashMap<>();
 
         buttons.put(11, new ConfirmCancelButton(ConfirmCancelButton.Type.CANCEL, data));
@@ -42,9 +41,9 @@ public class GrantConfirmMenu extends Menu {
 
     @Override
     public void onClose(Player player) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (playerData.getGrantProcedure() != null){
-            PlayerOfflineData.deleteData(playerData.getGrantProcedure().getPlayerData().getUuid());
+            PlayerData.deleteProfile(playerData.getGrantProcedure().getPlayerData());
         }
     }
 

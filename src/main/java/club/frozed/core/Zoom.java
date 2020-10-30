@@ -145,7 +145,7 @@ public final class Zoom extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+            PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
             if (playerData != null) {
                 playerData.saveData();
             }

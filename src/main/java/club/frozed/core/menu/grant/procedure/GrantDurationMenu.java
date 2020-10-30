@@ -1,7 +1,6 @@
 package club.frozed.core.menu.grant.procedure;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.manager.player.PlayerOfflineData;
 import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.utils.CC;
@@ -64,10 +63,10 @@ public class GrantDurationMenu extends Menu {
 
     @Override
     public void onClose(Player player) {
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (playerData.getGrantProcedure() != null && !this.custom && !this.completed)
             playerData.setGrantProcedure(null);
-        PlayerOfflineData.deleteData(targetData.getUuid());
+        PlayerData.deleteData(this.targetData.getUuid());
     }
 
     @AllArgsConstructor
@@ -101,7 +100,7 @@ public class GrantDurationMenu extends Menu {
 
         @Override
         public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-            PlayerData data = PlayerData.getByUuid(player.getUniqueId());
+            PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
             GrantProcedure targetGrantProcedure = data.getGrantProcedure();
             long duration;
             switch (type){

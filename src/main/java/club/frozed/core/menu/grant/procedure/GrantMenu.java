@@ -1,6 +1,7 @@
 package club.frozed.core.menu.grant.procedure;
 
 import club.frozed.core.manager.player.PlayerData;
+import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.menu.grant.procedure.button.RankButton;
 import club.frozed.core.utils.CC;
@@ -46,6 +47,15 @@ public class GrantMenu extends PaginatedMenu {
         List<Rank> ranks = new ArrayList<>();
         Rank.getRanks().stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).forEach(ranks::add);
         return ranks;
+    }
+
+    @Override
+    public void onClose(Player player) {
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
+        if (playerData.getGrantProcedure() != null && playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START) {
+            playerData.setGrantProcedure(null);
+        }
+        PlayerData.deleteData(this.targetData.getUuid());
     }
 
     @Override

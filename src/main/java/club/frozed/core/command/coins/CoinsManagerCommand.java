@@ -33,7 +33,7 @@ public class CoinsManagerCommand extends BaseCMD {
             p.sendMessage(Lang.OFFLINE_PLAYER);
             return;
         }
-        PlayerData targetData = PlayerData.getByUuid(target.getUniqueId());
+        PlayerData targetData = PlayerData.getPlayerData(target.getUniqueId());
         if (targetData == null){
             p.sendMessage(Lang.OFFLINE_PLAYER);
             return;

@@ -86,6 +86,7 @@
 - core.punishments.silent.see
 - core.punishments.warn
 - core.punishments.unwarn
+- core.punishments.alts
 
 
 Punishments Usage: {} Necessary , [] Optional

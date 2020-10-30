@@ -16,7 +16,7 @@ public class CoinsCommand extends BaseCMD {
     @Override
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
-        PlayerData playerData = PlayerData.getByUuid(p.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(p.getUniqueId());
         String[] args = cmd.getArgs();
 
         if (args.length == 0){

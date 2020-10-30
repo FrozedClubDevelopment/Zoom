@@ -238,7 +238,7 @@ public class RankManager {
                     Zoom.getInstance().getRedisManager().write(json);
                 }
             } else {
-                PlayerData playerData = PlayerData.getByUuid(target.getUniqueId());
+                PlayerData playerData = PlayerData.getPlayerData(target.getUniqueId());
                 playerData.loadPermissions(target);
             }
         }));

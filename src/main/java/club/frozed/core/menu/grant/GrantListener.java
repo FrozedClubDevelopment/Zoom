@@ -24,7 +24,7 @@ public class GrantListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handleGrantProcedure(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        PlayerData playerData = PlayerData.getByUuid(player.getUniqueId());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         String message = ChatColor.stripColor(event.getMessage());
         if (playerData == null)
             return;
