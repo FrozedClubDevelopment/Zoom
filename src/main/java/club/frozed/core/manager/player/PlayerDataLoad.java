@@ -9,8 +9,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
-import java.util.UUID;
-
 public class PlayerDataLoad implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -75,7 +73,6 @@ public class PlayerDataLoad implements Listener {
     private void handledSaveDate(Player player) {
         PlayerData playerData =  PlayerData.getPlayerData(player.getName());
         if (playerData != null){
-            playerData.saveData();
             playerData.removeData();
         }
     }
