@@ -66,7 +66,7 @@ public class GrantDurationMenu extends Menu {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (playerData.getGrantProcedure() != null && !this.custom && !this.completed)
             playerData.setGrantProcedure(null);
-        PlayerData.deleteData(this.targetData.getUuid());
+        PlayerData.deleteOfflineProfile(this.targetData.getUuid());
     }
 
     @AllArgsConstructor

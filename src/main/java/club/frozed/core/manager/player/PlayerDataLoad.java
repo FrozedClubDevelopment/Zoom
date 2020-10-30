@@ -25,11 +25,6 @@ public class PlayerDataLoad implements Listener {
             playerData = PlayerData.createPlayerData(e.getUniqueId(), e.getName());
         }
 
-        if (!playerData.isDataLoaded()) {
-            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-            e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
-        }
-
 //        if (playerData.getBannablePunishment() != null) {
 //            e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
 //            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
@@ -44,7 +39,7 @@ public class PlayerDataLoad implements Listener {
         if (!playerData.getIp().equalsIgnoreCase(e.getAddress().getHostAddress())){
             playerData.setIp(e.getAddress().getHostAddress());
         }
-        playerData.findAlts();
+//        playerData.findAlts();
 
 //        for (UUID uuid : playerData.getAlts()){
 //            PlayerData altsData = PlayerData.loadData(uuid);
@@ -62,7 +57,7 @@ public class PlayerDataLoad implements Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerLoginEvent(PlayerLoginEvent e) {
         PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
-        if (playerData == null) {
+        if (playerData == null || !playerData.isDataLoaded()) {
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
             return;
@@ -71,7 +66,7 @@ public class PlayerDataLoad implements Listener {
     }
 
     private void handledSaveDate(Player player) {
-        PlayerData playerData =  PlayerData.getPlayerData(player.getName());
+        PlayerData playerData =  PlayerData.getPlayerData(player.getUniqueId());
         if (playerData != null){
             playerData.removeData();
         }

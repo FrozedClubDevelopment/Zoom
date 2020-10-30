@@ -43,7 +43,7 @@ public class GrantConfirmMenu extends Menu {
     public void onClose(Player player) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (playerData.getGrantProcedure() != null){
-            PlayerData.deleteProfile(playerData.getGrantProcedure().getPlayerData());
+            PlayerData.deleteOfflineProfile(playerData.getGrantProcedure().getPlayerData());
         }
     }
 

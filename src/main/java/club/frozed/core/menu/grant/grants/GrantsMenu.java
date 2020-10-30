@@ -39,7 +39,7 @@ public class GrantsMenu extends PaginatedMenu {
 
     @Override
     public void onClose(Player player) {
-        PlayerData.deleteProfile(targetplayerData);
+        PlayerData.deleteOfflineProfile(targetplayerData);
     }
 
     @Override

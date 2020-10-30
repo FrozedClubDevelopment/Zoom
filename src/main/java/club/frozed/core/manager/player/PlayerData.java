@@ -208,7 +208,6 @@ public class PlayerData {
         document.put("toggle-sounds", this.toggleSounds);
         document.put("toggle-privatemsg", this.togglePrivateMessages);
         document.put("ignore-list", this.ignoredPlayersList);
-        this.dataLoaded = false;
 
         // Coins
         document.put("coins", this.coins);
@@ -228,10 +227,6 @@ public class PlayerData {
 
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerData().replaceOne(Filters.eq("uuid", this.uuid.toString()), document, (new UpdateOptions()).upsert(true));
-    }
-
-    public void removeData() {
-        deleteData(this.uuid);
     }
 
     public void loadData() {
@@ -385,6 +380,11 @@ public class PlayerData {
         System.out.println("Total -> " + this.alts.size());
     }
 
+    public void removeData(){
+        this.saveData();
+        playerData.remove(this.uuid);
+    }
+
     //    public void destroy() {
 //        this.saveData();
 //        this.removeData();
@@ -408,14 +408,14 @@ public class PlayerData {
         return playerData.get(UUID.fromString(document.getString("uuid")));
     }
 
-    public static void deleteProfile(PlayerData profile) {
+    public static void deleteOfflineProfile(PlayerData profile) {
         if (Bukkit.getPlayer(profile.getUuid()) == null) {
             profile.saveData();
             playerData.remove(profile.getUuid());
         }
     }
 
-    public static void deleteData(UUID uuid) {
+    public static void deleteOfflineProfile(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) return;
         playerData.get(uuid).saveData();

@@ -131,7 +131,11 @@ public class ConfirmCancelButton extends Button {
                         PlayerData targetPlayerData = PlayerData.getPlayerData(target.getUniqueId());
                         targetPlayerData.loadPermissions(target);
                     }
-                    PlayerData.deleteProfile(targetData);
+                    if (targetData.isOnline()){
+                        targetData.saveData();
+                    } else {
+                        PlayerData.deleteOfflineProfile(targetData);
+                    }
                 });
                 break;
         }

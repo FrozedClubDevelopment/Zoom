@@ -84,6 +84,10 @@ public class SetPermissionCommand extends BaseCMD {
                 Zoom.getInstance().getRedisManager().write(json);
             }
         }
-        PlayerData.deleteProfile(playerData);
+        if (playerData.isOnline()){
+            playerData.saveData();
+        } else {
+            PlayerData.deleteOfflineProfile(playerData);
+        }
     }
 }

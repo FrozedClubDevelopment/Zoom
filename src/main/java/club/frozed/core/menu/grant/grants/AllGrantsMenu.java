@@ -55,7 +55,7 @@ public class AllGrantsMenu extends PaginatedMenu {
 
     @Override
     public void onClose(Player player) {
-        PlayerData.deleteProfile(targetplayerData);
+        PlayerData.deleteOfflineProfile(targetplayerData);
     }
 
     @Override
