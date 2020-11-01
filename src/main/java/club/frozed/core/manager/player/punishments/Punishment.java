@@ -48,7 +48,7 @@ public class Punishment {
         this.type = PunishmentType.valueOf(document.getString("type"));
 
         if(document.containsKey("addedBy") && document.get("addedBy") != null) {
-            this.addedBy = UUID.fromString(document.getString("addedBy"));
+            this.addedBy = document.getString("addedBy").equals("null") ? null : UUID.fromString(document.getString("addedBy"));;
         }
 
         this.addedAt = document.getLong("addedAt");
@@ -57,7 +57,7 @@ public class Punishment {
         this.duration = document.getLong("duration");
 
         if(document.containsKey("pardonedBy") && document.get("pardonedBy") != null) {
-            this.pardonedBy = UUID.fromString(document.getString("pardonedBy"));
+            this.pardonedBy = document.getString("pardonedBy").equals("null") ? null : UUID.fromString(document.getString("pardonedBy"));
         }
 
         if(document.containsKey("pardonedAt") && document.get("pardonedAt") != null) {
@@ -73,72 +73,8 @@ public class Punishment {
         }
     }
 
-    public Punishment(JsonObject jsonObject) {
-        this.uniqueId = UUID.fromString(jsonObject.get("uuid").getAsString());
-        this.type = PunishmentType.valueOf(jsonObject.get("type").getAsString());
-
-
-        if (jsonObject.has("addedBy") && jsonObject.get("addedBy") == null) {
-            this.addedBy = UUID.fromString(jsonObject.get("addedBy").getAsString());
-        } else {
-            this.addedBy = null;
-        }
-
-        this.addedAt = jsonObject.get("addedAt").getAsLong();
-
-        this.reason = jsonObject.get("reason").getAsString();
-        this.duration = jsonObject.get("duration").getAsLong();
-
-        if (jsonObject.has("pardonedBy") && jsonObject.get("pardonedBy") == null) {
-            this.pardonedBy = UUID.fromString(jsonObject.get("pardonedBy").getAsString());
-        } else {
-            this.pardonedBy = null;
-        }
-
-        if(jsonObject.has("pardonedAt")) {
-            this.pardonedAt = jsonObject.get("pardonedAt").getAsLong();
-        }
-
-        if (jsonObject.has("pardonedReason") && jsonObject.get("pardonedReason") == null) {
-            this.pardonedReason = jsonObject.get("pardonedReason").getAsString();
-        }
-
-        if(jsonObject.has("pardoned")) {
-            this.pardoned = jsonObject.get("pardoned").getAsBoolean();
-        }
-    }
-
-    public Document toJSON() {
-        return new Document("uuid", this.uniqueId.toString())
-                .append("type", this.type.name())
-                .append("addedBy", this.addedBy == null ? null : this.addedBy.toString())
-                .append("addedAt", this.addedAt)
-                .append("reason", this.reason)
-                .append("duration", this.duration)
-                .append("pardonedBy", this.pardonedBy == null ? null : this.pardonedBy.toString())
-                .append("pardonedAt", this.pardonedAt)
-                .append("pardonedReason", this.pardonedReason)
-                .append("pardoned", this.pardoned);
-    }
-
-    public JsonObject toJson() {
-        JsonObject jsonObject = new JsonObject();
-
-        jsonObject.addProperty("uuid", this.uniqueId.toString());
-        jsonObject.addProperty("type", this.type.name());
-        jsonObject.addProperty("addedBy", this.addedBy == null ? null : this.addedBy.toString());
-        jsonObject.addProperty("addedAt", this.addedAt);
-        jsonObject.addProperty("reason", this.reason);
-        jsonObject.addProperty("duration", this.duration);
-        jsonObject.addProperty("pardonedBy", this.pardonedBy == null ? null : this.pardonedBy.toString());
-        jsonObject.addProperty("pardonedAt", this.pardonedAt);
-        jsonObject.addProperty("pardonedReason", this.pardonedReason);
-        jsonObject.addProperty("pardoned", this.pardoned);
-        return jsonObject;
-    }
-
     public boolean isLifetime() {
-        return type == PunishmentType.BLACKLIST || duration == Integer.MAX_VALUE;
+        return type == PunishmentType.BLACKLIST || duration == -5L;
     }
 
     public boolean hasExpired() {
@@ -152,7 +88,7 @@ public class Punishment {
     public String getTimeLeft(boolean simple) {
         if (this.pardoned) return "Pardoned";
         if (this.hasExpired()) return "Expired";
-        if (this.isLifetime()) return "Lifetime";
+        if (this.isLifetime()) return "Never";
 
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
@@ -176,7 +112,7 @@ public class Punishment {
         if (this.isPardoned() || this.isLifetime() || this.type == PunishmentType.WARN || this.type == PunishmentType.KICK) {
             time = "";
         } else {
-           time = Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.TIME").replace("<punish-time>", this.getTimeLeft(false));
+           time = CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.TIME")).replace("<punish-time>", this.getTimeLeft(false));
         }
         return time;
     }
@@ -189,9 +125,21 @@ public class Punishment {
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
                                 .replace("<context>", getContext())
-                                .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
-                                .replace("<time>", getTime())
+                                .replace("<reason>", this.pardoned ?
+                                        (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                        : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                                .replace("<time>", CC.translate(getTime()))
                         ));
+            });
+            Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text -> {
+                Bukkit.broadcastMessage(CC.translate(text)
+                        .replace("<player>", targetName)
+                        .replace("<sender>", senderName)
+                        .replace("<context>", getContext())
+                        .replace("<reason>", this.pardoned ?
+                                (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                        .replace("<time>", CC.translate(getTime())));
             });
         } else {
             if (Zoom.getInstance().getPunishmentConfig().getConfig().getBoolean("PUNISHMENT-MESSAGES.MESSAGE-IN-CONSOLE")) {
@@ -200,7 +148,9 @@ public class Punishment {
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
                                 .replace("<context>", getContext())
-                                .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                                .replace("<reason>", this.pardoned ?
+                                        (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                        : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                 .replace("<time>", getTime())
                         ));
             } else {
@@ -210,7 +160,9 @@ public class Punishment {
                                     .replace("<player>", targetName)
                                     .replace("<sender>", senderName)
                                     .replace("<context>", getContext())
-                                    .replace("<reason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                                    .replace("<reason>", this.pardoned ?
+                                            (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                            : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                                     .replace("<time>", getTime()))
                             );
                 });
@@ -235,7 +187,7 @@ public class Punishment {
                                 .replace("<pardonedDate>",TimeUtil.formatIntoCalendarString(new Date(this.pardonedAt)))
                                 .replace("<pardonedBy>",Utils.getDisplayName(this.pardonedBy))
                                 .replace("<pardonedReason>", (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason == "" ? "No reason provided" : this.pardonedReason))));
-                    } else {
+                    } else if (this.hasExpired() && !this.isLifetime()) {
                         Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.PARDONED.ACTIVE").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
                                         .replace("<expiredIn>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt + this.duration)))));
@@ -285,11 +237,10 @@ public class Punishment {
                     Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.TEMP-BAN").forEach(text -> {
                         switch (text){
                             case "<alt-relation>":
-                                if (alternativeAccount != null){
+                                if (alternativeAccount != null) {
                                     Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                             kickMessage.add(CC.translate(textExpired)
-                                            .replace("<alt-name>", alternativeAccount)));
-                                    kickMessage.add(CC.translate(text));
+                                                    .replace("<alt-name>", alternativeAccount)));
                                 }
                                 break;
                             default:
@@ -310,7 +261,6 @@ public class Punishment {
                                     Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                             kickMessage.add(CC.translate(textExpired)
                                                     .replace("<alt-name>", alternativeAccount)));
-                                    kickMessage.add(CC.translate(text));
                                 }
                                 break;
                             default:
@@ -333,7 +283,6 @@ public class Punishment {
                                 Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                         kickMessage.add(CC.translate(textExpired)
                                                 .replace("<alt-name>", alternativeAccount)));
-                                kickMessage.add(CC.translate(text));
                             }
                             break;
                         default:

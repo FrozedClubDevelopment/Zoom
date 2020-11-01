@@ -19,7 +19,8 @@ public class StaffListener implements Listener {
         if (!playerData.getPlayer().hasPermission("core.staff")) return;
         if (Zoom.getInstance().getRedisManager().isActive()) {
             String json;
-            if (playerData.getLastServer().equals(Lang.SERVER_NAME)) {
+            String lastServer = playerData.getLastServer() == null ? Lang.SERVER_NAME : playerData.getLastServer();
+            if (lastServer.equals(Lang.SERVER_NAME)) {
                 json = new RedisMessage(Payload.STAFF_JOIN)
                         .setParam("STAFF", e.getPlayer().getName())
                         .setParam("SERVER", Lang.SERVER_NAME).toJSON();

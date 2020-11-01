@@ -183,7 +183,7 @@ public class RedisListener extends JedisPubSub {
                     }
                     break;
                     case PUNISHMENTS_ADDED:
-                        Punishment punishment = PunishmentUtil.jsonStringToPunishment(redisMessage.getParam("PUNISHMENT"));
+                        Punishment punishment = PunishmentUtil.getPunishmentToString(redisMessage.getParam("PUNISHMENT"));
                         String staffName = redisMessage.getParam("STAFF");
                         String targetName = redisMessage.getParam("TARGET");
                         UUID uuid = UUID.fromString(redisMessage.getParam("TARGET_UUID"));

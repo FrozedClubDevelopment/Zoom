@@ -4,7 +4,10 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.punishment.PunishmentUtil;
+import club.frozed.core.utils.time.DateUtils;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,26 +28,36 @@ public class PunishmentExecutor {
 
     private boolean silent;
 
-    public PunishmentExecutor(String source, CommandSender sender){
-        String[] parser = source.split(" ");
-        if (parser.length != 0) {
-            this.duration = Utils.parse(parser[1], TimeUnit.MILLISECONDS);
-        }
-        if (this.duration > 0L) {
-            this.reason = parser.length <= 1 ? "" : source.replaceFirst(parser[0], "").replaceFirst(" ", "");
+    private boolean durationCorrect = false;
+
+    private int reasonToStart = 2;
+
+    public PunishmentExecutor(String[] args, CommandSender commandSender){
+//        System.out.println(args.length);
+        if (args.length == 1){
+            this.silent = false;
+            this.reason = "No Reason Provided";
+            this.duration = -5;
         } else {
-            this.duration = sender.hasPermission("core.punishments.limit") ? Integer.MAX_VALUE : TimeUnit.DAYS.toMillis(30);
-            this.reason = source;
+            if (args[1].equalsIgnoreCase("perm") || args[1].equalsIgnoreCase("permanent")) {
+                this.duration = -5L;
+            } else {
+                this.duration = DateUtils.getDuration(args[1]);
+                if (duration > 0){
+                    this.durationCorrect = true;
+                } else {
+                    this.duration = commandSender.hasPermission("core.punishments.limit") ? -5L : TimeUnit.DAYS.toMillis(30);
+                    this.reasonToStart = 1;
+                }
+            }
+//            System.out.println(duration);
+            String reason = PunishmentUtil.reasonBuilder(args, reasonToStart);
+            boolean silent = reason.contains("-S") || reason.contains("-SILENT") || reason.contains("-s") || reason.contains("-silent");
+            reason = PunishmentUtil.getReasonAndRemoveSilent(reason);
+
+            this.silent = silent;
+            this.reason = reason;
         }
-        silent = source.contains("-s") || source.contains("-silent") || source.contains("-SILENT") || source.contains("-S");
-        this.reason = CC.strip(reason
-                .replace("-S", "")
-                .replace("-SILENT", "")
-                .replace("-s", "")
-                .replace("-silent", "")
-                .replace("-sileNT", "")
-                .replace(parser[0], "")
-                .replaceFirst(" ", "").trim()).replaceAll("\\s+$", "");
     }
 
     public String getStaffName(CommandSender sender) {
@@ -52,9 +65,9 @@ public class PunishmentExecutor {
     }
 
     public boolean validate(CommandSender sender, PlayerData playerData, PunishmentType... punishmentTypes) {
-        if (duration <= 0L) {
-            sender.sendMessage(CC.translate("&cError! &7You must be a provided positive number."));
-            return false;
+        if (reasonToStart != 2 && !durationCorrect) {
+            this.duration = sender.hasPermission("core.punishments.limit") ? -5L : TimeUnit.DAYS.toMillis(30);
+            return true;
         }
 
         boolean cancel = true;

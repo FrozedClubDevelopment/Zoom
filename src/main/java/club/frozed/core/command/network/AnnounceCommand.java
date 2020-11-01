@@ -1,5 +1,6 @@
 package club.frozed.core.command.network;
 
+import club.frozed.core.Zoom;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.command.BaseCMD;

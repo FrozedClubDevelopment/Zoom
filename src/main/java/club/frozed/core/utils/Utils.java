@@ -54,6 +54,7 @@ public class Utils {
     }
 
     public static String getDisplayName(UUID uuid) {
+        if (uuid == null) return "Console";
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
         if (offlinePlayer != null){
             return offlinePlayer.getName();

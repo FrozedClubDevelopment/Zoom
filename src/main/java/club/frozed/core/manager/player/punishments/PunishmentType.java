@@ -17,7 +17,7 @@ public enum PunishmentType {
     BLACKLIST("Blacklists", ChatColor.DARK_RED, DyeColor.RED, "blacklisted", "unblacklisted", true, true),
     BAN("Bans", ChatColor.GOLD, DyeColor.ORANGE, "banned", "unbanned", true, true),
     MUTE("Mutes", ChatColor.YELLOW, DyeColor.YELLOW, "muted", "unmuted", false, true),
-    WARN("Warnings", ChatColor.GREEN, DyeColor.LIME, "warned", "unwarned", false, true),
+    WARN("Warns", ChatColor.GREEN, DyeColor.LIME, "warned", "unwarned", false, true),
     KICK("Kicks", ChatColor.GRAY, DyeColor.GRAY, "kicked", null, false, false);
 
     private final String name;

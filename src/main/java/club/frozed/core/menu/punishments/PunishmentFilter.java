@@ -1,4 +1,4 @@
-package club.frozed.core.manager.player.punishments.menu;
+package club.frozed.core.menu.punishments;
 
 import club.frozed.core.utils.CC;
 import lombok.Getter;

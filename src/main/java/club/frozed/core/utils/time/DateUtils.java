@@ -36,50 +36,8 @@ public class DateUtils {
         return FORMAT.format(new Date(value));
     }
 
-    public static long getDuration(String input) {
-        input = input.toLowerCase();
-        if (Character.isLetter(input.charAt(0))) {
-            return Long.MAX_VALUE;
-        } else {
-            long result = 0L;
-            StringBuilder number = new StringBuilder();
-
-            for(int i = 0; i < input.length(); ++i) {
-                char c = input.charAt(i);
-                if (Character.isDigit(c)) {
-                    number.append(c);
-                } else {
-                    String str = number.toString();
-                    if (Character.isLetter(c) && !str.isEmpty()) {
-                        result += convert(Integer.parseInt(str), c);
-                        number = new StringBuilder();
-                    }
-                }
-            }
-
-            return result;
-        }
-    }
-
-    private static long convert(int value, char charType) {
-        switch(charType) {
-            case 'M':
-                return (long)value * TimeUnit.DAYS.toMillis(30L);
-            case 'd':
-                return (long)value * TimeUnit.DAYS.toMillis(1L);
-            case 'h':
-                return (long)value * TimeUnit.HOURS.toMillis(1L);
-            case 'm':
-                return (long)value * TimeUnit.MINUTES.toMillis(1L);
-            case 's':
-                return (long)value * TimeUnit.SECONDS.toMillis(1L);
-            case 'w':
-                return (long)value * TimeUnit.DAYS.toMillis(7L);
-            case 'y':
-                return (long)value * TimeUnit.DAYS.toMillis(365L);
-            default:
-                return -1L;
-        }
+    public static long getDuration(String source) {
+        return TimeUnit.MILLISECONDS.convert(fromString(source), TimeUnit.MILLISECONDS);
     }
 
     public static String niceTime(int i) {

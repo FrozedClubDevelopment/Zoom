@@ -35,6 +35,10 @@ public class GrantCommand extends BaseCMD {
         } else {
             player.sendMessage(CC.translate("&eLoading player data....."));
             PlayerData targetData = PlayerData.loadData(target.getUniqueId());
+            if (targetData == null){
+                player.sendMessage(CC.translate("&cError! &7That player doesn't have data."));
+                return;
+            }
             (new GrantMenu(targetData)).openMenu(player);
         }
     }

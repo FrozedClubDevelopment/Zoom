@@ -13,7 +13,7 @@ public class StaffLang {
                 .replace("<server>", server
         );
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
                 p.sendMessage(CC.translate(format));
             }
@@ -27,7 +27,7 @@ public class StaffLang {
                 .replace("<server>", server
         );
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
                 p.sendMessage(CC.translate(format));
             }
@@ -41,7 +41,7 @@ public class StaffLang {
                 .replace("<server>", actualserver)
                 .replace("<lastServer>", lastserver
         );
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (p.hasPermission("core.staff.join")) {
                 p.sendMessage(CC.translate(format));
             }
@@ -50,7 +50,7 @@ public class StaffLang {
     }
 
     public static void sendRedisServerMsg(String string) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (p.hasPermission("core.servermanager")) {
                 p.sendMessage(string);
             }
@@ -59,14 +59,14 @@ public class StaffLang {
     }
 
     public static void sendAdminChat(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (!p.hasPermission("core.adminchat")) return;
             p.sendMessage(msg);
         }
     }
 
     public static void sendStaffChat(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (!p.hasPermission("core.staffchat")) return;
             p.sendMessage(msg);
         }
@@ -78,7 +78,7 @@ public class StaffLang {
                 .replace("<sender>", sender)
                 .replace("<target>", target)
                 .replace("<reason>", reason);
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (!p.hasPermission("core.staff.report")) return;
             p.sendMessage(CC.translate(format));
         }

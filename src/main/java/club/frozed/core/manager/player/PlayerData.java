@@ -6,12 +6,13 @@ import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.manager.player.punishments.menu.PunishmentFilter;
+import club.frozed.core.menu.punishments.PunishmentFilter;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.core.utils.time.Cooldown;
 import com.google.common.collect.Maps;
 import com.mongodb.client.MongoCursor;
@@ -26,8 +27,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,7 +81,7 @@ public class PlayerData {
     //Ban System
     private String ip;
     private List<String> ipAddresses = new ArrayList<>();
-    private final List<Punishment> punishments = new ArrayList<>();
+    private List<Punishment> punishments = new ArrayList<>();
 
     private List<UUID> alts = new ArrayList<>();
 
@@ -152,9 +155,6 @@ public class PlayerData {
         if (!player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET))
             player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
 
-//        if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-//            Zoom.getInstance().getPermission().playerAddGroup(player, rankData.getPrefix());
-//        }
     }
 
     public void refreshPlayer(Player player) {
@@ -223,7 +223,12 @@ public class PlayerData {
         document.put("ip", this.ip);
         document.put("ipAddresses", this.ignoredPlayersList);
 
-//        document.put("punishments", Zoom.GSON.toJson(this.punishments.stream().map(punishment -> punishment.toJSON().toJson()).collect(Collectors.toList()), Utils.LIST_STRING));
+//        List<String> punishmentsListData = new ArrayList<>();
+//        for (Punishment punishment : this.punishments){
+//            punishmentsListData.add(PunishmentUtil.serialize(punishment).toJson());
+//        }
+
+        document.put("punishments", PunishmentUtil.savePlayerPunishments(this.punishments));
 
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         mongoManager.getPlayerData().replaceOne(Filters.eq("uuid", this.uuid.toString()), document, (new UpdateOptions()).upsert(true));
@@ -263,9 +268,19 @@ public class PlayerData {
             this.ip = document.getString("ip");
             this.ipAddresses = (List<String>) document.get("ipAddresses");
 
+            if (document.containsKey("punishments")){
+                this.punishments = PunishmentUtil.getPlayerPunishments((List<String>) document.get("punishments"));
+            }
 
-//            List<String> punishmentsList = Zoom.GSON.fromJson(document.getString("punishments"), Utils.LIST_STRING);
+//            if (document.containsKey("punishments")){
+//                System.out.println(document.containsKey("punishments"));
+//                for (Object punishmentsNoSerializeData : punishmentsList) {
+//                    Punishment punishment = PunishmentUtil.jsonStringToPunishment(String.valueOf(punishmentsNoSerializeData));
+//                    this.punishments.add(punishment);
+//                }
+//            }
 //            this.punishments.addAll(punishmentsList.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
+//
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
@@ -349,7 +364,7 @@ public class PlayerData {
     }
 
     public Punishment getBannablePunishment() {
-        for (Punishment punishment : punishments) {
+        for (Punishment punishment : this.punishments) {
             if (punishment.getType().isBannable() && !punishment.hasExpired()) {
                 return punishment;
             }
@@ -366,7 +381,6 @@ public class PlayerData {
     }
 
     public void findAlts() {
-        System.out.println("Buscando alts de " + this.name);
         if (this.ip == null)
             return;
         this.alts.clear();
@@ -377,7 +391,6 @@ public class PlayerData {
                     this.alts.add(uuid);
             });
         }
-        System.out.println("Total -> " + this.alts.size());
     }
 
     public void removeData(){
@@ -385,12 +398,8 @@ public class PlayerData {
         playerData.remove(this.uuid);
     }
 
-    //    public void destroy() {
-//        this.saveData();
-//        this.removeData();
-//    }
     /*
-    Data Hadnler
+    Data Handler
      */
     public static PlayerData createPlayerData(UUID uuid, String name) {
         if (playerData.containsKey(uuid)) return getPlayerData(uuid);
@@ -446,5 +455,18 @@ public class PlayerData {
 
     public boolean hasPermission(String permission) {
         return (this.permissions.stream().filter(perm -> perm.equalsIgnoreCase(permission)).findFirst().orElse(null) != null);
+    }
+
+    public static void startTask(){
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                playerData.values().forEach(playerData -> {
+                    if (playerData.getPlayer() == null) {
+                        playerData.removeData();
+                    }
+                });
+            }
+        }.runTaskTimer(Zoom.getInstance(), 20L, TimeUnit.MINUTES.toMillis(5L));
     }
 }

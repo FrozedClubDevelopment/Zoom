@@ -7,6 +7,7 @@ import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class BroadcastCommand extends BaseCMD {
-    @Command(name = "broadcast", permission = "core.essentials.broadcast", aliases = {"bc", "alerta"})
+    @Command(name = "broadcast", permission = "core.essentials.broadcast", aliases = {"bc", "alerta"}, inGameOnly = false)
 
     @Override
     public void onCommand(CommandArgs cmd) {
-        Player p = cmd.getPlayer();
+        CommandSender p = cmd.getPlayer();
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {

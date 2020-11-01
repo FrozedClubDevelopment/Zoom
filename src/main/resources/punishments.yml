@@ -26,7 +26,7 @@ PUNISHMENT-MESSAGES:
         - '&cYou have muted for this <mute-time>'
 KICK-PUNISHMENT-MESSAGES:
   ALT-RELATION:
-    - '&eThis punishment is in relacion to <alt-name>'
+    - '&eThis punishment is in relacion to &f<alt-name>'
   KICK:
     - '&7&m--------------------'
     - '&eYou have benn kick from ExampleNetwork'
@@ -69,7 +69,7 @@ KICK-PUNISHMENT-MESSAGES:
     - '&7&m--------------------'
 PUNISHMENTS-MENU:
   ITEM:
-    NANE: '&ePunishment ID &f# <id> &7(<status>&7)'
+    NAME: '&ePunishment ID &f#<id> &7(<status>&7)'
     TIME-LEFT:
       - ''
       - '&eTime Left&7: &f <time>'
@@ -91,7 +91,7 @@ PUNISHMENTS-MENU:
       - '<punishment-pardoned>'
       - ''
 ALTS-FORMAT:
-  ALT-FORMAT: '&e » &f<player> <status>'
+  ALT-FORMAT: '&e ▸ &f<player> <status>'
   FORMAT:
     - '&6&lZoom &7- &ePlayer Alts'
     - '&7&m----------------------'
@@ -99,3 +99,9 @@ ALTS-FORMAT:
     - '&6Alts&7:'
     - '<alts>'
     - '&7&m----------------------'
+MENU:
+  PLAYER-INFO:
+    - '&eName&7: &f<player>'
+    - '&eCountry&7: &f<country>'
+    - '&eAlts&7: &f<alts>'
+  ALTS-INFO: '&e ▸ &f<player> <status>'

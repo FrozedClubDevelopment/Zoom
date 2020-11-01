@@ -55,7 +55,9 @@ public class GrantMenu extends PaginatedMenu {
         if (playerData.getGrantProcedure() != null && playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START) {
             playerData.setGrantProcedure(null);
         }
-        PlayerData.deleteOfflineProfile(this.targetData.getUuid());
+        if (this.targetData != null){
+            PlayerData.deleteOfflineProfile(targetData);
+        }
     }
 
     @Override

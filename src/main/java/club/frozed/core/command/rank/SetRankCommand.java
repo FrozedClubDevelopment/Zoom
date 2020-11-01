@@ -31,7 +31,7 @@ public class SetRankCommand extends BaseCMD {
             return;
         }
         if (!Rank.isRankExist(args[1])){
-            player.sendMessage(CC.translate("&cThat  rank doesn't exists"));
+            player.sendMessage(CC.translate("&cThat rank doesn't exists"));
             return;
         }
         Rank rankData = Rank.getRankByName(args[1]);

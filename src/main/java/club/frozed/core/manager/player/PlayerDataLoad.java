@@ -9,10 +9,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
+import java.util.UUID;
+
 public class PlayerDataLoad implements Listener {
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent e) {
+        if (!Zoom.getInstance().isJoinable()){
+            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+            e.setKickMessage("§cPlease wait to server load.");
+            return;
+        }
         Player player = Bukkit.getPlayer(e.getUniqueId());
         if (player != null && player.isOnline()) {
             e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
@@ -25,11 +32,12 @@ public class PlayerDataLoad implements Listener {
             playerData = PlayerData.createPlayerData(e.getUniqueId(), e.getName());
         }
 
-//        if (playerData.getBannablePunishment() != null) {
-//            e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
-//            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-//            return;
-//        }
+        if (playerData.getBannablePunishment() != null) {
+            e.setKickMessage(playerData.getBannablePunishment().toKickMessage(null));
+            e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+            return;
+        }
+
         if (playerData.getIp() == null){
             playerData.setIp(e.getAddress().getHostAddress());
         }
@@ -39,25 +47,31 @@ public class PlayerDataLoad implements Listener {
         if (!playerData.getIp().equalsIgnoreCase(e.getAddress().getHostAddress())){
             playerData.setIp(e.getAddress().getHostAddress());
         }
-//        playerData.findAlts();
+        playerData.findAlts();
 
-//        for (UUID uuid : playerData.getAlts()){
-//            PlayerData altsData = PlayerData.loadData(uuid);
-//            if (altsData != null) {
-//                if (altsData.getBannablePunishment() != null) {
-//                    e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
-//                    e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-//                }
-//            }
-//            PlayerData.deleteData(uuid);
-//        }
+        for (UUID uuid : playerData.getAlts()){
+            PlayerData altsData = PlayerData.loadData(uuid);
+            if (altsData != null) {
+                if (altsData.getBannablePunishment() != null) {
+                    e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
+                    e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+                }
+            }
+            PlayerData.deleteOfflineProfile(uuid);
+        }
         playerData.saveData();
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerLoginEvent(PlayerLoginEvent e) {
         PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
-        if (playerData == null || !playerData.isDataLoaded()) {
+        if (playerData == null) {
+            e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
+            return;
+        }
+        if (!playerData.isDataLoaded()){
+            playerData.saveData();
             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
             return;

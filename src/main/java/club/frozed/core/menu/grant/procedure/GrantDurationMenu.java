@@ -102,7 +102,7 @@ public class GrantDurationMenu extends Menu {
         public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
             PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
             GrantProcedure targetGrantProcedure = data.getGrantProcedure();
-            long duration;
+            long duration = 1L;
             switch (type){
                 case "14d":
                     if (targetGrantProcedure == null) {

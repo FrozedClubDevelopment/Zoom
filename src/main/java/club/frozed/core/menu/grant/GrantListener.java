@@ -42,9 +42,8 @@ public class GrantListener implements Listener {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING,2F,2F);
                 return;
             }
-            try {
-                duration = DateUtils.getDuration(message);
-            } catch (Exception e) {
+            duration = DateUtils.getDuration(message);
+            if (!(duration > 0)){
                 player.sendMessage(CC.translate("&cThe duration isn't valid."));
                 return;
             }

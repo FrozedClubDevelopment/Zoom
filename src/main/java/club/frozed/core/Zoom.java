@@ -27,7 +27,6 @@ import club.frozed.core.utils.config.FileConfig;
 import club.frozed.core.utils.menu.ButtonListener;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
-import club.frozed.core.utils.punishment.PunishmentAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
@@ -42,12 +41,6 @@ import java.util.List;
 @Getter
 @Setter
 public final class Zoom extends JavaPlugin {
-
-    public static final Gson GSON = new GsonBuilder()
-            .registerTypeHierarchyAdapter(Punishment.class, new PunishmentAdapter())
-            .setPrettyPrinting()
-            .serializeNulls()
-            .create();
 
     @Getter private static Zoom instance;
 
@@ -64,6 +57,8 @@ public final class Zoom extends JavaPlugin {
     private String disableMessage = "null";
 
     private RankManager rankManager;
+
+    private boolean joinable = false;
 
     @Override
     public void onEnable() {
@@ -140,6 +135,8 @@ public final class Zoom extends JavaPlugin {
             new HookPlaceholderAPI(this).register();
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholder API expansion successfully registered."));
         }
+        PlayerData.startTask();
+        TaskUtil.runLaterAsync(() -> setJoinable(true), 2 * 20);
     }
 
     @Override

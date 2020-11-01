@@ -85,8 +85,15 @@
 - core.punishments.limit
 - core.punishments.silent.see
 - core.punishments.warn
-- core.punishments.unwarn
+- core.punishments.ban
+- core.punishments.unban
+- core.punishments.blacklist
+- core.punishments.unblacklist
+- core.punishments.mute
+- core.punishments.unmute
+- core.punishments.kick
 - core.punishments.alts
+- core.punishments.check
 
 
 Punishments Usage: {} Necessary , [] Optional
