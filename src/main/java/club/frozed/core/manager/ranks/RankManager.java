@@ -130,7 +130,6 @@ public class RankManager {
             boolean rankBold = document.getBoolean("BOLD");
             boolean rankItalic = document.getBoolean("ITALIC");
             int rankPriority = document.getInteger("PRIORITY");
-            ;
             List<String> rankPermission = (List<String>) document.get("PERMISSIONS");
             List<String> rankInheritance = (List<String>) document.get("INHERITANCE");
 
@@ -154,8 +153,13 @@ public class RankManager {
     public Rank getDefaultRank() {
         List<Rank> ranks = new ArrayList<>(Rank.ranks);
         List<Rank> defaults = ranks.stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).filter(Rank::isDefaultRank).collect(Collectors.toList());
-        if (defaults.size() == 0)
-            return null;
+        if (defaults.size() == 0) {
+            List<String> perms = new ArrayList<>();
+            List<String> inheritance = new ArrayList<>();
+            Rank defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms, inheritance);
+            defaultRank.setDefaultRank(true);
+            return defaultRank;
+        }
         return defaults.get(0);
     }
 

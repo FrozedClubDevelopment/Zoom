@@ -86,7 +86,12 @@ public class RankCommand extends BaseCMD {
                 player.sendMessage(CC.MENU_BAR);
                 break;
             case "import":
+                Rank.getRanks().clear();
+                Zoom.getInstance().getMongoManager().getRanksData().drop();
+
                 Zoom.getInstance().getRankManager().loadRanksFromConfig();
+                Zoom.getInstance().getRankManager().saveRanks();
+
                 player.sendMessage(CC.translate("&aSuccessfully import ranks from ranks.yml"));
                 break;
             case "export":

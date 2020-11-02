@@ -306,12 +306,6 @@ public class PlayerData {
     @NonNull
     public Rank getHighestRank() {
         Rank defaultRank = Zoom.getInstance().getRankManager().getDefaultRank();
-        List<String> perms = new ArrayList<>();
-        List<String> inheritance = new ArrayList<>();
-        if (defaultRank == null) {
-            defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms, inheritance);
-            defaultRank.setDefaultRank(true);
-        }
         return getActiveGrants().stream().map(Grant::getRank).max(Comparator.comparingInt(Rank::getPriority)).orElse(defaultRank);
     }
 
