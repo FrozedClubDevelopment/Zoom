@@ -26,7 +26,7 @@ import java.util.UUID;
 
 public class BlacklistCommand extends BaseCMD {
 
-    @Command(name = "blacklist", aliases = {"ipban"}, inGameOnly = false, permission = "core.punishments.blacklist")
+    @Command(name = "blacklist", aliases = {"ipban", "banip"}, inGameOnly = false, permission = "core.punishments.blacklist")
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender commandSender = cmd.getSender();
