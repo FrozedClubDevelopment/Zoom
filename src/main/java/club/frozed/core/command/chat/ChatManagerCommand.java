@@ -83,6 +83,7 @@ public class ChatManagerCommand extends BaseCMD {
                         .replace("<delay>", args[1])
                         .replace("<player>", p.getName()))
                 );
+                chatManager.save();
                 break;
             default:
                 break;

@@ -68,16 +68,20 @@ public class ChatListener implements Listener {
         if (playerData.getPlayer().hasPermission("core.chatcolor.format")) {
             format = format.replace(message, CC.translate(message));
         }
-        e.setFormat(format);
+
+        e.setFormat(format
+                .replaceAll("%", "%%")
+                .replaceAll("\\$", "\\\\\\$")
+        );
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onMuteChat(AsyncPlayerChatEvent event){
+    public void onMuteChat(AsyncPlayerChatEvent event) {
         PlayerData data = PlayerData.getPlayerData(event.getPlayer().getUniqueId());
         if (data == null) return;
         Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
-        if (punishment != null){
-            if (punishment.isLifetime()){
+        if (punishment != null) {
+            if (punishment.isLifetime()) {
                 data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT")));
             } else {
                 data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP")
@@ -167,8 +171,8 @@ public class ChatListener implements Listener {
         if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")) {
             event.setCancelled(true);
             event.getPlayer().chat(event.getMessage()
-                    .replace("/msg","/message")
-                    .replace("/tell","/message"));
+                    .replace("/msg", "/message")
+                    .replace("/tell", "/message"));
         }
     }
 
