@@ -27,9 +27,9 @@ public class PunishmentTypeButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {
-        ItemCreator itemCreator = new ItemCreator(Material.WOOL);
+        ItemCreator itemCreator = new ItemCreator(Material.INK_SACK);
         itemCreator.setName(punishmentType.getChatColor() + punishmentType.getPluralName());
-        itemCreator.setDurability(punishmentType.getColor().getWoolData());
+        itemCreator.setDurability(punishmentType.getColor().getDyeData());
         return itemCreator.get();
     }
 
