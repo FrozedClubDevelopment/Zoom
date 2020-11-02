@@ -20,11 +20,12 @@ public class ChatManagerCommand extends BaseCMD {
     @Completer(name = "chat", aliases = {"chatmanager"})
 
     public List<String> ChatManagerComplete(CommandArgs args) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("clear");
         list.add("mute");
         list.add("unmute");
         list.add("delay");
+
         return list;
     }
 
@@ -52,7 +53,7 @@ public class ChatManagerCommand extends BaseCMD {
                 for (int i = 0; i < 120; i++) {
                     Utils.sendAllMsg("");
                 }
-                Utils.sendAllMsg(CC.translate(messages.getString("CLEAR").replace("<target>", p.getDisplayName())));
+                Utils.sendAllMsg(CC.translate(messages.getString("CLEAR").replace("<player>", p.getDisplayName())));
                 break;
             case "mute":
                 if (!chatManager.isMute()) {
