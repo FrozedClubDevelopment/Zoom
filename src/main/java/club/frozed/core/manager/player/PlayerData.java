@@ -154,7 +154,6 @@ public class PlayerData {
 
         if (!player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET))
             player.getDisplayName().equals(rankData.getPrefix() + rankData.getColor() + getName() + CC.translate(rankData.getSuffix()) + ChatColor.RESET);
-
     }
 
     public void refreshPlayer(Player player) {
@@ -223,11 +222,6 @@ public class PlayerData {
         document.put("ip", this.ip);
         document.put("ipAddresses", this.ignoredPlayersList);
 
-//        List<String> punishmentsListData = new ArrayList<>();
-//        for (Punishment punishment : this.punishments){
-//            punishmentsListData.add(PunishmentUtil.serialize(punishment).toJson());
-//        }
-
         document.put("punishments", PunishmentUtil.savePlayerPunishments(this.punishments));
 
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
@@ -271,16 +265,6 @@ public class PlayerData {
             if (document.containsKey("punishments")){
                 this.punishments = PunishmentUtil.getPlayerPunishments((List<String>) document.get("punishments"));
             }
-
-//            if (document.containsKey("punishments")){
-//                System.out.println(document.containsKey("punishments"));
-//                for (Object punishmentsNoSerializeData : punishmentsList) {
-//                    Punishment punishment = PunishmentUtil.jsonStringToPunishment(String.valueOf(punishmentsNoSerializeData));
-//                    this.punishments.add(punishment);
-//                }
-//            }
-//            this.punishments.addAll(punishmentsList.stream().map(source -> new Punishment(Document.parse(source))).collect(Collectors.toList()));
-//
         }
         this.dataLoaded = true;
         Zoom.getInstance().getLogger().info(PlayerData.this.getName() + "'s data was successfully loaded.");
