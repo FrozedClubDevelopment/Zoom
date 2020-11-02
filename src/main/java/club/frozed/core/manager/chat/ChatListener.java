@@ -69,10 +69,7 @@ public class ChatListener implements Listener {
             format = format.replace(message, CC.translate(message));
         }
 
-        e.setFormat(format
-                .replaceAll("%", "%%")
-                .replaceAll("\\$", "\\\\\\$")
-        );
+        e.setFormat(format.replace("%", "%%").replace("\\$", "\\\\\\$"));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
