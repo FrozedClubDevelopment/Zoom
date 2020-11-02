@@ -181,14 +181,14 @@ public class Punishment {
                                 .replace("<time>", this.getTimeLeft(true))));
                     break;
                 case "<punishment-pardoned>":
-                    if (this.pardoned){
-                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.PARDONED.EXPIRED").forEach(textRemoved ->
+                    if (isPardoned()){
+                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.EXPIRED").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
                                 .replace("<pardonedDate>",TimeUtil.formatIntoCalendarString(new Date(this.pardonedAt)))
                                 .replace("<pardonedBy>",Utils.getDisplayName(this.pardonedBy))
                                 .replace("<pardonedReason>", (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason == "" ? "No reason provided" : this.pardonedReason))));
                     } else if (this.hasExpired() && !this.isLifetime()) {
-                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.PARDONED.ACTIVE").forEach(textRemoved ->
+                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.ACTIVE").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
                                         .replace("<expiredIn>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt + this.duration)))));
                     }
