@@ -132,7 +132,7 @@ public class Punishment {
                         ));
             });
             Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text -> {
-                Bukkit.broadcastMessage(CC.translate(text)
+                Bukkit.getConsoleSender().sendMessage(CC.translate(text)
                         .replace("<player>", targetName)
                         .replace("<sender>", senderName)
                         .replace("<context>", getContext())
