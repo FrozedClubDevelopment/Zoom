@@ -175,4 +175,15 @@ public class PunishmentUtil {
         }
         return string;
     }
+
+    public static String getPunishReason(Punishment punishment){
+        return punishment.isPardoned() ?
+                (punishment.getPardonedReason() == null
+                        || punishment.getPardonedReason().isEmpty()
+                        || punishment.getPardonedReason().equals("") ? "No reason provided" : punishment.getPardonedReason())
+                : (punishment.getReason() == null
+                || punishment.getReason().isEmpty()
+                || punishment.getReason().equals("") ? "No reason provided"
+                : punishment.getReason());
+    }
 }

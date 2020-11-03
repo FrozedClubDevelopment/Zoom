@@ -11,6 +11,7 @@ import club.frozed.core.utils.CC;
 import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.ConfigReplacement;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.core.utils.time.Cooldown;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -79,10 +80,17 @@ public class ChatListener implements Listener {
         Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
         if (punishment != null) {
             if (punishment.isLifetime()) {
-                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT")));
+                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT").forEach(text -> {
+                    data.getPlayer().sendMessage(CC.translate(text)
+                            .replace("<mute-time>", punishment.getTimeLeft(true))
+                            .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));
+                });
             } else {
-                data.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP")
-                        .replace("<mute-time>", punishment.getTimeLeft(true))));
+                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP").forEach(text -> {
+                    data.getPlayer().sendMessage(CC.translate(text)
+                            .replace("<mute-time>", punishment.getTimeLeft(true))
+                            .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));
+                });
             }
             event.setCancelled(true);
         }
