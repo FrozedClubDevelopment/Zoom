@@ -58,6 +58,10 @@ public class MuteCommand extends BaseCMD {
         data.getPunishments().add(punishment);
         data.saveData();
 
+        if (data.isOnline()){
+            parameter.searchAndDestroy(data, punishment);
+        }
+
         if (Zoom.getInstance().getRedisManager().isActive()){
             String json = new RedisMessage(Payload.PUNISHMENTS_ADDED)
                     .setParam("PUNISHMENT", PunishmentUtil.serializePunishment(punishment))
@@ -69,7 +73,6 @@ public class MuteCommand extends BaseCMD {
                     .toJSON();
             Zoom.getInstance().getRedisManager().write(json);
         } else {
-            parameter.searchAndDestroy(data, punishment);
             punishment.broadcast(parameter.getStaffName(commandSender), data.getName(), parameter.isSilent());
         }
         if (!data.isOnline()) {
