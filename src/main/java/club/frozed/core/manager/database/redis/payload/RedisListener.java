@@ -164,14 +164,14 @@ public class RedisListener extends JedisPubSub {
                                 if (playerData != null) {
                                     Grant grant = new Grant(
                                             grantsSplit[0],
-                                            Long.valueOf(grantsSplit[1]),
-                                            Long.valueOf(grantsSplit[2]),
-                                            Long.valueOf(grantsSplit[3]),
+                                            Long.parseLong(grantsSplit[1]),
+                                            Long.parseLong(grantsSplit[2]),
+                                            Long.parseLong(grantsSplit[3]),
                                             grantsSplit[4],
                                             grantsSplit[5],
                                             grantsSplit[6],
-                                            Boolean.valueOf(grantsSplit[7]),
-                                            Boolean.valueOf(grantsSplit[8]),
+                                            Boolean.parseBoolean(grantsSplit[7]),
+                                            Boolean.parseBoolean(grantsSplit[8]),
                                             grantsSplit[9]);
                                     if (!playerData.getGrants().contains(grant)) {
                                         playerData.getGrants().add(grant);
