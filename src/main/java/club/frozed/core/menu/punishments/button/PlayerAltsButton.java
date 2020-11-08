@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Ryzeon
@@ -33,7 +32,7 @@ public class PlayerAltsButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         ItemCreator itemCreator = new ItemCreator(Material.BEACON);
-        itemCreator.setName(ChatColor.valueOf(this.targetData.getNameColor())+ "Alts");
+        itemCreator.setName(ChatColor.valueOf(this.targetData.getNameColor()) + "Alts");
         itemCreator.setLore(altsLore());
         return itemCreator.get();
     }
@@ -43,13 +42,13 @@ public class PlayerAltsButton extends Button {
         return true;
     }
 
-    private List<String> altsLore(){
+    private List<String> altsLore() {
         List<String> strings = new ArrayList<>();
-
         if (this.targetData.getAlts().isEmpty()) {
-            strings.add(CC.translate("&c" + this.targetData.getName() + " no have alts"));
+            strings.add(CC.translate("&c" + this.targetData.getName() + " doesn't have alts."));
             return strings;
         }
+
         this.targetData.getAlts().forEach(alts -> {
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(alts);
             PlayerData altsData;
@@ -65,18 +64,21 @@ public class PlayerAltsButton extends Button {
                 ));
             }
         });
+
         return strings;
     }
 
-    private String getStatusPunishment(PlayerData playerData){
+    private String getStatusPunishment(PlayerData playerData) {
         String text;
-        if (playerData.getActivePunishment(PunishmentType.BLACKLIST) != null){
-            text = playerData.isOnline() ?  CC.translate("&7(&4Blacklist&7) + &7(&aOnline&7)") : CC.translate("&7(&4Blacklist&7) + &7(&cOffline&7)");
-        } else if (playerData.getActivePunishment(PunishmentType.BAN) != null){
-            text = playerData.isOnline() ?  CC.translate("&7(&cBan&7) + &7(&aOnline&7)") : CC.translate("&7(&cBan&7) + &7(&cOffline&7)");
+
+        if (playerData.getActivePunishment(PunishmentType.BLACKLIST) != null) {
+            text = playerData.isOnline() ? CC.translate("&8(&4Blacklist&8) + &8(&aOnline&8)") : CC.translate("&8(&4Blacklist&8) + &8(&cOffline&8)");
+        } else if (playerData.getActivePunishment(PunishmentType.BAN) != null) {
+            text = playerData.isOnline() ? CC.translate("&8(&cBan&8) + &8(&aOnline&8)") : CC.translate("&8(&cBan&8) + &8(&cOffline&8)");
         } else {
-            text = playerData.isOnline() ? CC.translate("&7(&aOnline&7)") : CC.translate("&7(&cOffline&7)");
+            text = playerData.isOnline() ? CC.translate("&8(&aOnline&8)") : CC.translate("&8(&cOffline&8)");
         }
+
         return text;
     }
 }

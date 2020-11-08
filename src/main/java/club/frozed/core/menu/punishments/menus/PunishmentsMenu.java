@@ -19,7 +19,6 @@ import java.util.Map;
  * Project: Zoom [Core]
  * Date: 1/11/2020 @ 13:25
  */
-
 @AllArgsConstructor
 public class PunishmentsMenu extends Menu {
 
@@ -27,7 +26,7 @@ public class PunishmentsMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return ChatColor.valueOf(targetData.getNameColor()) + targetData.getName() + "'s punishments.";
+        return ChatColor.valueOf(targetData.getNameColor()) + targetData.getName() + "'s punishments";
     }
 
     @Override
@@ -35,17 +34,11 @@ public class PunishmentsMenu extends Menu {
         Map<Integer, Button> buttonMap = new HashMap<>();
 
         buttonMap.put(10, new PlayerInfoButton(this.targetData));
-
         buttonMap.put(12, new PunishmentTypeButton(targetData, PunishmentType.BLACKLIST));
-
         buttonMap.put(14, new PunishmentTypeButton(targetData, PunishmentType.BAN));
-
         buttonMap.put(28, new PlayerAltsButton(targetData));
-
         buttonMap.put(30, new PunishmentTypeButton(targetData, PunishmentType.MUTE));
-
         buttonMap.put(32, new PunishmentTypeButton(targetData, PunishmentType.WARN));
-
         buttonMap.put(34, new PunishmentTypeButton(targetData, PunishmentType.KICK));
 
         return buttonMap;

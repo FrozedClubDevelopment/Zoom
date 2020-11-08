@@ -27,19 +27,18 @@ public class IgnoreListButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemCreator(Material.PAPER)
-                .setName("§6Ignore List")
+                .setName("&6Ignore List")
                 .setLore(getIgnoreList(this.playerData))
-                .get()
-                ;
+                .get();
     }
 
     private List<String> getIgnoreList(PlayerData playerData) {
         List<String> ignore = new ArrayList<>();
         ignore.add(CC.MENU_BAR);
         if (playerData.getIgnoredPlayersList().isEmpty()) {
-            ignore.add("§cYou aren't ignoring any players.");
+            ignore.add("&cYou aren't ignoring anyone.");
         } else {
-            playerData.getIgnoredPlayersList().forEach(name -> ignore.add("§7 » §f" + name));
+            playerData.getIgnoredPlayersList().forEach(name -> ignore.add("&7 » &f" + name));
         }
         ignore.add(CC.MENU_BAR);
 

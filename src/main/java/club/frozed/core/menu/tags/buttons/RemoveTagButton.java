@@ -15,9 +15,10 @@ import org.bukkit.inventory.ItemStack;
  */
 
 public class RemoveTagButton extends Button {
+
     @Override
     public ItemStack getButtonItem(Player player) {
-        return new ItemCreator(Material.RED_ROSE).setName("&cRemove").get();
+        return new ItemCreator(Material.RED_ROSE).setName("&cRemove Tag").get();
     }
 
     @Override
@@ -27,9 +28,10 @@ public class RemoveTagButton extends Button {
             data.setTag(null);
             playSuccess(player);
         } else {
-            player.sendMessage("§cYou don't have a prefix");
+            player.sendMessage("&cYou don't have a tag");
             playNeutral(player);
         }
+
         player.closeInventory();
     }
 }

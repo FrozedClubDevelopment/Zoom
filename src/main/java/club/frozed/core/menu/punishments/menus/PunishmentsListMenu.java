@@ -1,19 +1,13 @@
 package club.frozed.core.menu.punishments.menus;
 
-import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.manager.tags.Tag;
 import club.frozed.core.menu.punishments.PunishmentFilter;
 import club.frozed.core.menu.punishments.button.PunishmentInfoButton;
-import club.frozed.core.menu.tags.buttons.RemoveTagButton;
-import club.frozed.core.menu.tags.buttons.TagButton;
-import club.frozed.core.utils.CC;
 import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.menu.buttons.AirButton;
 import club.frozed.core.utils.menu.buttons.BackButton;
-import club.frozed.core.utils.menu.buttons.CloseButton;
 import club.frozed.core.utils.menu.buttons.PageInfoButton;
 import club.frozed.core.utils.menu.pagination.PageButton;
 import club.frozed.core.utils.menu.pagination.PaginatedMenu;
@@ -23,7 +17,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Ryzeon
@@ -52,10 +45,10 @@ public class PunishmentsListMenu extends PaginatedMenu {
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-
         for (Punishment punishment : this.targetData.getPunishmentsByFilter(punishmentType, punishmentFilter)) {
             buttons.put(buttons.size(), new PunishmentInfoButton(punishment));
         }
+
         return buttons;
     }
 
@@ -69,9 +62,6 @@ public class PunishmentsListMenu extends PaginatedMenu {
         buttons.put(36, new BackButton(new PunishmentsMenu(this.targetData)));
         buttons.put(44, new BackButton(new PunishmentsMenu(this.targetData)));
 
-        /*
-        First Line Glass Button
-         */
         buttons.put(1, new AirButton());
         buttons.put(2, new AirButton());
         buttons.put(3, new AirButton());
@@ -79,9 +69,6 @@ public class PunishmentsListMenu extends PaginatedMenu {
         buttons.put(5, new AirButton());
         buttons.put(6, new AirButton());
         buttons.put(7, new AirButton());
-        /*
-        Second line button
-         */
         buttons.put(42, new AirButton());
         buttons.put(41, new AirButton());
         buttons.put(39, new AirButton());

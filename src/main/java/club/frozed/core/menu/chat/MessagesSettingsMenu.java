@@ -19,7 +19,10 @@ import java.util.Map;
  */
 public class MessagesSettingsMenu extends Menu {
 
+    private final ChatColor chatColor;
+
     public MessagesSettingsMenu(ChatColor chatColor) {
+        this.chatColor = chatColor;
     }
 
     @Override

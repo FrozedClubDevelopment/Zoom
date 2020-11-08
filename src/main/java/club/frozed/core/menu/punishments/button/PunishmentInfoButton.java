@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
  * Project: Zoom [Core]
  * Date: 1/11/2020 @ 13:23
  */
-
 @AllArgsConstructor
 public class PunishmentInfoButton extends Button {
 

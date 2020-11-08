@@ -26,8 +26,8 @@ public class TogglePrivateMessagesButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemCreator(Material.SKULL_ITEM)
-                .setName("§6Toggle Private Messages")
-                .setLore(Collections.singletonList(this.playerData.isTogglePrivateMessages() ? "§aenabled" : "&cdisabled"))
+                .setName("&6Toggle Private Messages")
+                .setLore(Collections.singletonList(this.playerData.isTogglePrivateMessages() ? "&aenabled" : "&cdisabled"))
                 .get();
     }
 

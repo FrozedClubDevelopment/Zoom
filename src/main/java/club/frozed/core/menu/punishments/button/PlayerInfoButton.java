@@ -33,6 +33,7 @@ public class PlayerInfoButton extends Button {
         itemCreator.setName(ChatColor.valueOf(targetData.getNameColor()) + targetData.getName() + "'s Info");
         itemCreator.setOwner(targetData.getName());
         itemCreator.setLore(getItemLore());
+
         return itemCreator.get();
     }
 
@@ -41,23 +42,22 @@ public class PlayerInfoButton extends Button {
         return true;
     }
 
-    private List<String> getItemLore(){
+    private List<String> getItemLore() {
         List<String> strings = new ArrayList<>();
-        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("MENU.PLAYER-INFO").forEach(text ->{
-            strings.add(CC.translate(text)
-                    .replace("<player>", this.targetData.getName())
-                    .replace("<alts>", String.valueOf(this.targetData.getAlts().size()))
-                    .replace("<country>", getCountry()));
-        });
+        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("MENU.PLAYER-INFO").forEach(text -> strings.add(CC.translate(text)
+                .replace("<player>", this.targetData.getName())
+                .replace("<alts>", String.valueOf(this.targetData.getAlts().size()))
+                .replace("<country>", getCountry())
+        ));
 
         return strings;
     }
 
-    private String getCountry(){
+    private String getCountry() {
         try {
-            return Utils.getCountry(this.targetData.getIp()) == null ? "No found" : Utils.getCountry(this.targetData.getIp());
+            return Utils.getCountry(this.targetData.getIp()) == null ? "Not found" : Utils.getCountry(this.targetData.getIp());
         } catch (Exception exception) {
-            return "No found";
+            return "Not found";
         }
     }
 }

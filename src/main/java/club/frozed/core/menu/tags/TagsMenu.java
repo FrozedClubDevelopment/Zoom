@@ -21,6 +21,7 @@ import java.util.Map;
  * Date: 11/10/2020 @ 19:43
  */
 public class TagsMenu extends PaginatedMenu {
+
     @Override
     public String getPrePaginatedTitle(Player player) {
         return CC.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title"));
@@ -48,9 +49,7 @@ public class TagsMenu extends PaginatedMenu {
         buttons.put(36, new RemoveTagButton());
         buttons.put(44, new RemoveTagButton());
 
-        /*
-        First Line Glass Button
-         */
+        // First line of glass buttons
         buttons.put(1, new AirButton());
         buttons.put(2, new AirButton());
         buttons.put(3, new AirButton());
@@ -58,9 +57,8 @@ public class TagsMenu extends PaginatedMenu {
         buttons.put(5, new AirButton());
         buttons.put(6, new AirButton());
         buttons.put(7, new AirButton());
-        /*
-        Second line button
-         */
+
+        // Second line of glass buttons
         buttons.put(42, new AirButton());
         buttons.put(41, new AirButton());
         buttons.put(39, new AirButton());

@@ -26,8 +26,8 @@ public class ToggleSoundButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemCreator(Material.JUKEBOX)
-                .setName("§6Toggle Sounds")
-                .setLore(Collections.singletonList(this.playerData.isToggleSounds() ? "§aenabled" : "&cdisabled"))
+                .setName("&6Toggle Sounds")
+                .setLore(Collections.singletonList(this.playerData.isToggleSounds() ? "&aenabled" : "&cdisabled"))
                 .get();
     }
 

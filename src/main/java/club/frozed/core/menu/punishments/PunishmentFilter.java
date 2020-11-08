@@ -9,7 +9,6 @@ import org.apache.commons.lang.WordUtils;
  * Project: Zoom [Core]
  * Date: 26/10/2020 @ 13:43
  */
-
 public enum PunishmentFilter {
 
     NONE(CC.WHITE),
@@ -18,11 +17,8 @@ public enum PunishmentFilter {
     LIFETIME(CC.GOLD),
     TEMPORARILY(CC.YELLOW);
 
-    @Getter
-    private final String name;
-
-    @Getter
-    private final String color;
+    @Getter private final String name;
+    @Getter private final String color;
 
     private static PunishmentFilter[] values = values();
 

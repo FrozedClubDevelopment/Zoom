@@ -4,7 +4,6 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.PunishmentType;
 import club.frozed.core.menu.punishments.PunishmentFilter;
 import club.frozed.core.menu.punishments.menus.PunishmentsListMenu;
-import club.frozed.core.menu.punishments.menus.PunishmentsMenu;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
  * Project: Zoom [Core]
  * Date: 1/11/2020 @ 13:17
  */
-
 @AllArgsConstructor
 public class PunishmentTypeButton extends Button {
 
@@ -30,6 +28,7 @@ public class PunishmentTypeButton extends Button {
         ItemCreator itemCreator = new ItemCreator(Material.INK_SACK);
         itemCreator.setName(punishmentType.getChatColor() + punishmentType.getPluralName());
         itemCreator.setDurability(punishmentType.getColor().getDyeData());
+
         return itemCreator.get();
     }
 

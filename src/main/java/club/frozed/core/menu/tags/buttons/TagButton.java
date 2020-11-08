@@ -19,7 +19,6 @@ import java.util.List;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 20:44
  */
-
 @AllArgsConstructor
 public class TagButton extends Button {
 
@@ -51,7 +50,7 @@ public class TagButton extends Button {
             data.setTag(tag.getTagPrefix());
             playSuccess(player);
         } else {
-            player.sendMessage("§cYou don't have this prefix");
+            player.sendMessage("&cYou don't have this tag");
             playNeutral(player);
         }
         player.closeInventory();
