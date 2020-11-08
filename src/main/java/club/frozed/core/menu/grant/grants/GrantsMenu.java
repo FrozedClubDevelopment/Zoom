@@ -31,7 +31,7 @@ public class GrantsMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return CC.translate(ChatColor.valueOf(targetPlayerData.getNameColor()) + targetPlayerData.getName() + "'s grants.");
+        return CC.translate(ChatColor.valueOf(targetPlayerData.getNameColor()) + targetPlayerData.getName() + "'s grants");
     }
 
     private Comparator<Grant> GRANT_COMPARATOR = Comparator.comparingLong(Grant::getAddedDate).reversed();

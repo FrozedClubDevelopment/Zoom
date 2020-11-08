@@ -10,11 +10,9 @@ NETWORK:
     - '&6Discord&7: <discord>'
     - '&6Store&7: <store>'
     - '&7&m-----------------------'
-
   SERVER-MANAGER:
     PREFIX: '&7[&eServerManager&7]'
     FORMAT: '<prefix> &d&l<server> &eserver will be <status> &ein 5 seconds'
-
   CHAT-MANAGER:
     CLEAR: '&eChat has been cleared by &f<player>'
     MUTE: '&eChat has been mute by &f<player>'
@@ -24,12 +22,10 @@ NETWORK:
     PLAYER-MESSAGE:
       MUTE: '&cChat is muted.'
       DELAY: '&eYou must be wait &e<time> &f<left> &eto use chat.'
-
   STAFF-ALERTS:
     JOIN: '&7(&9Staff&7) &d<player> &econnected to &d<server>'
     QUIT: '&7(&9Staff&7) &d<player> &edisconnected from &d<server>'
     SWITCH: '&7(&9Staff&7) &d<player> &econnected to &d<server> &efrom &d<lastServer>'
-
   SERVER-TPS:
     MESSAGE:
       - '&7&m---------------------'
@@ -106,7 +102,7 @@ COMMANDS:
     TEMP: '&eYou have been permanently granted to <rank> for <time>.'
     GRANT-MENU:
       RANK:
-        - '&aClick to grant &f<name>''s &a to <rank> rank!'
+        - '&aClick to grant &f<name> &a to <rank> rank!'
       GRANTS:
         LORE:
           - '&7&m------------------------'
