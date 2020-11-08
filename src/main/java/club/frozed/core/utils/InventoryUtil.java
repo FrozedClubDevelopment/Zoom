@@ -25,7 +25,7 @@ public final class InventoryUtil {
             ItemStack next = origin[i];
             cloned[i] = next == null ? null : next.clone();
         }
-        
+
         return cloned;
     }
 
