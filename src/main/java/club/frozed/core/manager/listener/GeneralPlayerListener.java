@@ -4,6 +4,7 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
+import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.lang.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
@@ -27,17 +28,20 @@ public class GeneralPlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        List<String> msg = new ArrayList<>();
-        for (String string : Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE")) {
-            msg.add(translate(string, e.getPlayer()));
-        }
+        Player player = e.getPlayer();;
 
         String sound = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.JOIN-SOUND");
         if (sound != null || sound.equalsIgnoreCase("none")) {
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.valueOf(sound), 2F, 2F);
         }
-
-        e.getPlayer().sendMessage(StringUtils.join(msg, "\n"));
+        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE").forEach(text -> {
+            if (text.contains("{C}")){
+                text = text.replace("{C}", "");
+                player.sendMessage(CC.translate(Utils.getCenteredMessage(text).replace("{0}", "\n")));
+            } else {
+                player.sendMessage(CC.translate(text.replace("{0}", "\n")));
+            }
+        });
         e.setJoinMessage(null);
         if (!PlayerData.getPlayerData(e.getPlayer().getUniqueId()).isVote()) {
             List<String> voteMessage = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
