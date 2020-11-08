@@ -30,7 +30,7 @@ public class MongoManager {
     private final String password = mongoConfig.getString("AUTH.PASSWORD");
     private final String authDatabase = mongoConfig.getString("AUTH.AUTH-DATABASE");
 
-    private boolean connect;
+    private boolean connected;
 
     private MongoCollection<Document> playerData;
 
@@ -42,20 +42,20 @@ public class MongoManager {
             if (authentication) {
                 MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authDatabase, this.password.toCharArray());
                 this.client = new MongoClient(new ServerAddress(this.host, this.port), Collections.singletonList(mongoCredential));
-                this.connect = true;
+                this.connected = true;
                 Bukkit.getConsoleSender().sendMessage("§aSuccessfully connected to MongoDB.");
             } else {
                 this.client = new MongoClient(new ServerAddress(this.host, this.port));
-                this.connect = true;
+                this.connected = true;
                 Bukkit.getConsoleSender().sendMessage("§aSuccessfully connected to MongoDB.");
             }
             this.mongoDatabase = this.client.getDatabase(this.database);
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
             this.ranksData = this.mongoDatabase.getCollection("ZoomCore-RanksData");
         } catch (Exception e) {
-            this.connect = false;
+            this.connected = false;
             Zoom.getInstance().setDisableMessage("An error has occured on -> MongoDB");
-            Bukkit.getConsoleSender().sendMessage("§eDisabling Zoom [Core] because an error occurred while trying to connect to MongoDB.");
+            Bukkit.getConsoleSender().sendMessage("§eDisabling Zoom [Core] because an error occurred while trying to connected to MongoDB.");
             Bukkit.getPluginManager().disablePlugins();
             Bukkit.shutdown();
         }
@@ -80,7 +80,7 @@ public class MongoManager {
         if (this.client != null) {
             Zoom.getInstance().getLogger().info("[MongoDB] Disconnecting...");
             this.client.close();
-            this.connect = false;
+            this.connected = false;
             Zoom.getInstance().getLogger().info("[MongoDB] Successfully disconnected.");
         }
     }
