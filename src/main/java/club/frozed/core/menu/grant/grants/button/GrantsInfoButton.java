@@ -27,7 +27,6 @@ import java.util.List;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 22:01
  */
-
 @AllArgsConstructor
 public class GrantsInfoButton extends Button {
 
@@ -63,6 +62,7 @@ public class GrantsInfoButton extends Button {
                     break;
             }
         });
+
         itemCreator.setLore(lore);
         itemCreator.setDurability(WoolUtil.convertChatColorToWoolData(grant.getRank().getColor()));
 

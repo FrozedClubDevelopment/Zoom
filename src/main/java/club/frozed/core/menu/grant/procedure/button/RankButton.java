@@ -24,7 +24,6 @@ import java.util.List;
  * Project: Zoom [Core]
  * Date: 12/10/2020 @ 00:19
  */
-
 @AllArgsConstructor
 public class RankButton extends Button {
 

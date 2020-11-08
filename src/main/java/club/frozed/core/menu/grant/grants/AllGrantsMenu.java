@@ -20,7 +20,6 @@ import java.util.*;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 21:41
  */
-
 public class AllGrantsMenu extends PaginatedMenu {
 
     private PlayerData targetplayerData;
@@ -39,11 +38,11 @@ public class AllGrantsMenu extends PaginatedMenu {
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-
         for (int i = 0; i < getGrants().size(); i++){
             Grant grant = getGrants().get(i);
             buttons.put(i, new GrantsInfoButton(grant, targetplayerData));
         }
+
         return buttons;
     }
 

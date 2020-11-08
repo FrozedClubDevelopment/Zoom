@@ -2,8 +2,8 @@ package club.frozed.core.menu.grant.grants.button;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.grant.grants.AllGrantsMenu;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class AllGrantsButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {
-        return new ItemCreator(Material.NETHER_STAR).setName("&eClick to view all grants").glow().get();
+        return new ItemCreator(Material.NETHER_STAR).setName("&6Click to view all grants").glow().get();
     }
 
     @Override
