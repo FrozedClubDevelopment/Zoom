@@ -17,18 +17,14 @@ import java.util.Map;
  * Project: Zoom
  * Date: 6/10/2020 @ 20:05
  */
-
 public class MessagesSettingsMenu extends Menu {
 
-    private ChatColor color;
-
-    public MessagesSettingsMenu(ChatColor chatColor){
-        this.color = chatColor;
+    public MessagesSettingsMenu(ChatColor chatColor) {
     }
 
     @Override
     public String getTitle(Player player) {
-        return color + "Chat Settings";
+        return ChatColor.DARK_GRAY + "Chat Settings";
     }
 
     @Override

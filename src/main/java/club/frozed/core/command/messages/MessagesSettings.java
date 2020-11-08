@@ -10,15 +10,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class MessagesSettings extends BaseCMD {
-    @Command(name = "messagessettings", aliases = {"msgsettings", "msettings"})
+    @Command(name = "messagessettings", aliases = {"msgsettings", "msettings", "chatsettings"})
 
     @Override
     public void onCommand(CommandArgs cmd) {
-        Player p = cmd.getPlayer();
+        Player player = cmd.getPlayer();
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            PlayerData playerData = PlayerData.getPlayerData(p.getUniqueId());
+            PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
             String defaultChatColor = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
             ChatColor CC;
 
@@ -28,7 +28,7 @@ public class MessagesSettings extends BaseCMD {
                 CC = ChatColor.valueOf(defaultChatColor);
             }
 
-            new MessagesSettingsMenu(CC).openMenu(p);
+            new MessagesSettingsMenu(CC).openMenu(player);
         }
     }
 }
