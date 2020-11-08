@@ -1,6 +1,6 @@
 # Bukkit Sounds List -> https://jd.bukkit.org/org/bukkit/Sound.html (If you don't want to have any sound, just put the sound as 'none'
 SETTINGS:
-  PREFIX: '&8[&6Zoom&8]'
+  PREFIX: '&8[&6Zoom&8] '
   SERVER-NAME: 'DEV'
   VAULT-SUPPORT: true
   CHAT:

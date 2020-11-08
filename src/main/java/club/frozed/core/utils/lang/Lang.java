@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 @Getter
 public class Lang {
+
     public static String TS = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TEAMSPEAK");
     public static String DISCORD = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.DISCORD");
     public static String TWITTER = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TWITTER");
@@ -15,7 +16,7 @@ public class Lang {
 
     public static String SERVER_IP = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SERVER-IP");
     public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.SERVER-NAME");
-    public static String PREFIX = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX") + " ");
+    public static String PREFIX = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX"));
 
     public static String OFFLINE_PLAYER = CC.translate("&cPlayer not found.");
     public static String NO_PERMS = CC.translate("&cYou don't have permissions.");
@@ -28,5 +29,4 @@ public class Lang {
             player.playSound(player.getLocation(), Sound.ITEM_BREAK, 2F, 2F);
         }
     }
-
 }
