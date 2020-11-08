@@ -1,12 +1,13 @@
 package club.frozed.core.utils.config;
 
-import java.io.File;
-import java.io.IOException;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
 
 @Getter
 public class FileConfig {
@@ -19,7 +20,6 @@ public class FileConfig {
 
         if (!this.file.exists()) {
             this.file.getParentFile().mkdirs();
-
             if (plugin.getResource(fileName) == null) {
                 try {
                     this.file.createNewFile();
@@ -42,5 +42,4 @@ public class FileConfig {
             e.printStackTrace();
         }
     }
-
 }

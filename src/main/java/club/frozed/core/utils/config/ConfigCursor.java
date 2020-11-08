@@ -71,5 +71,4 @@ public class ConfigCursor {
     public void save() {
         this.fileConfig.save();
     }
-
 }
