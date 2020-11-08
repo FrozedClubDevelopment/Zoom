@@ -15,47 +15,49 @@ import java.util.List;
 
 public class GrantUtil {
 
-    public static List<String> savePlayerGrants(List<Grant> grants){
+    public static List<String> savePlayerGrants(List<Grant> grants) {
         List<String> playerGrants = new ArrayList<>();
         for (Grant grant : grants) {
             playerGrants.add(
                     grant.getRank().getName()
-                    + ";" + grant.getAddedDate()
-                    + ";" + grant.getDuration()
-                    + ";" + grant.getRemovedDate()
-                    + ";" + grant.getAddedBy()
-                    + ";" + grant.getReason()
-                    + ";" + grant.getRemovedBy()
-                    + ";" + grant.isActive()
-                    + ";" + grant.isPermanent()
-                    + ";" + grant.getServer());
+                            + ";" + grant.getAddedDate()
+                            + ";" + grant.getDuration()
+                            + ";" + grant.getRemovedDate()
+                            + ";" + grant.getAddedBy()
+                            + ";" + grant.getReason()
+                            + ";" + grant.getRemovedBy()
+                            + ";" + grant.isActive()
+                            + ";" + grant.isPermanent()
+                            + ";" + grant.getServer()
+            );
         }
+
         return playerGrants;
     }
 
-    public static List<Grant> getPlayerGrants(List<String> strings){
+    public static List<Grant> getPlayerGrants(List<String> strings) {
         List<Grant> grants = new ArrayList<>();
-        for (String string : strings){
-            String[] grantsSplit = string.split(";");
-
-            // El split pa agarra cada wea a partir de un ; ekem hola;xd [0] es hola [1] xd
+        for (String string : strings) {
+            String[] grantsSplit = string.split(";"); // Split takes each thing starting from a ; - Example: hello;xd[0] returns hello [1] xd
             Grant grant = new Grant(
                     grantsSplit[0],
-                    Long.valueOf(grantsSplit[1]),
-                    Long.valueOf(grantsSplit[2]),
-                    Long.valueOf(grantsSplit[3]),
+                    Long.parseLong(grantsSplit[1]),
+                    Long.parseLong(grantsSplit[2]),
+                    Long.parseLong(grantsSplit[3]),
                     grantsSplit[4],
                     grantsSplit[5],
                     grantsSplit[6],
-                    Boolean.valueOf(grantsSplit[7]),
-                    Boolean.valueOf(grantsSplit[8]),
-                    grantsSplit[9]);
+                    Boolean.parseBoolean(grantsSplit[7]),
+                    Boolean.parseBoolean(grantsSplit[8]),
+                    grantsSplit[9]
+            );
             grants.add(grant);
         }
+
         return grants;
     }
 
     public static String getDate(long value) {
-        return (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a")).format(new Date(value));
+        return new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a").format(new Date(value));
     }
 }
