@@ -32,7 +32,7 @@ import java.util.List;
 public class GrantsInfoButton extends Button {
 
     private Grant grant;
-    private PlayerData targetplayerData;
+    private PlayerData targetPlayerData;
 
     @Override
     public ItemStack getButtonItem(Player player) {
@@ -93,10 +93,10 @@ public class GrantsInfoButton extends Button {
         grant.setRemovedDate(System.currentTimeMillis());
         grant.setRemovedBy(player.getName());
         TaskUtil.runAsync(() -> {
-            Player target = Bukkit.getPlayer(targetplayerData.getName());
+            Player target = Bukkit.getPlayer(targetPlayerData.getName());
             if (target == null) {
                 String json = new RedisMessage(Payload.GRANT_UPDATE)
-                        .setParam("NAME", targetplayerData.getName())
+                        .setParam("NAME", targetPlayerData.getName())
                         .setParam("GRANT", grant.getRank().getName()
                                 + ";" + grant.getAddedDate()
                                 + ";" + grant.getDuration()
@@ -111,7 +111,7 @@ public class GrantsInfoButton extends Button {
                     Zoom.getInstance().getRedisManager().write(json);
                 }
             } else {
-                targetplayerData.loadPermissions(target);
+                targetPlayerData.loadPermissions(target);
             }
         });
     }
