@@ -84,10 +84,10 @@ public final class Zoom extends JavaPlugin {
 
         redisManager.connect();
 
-        this.getLogger().info("[Zoom-Ranks] Registering ranks...");
+        //this.getLogger().info("[Zoom-Ranks] Registering ranks...");
         rankManager.loadRanks();
 
-        this.getLogger().info("[Zoom-Tags] Registering tags...");
+        //this.getLogger().info("[Zoom-Tags] Registering tags...");
         tagManager.registerTags();
 
         this.loadCommands();
