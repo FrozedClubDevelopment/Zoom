@@ -18,7 +18,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  * Project: Zoom
  * Date: 24/09/2020 @ 13:21
  */
-
 public class GrantListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -26,10 +25,12 @@ public class GrantListener implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         String message = ChatColor.stripColor(event.getMessage());
-        if (playerData == null)
+        if (playerData == null) {
             return;
-        if (playerData.getGrantProcedure() == null || playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START)
+        }
+        if (playerData.getGrantProcedure() == null || playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START) {
             return;
+        }
         if (playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.DURATION) {
             long duration;
             event.setCancelled(true);
@@ -39,24 +40,27 @@ public class GrantListener implements Listener {
                 player.sendMessage(CC.translate("&aSuccess! &7You have been duration to &a" + playerData.getGrantProcedure().getNiceDuration()));
                 playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
                 player.sendMessage(CC.translate("&aPlease type a reason for grant."));
-                player.playSound(player.getLocation(), Sound.NOTE_PLING,2F,2F);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 2F, 2F);
+
                 return;
             }
+
             duration = DateUtils.getDuration(message);
-            if (!(duration > 0)){
+            if (!(duration > 0)) {
                 player.sendMessage(CC.translate("&cThe duration isn't valid."));
                 return;
             }
+
             playerData.getGrantProcedure().setEnteredDuration(duration);
             player.sendMessage(CC.translate("&aSuccess! &7You have been duration to &a" + playerData.getGrantProcedure().getNiceDuration()));
             playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.REASON);
             player.sendMessage(CC.translate("&aPlease type a reason for grant."));
-            player.playSound(player.getLocation(), Sound.NOTE_PLING,2F,2F);
+            player.playSound(player.getLocation(), Sound.NOTE_PLING, 2F, 2F);
         } else if (playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.REASON) {
             event.setCancelled(true);
             playerData.getGrantProcedure().setEnteredReason(message);
             playerData.getGrantProcedure().setGrantProcedureState(GrantProcedureState.CONFIRMATION);
-            (new GrantConfirmMenu()).openMenu(player);
+            new GrantConfirmMenu().openMenu(player);
         }
     }
 }

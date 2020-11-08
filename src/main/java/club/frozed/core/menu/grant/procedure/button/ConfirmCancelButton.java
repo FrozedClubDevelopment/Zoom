@@ -8,9 +8,9 @@ import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,9 +36,9 @@ public class ConfirmCancelButton extends Button {
         return getItem(type);
     }
 
-    private ItemStack getItem(Type type){
+    private ItemStack getItem(Type type) {
         ItemStack itemStack = null;
-        switch (type){
+        switch (type) {
             case CONFIRM:
                 itemStack = new ItemCreator(Material.INK_SACK).setDurability(2).setName("&aConfirm Grant").get();
                 break;
@@ -51,7 +51,7 @@ public class ConfirmCancelButton extends Button {
 
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
-        switch (type){
+        switch (type) {
             case CANCEL:
                 playNeutral(player);
                 player.closeInventory();
@@ -60,7 +60,7 @@ public class ConfirmCancelButton extends Button {
                 Rank rankData = Rank.getRankByName(data.getGrantProcedure().getRankName());
                 if (rankData == null) {
                     player.closeInventory();
-                    player.sendMessage("&4Error! &cThat rank don't exists.");
+                    player.sendMessage("&4Error! &cThat rank doesn't exist.");
                     return;
                 }
                 Grant grant = new Grant(null, 1L, 1L, 1L, "", "", "", false, false, "Global");
@@ -73,7 +73,7 @@ public class ConfirmCancelButton extends Button {
                 grant.setPermanent(data.getGrantProcedure().isPermanent());
                 grant.setReason(data.getGrantProcedure().getEnteredReason());
                 player.closeInventory();
-                TaskUtil.runAsync(() ->{
+                TaskUtil.runAsync(() -> {
                     PlayerData targetData = PlayerData.getPlayerData(data.getGrantProcedure().getPlayerData().getUuid());
                     if (targetData == null) {
                         targetData = PlayerData.loadData(data.getGrantProcedure().getPlayerData().getUuid());
@@ -84,36 +84,36 @@ public class ConfirmCancelButton extends Button {
                     if (grant.isPermanent()) {
                         player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName()));
                         String json = new RedisMessage(Payload.GRANT_ADD)
-                                .setParam("NAME",targetData.getName())
-                                .setParam("MESSAGE",CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>",rankData.getName()))).toJSON();
-                        if (Zoom.getInstance().getRedisManager().isActive()){
+                                .setParam("NAME", targetData.getName())
+                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName()))).toJSON();
+                        if (Zoom.getInstance().getRedisManager().isActive()) {
                             Zoom.getInstance().getRedisManager().write(json);
                         } else {
                             if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
-                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>",rankData.getName())));
+                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName())));
                             }
                         }
                     } else {
-                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName()  + " for " + grant.getNiceDuration()));
+                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName() + " for " + grant.getNiceDuration()));
                         String json = new RedisMessage(Payload.GRANT_ADD)
-                                .setParam("NAME",targetData.getName())
-                                .setParam("MESSAGE",CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
-                                        .replace("<time>",grant.getNiceDuration())
-                                        .replace("<rank>",rankData.getName()))).toJSON();
-                        if (Zoom.getInstance().getRedisManager().isActive()){
+                                .setParam("NAME", targetData.getName())
+                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
+                                        .replace("<time>", grant.getNiceDuration())
+                                        .replace("<rank>", rankData.getName()))).toJSON();
+                        if (Zoom.getInstance().getRedisManager().isActive()) {
                             Zoom.getInstance().getRedisManager().write(json);
                         } else {
                             if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
                                 targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
-                                        .replace("<time>",grant.getNiceDuration())
-                                        .replace("<rank>",rankData.getName())));
+                                        .replace("<time>", grant.getNiceDuration())
+                                        .replace("<rank>", rankData.getName())));
                             }
                         }
                     }
                     Player target = Bukkit.getPlayer(targetData.getName());
                     if (target == null) {
                         String json = new RedisMessage(Payload.GRANT_UPDATE)
-                                .setParam("NAME",targetData.getName())
+                                .setParam("NAME", targetData.getName())
                                 .setParam("GRANT", grant.getRank().getName()
                                         + ";" + grant.getAddedDate()
                                         + ";" + grant.getDuration()
@@ -124,14 +124,14 @@ public class ConfirmCancelButton extends Button {
                                         + ";" + grant.isActive()
                                         + ";" + grant.isPermanent()
                                         + ";" + grant.getServer()).toJSON();
-                        if (Zoom.getInstance().getRedisManager().isActive()){
+                        if (Zoom.getInstance().getRedisManager().isActive()) {
                             Zoom.getInstance().getRedisManager().write(json);
                         }
                     } else {
                         PlayerData targetPlayerData = PlayerData.getPlayerData(target.getUniqueId());
                         targetPlayerData.loadPermissions(target);
                     }
-                    if (targetData.isOnline()){
+                    if (targetData.isOnline()) {
                         targetData.saveData();
                     } else {
                         PlayerData.deleteOfflineProfile(targetData);
@@ -141,7 +141,7 @@ public class ConfirmCancelButton extends Button {
         }
     }
 
-    public enum Type{
+    public enum Type {
         CONFIRM,
         CANCEL
     }

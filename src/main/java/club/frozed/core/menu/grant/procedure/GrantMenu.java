@@ -21,7 +21,6 @@ import java.util.*;
  * Project: Zoom [Core]
  * Date: 12/10/2020 @ 00:14
  */
-
 @AllArgsConstructor
 public class GrantMenu extends PaginatedMenu {
 
@@ -29,23 +28,24 @@ public class GrantMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return CC.translate("&8Grant Menu &e");
+        return CC.translate("&8Grant Menu&6");
     }
 
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-
-        for (int i = 0; i < getRanks().size(); i++){
+        for (int i = 0; i < getRanks().size(); i++) {
             Rank rank = getRanks().get(i);
             buttons.put(i, new RankButton(rank, targetData));
         }
+
         return buttons;
     }
 
-    private List<Rank> getRanks(){
+    private List<Rank> getRanks() {
         List<Rank> ranks = new ArrayList<>();
         Rank.getRanks().stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).forEach(ranks::add);
+
         return ranks;
     }
 
@@ -55,7 +55,7 @@ public class GrantMenu extends PaginatedMenu {
         if (playerData.getGrantProcedure() != null && playerData.getGrantProcedure().getGrantProcedureState() == GrantProcedureState.START) {
             playerData.setGrantProcedure(null);
         }
-        if (this.targetData != null){
+        if (this.targetData != null) {
             PlayerData.deleteOfflineProfile(targetData);
         }
     }
@@ -70,9 +70,6 @@ public class GrantMenu extends PaginatedMenu {
         buttons.put(36, new CloseButton());
         buttons.put(44, new CloseButton());
 
-        /*
-        First Line Glass Button
-         */
         buttons.put(1, new AirButton());
         buttons.put(2, new AirButton());
         buttons.put(3, new AirButton());
@@ -80,9 +77,6 @@ public class GrantMenu extends PaginatedMenu {
         buttons.put(5, new AirButton());
         buttons.put(6, new AirButton());
         buttons.put(7, new AirButton());
-        /*
-        Second line button
-         */
         buttons.put(42, new AirButton());
         buttons.put(41, new AirButton());
         buttons.put(39, new AirButton());

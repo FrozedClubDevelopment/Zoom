@@ -16,8 +16,8 @@ import java.util.Map;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 23:32
  */
-
 public class GrantConfirmMenu extends Menu {
+
     @Override
     public String getTitle(Player player) {
         return CC.translate("&aConfirm grant?");
@@ -29,9 +29,7 @@ public class GrantConfirmMenu extends Menu {
         Map<Integer, Button> buttons = new HashMap<>();
 
         buttons.put(11, new ConfirmCancelButton(ConfirmCancelButton.Type.CANCEL, data));
-
         buttons.put(13, new GrantInfoButton(data));
-
         buttons.put(15, new ConfirmCancelButton(ConfirmCancelButton.Type.CONFIRM, data));
 
         setPlaceholder(true);
@@ -42,7 +40,7 @@ public class GrantConfirmMenu extends Menu {
     @Override
     public void onClose(Player player) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
-        if (playerData.getGrantProcedure() != null){
+        if (playerData.getGrantProcedure() != null) {
             PlayerData.deleteOfflineProfile(playerData.getGrantProcedure().getPlayerData());
         }
     }

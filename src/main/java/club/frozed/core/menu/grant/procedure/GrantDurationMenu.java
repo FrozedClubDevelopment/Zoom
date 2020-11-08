@@ -5,9 +5,9 @@ import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.grant.WoolUtil;
+import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.menu.Menu;
-import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.time.DateUtils;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
@@ -24,7 +24,6 @@ import java.util.Map;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 23:49
  */
-
 public class GrantDurationMenu extends Menu {
 
     private PlayerData targetData;
@@ -33,13 +32,13 @@ public class GrantDurationMenu extends Menu {
 
     private boolean completed;
 
-    public GrantDurationMenu(PlayerData playerData){
+    public GrantDurationMenu(PlayerData playerData) {
         this.targetData = playerData;
     }
 
     @Override
     public String getTitle(Player player) {
-        return CC.translate("&aChoose duration.");
+        return CC.translate("&aChoose duration");
     }
 
     @Override
@@ -64,8 +63,9 @@ public class GrantDurationMenu extends Menu {
     @Override
     public void onClose(Player player) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
-        if (playerData.getGrantProcedure() != null && !this.custom && !this.completed)
+        if (playerData.getGrantProcedure() != null && !this.custom && !this.completed) {
             playerData.setGrantProcedure(null);
+        }
         PlayerData.deleteOfflineProfile(this.targetData.getUuid());
     }
 
@@ -79,9 +79,9 @@ public class GrantDurationMenu extends Menu {
             return getItem(type);
         }
 
-        private ItemStack getItem(String type){
+        private ItemStack getItem(String type) {
             ItemStack itemStack = null;
-            switch (type){
+            switch (type) {
                 case "14d":
                     itemStack = new ItemCreator(Material.WOOL).setDurability(WoolUtil.convertChatColorToWoolData(ChatColor.GREEN)).setName("&a&l14 Days").get();
                     break;
@@ -103,11 +103,11 @@ public class GrantDurationMenu extends Menu {
             PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
             GrantProcedure targetGrantProcedure = data.getGrantProcedure();
             long duration = 1L;
-            switch (type){
+            switch (type) {
                 case "14d":
                     if (targetGrantProcedure == null) {
                         player.closeInventory();
-                        player.sendMessage(CC.translate("&4Error! &cOpps"));
+                        player.sendMessage(CC.translate("&4Error!"));
                         return;
                     }
                     duration = DateUtils.getDuration("14d");
@@ -121,7 +121,7 @@ public class GrantDurationMenu extends Menu {
                 case "30d":
                     if (targetGrantProcedure == null) {
                         player.closeInventory();
-                        player.sendMessage(CC.translate("&4Error! &cOpps"));
+                        player.sendMessage(CC.translate("&4Error!"));
                         return;
                     }
                     duration = DateUtils.getDuration("30d");
@@ -135,7 +135,7 @@ public class GrantDurationMenu extends Menu {
                 case "Perm":
                     if (targetGrantProcedure == null) {
                         player.closeInventory();
-                        player.sendMessage(CC.translate("&4Error! &cOpps"));
+                        player.sendMessage(CC.translate("&4Error!"));
                         return;
                     }
                     GrantDurationMenu.this.completed = true;
@@ -149,7 +149,7 @@ public class GrantDurationMenu extends Menu {
                 case "Custom":
                     if (targetGrantProcedure == null) {
                         player.closeInventory();
-                        player.sendMessage(CC.translate("&4Error! &cOpps"));
+                        player.sendMessage(CC.translate("&4Error!"));
                         return;
                     }
                     GrantDurationMenu.this.custom = true;
