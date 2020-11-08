@@ -2,7 +2,6 @@ package club.frozed.core.utils.time;
 
 import org.apache.commons.lang.time.DurationFormatUtils;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,14 +18,11 @@ import java.util.regex.Pattern;
  */
 
 public class DateUtils {
+
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
     public static final long PERMANENT = Long.MAX_VALUE;
-    private static final ThreadLocal SECONDS = ThreadLocal.withInitial(() -> {
-        return new DecimalFormat("0.#");
-    });
-    private static final ThreadLocal TRAILING = ThreadLocal.withInitial(() -> {
-        return new DecimalFormat("0");
-    });
+    private static final ThreadLocal SECONDS = ThreadLocal.withInitial(() -> new DecimalFormat("0.#"));
+    private static final ThreadLocal TRAILING = ThreadLocal.withInitial(() -> new DecimalFormat("0"));
 
     public static String formatDuration(long input) {
         return DurationFormatUtils.formatDurationWords(input, true, true);
@@ -53,7 +49,7 @@ public class DateUtils {
     }
 
     public static String niceTime(long duration, boolean milliseconds, boolean trail) {
-        return milliseconds && duration < TimeUnit.MINUTES.toMillis(1L) ? ((DecimalFormat)(trail ? TRAILING : SECONDS).get()).format((double)duration * 0.001D) + 's' : DurationFormatUtils.formatDuration(duration, (duration >= TimeUnit.HOURS.toMillis(1L) ? "HH:" : "") + "mm:ss");
+        return milliseconds && duration < TimeUnit.MINUTES.toMillis(1L) ? ((DecimalFormat) (trail ? TRAILING : SECONDS).get()).format((double) duration * 0.001D) + 's' : DurationFormatUtils.formatDuration(duration, (duration >= TimeUnit.HOURS.toMillis(1L) ? "HH:" : "") + "mm:ss");
     }
 
     public static String formatSimplifiedDateDiff(long date) {
@@ -76,7 +72,7 @@ public class DateUtils {
             String[] names = new String[]{"y", "y", "m", "m", "d", "d", "h", "h", "m", "m", "s", "s"};
             int accuracy = 0;
 
-            for(int i = 0; i < types.length && accuracy <= 2; ++i) {
+            for (int i = 0; i < types.length && accuracy <= 2; ++i) {
                 int diff = dateDiff(types[i], fromDate, toDate, future);
                 if (diff > 0) {
                     ++accuracy;
@@ -90,10 +86,10 @@ public class DateUtils {
 
     public static String formatDateDiff(Calendar fromDate, Calendar toDate) {
         boolean future = false;
-        if(toDate.equals(fromDate)) {
+        if (toDate.equals(fromDate)) {
             return "now";
         } else {
-            if(toDate.after(fromDate)) {
+            if (toDate.after(fromDate)) {
                 future = true;
             }
 
@@ -102,15 +98,15 @@ public class DateUtils {
             String[] names = new String[]{"year", "years", "month", "months", "day", "days", "hour", "hours", "minute", "minutes", "second", "seconds"};
             int accuracy = 0;
 
-            for(int i = 0; i < types.length && accuracy <= 2; ++i) {
+            for (int i = 0; i < types.length && accuracy <= 2; ++i) {
                 int diff = dateDiff(types[i], fromDate, toDate, future);
-                if(diff > 0) {
+                if (diff > 0) {
                     ++accuracy;
-                    sb.append(" ").append(diff).append(" ").append(names[i * 2 + (diff > 1?1:0)]);
+                    sb.append(" ").append(diff).append(" ").append(names[i * 2 + (diff > 1 ? 1 : 0)]);
                 }
             }
 
-            return sb.length() == 0?"now":sb.toString().trim();
+            return sb.length() == 0 ? "now" : sb.toString().trim();
         }
     }
 
@@ -168,7 +164,7 @@ public class DateUtils {
         int diff = 0;
 
         long savedDate;
-        for(savedDate = fromDate.getTimeInMillis(); future && !fromDate.after(toDate) || !future && !fromDate.before(toDate); ++diff) {
+        for (savedDate = fromDate.getTimeInMillis(); future && !fromDate.after(toDate) || !future && !fromDate.before(toDate); ++diff) {
             savedDate = fromDate.getTimeInMillis();
             fromDate.add(type, future ? 1 : -1);
         }
