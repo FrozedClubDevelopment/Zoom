@@ -12,7 +12,6 @@ import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.PlayerDataLoad;
-import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.ranks.RankManager;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
@@ -27,8 +26,6 @@ import club.frozed.core.utils.config.FileConfig;
 import club.frozed.core.utils.menu.ButtonListener;
 import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -38,8 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 public final class Zoom extends JavaPlugin {
 
     @Getter private static Zoom instance;
@@ -63,12 +59,6 @@ public final class Zoom extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        /*
-         * TODO-LIST:
-         *      -> Bans System
-         *      -> Bans Commands
-         */
-
         instance = this;
         commandFramework = new CommandFramework(this);
         this.messagesConfig = new FileConfig(this, "messages.yml");
@@ -85,37 +75,37 @@ public final class Zoom extends JavaPlugin {
         this.rankManager = new RankManager();
         ItemCreator.registerGlow();
 
-        chatManager.load();
-        mongoManager.connect();
+        this.chatManager.load();
 
-        if (!mongoManager.isConnect()) return;
+        this.mongoManager.connect();
+        if (!this.mongoManager.isConnected()) {
+            return;
+        }
 
         redisManager.connect();
 
-        getLogger().info("[Zoom-Ranks] Registering ranks...");
+        this.getLogger().info("[Zoom-Ranks] Registering ranks...");
         rankManager.loadRanks();
 
-        getLogger().info("[Zoom-Tags] Registering tags...");
+        this.getLogger().info("[Zoom-Tags] Registering tags...");
         tagManager.registerTags();
 
-        loadCommands();
-        loadListener();
+        this.loadCommands();
+        this.loadListener();
 
         if (Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.TIPS.ENABLED")) {
             TaskUtil.runTaskTimerAsynchronously(new TipsRunnable(), Zoom.getInstance().getSettingsConfig().getConfig().getInt("SETTINGS.TIPS.DELAY"));
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.TIPS.MODE"));
+            //Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Tips enabled§f -> §6Mode§f -> §6" + Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.TIPS.MODE"));
         }
 
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Authors§f: §aRyzeon§7, §aElb1to");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Version§f: §av" + getDescription().getVersion());
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7|-");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§aDatabase§f:");
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §aMongoDB§f: " + (mongoManager.isConnect() ? "§aEnabled" : "§cDisabled"));
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + " §7* §cRedis§f: " + (redisManager.isActive() ? "§aEnabled" : "§cDisabled"));
-        Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
+        Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&6Zoom &8- &fv" + getDescription().getVersion()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7Developed on &bFrozed Club Development"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate(" "));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&6 • &eDevelopers: &fElb1to & Ryzeon"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&6 • &eMongo: &f" + (mongoManager.isConnected() ? "&aenabled" : "&cdisabled")));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&6 • &eRedis: &f" + (redisManager.isActive() ? "&aenabled" : "&cdisabled")));
+        Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
 
         if (redisManager.isActive()) {
             String json = new RedisMessage(Payload.SERVER_MANAGER).setParam("SERVER", Lang.SERVER_NAME).setParam("STATUS", "online").toJSON();
@@ -133,10 +123,11 @@ public final class Zoom extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HookPlaceholderAPI(this).register();
-            Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholder API expansion successfully registered."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholderAPI hook successfully registered."));
         }
+
         PlayerData.startTask();
-        TaskUtil.runLaterAsync(() -> setJoinable(true), 2 * 20);
+        TaskUtil.runLaterAsync(() -> setJoinable(true), 5 * 20);
     }
 
     @Override
@@ -191,18 +182,24 @@ public final class Zoom extends JavaPlugin {
 
     public void shutdownMessage() {
         if (disableMessage.equalsIgnoreCase("Error in MongoDB")) {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core §7| §cDisabling");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Please check your database.yml");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fhttps://discord.frozed.club");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&6Zoom &8- &fv" + getDescription().getVersion()));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&7Developed on &bFrozed Club Development"));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&cAn error has occurred while connecting to MongoDB"));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&cMake sure that your database.yml has the right data."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&6Do you need support? &fhttps://discord.frozed.club"));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         } else {
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Zoom Core §7| §cDisabling");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§6Dou you want support?");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§fhttps://discord.frozed.club");
-            Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§7-----------------------------");
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&6Zoom &8- &fv" + getDescription().getVersion()));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&7Developed on &bFrozed Club Development"));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&cAn error has occurred while loading Zoom."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&cPlease join our Discord for support."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&6 ▶ &fhttps://discord.frozed.club"));
+            Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
         }
     }
 
