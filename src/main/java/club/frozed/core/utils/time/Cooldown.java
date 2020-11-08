@@ -3,6 +3,7 @@ package club.frozed.core.utils.time;
 import java.util.UUID;
 
 public class Cooldown {
+
     private UUID uniqueId;
 
     private long start;
@@ -16,8 +17,9 @@ public class Cooldown {
         this.uniqueId = UUID.randomUUID();
         this.start = System.currentTimeMillis();
         this.expire = this.start + duration;
-        if (duration == 0L)
+        if (duration == 0L) {
             this.notified = true;
+        }
     }
 
     public long getPassed() {
@@ -33,19 +35,19 @@ public class Cooldown {
     }
 
     public String getTimeLeft() {
-        if (getRemaining() >= 60000L)
+        if (getRemaining() >= 60000L) {
             return TimeUtil.millisToRoundedTime(getRemaining());
+        }
+
         return TimeUtil.millisToSeconds(getRemaining());
     }
 
     public String getTimeMilisLeft() {
-        String time = TimeUtil.millisToSeconds(getRemaining());
-        return time;
+        return TimeUtil.millisToSeconds(getRemaining());
     }
 
     public String getContextLeft() {
-        String context = "second" + ((getRemaining() / 1000L > 1L) ? "s" : "");
-        return context;
+        return "second" + ((getRemaining() / 1000L > 1L) ? "s" : "");
     }
 
     public UUID getUniqueId() {
@@ -81,21 +83,28 @@ public class Cooldown {
     }
 
     public boolean equals(Object o) {
-        if (o == this)
+        if (o == this) {
             return true;
-        if (!(o instanceof Cooldown))
+        }
+        if (!(o instanceof Cooldown)) {
             return false;
+        }
+
         Cooldown other = (Cooldown) o;
-        if (!other.canEqual(this))
+        if (!other.canEqual(this)) {
             return false;
+        }
+
         Object this$uniqueId = getUniqueId();
         Object other$uniqueId = other.getUniqueId();
         if (this$uniqueId == null) {
-            if (other$uniqueId == null)
+            if (other$uniqueId == null) {
                 return (getStart() == other.getStart() && getExpire() == other.getExpire() && isNotified() == other.isNotified());
+            }
         } else if (this$uniqueId.equals(other$uniqueId)) {
             return (getStart() == other.getStart() && getExpire() == other.getExpire() && isNotified() == other.isNotified());
         }
+
         return false;
     }
 
@@ -113,6 +122,7 @@ public class Cooldown {
         long $expire = getExpire();
         result = result * 59 + (int) ($expire >>> 32L ^ $expire);
         result = result * 59 + (isNotified() ? 79 : 97);
+
         return result;
     }
 
