@@ -44,6 +44,7 @@ public class TagManager {
                 return tag;
             }
         }
+
         return null;
     }
 
@@ -53,6 +54,7 @@ public class TagManager {
                 return tag;
             }
         }
+
         return null;
     }
 }
