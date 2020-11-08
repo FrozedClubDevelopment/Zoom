@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
-    public static final Type LIST_STRING = new TypeToken<List<String>>() {}.getType();
+    public static final Type LIST_STRING = new TypeToken<List<String>>() {
+    }.getType();
 
     public static int getPing(Player p) {
         try {
@@ -57,7 +58,7 @@ public class Utils {
     public static String getDisplayName(UUID uuid) {
         if (uuid == null) return "Console";
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-        if (offlinePlayer != null){
+        if (offlinePlayer != null) {
             return offlinePlayer.getName();
         } else {
             return "Console";
@@ -68,8 +69,8 @@ public class Utils {
         return sender instanceof Player ? ((Player) sender).getPlayer().getDisplayName() : "§4§lConsole";
     }
 
-    public static String getCommandWithIgnoreArgsOne(String[] args){
-        return Joiner.on(" ").skipNulls().join(Arrays.copyOfRange(args, 0 , args.length));
+    public static String getCommandWithIgnoreArgsOne(String[] args) {
+        return Joiner.on(" ").skipNulls().join(Arrays.copyOfRange(args, 0, args.length));
     }
 
     public static void sendAllMsg(String string) {
@@ -92,6 +93,7 @@ public class Utils {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -100,6 +102,7 @@ public class Utils {
         DecimalFormat decimalFormat = new DecimalFormat("##.##");
         double serverTps = Bukkit.spigot().getTPS()[0];
         tps = decimalFormat.format(serverTps);
+
         return tps;
     }
 
@@ -107,24 +110,28 @@ public class Utils {
         long serverTime = ManagementFactory.getRuntimeMXBean().getStartTime();
         String text;
         text = DurationFormatUtils.formatDurationWords(System.currentTimeMillis() - serverTime, true, true);
+
         return text;
     }
 
     public static long getMaxMemory() {
         long text;
         text = Runtime.getRuntime().maxMemory() / 1024 / 1024;
+
         return text;
     }
 
     public static long getAllMemory() {
         long text;
         text = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+
         return text;
     }
 
     public static long getFreeMemory() {
         long text;
         text = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+
         return text;
     }
 
@@ -140,19 +147,16 @@ public class Utils {
         long minute = TimeUnit.SECONDS.toMinutes(time) - TimeUnit.DAYS.toMinutes(day) - TimeUnit.HOURS.toMinutes(hours);
         long second = TimeUnit.SECONDS.toSeconds(time) - TimeUnit.DAYS.toSeconds(day) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(minute);
         String hour_text = String.valueOf(hours), minute_text = String.valueOf(minute), second_text = String.valueOf(second);
-        if (hours < 10L)
-            hour_text = "0" + hour_text;
-        if (minute < 10L)
-            minute_text = "0" + minute_text;
-        if (second < 10L)
-            second_text = "0" + second_text;
+        if (hours < 10L) hour_text = "0" + hour_text;
+        if (minute < 10L) minute_text = "0" + minute_text;
+        if (second < 10L) second_text = "0" + second_text;
+
         return (hours == 0L) ? (minute_text + ":" + second_text) : (hour_text + ":" + minute_text + ":" + second_text);
     }
 
     public static String formatTimeMillis(long millis) {
         long seconds = millis / 1000L;
-        if (seconds <= 0L)
-            return "0 seconds";
+        if (seconds <= 0L) return "0 seconds";
         long minutes = seconds / 60L;
         seconds %= 60L;
         long hours = minutes / 60L;
@@ -162,30 +166,31 @@ public class Utils {
         long years = day / 365L;
         day %= 365L;
         StringBuilder time = new StringBuilder();
-        if (years != 0L)
-            time.append(years).append((years == 1L) ? " year " : " years ");
-        if (day != 0L)
-            time.append(day).append((day == 1L) ? " day " : " days ");
-        if (hours != 0L)
-            time.append(hours).append((hours == 1L) ? " hour " : " hours ");
-        if (minutes != 0L)
-            time.append(minutes).append((minutes == 1L) ? " minute " : " minutes ");
-        if (seconds != 0L)
-            time.append(seconds).append((seconds == 1L) ? " second " : " seconds ");
+        if (years != 0L) time.append(years).append((years == 1L) ? " year " : " years ");
+        if (day != 0L) time.append(day).append((day == 1L) ? " day " : " days ");
+        if (hours != 0L) time.append(hours).append((hours == 1L) ? " hour " : " hours ");
+        if (minutes != 0L) time.append(minutes).append((minutes == 1L) ? " minute " : " minutes ");
+        if (seconds != 0L) time.append(seconds).append((seconds == 1L) ? " second " : " seconds ");
+
         return time.toString().trim();
     }
 
     public static String formatDateDiff(Calendar fromDate, Calendar toDate) {
         boolean future = false;
-        if (toDate.equals(fromDate))
-            return "now";
-        if (toDate.after(fromDate))
-            future = true;
+        if (toDate.equals(fromDate)) return "now";
+        if (toDate.after(fromDate)) future = true;
+
         StringBuilder sb = new StringBuilder();
-        int[] types = { 1, 2, 5, 11, 12, 13 };
+        int[] types = {1, 2, 5, 11, 12, 13};
         String[] names = {
-                "year", "years", "month", "months", "day", "days", "hour", "hours", "minute", "minutes",
-                "second", "seconds" };
+                "year", "years",
+                "month", "months",
+                "day", "days",
+                "hour", "hours",
+                "minute", "minutes",
+                "second", "seconds"
+        };
+
         int accuracy = 0;
         for (int i = 0; i < types.length && accuracy <= 2; i++) {
             int diff = dateDiff(types[i], fromDate, toDate, future);
@@ -194,6 +199,7 @@ public class Utils {
                 sb.append(" ").append(diff).append(" ").append(names[i * 2 + ((diff > 1) ? 1 : 0)]);
             }
         }
+
         return (sb.length() == 0) ? "now" : sb.toString().trim();
     }
 
@@ -210,9 +216,9 @@ public class Utils {
     }
 
     public static String buildMessage(String[] args, int start) {
-        if (start >= args.length)
-            return "";
-        return ChatColor.stripColor(String.join(" ", Arrays.<CharSequence>copyOfRange((CharSequence[])args, start, args.length)));
+        if (start >= args.length) return "";
+
+        return ChatColor.stripColor(String.join(" ", Arrays.copyOfRange((CharSequence[]) args, start, args.length)));
     }
 
     public static String getCountry(String ip) throws Exception {
@@ -223,6 +229,7 @@ public class Utils {
         while ((inputLine = stream.readLine()) != null) entirePage.append(inputLine);
         stream.close();
         if (!(entirePage.toString().contains("\"country\":\""))) return null;
+
         return entirePage.toString().split("\"country\":\"")[1].split("\",")[0];
     }
 
@@ -244,6 +251,7 @@ public class Utils {
         } catch (IOException exception) {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "§cAn error occurred while checking vote on name-mc");
         }
+
         return false;
     }
 
@@ -252,16 +260,15 @@ public class Utils {
         int min = Math.min(maximo, maximo);
         int max = Math.max(maximo, maximo);
         int maxsize = min - max;
+
         return random.nextInt(maxsize + 1) + minimo;
     }
 
     private final static int CENTER_PX = 154;
 
-    public static String getCenteredMessage(String message){
+    public static String getCenteredMessage(String message) {
         String[] lines = ChatColor.translateAlternateColorCodes('&', message).split("\n", 40);
         StringBuilder returnMessage = new StringBuilder();
-
-
         for (String line : lines) {
             int messagePxSize = 0;
             boolean previousCode = false;
@@ -283,7 +290,7 @@ public class Utils {
             int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
             int compensated = 0;
             StringBuilder sb = new StringBuilder();
-            while(compensated < toCompensate){
+            while (compensated < toCompensate) {
                 sb.append(" ");
                 compensated += spaceLength;
             }
@@ -292,5 +299,4 @@ public class Utils {
 
         return returnMessage.toString();
     }
-
 }
