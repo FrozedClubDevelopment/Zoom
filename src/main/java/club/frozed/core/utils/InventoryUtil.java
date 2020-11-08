@@ -25,6 +25,7 @@ public final class InventoryUtil {
             ItemStack next = origin[i];
             cloned[i] = next == null ? null : next.clone();
         }
+        
         return cloned;
     }
 
@@ -53,6 +54,7 @@ public final class InventoryUtil {
             return 0;
         }
         item.setDurability((short) 0);
+
         return 1;
     }
 
@@ -79,7 +81,9 @@ public final class InventoryUtil {
         boolean compareDamage = type.getMaxDurability() == 0;
         int counter = 0;
         for (ItemStack item : contents) {
-            if (item == null || item.getType() != type || compareDamage && item.getData().getData() != data) continue;
+            if (item == null || item.getType() != type || compareDamage && item.getData().getData() != data) {
+                continue;
+            }
             counter += item.getAmount();
         }
         return counter;
@@ -93,11 +97,15 @@ public final class InventoryUtil {
         ItemStack[] contents;
         boolean result = true;
         for (ItemStack content : contents = inventory.getContents()) {
-            if (content == null || content.getType() == Material.AIR) continue;
+            if (content == null || content.getType() == Material.AIR) {
+                continue;
+            }
             result = false;
             break;
         }
-        if (!result) return false;
+        if (!result) {
+            return false;
+        }
         if (checkArmour && inventory instanceof PlayerInventory) {
             for (ItemStack content : contents = ((PlayerInventory) inventory).getArmorContents()) {
                 if (content == null || content.getType() == Material.AIR) continue;
@@ -105,6 +113,7 @@ public final class InventoryUtil {
                 break;
             }
         }
+
         return result;
     }
 
@@ -114,13 +123,17 @@ public final class InventoryUtil {
         if (topInventory == null) {
             return false;
         }
+
         boolean result = false;
         int size = topInventory.getSize();
         for (Integer entry : event.getNewItems().keySet()) {
-            if (entry >= size) continue;
+            if (entry >= size) {
+                continue;
+            }
             result = true;
             break;
         }
+
         return result;
     }
 
@@ -156,26 +169,22 @@ public final class InventoryUtil {
 
     public static String serializeItemStack(ItemStack item) {
         StringBuilder builder = new StringBuilder();
-
         if (item == null) {
             return "null";
         }
 
         String isType = String.valueOf(item.getType().getId());
         builder.append("t@").append(isType);
-
         if (item.getDurability() != 0) {
             String isDurability = String.valueOf(item.getDurability());
             builder.append(":d@").append(isDurability);
         }
-
         if (item.getAmount() != 1) {
             String isAmount = String.valueOf(item.getAmount());
             builder.append(":a@").append(isAmount);
         }
 
         Map<Enchantment, Integer> isEnch = item.getEnchantments();
-
         if (isEnch.size() > 0) {
             for (Map.Entry<Enchantment, Integer> ench : isEnch.entrySet()) {
                 builder.append(":e@").append(ench.getKey().getId()).append("@").append(ench.getValue());
@@ -183,14 +192,12 @@ public final class InventoryUtil {
         }
 
         if (item.hasItemMeta()) {
-            ItemMeta imeta = item.getItemMeta();
-
-            if (imeta.hasDisplayName()) {
-                builder.append(":dn@").append(imeta.getDisplayName());
+            ItemMeta itemMeta = item.getItemMeta();
+            if (itemMeta.hasDisplayName()) {
+                builder.append(":dn@").append(itemMeta.getDisplayName());
             }
-
-            if (imeta.hasLore()) {
-                builder.append(":l@").append(imeta.getLore());
+            if (itemMeta.hasLore()) {
+                builder.append(":l@").append(itemMeta.getLore());
             }
         }
 
@@ -198,64 +205,55 @@ public final class InventoryUtil {
     }
 
     public static ItemStack deserializeItemStack(String in) {
-        ItemStack item = null;
-        ItemMeta meta = null;
-
+        ItemStack itemStack = null;
+        ItemMeta itemMeta = null;
         if (in.equals("null")) {
             return new ItemStack(Material.AIR);
         }
 
         String[] split = in.split(":");
-
         for (String itemInfo : split) {
             String[] itemAttribute = itemInfo.split("@");
             String s2 = itemAttribute[0];
-
             switch (s2) {
-                case "t": {
-                    item = new ItemStack(Material.getMaterial(Integer.valueOf(itemAttribute[1])));
-                    meta = item.getItemMeta();
+                case "t":
+                    itemStack = new ItemStack(Material.getMaterial(Integer.parseInt(itemAttribute[1])));
+                    itemMeta = itemStack.getItemMeta();
                     break;
-                }
-                case "d": {
-                    if (item != null) {
-                        item.setDurability(Short.valueOf(itemAttribute[1]));
+                case "d":
+                    if (itemStack != null) {
+                        itemStack.setDurability(Short.parseShort(itemAttribute[1]));
                         break;
                     }
                     break;
-                }
-                case "a": {
-                    if (item != null) {
-                        item.setAmount(Integer.valueOf(itemAttribute[1]));
+                case "a":
+                    if (itemStack != null) {
+                        itemStack.setAmount(Integer.parseInt(itemAttribute[1]));
                         break;
                     }
                     break;
-                }
-                case "e": {
-                    if (item != null) {
-                        item.addEnchantment(
-                                Enchantment.getById(Integer.valueOf(itemAttribute[1])),
-                                Integer.valueOf(itemAttribute[2])
+                case "e":
+                    if (itemStack != null) {
+                        itemStack.addEnchantment(
+                                Enchantment.getById(Integer.parseInt(itemAttribute[1])),
+                                Integer.parseInt(itemAttribute[2])
                         );
                         break;
                     }
                     break;
-                }
-                case "dn": {
-                    if (meta != null) {
-                        meta.setDisplayName(itemAttribute[1]);
+                case "dn":
+                    if (itemMeta != null) {
+                        itemMeta.setDisplayName(itemAttribute[1]);
                         break;
                     }
                     break;
-                }
-                case "l": {
+                case "l":
                     itemAttribute[1] = itemAttribute[1].replace("[", "");
                     itemAttribute[1] = itemAttribute[1].replace("]", "");
                     List<String> lore = Arrays.asList(itemAttribute[1].split(","));
 
                     for (int x = 0; x < lore.size(); ++x) {
                         String s = lore.get(x);
-
                         if (s != null) {
                             if (s.toCharArray().length != 0) {
                                 if (s.charAt(0) == ' ') {
@@ -267,20 +265,19 @@ public final class InventoryUtil {
                         }
                     }
 
-                    if (meta != null) {
-                        meta.setLore(lore);
+                    if (itemMeta != null) {
+                        itemMeta.setLore(lore);
                         break;
                     }
 
                     break;
-                }
             }
         }
 
-        if (meta != null && (meta.hasDisplayName() || meta.hasLore())) {
-            item.setItemMeta(meta);
+        if (itemMeta != null && (itemMeta.hasDisplayName() || itemMeta.hasLore())) {
+            itemStack.setItemMeta(itemMeta);
         }
 
-        return item;
+        return itemStack;
     }
 }
