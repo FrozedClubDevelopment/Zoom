@@ -37,9 +37,9 @@ public class GeneralPlayerListener implements Listener {
         Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE").forEach(text -> {
             if (text.contains("{C}")){
                 text = text.replace("{C}", "");
-                player.sendMessage(CC.translate(Utils.getCenteredMessage(text).replace("{0}", "\n")));
+                player.sendMessage(translate(Utils.getCenteredMessage(text).replace("{0}", "\n"), player));
             } else {
-                player.sendMessage(CC.translate(text.replace("{0}", "\n")));
+                player.sendMessage(translate(text.replace("{0}", "\n"), player));
             }
         });
         e.setJoinMessage(null);
@@ -60,14 +60,14 @@ public class GeneralPlayerListener implements Listener {
 
     public String translate(String text, Player player) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
-        //Rank rankData = Rank.getRankByName(playerData.getName());
+        Rank rankData = playerData.getHighestRank();
         text = CC.translate(text);
 
         if (playerData.getTag() != null) {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-                    //.replace("<rank>", rankData.getName())
+                    .replace("<rank>", rankData.getName())
                     .replace("<prefix>", playerData.getTag())
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
@@ -77,7 +77,7 @@ public class GeneralPlayerListener implements Listener {
             text = text
                     .replace("<player>", player.getName())
                     .replace("<server>", Lang.SERVER_NAME)
-                    //.replace("<rank>", rankData.getName())
+                    .replace("<rank>", rankData.getName())
                     .replace("<prefix>", "")
                     .replace("<teamspeak>", Lang.TS)
                     .replace("<store>", Lang.STORE)
