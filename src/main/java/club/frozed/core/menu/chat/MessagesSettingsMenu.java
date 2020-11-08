@@ -27,7 +27,7 @@ public class MessagesSettingsMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return ChatColor.DARK_GRAY + "Chat Settings";
+        return chatColor + "Chat Settings";
     }
 
     @Override
