@@ -1,7 +1,7 @@
 name: Zoom
-version: 1.0-IN-DEV-[PRE-ORDER-COPY]
+version: 1.0-SNAPSHOT
 main: club.frozed.core.Zoom
-description: All-in-Core
+description: All-in-Core Server Core developed by Frozed Club Development
 website: www.frozed.club
 softdepend: [Vault]
 authors:
