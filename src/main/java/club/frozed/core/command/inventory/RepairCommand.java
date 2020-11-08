@@ -34,7 +34,7 @@ public class RepairCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.sendMessage(CC.CHAT_BAR);
-            p.sendMessage("§eUsage /" + cmd.getLabel() + "<all/iteminhand>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + "<all/iteminhand>");
             p.sendMessage(CC.CHAT_BAR);
             return;
         }
@@ -71,7 +71,7 @@ public class RepairCommand extends BaseCMD {
                 break;
             default:
                 p.sendMessage(CC.CHAT_BAR);
-                p.sendMessage("§eUsage /" + cmd.getLabel() + "<all/iteminhand>");
+                p.sendMessage("§cUsage: /" + cmd.getLabel() + "<all/iteminhand>");
                 p.sendMessage(CC.CHAT_BAR);
                 break;
         }

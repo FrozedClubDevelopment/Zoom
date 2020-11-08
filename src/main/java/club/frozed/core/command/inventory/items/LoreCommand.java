@@ -21,11 +21,12 @@ public class LoreCommand extends BaseCMD {
     @Completer(name = "lore", aliases = {"setlore"})
 
     public List<String> LoreTab(CommandArgs args) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         if (args.length() == 1) {
             list.add("add");
             list.add("remove");
         }
+
         return list;
     }
 
@@ -38,17 +39,20 @@ public class LoreCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.LORE-MESSAGES");
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " add/remove <text>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " add/remove <text>");
             return;
         }
+
         ItemStack item = p.getItemInHand();
         if (item == null || item.getType() == Material.AIR) {
             p.sendMessage("§cThe item cannot be null");
             return;
         }
+
         ItemMeta itemMeta = item.getItemMeta();
-        // If lore no have add lore added a new arrayslist with lore
-        if (!itemMeta.hasLore()) itemMeta.setLore(new ArrayList());
+        if (!itemMeta.hasLore()) {
+            itemMeta.setLore(new ArrayList());
+        }
 
         List<String> lore = itemMeta.getLore();
 
@@ -80,7 +84,7 @@ public class LoreCommand extends BaseCMD {
                 p.sendMessage(CC.translate(messages.getString("REMOVE")));
                 break;
             default:
-                p.sendMessage("§eUsage /" + cmd.getLabel() + " add/remove <text>");
+                p.sendMessage("§cUsage: /" + cmd.getLabel() + " add/remove <text>");
                 break;
         }
     }

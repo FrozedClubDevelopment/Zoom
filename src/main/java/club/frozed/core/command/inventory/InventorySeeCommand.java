@@ -18,7 +18,7 @@ public class InventorySeeCommand extends BaseCMD {
 
         if (args.length == 0) {
             p.sendMessage(CC.CHAT_BAR);
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <player>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <player>");
             p.sendMessage(CC.CHAT_BAR);
             return;
         }

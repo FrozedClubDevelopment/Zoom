@@ -19,7 +19,7 @@ public class MessageCommand extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <player> <text>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <player> <text>");
             return;
         }
 

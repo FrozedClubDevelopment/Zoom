@@ -48,7 +48,7 @@ public class GamemodeCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.GAMEMODE-MESSAGES");
         if (args.length == 0) {
             p.sendMessage("§7§m-----------------------");
-            p.sendMessage("§eUsage /gamemode <survival/creative/adventure>");
+            p.sendMessage("§cUsage: /gamemode <survival/creative/adventure>");
             p.sendMessage("§7§m-----------------------");
             return;
         }
@@ -92,7 +92,7 @@ public class GamemodeCommand extends BaseCMD {
                 }
             } else {
                 p.sendMessage("§7§m-----------------------");
-                p.sendMessage("§eUsage /gamemode <survival/creative/adventure>");
+                p.sendMessage("§cUsage: /gamemode <survival/creative/adventure>");
                 p.sendMessage("§7§m-----------------------");
             }
         } else {
@@ -109,7 +109,7 @@ public class GamemodeCommand extends BaseCMD {
             }
             if (args.length == 1) {
                 p.sendMessage("§7§m-----------------------");
-                p.sendMessage("§eUsage /gamemode <survival/creative/adventure>");
+                p.sendMessage("§cUsage: /gamemode <survival/creative/adventure>");
                 p.sendMessage("§7§m-----------------------");
             }
             String gamemode = args[1];
@@ -145,7 +145,7 @@ public class GamemodeCommand extends BaseCMD {
                 }
             } else {
                 p.sendMessage("§7§m-----------------------");
-                p.sendMessage("§eUsage /gamemode <survival/creative/adventure>");
+                p.sendMessage("§cUsage: /gamemode <survival/creative/adventure>");
                 p.sendMessage("§7§m-----------------------");
             }
         }

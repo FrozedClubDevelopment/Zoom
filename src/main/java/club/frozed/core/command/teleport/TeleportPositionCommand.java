@@ -20,7 +20,7 @@ public class TeleportPositionCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
 
         if (args.length < 3) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <x> <y> <z>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <x> <y> <z>");
             return;
         }
         if (!NumberUtils.checkNumber(args[0]) || !NumberUtils.checkNumber(args[1]) || !NumberUtils.checkNumber(args[2])) {

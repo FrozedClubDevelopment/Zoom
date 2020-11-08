@@ -34,7 +34,7 @@ public class SpeedCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.SPEED-MESSAGES");
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <fly/walk> amount");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <fly/walk> amount");
             return;
         }
 

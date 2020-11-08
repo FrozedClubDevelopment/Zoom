@@ -19,7 +19,7 @@ public class TeleportCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /teleport <player>");
+            p.sendMessage("§cUsage: /teleport <player>");
             return;
         }
 

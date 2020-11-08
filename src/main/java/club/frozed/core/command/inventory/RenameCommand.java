@@ -24,7 +24,7 @@ public class RenameCommand extends BaseCMD {
         String[] args = cmd.getArgs();
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS");
         if (args.length == 0) {
-            p.sendMessage("§eUsage /rename <name>");
+            p.sendMessage("§cUsage: /rename <name>");
             return;
         }
         ItemStack item = p.getItemInHand();

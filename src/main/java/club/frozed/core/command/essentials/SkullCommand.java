@@ -22,7 +22,7 @@ public class SkullCommand extends BaseCMD {
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS");
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <player>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <player>");
             return;
         }
 

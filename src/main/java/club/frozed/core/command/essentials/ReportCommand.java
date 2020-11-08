@@ -34,7 +34,7 @@ public class ReportCommand extends BaseCMD {
         Cooldown cooldown = new Cooldown(Zoom.getInstance().getSettingsConfig().getConfig().getInt("SETTINGS.REPORT.COOLDOWN"));
 
         if (args.length == 0){
-            p.sendMessage(CC.translate("&eUsage /" + cmd.getLabel() + " <player> <message>"));
+            p.sendMessage(CC.translate("&cUsage: /" + cmd.getLabel() + " <player> <message>"));
             return;
         }
         Player targetPlayer = Bukkit.getPlayer(args[0]);

@@ -23,7 +23,7 @@ public class BroadcastCommand extends BaseCMD {
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
-            p.sendMessage("§eUsage /" + cmd.getLabel() + " <text>");
+            p.sendMessage("§cUsage: /" + cmd.getLabel() + " <text>");
             return;
         }
 

@@ -10,8 +10,8 @@ import club.frozed.core.utils.CC;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.grant.WoolUtil;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,7 +32,6 @@ import java.util.List;
 public class GrantsInfoButton extends Button {
 
     private Grant grant;
-
     private PlayerData targetplayerData;
 
     @Override
@@ -40,14 +39,15 @@ public class GrantsInfoButton extends Button {
         ItemCreator itemCreator = new ItemCreator(Material.WOOL);
         Rank rank = grant.getRank();
         itemCreator.setName(grant.getRank().getColor() + grant.getRank().getName());
-        if (rank != null){
+        if (rank != null) {
             itemCreator.setName(rank.getColor() + grant.getRank().getName());
         } else {
             itemCreator.setName("&e" + grant.getRankName());
         }
+
         List<String> lore = new ArrayList<>();
         Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.LORE").forEach(text -> {
-            switch (text){
+            switch (text) {
                 case "<not-expired>":
                     if (!grant.hasExpired() && grant.getRank() != null && !grant.getRank().isDefaultRank())
                         Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.NOT-EXPIRED").forEach(textExpired -> lore.add(CC.translate(textExpired)));
@@ -55,16 +55,17 @@ public class GrantsInfoButton extends Button {
                 case "<if-removed>":
                     if (grant.getRemovedBy() != null && !grant.getRemovedBy().equalsIgnoreCase(""))
                         Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.IF-REMOVED").forEach(textRemoved -> lore.add(CC.translate(textRemoved)
-                                .replace("<removedBy>",grant.getRemovedBy())
+                                .replace("<removedBy>", grant.getRemovedBy())
                                 .replace("<removedDate>", GrantUtil.getDate(grant.getRemovedDate()))));
                     break;
                 default:
-                    lore.add(translate(grant,text));
+                    lore.add(translate(grant, text));
                     break;
             }
         });
         itemCreator.setLore(lore);
         itemCreator.setDurability(WoolUtil.convertChatColorToWoolData(grant.getRank().getColor()));
+
         return itemCreator.get();
     }
 
@@ -72,12 +73,12 @@ public class GrantsInfoButton extends Button {
         text = CC.translate(text);
 
         text = text
-                .replace("<addedBy>",grant.getAddedBy())
+                .replace("<addedBy>", grant.getAddedBy())
                 .replace("<addedDate>", GrantUtil.getDate(grant.getAddedDate()))
-                .replace("<duration>",grant.getNiceDuration())
-                .replace("<reason>",grant.getReason())
-                .replace("<active>",!grant.hasExpired() ? "&aYes" : "&cNo")
-                .replace("<expire>",grant.getNiceExpire());
+                .replace("<duration>", grant.getNiceDuration())
+                .replace("<reason>", grant.getReason())
+                .replace("<active>", !grant.hasExpired() ? "&aYes" : "&cNo")
+                .replace("<expire>", grant.getNiceExpire());
 
         return text;
     }
@@ -91,11 +92,11 @@ public class GrantsInfoButton extends Button {
         grant.setActive(false);
         grant.setRemovedDate(System.currentTimeMillis());
         grant.setRemovedBy(player.getName());
-        TaskUtil.runAsync(() ->{
+        TaskUtil.runAsync(() -> {
             Player target = Bukkit.getPlayer(targetplayerData.getName());
             if (target == null) {
                 String json = new RedisMessage(Payload.GRANT_UPDATE)
-                        .setParam("NAME",targetplayerData.getName())
+                        .setParam("NAME", targetplayerData.getName())
                         .setParam("GRANT", grant.getRank().getName()
                                 + ";" + grant.getAddedDate()
                                 + ";" + grant.getDuration()
@@ -106,7 +107,7 @@ public class GrantsInfoButton extends Button {
                                 + ";" + grant.isActive()
                                 + ";" + grant.isPermanent()
                                 + ";" + grant.getServer()).toJSON();
-                if (Zoom.getInstance().getRedisManager().isActive()){
+                if (Zoom.getInstance().getRedisManager().isActive()) {
                     Zoom.getInstance().getRedisManager().write(json);
                 }
             } else {
