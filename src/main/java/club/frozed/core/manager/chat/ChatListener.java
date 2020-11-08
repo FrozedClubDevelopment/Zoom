@@ -46,7 +46,7 @@ public class ChatListener implements Listener {
         } else {
             replacement.add("<chatcolor>", ChatColor.valueOf(chatColor));
         }
-        if (playerData.getNameColor() != null) {
+//        if (playerData.getNameColor() != null) {
             if (playerData.isItalic() && playerData.isBold()) {
                 replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l§o");
             } else if (playerData.isBold() && playerData.isItalic()) {
@@ -58,9 +58,9 @@ public class ChatListener implements Listener {
             } else {
                 replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()));
             }
-        } else {
-            replacement.add("<nameColor>", playerData.getHighestRank().getColor());
-        }
+//        } else {
+//            replacement.add("<nameColor>", playerData.getHighestRank().getColor());
+//        }
 
         replacement.add("<name>", playerData.getHighestRank().formatName(e.getPlayer()));
         replacement.add("<text>", ChatColor.stripColor(message));
