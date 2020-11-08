@@ -21,29 +21,30 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralPlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();;
+        Player player = e.getPlayer();
 
         String sound = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.JOIN-SOUND");
         if (sound != null || sound.equalsIgnoreCase("none")) {
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.valueOf(sound), 2F, 2F);
         }
+
         Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE").forEach(text -> {
-            if (text.contains("{C}")){
+            if (text.contains("{C}")) {
                 text = text.replace("{C}", "");
                 player.sendMessage(translate(Utils.getCenteredMessage(text).replace("{0}", "\n"), player));
             } else {
                 player.sendMessage(translate(text.replace("{0}", "\n"), player));
             }
         });
+
         e.setJoinMessage(null);
-        if (!PlayerData.getPlayerData(e.getPlayer().getUniqueId()).isVote()) {
+        if (!PlayerData.getPlayerData(e.getPlayer().getUniqueId()).isVote() && Zoom.getInstance().getMessagesConfig().getConfig().getBoolean("SETTINGS.NAME-MC-CHECK.ENABLED")) {
             List<String> voteMessage = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getStringList("SETTINGS.NAME-MC-CHECK.JOIN-MSG"));
             String voteSound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SOUND");
             e.getPlayer().sendMessage(StringUtils.join(voteMessage, "\n"));
