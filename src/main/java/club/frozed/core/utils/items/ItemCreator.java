@@ -20,7 +20,7 @@ public class ItemCreator {
     private ItemStack itemStack;
 
     public ItemCreator(Material material) {
-        this.itemStack = new ItemStack(material);
+        this.itemStack = new ItemStack(material, 1);
     }
 
     public ItemCreator(ItemStack itemStack) {
@@ -53,6 +53,11 @@ public class ItemCreator {
             meta.setLore(list);
             this.itemStack.setItemMeta(meta);
         }
+        return this;
+    }
+
+    public ItemCreator setAmount(int amount){
+        this.itemStack.setAmount(amount);
         return this;
     }
 
