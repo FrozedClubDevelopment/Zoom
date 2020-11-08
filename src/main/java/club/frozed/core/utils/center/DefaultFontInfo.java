@@ -1,13 +1,6 @@
 package club.frozed.core.utils.center;
 
-/**
- * Created by Ryzeon
- * Project: Zoom [Core]
- * Date: 7/11/2020 @ 21:39
- */
-
 public enum DefaultFontInfo {
-
     A('A', 5),
     a('a', 5),
     B('B', 5),
@@ -122,7 +115,10 @@ public enum DefaultFontInfo {
     }
 
     public int getBoldLength() {
-        if (this == DefaultFontInfo.SPACE) return this.getLength();
+        if (this == DefaultFontInfo.SPACE) {
+            return this.getLength();
+        }
+
         return this.length + 1;
     }
 
@@ -130,6 +126,7 @@ public enum DefaultFontInfo {
         for (DefaultFontInfo dFI : DefaultFontInfo.values()) {
             if (dFI.getCharacter() == c) return dFI;
         }
+
         return DefaultFontInfo.DEFAULT;
     }
 }
