@@ -47,7 +47,7 @@ public class RedisManager {
                 jedis.auth(this.password);
             }
             this.redisListener = new RedisListener();
-            (new Thread(() -> jedis.subscribe(this.redisListener, new String[] { "Zoom" }))).start();
+            (new Thread(() -> jedis.subscribe(this.redisListener, "Zoom"))).start();
             jedis.connect();
             active = true;
             Bukkit.getConsoleSender().sendMessage("§aSuccessfully connect to §4Redis.");
