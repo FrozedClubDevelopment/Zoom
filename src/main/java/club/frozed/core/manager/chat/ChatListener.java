@@ -37,7 +37,7 @@ public class ChatListener implements Listener {
         ConfigReplacement replacement = new ConfigReplacement(messageFormat);
         replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()));
         if (playerData.getTag() != null) {
-            replacement.add("<tag>", " " + playerData.getTag());
+            replacement.add("<tag>", " " + playerData.getTag() + " ");
         } else {
             replacement.add("<tag>", "");
         }
@@ -173,11 +173,20 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void onCommandReplace(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell")) {
+        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell") || event.getMessage().startsWith("TELL") || event.getMessage().startsWith("/MSG")) {
             event.setCancelled(true);
             event.getPlayer().chat(event.getMessage()
                     .replace("/msg", "/message")
+                    .replace("/MSG", "/message")
+                    .replace("/TELL", "/message")
                     .replace("/tell", "/message"));
+        }
+        if (event.getMessage().startsWith("/kick") || event.getMessage().startsWith("/KICK")){
+            event.setCancelled(true);
+            event.getPlayer().chat(event.getMessage()
+                    .replace("/kick", "/kickear")
+                    .replace("/KICK", "/kickear")
+            );
         }
     }
 

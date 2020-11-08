@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class KickCommand extends BaseCMD {
 
-    @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick")
+    @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick", aliases = {"kickear"})
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender commandSender = cmd.getSender();
