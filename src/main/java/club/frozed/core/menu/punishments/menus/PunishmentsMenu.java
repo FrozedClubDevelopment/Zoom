@@ -26,7 +26,7 @@ public class PunishmentsMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return ChatColor.valueOf(targetData.getNameColor()) + targetData.getName() + "'s punishments";
+        return ChatColor.valueOf(targetData.getNameColor()) + targetData.getName() + "'s Punishments";
     }
 
     @Override
