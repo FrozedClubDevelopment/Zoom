@@ -26,18 +26,21 @@ public final class TimeUtil {
 
     public static String millisToTimer(long millis) {
         long seconds = millis / 1000L;
-        if (seconds > 3600L)
-            return String.format("%02d:%02d:%02d", new Object[]{Long.valueOf(seconds / 3600L), Long.valueOf(seconds % 3600L / 60L), Long.valueOf(seconds % 60L)});
-        return String.format("%02d:%02d", new Object[]{Long.valueOf(seconds / 60L), Long.valueOf(seconds % 60L)});
+        if (seconds > 3600L) {
+            return String.format("%02d:%02d:%02d", seconds / 3600L, seconds % 3600L / 60L, seconds % 60L);
+        }
+
+        return String.format("%02d:%02d", seconds / 60L, seconds % 60L);
     }
 
     public static String millisToSeconds(long millis) {
-        return (new DecimalFormat("#0.0")).format(((float) millis / 1000.0F));
+        return new DecimalFormat("#0.0").format(((float) millis / 1000.0F));
     }
 
     public static String dateToString(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+
         return calendar.getTime().toString();
     }
 
@@ -46,8 +49,10 @@ public final class TimeUtil {
     }
 
     public static Timestamp truncateTimestamp(Timestamp timestamp) {
-        if (timestamp.toLocalDateTime().getYear() > 2037)
+        if (timestamp.toLocalDateTime().getYear() > 2037) {
             timestamp.setYear(2037);
+        }
+
         return timestamp;
     }
 
@@ -73,18 +78,13 @@ public final class TimeUtil {
         long months = weeks / 4L;
         long years = months / 12L;
         minutes++;
-        if (years > 0L)
-            return years + " year" + ((years == 1L) ? "" : "s");
-        if (months > 0L)
-            return months + " month" + ((months == 1L) ? "" : "s");
-        if (weeks > 0L)
-            return weeks + " week" + ((weeks == 1L) ? "" : "s");
-        if (days > 0L)
-            return days + " day" + ((days == 1L) ? "" : "s");
-        if (hours > 0L)
-            return hours + " hour" + ((hours == 1L) ? "" : "s");
-        if (minutes > 0L)
-            return minutes + " minute" + ((minutes == 1L) ? "" : "s");
+        if (years > 0L) return years + " year" + ((years == 1L) ? "" : "s");
+        if (months > 0L) return months + " month" + ((months == 1L) ? "" : "s");
+        if (weeks > 0L) return weeks + " week" + ((weeks == 1L) ? "" : "s");
+        if (days > 0L) return days + " day" + ((days == 1L) ? "" : "s");
+        if (hours > 0L) return hours + " hour" + ((hours == 1L) ? "" : "s");
+        if (minutes > 0L) return minutes + " minute" + ((minutes == 1L) ? "" : "s");
+
         return seconds + " second" + ((seconds == 1L) ? "" : "s");
     }
 
@@ -94,7 +94,7 @@ public final class TimeUtil {
         Matcher matcher = Pattern.compile("\\d+\\D+").matcher(time);
         while (matcher.find()) {
             String s = matcher.group();
-            Long value = Long.valueOf(Long.parseLong(s.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)")[0]));
+            Long value = Long.parseLong(s.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)")[0]);
             String type = s.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)")[1];
             switch (type) {
                 case "s":
