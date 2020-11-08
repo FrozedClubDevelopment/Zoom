@@ -1,8 +1,8 @@
 package club.frozed.core.menu.color.namecolor.buttons;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 public class NameColorButton extends Button {
 
     private ChatColor color;
-
     private int material;
 
     @Override
@@ -30,8 +29,7 @@ public class NameColorButton extends Button {
         return new ItemCreator(getMaterial(material))
                 .setName(name)
                 .setDurability(getDurability(color))
-                .get()
-                ;
+                .get();
     }
 
     @Override
@@ -48,9 +46,9 @@ public class NameColorButton extends Button {
         player.closeInventory();
     }
 
-    private Material getMaterial(int i){
+    private Material getMaterial(int i) {
         Material material = null;
-        switch (i){
+        switch (i) {
             case 1:
                 material = Material.INK_SACK;
                 break;
@@ -69,7 +67,7 @@ public class NameColorButton extends Button {
 
     private int getDurability(ChatColor chatColor) {
         int durability;
-        switch (chatColor){
+        switch (chatColor) {
             case WHITE:
                 durability = 15;
                 break;

@@ -1,8 +1,8 @@
 package club.frozed.core.menu.color.namecolor.buttons;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 15:55
  */
-
 public class ResetButton extends Button {
+
     @Override
     public ItemStack getButtonItem(Player player) {
-        return new ItemCreator(Material.INK_SACK).setDurability(8).setName("&cReset").get();
+        return new ItemCreator(Material.INK_SACK).setDurability(8).setName("&cReset Name Color").get();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ResetButton extends Button {
             data.setNameColor(null);
             playSuccess(player);
         } else {
-            player.sendMessage("§cYou don't have any namecolor");
+            player.sendMessage("§cYou don't have any name color");
             playNeutral(player);
             player.closeInventory();
         }

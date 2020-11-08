@@ -19,8 +19,8 @@ import java.util.Map;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 13:24
  */
-
 public class NameColorMenu extends Menu {
+
     @Override
     public String getTitle(Player player) {
         return CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.NAME-COLOR-MENU-TITLE"));

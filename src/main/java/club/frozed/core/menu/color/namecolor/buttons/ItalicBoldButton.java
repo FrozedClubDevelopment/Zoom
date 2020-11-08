@@ -2,8 +2,8 @@ package club.frozed.core.menu.color.namecolor.buttons;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.menu.Button;
 import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.core.utils.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,14 +30,14 @@ public class ItalicBoldButton extends Button {
         return getMaterial(type, data);
     }
 
-    private ItemStack getMaterial(int i, PlayerData playerData){
+    private ItemStack getMaterial(int i, PlayerData playerData) {
         ChatColor color;
         if (playerData.getNameColor() != null) {
             color = ChatColor.valueOf(playerData.getNameColor());
         } else {
             color = ChatColor.valueOf(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR"));
         }
-        if (i == 1){
+        if (i == 1) {
             return new ItemCreator(Material.IRON_DOOR)
                     .setName(color + "&oItalic")
                     .setLore(Collections.singletonList((playerData.isItalic() ? "&aenabled" : "&cdisabled")))
@@ -53,7 +53,7 @@ public class ItalicBoldButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
-        switch (this.type){
+        switch (this.type) {
             case 1:
                 if (player.hasPermission("core.namecolor.italic")) {
                     playNeutral(player);
