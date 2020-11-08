@@ -9,7 +9,7 @@ SETTINGS:
     FORMAT:
       ENABLED: true
       DEFAULT-COLOR: YELLOW
-      FORMAT: '<rank><tag> <nameColor><name>&7: <chatcolor><text>'
+      FORMAT: '<rank><tag><nameColor><name>&7: <chatcolor><text>'
     MUTE: false
     DELAY: 3
   STAFF-CHAT:
