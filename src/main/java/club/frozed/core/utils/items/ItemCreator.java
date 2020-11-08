@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemCreator {
+
     private ItemStack itemStack;
 
     public ItemCreator(Material material) {
@@ -42,6 +43,7 @@ public class ItemCreator {
             meta.setDisplayName(name);
             this.itemStack.setItemMeta(meta);
         }
+
         return this;
     }
 
@@ -53,10 +55,11 @@ public class ItemCreator {
             meta.setLore(list);
             this.itemStack.setItemMeta(meta);
         }
+
         return this;
     }
 
-    public ItemCreator setAmount(int amount){
+    public ItemCreator setAmount(int amount) {
         this.itemStack.setAmount(amount);
         return this;
     }
@@ -66,19 +69,22 @@ public class ItemCreator {
             enchants.forEach(enchant -> {
                 String[] arr = enchant.replace(" ", "").split(",");
                 Enchantment enchantment = Enchantment.getByName(arr[0]);
-                Integer level = Integer.valueOf(arr[1]);
-                this.itemStack.addUnsafeEnchantment(enchantment, level.intValue());
+                int level = Integer.parseInt(arr[1]);
+                this.itemStack.addUnsafeEnchantment(enchantment, level);
             });
+
         return this;
     }
 
     public ItemCreator setDurability(short dur) {
         this.itemStack.setDurability(dur);
+
         return this;
     }
 
     public ItemCreator setDurability(int dur) {
-        this.itemStack.setDurability((short)dur);
+        this.itemStack.setDurability((short) dur);
+
         return this;
     }
 
@@ -86,9 +92,10 @@ public class ItemCreator {
         if (this.itemStack.getType() == Material.SKULL_ITEM) {
             SkullMeta meta = (SkullMeta) this.itemStack.getItemMeta();
             meta.setOwner(owner);
-            this.itemStack.setItemMeta((ItemMeta) meta);
+            this.itemStack.setItemMeta(meta);
             return this;
         }
+
         throw new IllegalArgumentException("setOwner() only applicable for Skull Item");
     }
 
@@ -100,6 +107,7 @@ public class ItemCreator {
         } catch (Exception exception) {
             Bukkit.getConsoleSender().sendMessage(Lang.PREFIX + "Error set armor color.");
         }
+
         return this;
     }
 
@@ -108,6 +116,7 @@ public class ItemCreator {
 
         meta.addEnchant(new Glow(), 1, true);
         this.itemStack.setItemMeta(meta);
+
         return this;
     }
 
