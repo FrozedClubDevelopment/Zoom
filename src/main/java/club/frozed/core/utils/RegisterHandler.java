@@ -14,6 +14,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class RegisterHandler {
+
     public static void loadListenersFromPackage(Plugin plugin, String packageName) {
         for (Class<?> clazz : getClassesInPackage(plugin, packageName)) {
             if (isListener(clazz)) {
@@ -72,8 +73,9 @@ public class RegisterHandler {
             JarEntry entry = entries.nextElement();
             String entryName = entry.getName();
             String className = null;
-            if (entryName.endsWith(".class") && entryName.startsWith(relPath) && entryName.length() > relPath.length() + "/".length())
+            if (entryName.endsWith(".class") && entryName.startsWith(relPath) && entryName.length() > relPath.length() + "/".length()) {
                 className = entryName.replace('/', '.').replace('\\', '.').replace(".class", "");
+            }
             if (className != null) {
                 Class<?> clazz = null;
                 try {
@@ -81,8 +83,9 @@ public class RegisterHandler {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                if (clazz != null)
+                if (clazz != null) {
                     classes.add(clazz);
+                }
             }
         }
 
