@@ -40,6 +40,7 @@ public class TagButton extends Button {
             }
         }
         itemCreator.setLore(lore);
+        itemCreator.setAmount(1);
         return itemCreator.get();
     }
 
