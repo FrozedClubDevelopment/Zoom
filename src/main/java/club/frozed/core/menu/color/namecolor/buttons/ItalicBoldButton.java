@@ -18,7 +18,6 @@ import java.util.Collections;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 16:48
  */
-
 @AllArgsConstructor
 public class ItalicBoldButton extends Button {
 

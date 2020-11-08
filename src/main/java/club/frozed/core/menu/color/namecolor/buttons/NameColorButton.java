@@ -16,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 17:37
  */
-
 @AllArgsConstructor
 public class NameColorButton extends Button {
 

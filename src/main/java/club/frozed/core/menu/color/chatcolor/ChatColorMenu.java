@@ -18,7 +18,6 @@ import java.util.Map;
  * Project: Zoom
  * Date: 10/10/2020 @ 16:13
  */
-
 public class ChatColorMenu extends Menu {
     
     @Override
