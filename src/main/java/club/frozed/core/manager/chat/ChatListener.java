@@ -173,7 +173,7 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void onCommandReplace(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell") || event.getMessage().startsWith("TELL") || event.getMessage().startsWith("/MSG")) {
+        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell") || event.getMessage().startsWith("/TELL") || event.getMessage().startsWith("/MSG")) {
             event.setCancelled(true);
             event.getPlayer().chat(event.getMessage()
                     .replace("/msg", "/message")
@@ -184,8 +184,15 @@ public class ChatListener implements Listener {
         if (event.getMessage().startsWith("/kick") || event.getMessage().startsWith("/KICK")){
             event.setCancelled(true);
             event.getPlayer().chat(event.getMessage()
-                    .replace("/kick", "/kickear")
-                    .replace("/KICK", "/kickear")
+                    .replace("/kick", "/expulsar")
+                    .replace("/KICK", "/expulsar")
+            );
+        }
+        if (event.getMessage().startsWith("/ban") || event.getMessage().startsWith("/BAN")){
+            event.setCancelled(true);
+            event.getPlayer().chat(event.getMessage()
+                    .replace("/ban","/zban")
+                    .replace("/BAN","/zban")
             );
         }
     }

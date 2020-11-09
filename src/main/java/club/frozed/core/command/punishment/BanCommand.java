@@ -26,7 +26,7 @@ import java.util.UUID;
 
 public class BanCommand extends BaseCMD {
 
-    @Command(name = "ban", inGameOnly = false, permission = "core.punishments.ban", aliases = {"tempban"})
+    @Command(name = "ban", inGameOnly = false, permission = "core.punishments.ban", aliases = {"tempban", "zban"})
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender commandSender = cmd.getSender();

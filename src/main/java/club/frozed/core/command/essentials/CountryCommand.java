@@ -9,6 +9,7 @@ import club.frozed.core.utils.command.Command;
 import club.frozed.core.utils.command.CommandArgs;
 import club.frozed.core.utils.config.ConfigCursor;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
@@ -28,10 +29,12 @@ public class CountryCommand extends BaseCMD {
             return;
         }
 
-//        playerData = PlayerData.getByUuid(Bukkit.getPlayer(args[0]).getUniqueId());
-        playerData = PlayerData.getPlayerData(Bukkit.getPlayer(args[0]).getUniqueId());
-        if (playerData == null) return;
-        if (playerData.getCountry() == null) return;
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+        if (!offlinePlayer.isOnline()){
+            p.sendMessage(CC.RED + offlinePlayer.getName() + " isn't online.");
+            return;
+        }
+        playerData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
         String ip = playerData.getPlayer().getAddress().getAddress().toString().replaceAll("/", "");
         try {
             p.sendMessage(CC.translate(configCursor.getString("GEO-IP-MESSAGE")

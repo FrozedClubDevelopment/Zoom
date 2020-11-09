@@ -28,13 +28,13 @@ import java.util.UUID;
 
 public class KickCommand extends BaseCMD {
 
-    @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick", aliases = {"kickear"})
+    @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick", aliases = {"expulsar"})
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender commandSender = cmd.getSender();
         String[] args = cmd.getArgs();
         if (args.length == 0){
-            commandSender.sendMessage(CC.translate("&e/"+ cmd.getLabel() + " <player> [reason] [-s]"));
+            commandSender.sendMessage(CC.translate("&e/kick <player> [reason] [-s]"));
             return;
         }
         PunishmentExecutor parameter = new PunishmentExecutor(cmd.getArgs(), commandSender);
