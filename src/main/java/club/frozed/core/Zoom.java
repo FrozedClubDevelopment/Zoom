@@ -22,6 +22,7 @@ import club.frozed.core.utils.CC;
 import club.frozed.core.utils.RegisterHandler;
 import club.frozed.core.utils.TaskUtil;
 import club.frozed.core.utils.command.CommandFramework;
+import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.config.FileConfig;
 import club.frozed.core.utils.menu.ButtonListener;
 import club.frozed.core.utils.items.ItemCreator;
@@ -171,10 +172,13 @@ public final class Zoom extends JavaPlugin {
 
     private void loadListener() {
         PluginManager pluginManager = Bukkit.getPluginManager();
+        boolean staffJoinMessages = new ConfigCursor(messagesConfig, "NETWORK.STAFF-ALERTS").exists("ENABLED") ? messagesConfig.getConfig().getBoolean("NETWORK.STAFF-ALERTS.ENABLED") : true;
         pluginManager.registerEvents(new PlayerDataLoad(), this);
         pluginManager.registerEvents(new ChatListener(), this);
         pluginManager.registerEvents(new ButtonListener(), this);
-        pluginManager.registerEvents(new StaffListener(), this);
+        if (staffJoinMessages){
+            pluginManager.registerEvents(new StaffListener(), this);
+        }
         pluginManager.registerEvents(new GeneralPlayerListener(), this);
         pluginManager.registerEvents(new BlockCommandListener(), this);
         pluginManager.registerEvents(new GrantListener(), this);

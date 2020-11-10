@@ -1,5 +1,6 @@
 # Bukkit Sounds List -> https://jd.bukkit.org/org/bukkit/Sound.html (If you don't want to have any sound, just put the sound as 'none'
 NETWORK:
+  JOIN-MESSAGE-ENABLED: true
   JOIN-SOUND: 'NOTE_PLING'
   JOIN-MESSAGE:
     - '&7&m-----------------------'
@@ -23,6 +24,7 @@ NETWORK:
       MUTE: '&cChat is muted.'
       DELAY: '&eYou must be wait &e<time> &f<left> &eto use chat.'
   STAFF-ALERTS:
+    ENABLED: true
     JOIN: '&7(&9Staff&7) &d<player> &econnected to &d<server>'
     QUIT: '&7(&9Staff&7) &d<player> &edisconnected from &d<server>'
     SWITCH: '&7(&9Staff&7) &d<player> &econnected to &d<server> &efrom &d<lastServer>'

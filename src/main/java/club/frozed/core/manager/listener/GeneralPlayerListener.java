@@ -5,6 +5,7 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.config.ConfigCursor;
 import club.frozed.core.utils.lang.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
@@ -28,20 +29,24 @@ public class GeneralPlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getMessagesConfig(),"NETWORK");
+        boolean joinMessages = configCursor.exists("JOIN-MESSAGE-ENABLED") ? configCursor.getBoolean("JOIN-MESSAGE-ENABLED") : true;
 
         String sound = Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.JOIN-SOUND");
         if (sound != null || sound.equalsIgnoreCase("none")) {
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.valueOf(sound), 2F, 2F);
         }
 
-        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE").forEach(text -> {
-            if (text.contains("{C}")) {
-                text = text.replace("{C}", "");
-                player.sendMessage(translate(Utils.getCenteredMessage(text).replace("{0}", "\n"), player));
-            } else {
-                player.sendMessage(translate(text.replace("{0}", "\n"), player));
-            }
-        });
+        if (joinMessages) {
+            Zoom.getInstance().getMessagesConfig().getConfig().getStringList("NETWORK.JOIN-MESSAGE").forEach(text -> {
+                if (text.contains("{C}")) {
+                    text = text.replace("{C}", "");
+                    player.sendMessage(translate(Utils.getCenteredMessage(text).replace("{0}", "\n"), player));
+                } else {
+                    player.sendMessage(translate(text.replace("{0}", "\n"), player));
+                }
+            });
+        }
 
         e.setJoinMessage(null);
         if (!PlayerData.getPlayerData(e.getPlayer().getUniqueId()).isVote() && Zoom.getInstance().getMessagesConfig().getConfig().getBoolean("SETTINGS.NAME-MC-CHECK.ENABLED")) {
