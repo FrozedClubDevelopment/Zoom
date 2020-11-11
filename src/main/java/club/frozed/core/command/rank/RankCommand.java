@@ -59,7 +59,7 @@ public class RankCommand extends BaseCMD {
             return;
         }
 
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
             case "help":
                 if (args.length < 2) return;
                 if (args[1] == null) return;
