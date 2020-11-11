@@ -180,9 +180,14 @@ public class RankCommand extends BaseCMD {
                 if (args[2] != null) {
                     rank = Rank.getRankByName(args[1]);
                     String lastColor = rank.getColor() + rank.getColor().name();
-                    ChatColor color = ChatColor.getByChar(args[2]);
+                    String colorMessage = args[2].replace("&","").replace("§","");
+                    ChatColor color = ChatColor.getByChar(colorMessage);
                     if (color == null) {
-                        color = ChatColor.WHITE;
+                        try {
+                            color = ChatColor.valueOf(colorMessage.toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            color = ChatColor.WHITE;
+                        }
                     }
                     rank.setColor(color);
                     player.sendMessage(CC.translate(Lang.PREFIX + "&7Successfully updated " + rank.getName() + " &7color from " + lastColor + " &7to " + rank.getColor() + rank.getColor().name()));
