@@ -43,7 +43,7 @@ public final class Zoom extends JavaPlugin {
 
     private CommandFramework commandFramework;
 
-    private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig, punishmentConfig;
+    private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig, punishmentConfig, commandsFile;
 
     private TagManager tagManager;
     private MongoManager mongoManager;
@@ -59,9 +59,9 @@ public final class Zoom extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         instance = this;
         commandFramework = new CommandFramework(this);
+        this.commandsFile = new FileConfig(this, "commands.yml");
         this.messagesConfig = new FileConfig(this, "messages.yml");
         this.databaseConfig = new FileConfig(this, "database.yml");
         this.settingsConfig = new FileConfig(this, "settings.yml");
@@ -168,6 +168,8 @@ public final class Zoom extends JavaPlugin {
 
     private void loadCommands() {
         RegisterHandler.loadCommandsFromPackage(this, "club.frozed.core.command");
+
+        commandFramework.loadCommandsInFile();
     }
 
     private void loadListener() {

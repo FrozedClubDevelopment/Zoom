@@ -1,10 +1,13 @@
 package club.frozed.core.utils.command;
 
+import club.frozed.core.Zoom;
+import club.frozed.core.utils.config.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.help.GenericCommandHelpTopic;
 import org.bukkit.help.HelpTopic;
@@ -13,6 +16,7 @@ import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -146,6 +150,27 @@ public class CommandFramework implements CommandExecutor {
 				}
 			}
 		}
+	}
+
+
+	public void loadCommandsInFile() {
+		FileConfiguration config = Zoom.getInstance().getCommandsFile().getConfig();
+		config.getKeys(false).forEach(key -> {
+			config.set(key, null);
+		});
+		this.commandMap.forEach((key, value) -> {
+			Method method = commandMap.get(key).getKey();
+			Command command = method.getAnnotation(Command.class);
+
+			config.set(command.name() + ".PERMISSION", command.permission().isEmpty() || command.permission() == null ? "No available permission" : command.description());
+			config.set(command.name() + ".ALIASES", command.aliases().length > 0 ? command.aliases() : "No available Aliases.");
+			config.set(command.name() + ".USAGE", command.usage().isEmpty() ? "No available usage." : command.usage());
+			config.set(command.name() + ".DESCRIPTION", command.description().isEmpty() ? "No available description" : command.description());
+		});
+		config.set("TOTAL-REGISTER-COMMANDS", config.getKeys(false).size());
+		try {
+			config.save(Zoom.getInstance().getCommandsFile().getFile());
+		} catch (IOException e) {}
 	}
 
 	/**
