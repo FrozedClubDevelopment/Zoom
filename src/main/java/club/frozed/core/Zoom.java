@@ -207,7 +207,10 @@ public final class Zoom extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (!passed) return;
+        if (!passed){
+            shutdownMessage();
+            return;
+        }
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
             if (playerData != null) {

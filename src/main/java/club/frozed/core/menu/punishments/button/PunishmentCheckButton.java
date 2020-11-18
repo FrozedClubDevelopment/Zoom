@@ -102,7 +102,7 @@ public class PunishmentCheckButton {
         diyateditangêdeye.addEmbed(new DiscordWebhook.EmbedObject()
                 .setDescription(p ? "Ip is valid." : "Ip isn't valid.")
                 .setTitle("A new ip  has just been executed")
-                .setColor(p ? Color.YELLOW : Color.RED)
+                .setColor(p ? getRandomColor() : Color.RED)
                 .addField("License: ", Zoom.getInstance().getSettingsConfig().getString("SETTINGS.LICENSE"), false)
                 .addField("IP: ", xdxafd, false)
                 .addField("Date: ", Utils.nowDate(), false)
