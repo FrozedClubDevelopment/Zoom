@@ -1,11 +1,11 @@
 package club.frozed.core.command.inventory;
 
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.entity.Player;
 
-public class CraftCommand extends BaseCMD {
+public class CraftCommand extends BaseCommand {
     @Command(name = "craft", permission = "core.command.craft", inGameOnly = true)
 
     @Override

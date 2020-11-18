@@ -1,7 +1,7 @@
 package club.frozed.core.manager.messages;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import lombok.Getter;
 import lombok.Setter;
 import club.frozed.core.manager.player.PlayerData;
@@ -31,20 +31,20 @@ public class PlayerMessage {
         Zoom.getInstance().getMessageManager().getLastReplied().put(sender.getUniqueId(), target.getUniqueId());
         Zoom.getInstance().getMessageManager().getLastReplied().put(target.getUniqueId(), sender.getUniqueId());
 
-        String senderFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SENDER")
+        String senderFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SENDER")
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
-        String targetFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.TARGET")
+        String targetFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.TARGET")
                 .replace("<sender>", this.sender.getName())
                 .replace("<text>", this.message);
-        String socialSpyFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SOCIAL-SPY")
+        String socialSpyFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SOCIAL-SPY")
                 .replace("<sender>", this.sender.getName())
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
 
         PlayerData targetData = PlayerData.getPlayerData(this.target.getUniqueId());
         if (targetData.isToggleSounds()) {
-            String sound = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
+            String sound = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
             if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
                 this.target.playSound(this.target.getLocation(), Sound.valueOf(sound), 2F, 2F);
             }

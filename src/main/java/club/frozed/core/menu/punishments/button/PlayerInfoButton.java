@@ -2,10 +2,10 @@ package club.frozed.core.menu.punishments.button;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,7 +44,7 @@ public class PlayerInfoButton extends Button {
 
     private List<String> getItemLore() {
         List<String> strings = new ArrayList<>();
-        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("MENU.PLAYER-INFO").forEach(text -> strings.add(CC.translate(text)
+        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("MENU.PLAYER-INFO").forEach(text -> strings.add(CC.translate(text)
                 .replace("<player>", this.targetData.getName())
                 .replace("<alts>", String.valueOf(this.targetData.getAlts().size()))
                 .replace("<country>", getCountry())

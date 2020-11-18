@@ -4,10 +4,10 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
  * Date: 22/09/2020 @ 20:43
  */
 
-public class SetPermissionCommand extends BaseCMD {
+public class SetPermissionCommand extends BaseCommand {
     @Command(name = "setpermission", permission = "core.rank.setperm", aliases = {"setperm"},inGameOnly = false)
     @Override
     public void onCommand(CommandArgs cmd) {

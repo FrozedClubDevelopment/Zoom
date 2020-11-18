@@ -2,13 +2,13 @@ package club.frozed.core.command.rank;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Clickable;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.command.Completer;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.Completer;
 import club.frozed.core.utils.lang.Lang;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -26,7 +26,7 @@ import java.util.List;
  * Template by Elp1to
  */
 
-public class RankCommand extends BaseCMD {
+public class RankCommand extends BaseCommand {
 
     @Completer(name = "rank")
     public List<String> rankCompleter(CommandArgs args) {

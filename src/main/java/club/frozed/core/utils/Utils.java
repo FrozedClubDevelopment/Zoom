@@ -1,7 +1,6 @@
 package club.frozed.core.utils;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.center.DefaultFontInfo;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.DateUtils;
 import com.google.common.base.Joiner;
@@ -20,9 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Type;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -255,6 +257,56 @@ public class Utils {
         return false;
     }
 
+    public static String nowDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+
+    public static String getUsernameById(int userid) {
+        if (Zoom.ринокuseridm.equals("%%__USER__%")) {
+            return "Robot";
+        } else {
+            try {
+                URL url = new URL("https://www.mc-market.org/members/" + userid);
+                URLConnection connection = url.openConnection();
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36");
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String code = "", line = "";
+                while ((line = br.readLine()) != null) {
+                    code = code + line;
+                }
+                return code.split("<title>")[1].split("</title>")[0].split(" | ")[0];
+            } catch (IOException e) {
+            }
+        }
+        return "NONE";
+    }
+
+    public static String getIP() {
+        URL url = null;
+        BufferedReader in = null;
+        String ipAddress = "";
+        try {
+            url = new URL("http://bot.whatismyipaddress.com");
+            in = new BufferedReader(new InputStreamReader(url.openStream()));
+            ipAddress = in.readLine().trim();
+            if (ipAddress.length() <= 0)
+                try {
+                    InetAddress ip = InetAddress.getLocalHost();
+                    System.out.println(ip.getHostAddress().trim());
+                    ipAddress = ip.getHostAddress().trim();
+                } catch (Exception exp) {
+                    ipAddress = "ERROR";
+                }
+        } catch (Exception ex) {
+            Zoom.getInstance().getLogger().info("[License] Error in check your host ip!");
+//            Bukkit.getConsoleSender().sendMessage("&c&lYour LocalHost IP are unknown , please check what happend on your intertnet! ERROR LOG:");
+            ex.printStackTrace();
+        }
+        return ipAddress;
+    }
+
     public static int randomNumber(int minimo, int maximo) {
         Random random = new Random();
         int min = Math.min(maximo, maximo);
@@ -262,41 +314,5 @@ public class Utils {
         int maxsize = min - max;
 
         return random.nextInt(maxsize + 1) + minimo;
-    }
-
-    private final static int CENTER_PX = 154;
-
-    public static String getCenteredMessage(String message) {
-        String[] lines = ChatColor.translateAlternateColorCodes('&', message).split("\n", 40);
-        StringBuilder returnMessage = new StringBuilder();
-        for (String line : lines) {
-            int messagePxSize = 0;
-            boolean previousCode = false;
-            boolean isBold = false;
-
-            for (char c : line.toCharArray()) {
-                if (c == '§') {
-                    previousCode = true;
-                } else if (previousCode) {
-                    previousCode = false;
-                    isBold = c == 'l';
-                } else {
-                    DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
-                    messagePxSize = isBold ? messagePxSize + dFI.getBoldLength() : messagePxSize + dFI.getLength();
-                    messagePxSize++;
-                }
-            }
-            int toCompensate = CENTER_PX - messagePxSize / 2;
-            int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
-            int compensated = 0;
-            StringBuilder sb = new StringBuilder();
-            while (compensated < toCompensate) {
-                sb.append(" ");
-                compensated += spaceLength;
-            }
-            returnMessage.append(sb.toString()).append(line).append("\n");
-        }
-
-        return returnMessage.toString();
     }
 }

@@ -2,13 +2,11 @@ package club.frozed.core.manager.database.redis;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.RedisListener;
-import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.config.ConfigCursor;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPubSub;
 
 /**
  * Created by Ryzeon

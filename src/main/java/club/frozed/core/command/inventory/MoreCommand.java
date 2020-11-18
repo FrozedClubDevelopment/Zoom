@@ -1,13 +1,13 @@
 package club.frozed.core.command.inventory;
 
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class MoreCommand extends BaseCMD {
+public class MoreCommand extends BaseCommand {
     @Command(name = "more", permission = "core.command.more", inGameOnly = true, aliases = {"stackitem"})
 
     @Override

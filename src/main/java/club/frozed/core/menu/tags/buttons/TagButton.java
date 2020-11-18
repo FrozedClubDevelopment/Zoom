@@ -3,9 +3,9 @@ package club.frozed.core.menu.tags.buttons;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.tags.Tag;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -34,7 +34,7 @@ public class TagButton extends Button {
                 lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
             }
         } else {
-            for (String msg : Zoom.getInstance().getTagsConfig().getConfig().getStringList("no-perms-lore")) {
+            for (String msg : Zoom.getInstance().getTagsConfig().getConfiguration().getStringList("no-perms-lore")) {
                 lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
             }
         }

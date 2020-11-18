@@ -2,8 +2,8 @@ package club.frozed.core.menu.grant.grants.button;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.grant.grants.AllGrantsMenu;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

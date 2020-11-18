@@ -1,19 +1,19 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.NumberUtils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.command.Completer;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.Completer;
+import club.frozed.lib.config.ConfigCursor;
+import club.frozed.lib.number.NumberUtils;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpeedCommand extends BaseCMD {
+public class SpeedCommand extends BaseCommand {
 
     @Completer(name = "speed")
     public List<String> speedCompleter(CommandArgs args) {
@@ -41,7 +41,7 @@ public class SpeedCommand extends BaseCMD {
         int speedVelocity = Integer.parseInt(args[1]);
         switch (args[0]) {
             case "fly":
-                if (!NumberUtils.checkNumber(args[1])) {
+                if (!NumberUtils.checkInt(args[1])) {
                     p.sendMessage("§cIt must be a number");
                     return;
                 }
@@ -53,7 +53,7 @@ public class SpeedCommand extends BaseCMD {
                 p.sendMessage(CC.translate(messages.getString("FLY").replace("<amount>", String.valueOf(speedVelocity))));
                 break;
             case "walk":
-                if (!NumberUtils.checkNumber(args[1])) {
+                if (!NumberUtils.checkInt(args[1])) {
                     p.sendMessage("§cIt must be a number");
                     return;
                 }

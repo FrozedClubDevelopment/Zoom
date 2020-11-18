@@ -1,6 +1,6 @@
 package club.frozed.core.manager.tags;
 
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;

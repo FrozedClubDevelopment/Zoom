@@ -1,5 +1,6 @@
 package club.frozed.core.utils;
 
+import club.frozed.lib.chat.CC;
 import lombok.NoArgsConstructor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;

@@ -6,11 +6,11 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
  * Date: 1/11/2020 @ 12:57
  */
 
-public class UnmuteCommand extends BaseCMD {
+public class UnmuteCommand extends BaseCommand {
 
     @Command(name = "unmute", inGameOnly = false, permission = "core.punishments.unmute")
     @Override

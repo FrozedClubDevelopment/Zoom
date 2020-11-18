@@ -1,15 +1,15 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class HealCommand extends BaseCMD {
+public class HealCommand extends BaseCommand {
     @Command(name = "heal", permission = "core.essentials.heal", aliases = {"curar"}, inGameOnly = true)
 
     @Override

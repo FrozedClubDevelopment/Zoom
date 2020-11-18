@@ -2,10 +2,10 @@ package club.frozed.core.command.rank.grant;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.grant.procedure.GrantMenu;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  * Date: 24/09/2020 @ 09:07
  */
 
-public class GrantCommand extends BaseCMD {
+public class GrantCommand extends BaseCommand {
 
     @Command(name = "grant",permission = "core.rank.grant")
 

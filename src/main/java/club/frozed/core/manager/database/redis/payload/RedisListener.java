@@ -6,18 +6,23 @@ import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.manager.staff.StaffLang;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.config.ConfigCursor;
 import club.frozed.core.utils.punishment.PunishmentUtil;
+import club.frozed.lib.task.TaskUtil;
 import com.google.gson.Gson;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -44,8 +49,8 @@ public class RedisListener extends JedisPubSub {
                             } else {
                                 status = "&coffline";
                             }
-                            String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.FORMAT")
-                                    .replace("<prefix>", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("NETWORK.SERVER-MANAGER.PREFIX")))
+                            String format = CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("NETWORK.SERVER-MANAGER.FORMAT")
+                                    .replace("<prefix>", CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("NETWORK.SERVER-MANAGER.PREFIX")))
                                     .replace("<server>", server)
                                     .replace("<status>", status));
                             StaffLang.sendRedisServerMsg(format);

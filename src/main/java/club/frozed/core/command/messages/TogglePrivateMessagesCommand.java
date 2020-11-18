@@ -1,13 +1,13 @@
 package club.frozed.core.command.messages;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.entity.Player;
 
-public class TogglePrivateMessagesCommand extends BaseCMD {
+public class TogglePrivateMessagesCommand extends BaseCommand {
     @Command(name = "togglemessages", aliases = {"togglepm", "tpm"})
 
     @Override

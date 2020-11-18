@@ -1,12 +1,12 @@
 package club.frozed.core.command.color;
 
 import club.frozed.core.menu.color.chatcolor.ChatColorMenu;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.entity.Player;
 
-public class ChatColorCommand extends BaseCMD {
+public class ChatColorCommand extends BaseCommand {
     @Command(name = "chatcolor", aliases = {"cc"}, permission = "core.chatcolor", inGameOnly = true)
 
     @Override

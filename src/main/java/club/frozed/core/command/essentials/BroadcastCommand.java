@@ -1,10 +1,10 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BroadcastCommand extends BaseCMD {
+public class BroadcastCommand extends BaseCommand {
     @Command(name = "broadcast", permission = "core.essentials.broadcast", aliases = {"bc", "alerta"}, inGameOnly = false)
 
     @Override
     public void onCommand(CommandArgs cmd) {
-        CommandSender p = cmd.getPlayer();
+        CommandSender p = cmd.getSender();
         String[] args = cmd.getArgs();
 
         if (args.length == 0) {
@@ -29,7 +29,7 @@ public class BroadcastCommand extends BaseCMD {
 
         List<String> text = new ArrayList<>();
         Collections.addAll(text, args);
-        Bukkit.broadcastMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.BROADCAST")
+        Bukkit.broadcastMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.BROADCAST")
                 .replace("<text>", StringUtils.join(text, " "))));
     }
 }

@@ -2,8 +2,8 @@ package club.frozed.core.menu.color.namecolor.buttons;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,7 +34,7 @@ public class ItalicBoldButton extends Button {
         if (playerData.getNameColor() != null) {
             color = ChatColor.valueOf(playerData.getNameColor());
         } else {
-            color = ChatColor.valueOf(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR"));
+            color = ChatColor.valueOf(Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR"));
         }
         if (i == 1) {
             return new ItemCreator(Material.IRON_DOOR)

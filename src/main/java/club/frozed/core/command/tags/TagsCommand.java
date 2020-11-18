@@ -2,16 +2,16 @@ package club.frozed.core.command.tags;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.menu.tags.TagsMenu;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.command.Completer;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.Completer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagsCommand extends BaseCMD {
+public class TagsCommand extends BaseCommand {
     @Completer(name = "tags", aliases = {"tag", "prefix"})
 
     public List<String> gamemodeCompleter(CommandArgs args) {

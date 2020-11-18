@@ -1,11 +1,11 @@
 package club.frozed.core.command.messages;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.command.Completer;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.Completer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IgnoreCommand extends BaseCMD {
+public class IgnoreCommand extends BaseCommand {
     @Completer(name = "ignore", aliases = "ignoredPlayersList")
 
     public List<String> IgnoreCompleter(CommandArgs args) {

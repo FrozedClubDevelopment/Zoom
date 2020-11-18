@@ -1,8 +1,8 @@
 package club.frozed.core.menu.invsee.button;
 
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;

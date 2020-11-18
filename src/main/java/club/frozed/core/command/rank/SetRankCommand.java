@@ -3,11 +3,11 @@ package club.frozed.core.command.rank;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.time.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -19,7 +19,7 @@ import org.bukkit.command.CommandSender;
  * Date: 22/09/2020 @ 20:42
  */
 
-public class SetRankCommand extends BaseCMD {
+public class SetRankCommand extends BaseCommand {
 
     @Command(name = "setrank", permission = "core.rank.setrank", inGameOnly = false)
     @Override

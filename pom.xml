@@ -24,7 +24,18 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>frozedrepo</id>
+            <url>http://ryzeon.me:8081/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <!-- 1.8.8 -->
@@ -73,6 +84,23 @@
             <version>2.9.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Vault-API-->
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Frozed Lib -->
+        <dependency>
+            <groupId>club.frozed.lib</groupId>
+            <artifactId>FrozedLib</artifactId>
+            <version>1.0-FINAL</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

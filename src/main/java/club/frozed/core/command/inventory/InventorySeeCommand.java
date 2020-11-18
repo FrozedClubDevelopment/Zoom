@@ -1,14 +1,14 @@
 package club.frozed.core.command.inventory;
 
 import club.frozed.core.menu.invsee.InventorySeeMenu;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class InventorySeeCommand extends BaseCMD {
+public class InventorySeeCommand extends BaseCommand {
     @Command(name = "inventorysee", permission = "core.command.invsee", aliases = {"invsee"})
 
     @Override

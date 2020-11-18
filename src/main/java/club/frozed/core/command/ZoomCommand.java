@@ -1,17 +1,17 @@
 package club.frozed.core.command;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Completer;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Completer;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZoomCommand extends BaseCMD {
+public class ZoomCommand extends BaseCommand {
     @Completer(name = "core", aliases = {"zoomcore", "zoom"})
 
     public List<String> gamemodeCompleter(CommandArgs args) {

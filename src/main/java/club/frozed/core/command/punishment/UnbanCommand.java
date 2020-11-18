@@ -6,11 +6,11 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -25,7 +25,7 @@ import java.util.UUID;
  * Date: 31/10/2020 @ 19:56
  */
 
-public class UnbanCommand extends BaseCMD {
+public class UnbanCommand extends BaseCommand {
 
     @Command(name = "unban", inGameOnly = false, permission = "core.punishments.unban")
     @Override

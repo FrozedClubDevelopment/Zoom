@@ -1,16 +1,16 @@
 package club.frozed.core.command.teleport;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.NumberUtils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
+import club.frozed.lib.number.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-public class TeleportPositionCommand extends BaseCMD {
+public class TeleportPositionCommand extends BaseCommand {
     @Command(name = "teleportposition", permission = "core.command.tppos", aliases = {"tppos"}, inGameOnly = true)
 
     @Override
@@ -23,7 +23,7 @@ public class TeleportPositionCommand extends BaseCMD {
             p.sendMessage("§cUsage: /" + cmd.getLabel() + " <x> <y> <z>");
             return;
         }
-        if (!NumberUtils.checkNumber(args[0]) || !NumberUtils.checkNumber(args[1]) || !NumberUtils.checkNumber(args[2])) {
+        if (!NumberUtils.checkInt(args[0]) || !NumberUtils.checkInt(args[1]) || !NumberUtils.checkInt(args[2])) {
             p.sendMessage("§ePlease specify a number");
             return;
         }

@@ -3,9 +3,9 @@ package club.frozed.core.menu.grant.procedure;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.grant.procedure.button.ConfirmCancelButton;
 import club.frozed.core.menu.grant.procedure.button.GrantInfoButton;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.menu.Button;
-import club.frozed.core.utils.menu.Menu;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.menu.Menu;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

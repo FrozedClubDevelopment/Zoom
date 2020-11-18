@@ -2,10 +2,10 @@ package club.frozed.core.command.punishment;
 
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.punishments.menus.PunishmentsMenu;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  * Date: 1/11/2020 @ 13:28
  */
 
-public class CheckPunishmentsCommand extends BaseCMD {
+public class CheckPunishmentsCommand extends BaseCommand {
 
     @Command(name = "check", aliases = {"checkplayerpunishemnts", "punishments", "c", "history"}, permission = "core.punishments.check")
     @Override

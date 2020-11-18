@@ -1,16 +1,16 @@
 package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class FlyCommand extends BaseCMD {
+public class FlyCommand extends BaseCommand {
     @Command(name = "fly", permission = "core.essentials.fly", aliases = {"flying"}, inGameOnly = true)
 
     @Override

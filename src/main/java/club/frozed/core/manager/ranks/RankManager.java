@@ -5,10 +5,10 @@ import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.config.FileConfig;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.config.FileConfig;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.task.TaskUtil;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
@@ -41,20 +41,20 @@ public class RankManager {
     public void loadRanksFromConfig() {
         Rank.ranks.clear();
         try {
-            for (String rank : Zoom.getInstance().getRanksConfig().getConfig().getKeys(false)) {
-                String rankName = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".NAME");
-                String rankPrefix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".PREFIX");
-                String rankSuffix = Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".SUFFIX");
-                ChatColor rankColor = ChatColor.valueOf(Zoom.getInstance().getRanksConfig().getConfig().getString(rank + ".COLOR"));
+            for (String rank : Zoom.getInstance().getRanksConfig().getConfiguration().getKeys(false)) {
+                String rankName = Zoom.getInstance().getRanksConfig().getConfiguration().getString(rank + ".NAME");
+                String rankPrefix = Zoom.getInstance().getRanksConfig().getConfiguration().getString(rank + ".PREFIX");
+                String rankSuffix = Zoom.getInstance().getRanksConfig().getConfiguration().getString(rank + ".SUFFIX");
+                ChatColor rankColor = ChatColor.valueOf(Zoom.getInstance().getRanksConfig().getConfiguration().getString(rank + ".COLOR"));
                 if (rankColor == null) {
                     rankColor = ChatColor.WHITE;
                 }
-                boolean rankDefault = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".DEFAULT");
-                boolean rankBold = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".BOLD");
-                boolean rankItalic = Zoom.getInstance().getRanksConfig().getConfig().getBoolean(rank + ".ITALIC");
-                int rankPriority = Zoom.getInstance().getRanksConfig().getConfig().getInt(rank + ".PRIORITY");
-                List<String> rankInheritance = Zoom.getInstance().getRanksConfig().getConfig().getStringList(rank + ".INHERITANCE");
-                List<String> rankPermission = Zoom.getInstance().getRanksConfig().getConfig().getStringList(rank + ".PERMISSIONS");
+                boolean rankDefault = Zoom.getInstance().getRanksConfig().getConfiguration().getBoolean(rank + ".DEFAULT");
+                boolean rankBold = Zoom.getInstance().getRanksConfig().getConfiguration().getBoolean(rank + ".BOLD");
+                boolean rankItalic = Zoom.getInstance().getRanksConfig().getConfiguration().getBoolean(rank + ".ITALIC");
+                int rankPriority = Zoom.getInstance().getRanksConfig().getConfiguration().getInt(rank + ".PRIORITY");
+                List<String> rankInheritance = Zoom.getInstance().getRanksConfig().getConfiguration().getStringList(rank + ".INHERITANCE");
+                List<String> rankPermission = Zoom.getInstance().getRanksConfig().getConfiguration().getStringList(rank + ".PERMISSIONS");
 
                 new Rank(rankName, rankPrefix, rankSuffix, rankColor, rankPriority, rankDefault, rankBold, rankItalic, rankPermission, rankInheritance);
             }
@@ -135,16 +135,16 @@ public class RankManager {
 
             FileConfig config = Zoom.getInstance().getRanksConfig();
 
-            config.getConfig().set(rankName + ".NAME", rankName);
-            config.getConfig().set(rankName + ".PREFIX", rankPrefix);
-            config.getConfig().set(rankName + ".SUFFIX", rankSuffix);
-            config.getConfig().set(rankName + ".COLOR", rankColor.name());
-            config.getConfig().set(rankName + ".DEFAULT", rankDefault);
-            config.getConfig().set(rankName + ".BOLD", rankBold);
-            config.getConfig().set(rankName + ".ITALIC", rankItalic);
-            config.getConfig().set(rankName + ".PRIORITY", rankPriority);
-            config.getConfig().set(rankName + ".INHERITANCE", rankInheritance);
-            config.getConfig().set(rankName + ".PERMISSIONS", rankPermission);
+            config.getConfiguration().set(rankName + ".NAME", rankName);
+            config.getConfiguration().set(rankName + ".PREFIX", rankPrefix);
+            config.getConfiguration().set(rankName + ".SUFFIX", rankSuffix);
+            config.getConfiguration().set(rankName + ".COLOR", rankColor.name());
+            config.getConfiguration().set(rankName + ".DEFAULT", rankDefault);
+            config.getConfiguration().set(rankName + ".BOLD", rankBold);
+            config.getConfiguration().set(rankName + ".ITALIC", rankItalic);
+            config.getConfiguration().set(rankName + ".PRIORITY", rankPriority);
+            config.getConfiguration().set(rankName + ".INHERITANCE", rankInheritance);
+            config.getConfiguration().set(rankName + ".PERMISSIONS", rankPermission);
 
             config.save();
         }
@@ -199,26 +199,26 @@ public class RankManager {
                 sender.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName()));
                 json = new RedisMessage(Payload.GRANT_ADD)
                         .setParam("NAME", targetData.getName())
-                        .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName()))).toJSON();
+                        .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName()))).toJSON();
                 if (Zoom.getInstance().getRedisManager().isActive()) {
                     Zoom.getInstance().getRedisManager().write(json);
                 } else {
                     if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
-                        targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName())));
+                        targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName())));
                     }
                 }
             } else {
                 sender.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName() + " for " + grant.getNiceDuration()));
                 json = new RedisMessage(Payload.GRANT_ADD)
                         .setParam("NAME", targetData.getName())
-                        .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
+                        .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.TEMP")
                                 .replace("<time>", grant.getNiceDuration())
                                 .replace("<rank>", rankData.getName()))).toJSON();
                 if (Zoom.getInstance().getRedisManager().isActive()) {
                     Zoom.getInstance().getRedisManager().write(json);
                 } else {
                     if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
-                        targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
+                        targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.TEMP")
                                 .replace("<time>", grant.getNiceDuration())
                                 .replace("<rank>", rankData.getName())));
                     }

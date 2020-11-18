@@ -1,7 +1,7 @@
 package club.frozed.core.utils.lang;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import lombok.Getter;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -9,14 +9,14 @@ import org.bukkit.entity.Player;
 @Getter
 public class Lang {
 
-    public static String TS = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TEAMSPEAK");
-    public static String DISCORD = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.DISCORD");
-    public static String TWITTER = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.TWITTER");
-    public static String STORE = Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.SOCIAL.STORE");
+    public static String TS = Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.SOCIAL.TEAMSPEAK");
+    public static String DISCORD = Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.SOCIAL.DISCORD");
+    public static String TWITTER = Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.SOCIAL.TWITTER");
+    public static String STORE = Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.SOCIAL.STORE");
 
-    public static String SERVER_IP = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.NAME-MC-CHECK.SERVER-IP");
-    public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.SERVER-NAME");
-    public static String PREFIX = CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.PREFIX"));
+    public static String SERVER_IP = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.NAME-MC-CHECK.SERVER-IP");
+    public static String SERVER_NAME = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.SERVER-NAME");
+    public static String PREFIX = CC.translate(Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PREFIX"));
 
     public static String OFFLINE_PLAYER = CC.translate("&cPlayer not found.");
     public static String NO_PERMS = CC.translate("&cYou don't have permissions.");

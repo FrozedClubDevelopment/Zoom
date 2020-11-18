@@ -2,19 +2,19 @@ package club.frozed.core.command.essentials;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class CountryCommand extends BaseCMD {
+public class CountryCommand extends BaseCommand {
     @Command(name = "getcountry", permission = "core.essentials.geoip", aliases = {"geoip"})
 
     @Override

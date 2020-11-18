@@ -7,12 +7,12 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentExecutor;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.punishment.PunishmentUtil;
+import club.frozed.lib.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -26,7 +26,7 @@ import java.util.UUID;
  * Date: 31/10/2020 @ 18:38
  */
 
-public class KickCommand extends BaseCMD {
+public class KickCommand extends BaseCommand {
 
     @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick", aliases = {"expulsar"})
     @Override

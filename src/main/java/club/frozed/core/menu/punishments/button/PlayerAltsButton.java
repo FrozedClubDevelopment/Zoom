@@ -3,9 +3,9 @@ package club.frozed.core.menu.punishments.button;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -58,7 +58,7 @@ public class PlayerAltsButton extends Button {
                 altsData = PlayerData.loadData(offlinePlayer.getUniqueId());
             }
             if (altsData != null) {
-                strings.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("MENU.ALTS-INFO")
+                strings.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("MENU.ALTS-INFO")
                         .replace("<player>", altsData.getName() == null ? "None" : altsData.getName())
                         .replace("<status>", getStatusPunishment(altsData))
                 ));

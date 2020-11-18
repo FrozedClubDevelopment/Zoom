@@ -2,7 +2,7 @@ package club.frozed.core.manager.player.punishments;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.core.utils.time.DateUtils;
@@ -100,13 +100,13 @@ public class PunishmentExecutor {
             if (punishment.getType().isBannable()) {
                 player.kickPlayer(punishment.toKickMessage(null));
             } else if (punishment.getType() == PunishmentType.WARN) {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.WARN").forEach(s ->
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.WARN").forEach(s ->
                         player.sendMessage(CC.translate(s)
                                 .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
                                 .replace("<reason>", (punishment.getReason() == null || punishment.getReason().isEmpty() || punishment.getReason().equals("") ? "No reason provided" : punishment.getReason()))
                         ));
             } else if (punishment.getType() == PunishmentType.MUTE) {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.MUTE").forEach(s ->
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.MUTE").forEach(s ->
                         player.sendMessage(CC.translate(s)
                                 .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
                                 .replace("<duration>", punishment.getTimeLeft(false))

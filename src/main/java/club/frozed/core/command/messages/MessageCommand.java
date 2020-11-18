@@ -2,14 +2,14 @@ package club.frozed.core.command.messages;
 
 import club.frozed.core.manager.messages.PlayerMessage;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class MessageCommand extends BaseCMD {
+public class MessageCommand extends BaseCommand {
     @Command(name = "message", aliases = {"whisper", "decir"})
 
     @Override

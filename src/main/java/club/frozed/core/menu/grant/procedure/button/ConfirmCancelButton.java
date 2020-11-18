@@ -6,11 +6,11 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.TaskUtil;
-import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.item.ItemCreator;
 import club.frozed.core.utils.lang.Lang;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.task.TaskUtil;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -85,26 +85,26 @@ public class ConfirmCancelButton extends Button {
                         player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName()));
                         String json = new RedisMessage(Payload.GRANT_ADD)
                                 .setParam("NAME", targetData.getName())
-                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName()))).toJSON();
+                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName()))).toJSON();
                         if (Zoom.getInstance().getRedisManager().isActive()) {
                             Zoom.getInstance().getRedisManager().write(json);
                         } else {
                             if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
-                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName())));
+                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.PERM").replace("<rank>", rankData.getName())));
                             }
                         }
                     } else {
                         player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Added permanently grant " + grant.getRank().getName() + " to " + targetData.getName() + " for " + grant.getNiceDuration()));
                         String json = new RedisMessage(Payload.GRANT_ADD)
                                 .setParam("NAME", targetData.getName())
-                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
+                                .setParam("MESSAGE", CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.TEMP")
                                         .replace("<time>", grant.getNiceDuration())
                                         .replace("<rank>", rankData.getName()))).toJSON();
                         if (Zoom.getInstance().getRedisManager().isActive()) {
                             Zoom.getInstance().getRedisManager().write(json);
                         } else {
                             if (targetData.getPlayer() != null && targetData.getPlayer().isOnline()) {
-                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfig().getString("COMMANDS.GRANT.TEMP")
+                                targetData.getPlayer().sendMessage(CC.translate(Zoom.getInstance().getMessagesConfig().getConfiguration().getString("COMMANDS.GRANT.TEMP")
                                         .replace("<time>", grant.getNiceDuration())
                                         .replace("<rank>", rankData.getName())));
                             }

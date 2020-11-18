@@ -6,12 +6,12 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.TaskUtil;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.grant.WoolUtil;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.task.TaskUtil;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,15 +45,15 @@ public class GrantsInfoButton extends Button {
         }
 
         List<String> lore = new ArrayList<>();
-        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.LORE").forEach(text -> {
+        Zoom.getInstance().getMessagesConfig().getConfiguration().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.LORE").forEach(text -> {
             switch (text) {
                 case "<not-expired>":
                     if (!grant.hasExpired() && grant.getRank() != null && !grant.getRank().isDefaultRank())
-                        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.NOT-EXPIRED").forEach(textExpired -> lore.add(CC.translate(textExpired)));
+                        Zoom.getInstance().getMessagesConfig().getConfiguration().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.NOT-EXPIRED").forEach(textExpired -> lore.add(CC.translate(textExpired)));
                     break;
                 case "<if-removed>":
                     if (grant.getRemovedBy() != null && !grant.getRemovedBy().equalsIgnoreCase(""))
-                        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.IF-REMOVED").forEach(textRemoved -> lore.add(CC.translate(textRemoved)
+                        Zoom.getInstance().getMessagesConfig().getConfiguration().getStringList("COMMANDS.GRANT.GRANT-MENU.GRANTS.IF-REMOVED").forEach(textRemoved -> lore.add(CC.translate(textRemoved)
                                 .replace("<removedBy>", grant.getRemovedBy())
                                 .replace("<removedDate>", GrantUtil.getDate(grant.getRemovedDate()))));
                     break;

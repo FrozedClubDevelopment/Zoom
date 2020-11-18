@@ -1,13 +1,13 @@
 package club.frozed.core.command.messages;
 
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.entity.Player;
 
-public class SocialSpyCommand extends BaseCMD {
+public class SocialSpyCommand extends BaseCommand {
     @Command(name = "socialSpy", permission = "core.chat.socialSpy", aliases = {"ssspy"})
 
     @Override

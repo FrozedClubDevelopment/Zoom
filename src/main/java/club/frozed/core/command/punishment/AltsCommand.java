@@ -3,10 +3,10 @@ package club.frozed.core.command.punishment;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +21,7 @@ import java.util.List;
  * Date: 28/10/2020 @ 22:14
  */
 
-public class AltsCommand extends BaseCMD {
+public class AltsCommand extends BaseCommand {
 
     @Command(name = "alts", permission = "core.punishments.alts", inGameOnly = false)
     @Override
@@ -59,7 +59,7 @@ public class AltsCommand extends BaseCMD {
                 altsData = PlayerData.loadData(alts);
             }
             if (altsData != null) {
-                altsList.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("ALTS-FORMAT.ALT-FORMAT")
+                altsList.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("ALTS-FORMAT.ALT-FORMAT")
                         .replace("<player>", altsData.getName() == null ? "None" : altsData.getName())
                         .replace("<status>", getStatusPunishment(altsData))
                 ));
@@ -67,7 +67,7 @@ public class AltsCommand extends BaseCMD {
             PlayerData.deleteOfflineProfile(altsData);
         });
         List<String> text = new ArrayList<>();
-        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("ALTS-FORMAT.FORMAT").forEach(msg -> {
+        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("ALTS-FORMAT.FORMAT").forEach(msg -> {
             text.add(CC.translate(msg)
                     .replace("<player>", data.getName())
                     .replace("<alts>", StringUtils.join(altsList, "\n"))

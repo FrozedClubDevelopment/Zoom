@@ -1,6 +1,6 @@
 package club.frozed.core.menu.punishments;
 
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import lombok.Getter;
 import org.apache.commons.lang.WordUtils;
 

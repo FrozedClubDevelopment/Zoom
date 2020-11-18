@@ -6,10 +6,10 @@ import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.menu.grant.procedure.GrantDurationMenu;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.grant.WoolUtil;
-import club.frozed.core.utils.items.ItemCreator;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.item.ItemCreator;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public class RankButton extends Button {
         ItemCreator itemCreator = new ItemCreator(Material.WOOL);
         itemCreator.setName(rank.getColor() + rank.getName());
         List<String> lore = new ArrayList<>();
-        Zoom.getInstance().getMessagesConfig().getConfig().getStringList("COMMANDS.GRANT.GRANT-MENU.RANK").forEach(line -> lore.add(CC.translate(line)
+        Zoom.getInstance().getMessagesConfig().getConfiguration().getStringList("COMMANDS.GRANT.GRANT-MENU.RANK").forEach(line -> lore.add(CC.translate(line)
                 .replace("<rank>", rank.getColor() + rank.getName())
                 .replace("<name>", targetPlayerData.getName())));
         itemCreator.setLore(lore);

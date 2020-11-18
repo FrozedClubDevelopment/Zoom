@@ -1,7 +1,7 @@
 package club.frozed.core.manager.database.mongo;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.config.ConfigCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;

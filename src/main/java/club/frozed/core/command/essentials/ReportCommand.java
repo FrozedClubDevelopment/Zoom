@@ -6,10 +6,10 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.event.PlayerReportEvent;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.staff.StaffLang;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.time.Cooldown;
 import org.apache.commons.lang.StringUtils;
@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
  * Template by Elb1to
  */
 
-public class ReportCommand extends BaseCMD {
+public class ReportCommand extends BaseCommand {
     @Command(name = "report",permission = "core.essentials.report",inGameOnly = true)
 
     @Override
@@ -31,7 +31,7 @@ public class ReportCommand extends BaseCMD {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
         PlayerData playerData = PlayerData.getPlayerData(p.getUniqueId());
-        Cooldown cooldown = new Cooldown(Zoom.getInstance().getSettingsConfig().getConfig().getInt("SETTINGS.REPORT.COOLDOWN"));
+        Cooldown cooldown = new Cooldown(Zoom.getInstance().getSettingsConfig().getConfiguration().getInt("SETTINGS.REPORT.COOLDOWN"));
 
         if (args.length == 0){
             p.sendMessage(CC.translate("&cUsage: /" + cmd.getLabel() + " <player> <message>"));
@@ -51,7 +51,7 @@ public class ReportCommand extends BaseCMD {
             return;
         }
         if (!playerData.getReportCooldown().hasExpired()){
-            p.sendMessage(CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.REPORT.MSG.COOLDOWN")
+            p.sendMessage(CC.translate(Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.REPORT.MSG.COOLDOWN")
                     .replace("<time>",playerData.getReportCooldown().getTimeMilisLeft())
                     .replace("<left>",playerData.getReportCooldown().getContextLeft())));
             return;
@@ -63,7 +63,7 @@ public class ReportCommand extends BaseCMD {
 
         playerData.setReportCooldown(cooldown);
 
-        p.sendMessage(CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.REPORT.MSG.SENDER")
+        p.sendMessage(CC.translate(Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.REPORT.MSG.SENDER")
                 .replace("<target>",targetPlayer.getName())
                 .replace("<text>",text)));
 

@@ -7,10 +7,10 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentExecutor;
 import club.frozed.core.manager.player.punishments.PunishmentType;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -24,7 +24,7 @@ import java.util.UUID;
  * Date: 22/10/2020 @ 21:15
  */
 
-public class WarnCommand extends BaseCMD {
+public class WarnCommand extends BaseCommand {
 
     @Command(name = "warn",permission = "core.punishments.warn", inGameOnly = false)
     @Override

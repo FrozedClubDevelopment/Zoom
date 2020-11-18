@@ -1,6 +1,6 @@
 package club.frozed.core.utils;
 
-import club.frozed.core.utils.items.ItemCreator;
+import club.frozed.lib.item.ItemCreator;
 import com.google.common.base.Preconditions;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

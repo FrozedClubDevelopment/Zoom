@@ -2,17 +2,17 @@ package club.frozed.core.command.coins;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.NumberUtils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.number.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class CoinsManagerCommand extends BaseCMD {
+public class CoinsManagerCommand extends BaseCommand {
     @Command(name = "coinsmanager",permission = "core.coins.manager")
     @Override
     public void onCommand(CommandArgs cmd) {
@@ -41,7 +41,7 @@ public class CoinsManagerCommand extends BaseCMD {
         int amount;
         switch (args[1]){
             case "set":
-                if (!NumberUtils.checkNumber(args[2])){
+                if (!NumberUtils.checkInt(args[2])){
                     p.sendMessage(Lang.NO_NUMBER);
                     return;
                 }
@@ -52,7 +52,7 @@ public class CoinsManagerCommand extends BaseCMD {
                 targetData.setCoins(amount);
                 break;
             case "add":
-                if (!NumberUtils.checkNumber(args[2])){
+                if (!NumberUtils.checkInt(args[2])){
                     p.sendMessage(Lang.NO_NUMBER);
                     return;
                 }
@@ -64,7 +64,7 @@ public class CoinsManagerCommand extends BaseCMD {
                 targetData.setCoins(targetData.getCoins() + amount);
                 break;
             case "remove":
-                if (!NumberUtils.checkNumber(args[2])){
+                if (!NumberUtils.checkInt(args[2])){
                     p.sendMessage(Lang.NO_NUMBER);
                     return;
                 }

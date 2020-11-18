@@ -4,12 +4,12 @@ import club.frozed.core.Zoom;
 import club.frozed.core.manager.tags.Tag;
 import club.frozed.core.menu.tags.buttons.RemoveTagButton;
 import club.frozed.core.menu.tags.buttons.TagButton;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.menu.Button;
-import club.frozed.core.utils.menu.buttons.AirButton;
-import club.frozed.core.utils.menu.buttons.PageInfoButton;
-import club.frozed.core.utils.menu.pagination.PageButton;
-import club.frozed.core.utils.menu.pagination.PaginatedMenu;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.menu.buttons.AirButton;
+import club.frozed.lib.menu.buttons.PageInfoButton;
+import club.frozed.lib.menu.pagination.PageButton;
+import club.frozed.lib.menu.pagination.PaginatedMenu;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class TagsMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return CC.translate(Zoom.getInstance().getTagsConfig().getConfig().getString("title"));
+        return CC.translate(Zoom.getInstance().getTagsConfig().getConfiguration().getString("title"));
     }
 
     @Override

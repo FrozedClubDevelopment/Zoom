@@ -3,10 +3,10 @@ package club.frozed.core.menu.color.chatcolor;
 import club.frozed.core.Zoom;
 import club.frozed.core.menu.color.chatcolor.buttons.ChatColorButton;
 import club.frozed.core.menu.color.chatcolor.buttons.ResetButton;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.menu.Button;
-import club.frozed.core.utils.menu.Menu;
-import club.frozed.core.utils.menu.buttons.CloseButton;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.menu.Menu;
+import club.frozed.lib.menu.buttons.CloseButton;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public class ChatColorMenu extends Menu {
     
     @Override
     public String getTitle(Player player) {
-        return CC.translate(Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.CHATCOLOR-MENU-TITLE"));
+        return CC.translate(Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.CHATCOLOR-MENU-TITLE"));
     }
 
     @Override

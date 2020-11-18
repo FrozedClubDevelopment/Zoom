@@ -4,8 +4,8 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.menu.chat.buttons.IgnoreListButton;
 import club.frozed.core.menu.chat.buttons.TogglePrivateMessagesButton;
 import club.frozed.core.menu.chat.buttons.ToggleSoundButton;
-import club.frozed.core.utils.menu.Button;
-import club.frozed.core.utils.menu.Menu;
+import club.frozed.lib.menu.Button;
+import club.frozed.lib.menu.Menu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

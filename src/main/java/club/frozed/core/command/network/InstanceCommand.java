@@ -1,9 +1,9 @@
 package club.frozed.core.command.network;
 
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
  * Project: Zoom
  * Date: 08/27/2020 @ 21:12
  */
-public class InstanceCommand extends BaseCMD {
+public class InstanceCommand extends BaseCommand {
     @Command(name = "instance", aliases = {"serverinstance", "checkinstance", "currentserver"}, permission = "core.network.instance", usage = "Usage: /instance <serverName>",inGameOnly = true)
 
     public void onCommand(CommandArgs command) {

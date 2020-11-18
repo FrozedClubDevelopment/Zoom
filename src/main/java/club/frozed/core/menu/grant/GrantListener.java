@@ -3,7 +3,7 @@ package club.frozed.core.menu.grant;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.GrantProcedureState;
 import club.frozed.core.menu.grant.procedure.GrantConfirmMenu;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.time.DateUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

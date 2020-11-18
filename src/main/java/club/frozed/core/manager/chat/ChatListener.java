@@ -7,9 +7,9 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
 import club.frozed.core.manager.staff.StaffLang;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.config.ConfigCursor;
-import club.frozed.core.utils.config.ConfigReplacement;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.config.ConfigCursor;
+import club.frozed.lib.config.ConfigReplacement;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.core.utils.time.Cooldown;
@@ -29,9 +29,9 @@ public class ChatListener implements Listener {
     public void onAsyncPlayerChat(AsyncPlayerChatEvent e) {
         PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         String message = e.getMessage();
-        String messageFormat = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.FORMAT");
-        String chatColor = Zoom.getInstance().getSettingsConfig().getConfig().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
-        boolean enabled = Zoom.getInstance().getSettingsConfig().getConfig().getBoolean("SETTINGS.CHAT.FORMAT.ENABLED");
+        String messageFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.FORMAT");
+        String chatColor = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
+        boolean enabled = Zoom.getInstance().getSettingsConfig().getConfiguration().getBoolean("SETTINGS.CHAT.FORMAT.ENABLED");
         if (!enabled) return;
 
         ConfigReplacement replacement = new ConfigReplacement(messageFormat);
@@ -80,13 +80,13 @@ public class ChatListener implements Listener {
         Punishment punishment = data.getActivePunishment(PunishmentType.MUTE);
         if (punishment != null) {
             if (punishment.isLifetime()) {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT").forEach(text -> {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.PERMANENT").forEach(text -> {
                     data.getPlayer().sendMessage(CC.translate(text)
                             .replace("<mute-time>", punishment.getTimeLeft(true))
                             .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));
                 });
             } else {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP").forEach(text -> {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP").forEach(text -> {
                     data.getPlayer().sendMessage(CC.translate(text)
                             .replace("<mute-time>", punishment.getTimeLeft(true))
                             .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));
@@ -171,31 +171,31 @@ public class ChatListener implements Listener {
         playerData.setChatDelay(cooldown);
     }
 
-    @EventHandler
-    public void onCommandReplace(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell") || event.getMessage().startsWith("/TELL") || event.getMessage().startsWith("/MSG")) {
-            event.setCancelled(true);
-            event.getPlayer().chat(event.getMessage()
-                    .replace("/msg", "/message")
-                    .replace("/MSG", "/message")
-                    .replace("/TELL", "/message")
-                    .replace("/tell", "/message"));
-        }
-        if (event.getMessage().startsWith("/kick") || event.getMessage().startsWith("/KICK")){
-            event.setCancelled(true);
-            event.getPlayer().chat(event.getMessage()
-                    .replace("/kick", "/expulsar")
-                    .replace("/KICK", "/expulsar")
-            );
-        }
-        if (event.getMessage().startsWith("/ban") || event.getMessage().startsWith("/BAN")){
-            event.setCancelled(true);
-            event.getPlayer().chat(event.getMessage()
-                    .replace("/ban","/zban")
-                    .replace("/BAN","/zban")
-            );
-        }
-    }
+//    @EventHandler
+//    public void onCommandReplace(PlayerCommandPreprocessEvent event) {
+//        if (event.getMessage().startsWith("/msg") || event.getMessage().startsWith("/tell") || event.getMessage().startsWith("/TELL") || event.getMessage().startsWith("/MSG")) {
+//            event.setCancelled(true);
+//            event.getPlayer().chat(event.getMessage()
+//                    .replace("/msg", "/message")
+//                    .replace("/MSG", "/message")
+//                    .replace("/TELL", "/message")
+//                    .replace("/tell", "/message"));
+//        }
+//        if (event.getMessage().startsWith("/kick") || event.getMessage().startsWith("/KICK")){
+//            event.setCancelled(true);
+//            event.getPlayer().chat(event.getMessage()
+//                    .replace("/kick", "/expulsar")
+//                    .replace("/KICK", "/expulsar")
+//            );
+//        }
+//        if (event.getMessage().startsWith("/ban") || event.getMessage().startsWith("/BAN")){
+//            event.setCancelled(true);
+//            event.getPlayer().chat(event.getMessage()
+//                    .replace("/ban","/zban")
+//                    .replace("/BAN","/zban")
+//            );
+//        }
+//    }
 
     public String translate(String text, Player player, String message) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());

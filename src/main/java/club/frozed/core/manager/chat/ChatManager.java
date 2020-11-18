@@ -1,7 +1,7 @@
 package club.frozed.core.manager.chat;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.config.ConfigCursor;
 import lombok.Getter;
 import lombok.Setter;
 

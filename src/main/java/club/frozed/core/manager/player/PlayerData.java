@@ -8,7 +8,7 @@ import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.core.menu.punishments.PunishmentFilter;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;

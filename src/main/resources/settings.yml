@@ -1,5 +1,6 @@
 # Bukkit Sounds List -> https://jd.bukkit.org/org/bukkit/Sound.html (If you don't want to have any sound, just put the sound as 'none'
 SETTINGS:
+  LICENSE: ''
   PREFIX: '&8[&6Zoom&8] '
   SERVER-NAME: 'DEV'
   VAULT-SUPPORT: true
@@ -55,3 +56,5 @@ SETTINGS:
       - '&7&m----------------------------------------------------'
     SERVER-IP: 'frozed.club'
     EXECUTE-CMD: 'setperm <player> tag.verfied'
+  DISABLE-COMMANDS:
+    - 'coins'

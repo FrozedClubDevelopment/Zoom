@@ -1,12 +1,11 @@
 package club.frozed.core.manager.player.punishments;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.items.ItemCreator;
 import club.frozed.core.utils.time.DateUtils;
 import club.frozed.core.utils.time.TimeUtil;
-import com.google.gson.JsonObject;
+import club.frozed.lib.item.ItemCreator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -112,7 +111,7 @@ public class Punishment {
         if (this.isPardoned() || this.isLifetime() || this.type == PunishmentType.WARN || this.type == PunishmentType.KICK) {
             time = "";
         } else {
-           time = CC.translate(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENT-MESSAGES.TIME")).replace("<punish-time>", this.getTimeLeft(false));
+           time = CC.translate(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("PUNISHMENT-MESSAGES.TIME")).replace("<punish-time>", this.getTimeLeft(false));
         }
         return time;
     }
@@ -120,7 +119,7 @@ public class Punishment {
     public void broadcast(String senderName, String targetName, boolean silent) {
         if (silent) {
             Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.hasPermission("core.punishments.silent.see")).forEach(player -> {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text ->
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text ->
                         player.sendMessage(CC.translate(text)
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
@@ -131,7 +130,7 @@ public class Punishment {
                                 .replace("<time>", CC.translate(getTime()))
                         ));
             });
-            Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text -> {
+            Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.SILENT").forEach(text -> {
                 Bukkit.getConsoleSender().sendMessage(CC.translate(text)
                         .replace("<player>", targetName)
                         .replace("<sender>", senderName)
@@ -142,8 +141,8 @@ public class Punishment {
                         .replace("<time>", CC.translate(getTime())));
             });
         } else {
-            if (Zoom.getInstance().getPunishmentConfig().getConfig().getBoolean("PUNISHMENT-MESSAGES.MESSAGE-IN-CONSOLE")) {
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PUBLIC").forEach(text ->
+            if (Zoom.getInstance().getPunishmentConfig().getConfiguration().getBoolean("PUNISHMENT-MESSAGES.MESSAGE-IN-CONSOLE")) {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PUBLIC").forEach(text ->
                         Bukkit.broadcastMessage(CC.translate(text)
                                 .replace("<player>", targetName)
                                 .replace("<sender>", senderName)
@@ -155,7 +154,7 @@ public class Punishment {
                         ));
             } else {
                 Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-                    Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENT-MESSAGES.PUBLIC").forEach(text ->
+                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PUBLIC").forEach(text ->
                             player.sendMessage(CC.translate(text)
                                     .replace("<player>", targetName)
                                     .replace("<sender>", senderName)
@@ -172,23 +171,23 @@ public class Punishment {
 
     public ItemStack toItemStack() {
         List<String> lore = new ArrayList<>();
-        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.LORE").forEach(text -> {
+        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENTS-MENU.ITEM.LORE").forEach(text -> {
             switch (text){
                 case "<time-left>":
                     if (!this.hasExpired() && !this.isLifetime())
-                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.TIME-LEFT").forEach(textExpired ->
+                        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENTS-MENU.ITEM.TIME-LEFT").forEach(textExpired ->
                                 lore.add(CC.translate(textExpired)
                                 .replace("<time>", this.getTimeLeft(true))));
                     break;
                 case "<punishment-pardoned>":
                     if (isPardoned()){
-                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.EXPIRED").forEach(textRemoved ->
+                        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.EXPIRED").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
                                 .replace("<pardonedDate>",TimeUtil.formatIntoCalendarString(new Date(this.pardonedAt)))
                                 .replace("<pardonedBy>",Utils.getDisplayName(this.pardonedBy))
                                 .replace("<pardonedReason>", (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason == "" ? "No reason provided" : this.pardonedReason))));
                     } else if (this.hasExpired() && !this.isLifetime()) {
-                        Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.ACTIVE").forEach(textRemoved ->
+                        Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENTS-MENU.ITEM.PARDONED.ACTIVE").forEach(textRemoved ->
                                 lore.add(CC.translate(textRemoved)
                                         .replace("<expiredIn>", TimeUtil.formatIntoCalendarString(new Date(this.addedAt + this.duration)))));
                     }
@@ -200,7 +199,7 @@ public class Punishment {
         });
         String iD = this.uniqueId.toString().split("-")[0];
         return new ItemCreator(Material.INK_SACK)
-                .setName(Zoom.getInstance().getPunishmentConfig().getConfig().getString("PUNISHMENTS-MENU.ITEM.NAME")
+                .setName(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("PUNISHMENTS-MENU.ITEM.NAME")
                         .replace("<id>", iD.toUpperCase())
                         .replace("<status>", (this.hasExpired() ? "&7Inactive" : "&aActive"))
                 )
@@ -225,7 +224,7 @@ public class Punishment {
         List<String> kickMessage = new ArrayList<>();
         switch (this.type){
             case KICK:
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.KICK").forEach(text -> {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.KICK").forEach(text -> {
                     kickMessage.add(CC.translate(text)
                             .replace("<punishReason>", (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
                             .replace("<punishSender>", Utils.getDisplayName(this.addedBy)))
@@ -234,11 +233,11 @@ public class Punishment {
                 break;
             case BAN:
                 if (!this.isLifetime() && this.type.isBannable()){
-                    Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.TEMP-BAN").forEach(text -> {
+                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.TEMP-BAN").forEach(text -> {
                         switch (text){
                             case "<alt-relation>":
                                 if (alternativeAccount != null) {
-                                    Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
+                                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                             kickMessage.add(CC.translate(textExpired)
                                                     .replace("<alt-name>", alternativeAccount)));
                                 }
@@ -254,11 +253,11 @@ public class Punishment {
                         }
                     });
                 } else {
-                    Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.BAN").forEach(text -> {
+                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.BAN").forEach(text -> {
                         switch (text){
                             case "<alt-relation>":
                                 if (alternativeAccount != null){
-                                    Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
+                                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                             kickMessage.add(CC.translate(textExpired)
                                                     .replace("<alt-name>", alternativeAccount)));
                                 }
@@ -276,11 +275,11 @@ public class Punishment {
                 }
                 break;
             case BLACKLIST:
-                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.IP-BAN").forEach(text -> {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.IP-BAN").forEach(text -> {
                     switch (text){
                         case "<alt-relation>":
                             if (alternativeAccount != null){
-                                Zoom.getInstance().getPunishmentConfig().getConfig().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
+                                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("KICK-PUNISHMENT-MESSAGES.ALT-RELATION").forEach(textExpired ->
                                         kickMessage.add(CC.translate(textExpired)
                                                 .replace("<alt-name>", alternativeAccount)));
                             }

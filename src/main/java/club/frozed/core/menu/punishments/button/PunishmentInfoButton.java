@@ -1,7 +1,7 @@
 package club.frozed.core.menu.punishments.button;
 
 import club.frozed.core.manager.player.punishments.Punishment;
-import club.frozed.core.utils.menu.Button;
+import club.frozed.lib.menu.Button;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

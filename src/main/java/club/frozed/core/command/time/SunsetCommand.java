@@ -1,14 +1,14 @@
 package club.frozed.core.command.time;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
-public class SunsetCommand extends BaseCMD {
+public class SunsetCommand extends BaseCommand {
     @Command(name = "sunset", permission = "core.command.sunset", inGameOnly = true)
 
     @Override

@@ -2,15 +2,15 @@ package club.frozed.core.command.chat;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
-import club.frozed.core.utils.CC;
 import club.frozed.core.utils.Utils;
-import club.frozed.core.utils.command.BaseCMD;
-import club.frozed.core.utils.command.Command;
-import club.frozed.core.utils.command.CommandArgs;
-import club.frozed.core.utils.config.ConfigCursor;
+import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.Command;
+import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.BaseCommand;
+import club.frozed.lib.config.ConfigCursor;
 import org.bukkit.entity.Player;
 
-public class AdminChatCommand extends BaseCMD {
+public class AdminChatCommand extends BaseCommand {
     @Command(name = "adminChat", permission = "core.adminChat", aliases = {"ac"}, inGameOnly = true)
 
     @Override

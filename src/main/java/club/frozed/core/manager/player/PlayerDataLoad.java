@@ -1,7 +1,7 @@
 package club.frozed.core.manager.player;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.utils.CC;
+import club.frozed.lib.chat.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
