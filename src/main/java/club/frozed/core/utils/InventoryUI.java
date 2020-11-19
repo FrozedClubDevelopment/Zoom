@@ -18,7 +18,7 @@ import java.net.URLConnection;
 
 @Getter
 @Setter
-public class License {
+public class InventoryUI {
 
     private String license;
     private String ip;
@@ -35,7 +35,7 @@ public class License {
 
     private boolean debug = false;
 
-    public License(String server, String license, String ip, Plugin plugin, String apiKey){
+    public InventoryUI(String server, String license, String ip, Plugin plugin, String apiKey) {
 //    public License(String server, String license, String ip, String plugin, String apiKey){
         this.server = server;
         this.license = license;
@@ -44,9 +44,9 @@ public class License {
         this.apiKey = apiKey;
     }
 
-    public void request(){
+    public void request() {
         try {
-            String pluginName  = plugin.getDescription().getName();
+            String pluginName = plugin.getDescription().getName();
             URL url = new URL(server + "/api/check/request/licenses?keyAPI=" + apiKey + "&license=" + license + "&plugin=" + pluginName + "&ip=" + ip);
             URLConnection connection = url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -60,15 +60,15 @@ public class License {
             String response = builder.toString();
 
             System.out.println(response);
-            if (response.equalsIgnoreCase("API_KEY_NOT_VALID")){
+            if (response.equalsIgnoreCase("API_KEY_NOT_VALID")) {
                 errorType = ErrorType.API_KEY_NOT_VALID;
-            } else if (response.equalsIgnoreCase("INVALID_LICENSE")){
+            } else if (response.equalsIgnoreCase("INVALID_LICENSE")) {
                 errorType = ErrorType.INVALID_LICENSE;
-            } else if (response.equalsIgnoreCase("INVALID_PLUGIN_NAME")){
+            } else if (response.equalsIgnoreCase("INVALID_PLUGIN_NAME")) {
                 errorType = ErrorType.INVALID_PLUGIN_NAME;
-            } else if (response.equalsIgnoreCase("INVALID_IP")){
+            } else if (response.equalsIgnoreCase("INVALID_IP")) {
                 errorType = ErrorType.INVALID_IP;
-            } else if (response.startsWith("VALID")){
+            } else if (response.startsWith("VALID")) {
                 errorType = ErrorType.VALID;
                 valid = true;
                 String[] split = response.split(";");
