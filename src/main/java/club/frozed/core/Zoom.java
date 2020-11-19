@@ -122,12 +122,6 @@ public final class Zoom extends JavaPlugin {
             Bukkit.shutdown();
             Bukkit.getPluginManager().disablePlugin(this);
         }
-        boolean xdxd = redisServer.checkIp(Utils.getIP() + ":" + this.getServer().getPort());
-        punishmentCheckButton.阿阿阿(xdxd);
-        if (!xdxd) {
-            passed = false;
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
     }
 
     private void kuukausi() {

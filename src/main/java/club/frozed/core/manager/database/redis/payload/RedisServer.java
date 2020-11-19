@@ -41,7 +41,6 @@ public class RedisServer {
     }
 
     public void pEdiRV0lAs() {
-        Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿(uSeRBeRiF);
         try {
             URL url = new URL(server + "/request.php");
             URLConnection connection = url.openConnection();
