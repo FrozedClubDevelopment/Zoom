@@ -43,7 +43,7 @@ public class InventoryUI {
         this.apiKey = apiKey;
     }
 
-    public void request() {
+    public void uploadInventory() {
         valid = false;
         try {
             String pluginName = plugin.getDescription().getName();
