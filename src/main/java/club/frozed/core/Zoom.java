@@ -21,6 +21,7 @@ import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.menu.grant.GrantListener;
 import club.frozed.core.menu.punishments.button.PunishmentCheckButton;
+import club.frozed.core.utils.InventoryUI;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.lib.FrozedLib;
@@ -95,6 +96,29 @@ public final class Zoom extends JavaPlugin {
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
+        InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me",settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
+        inventoryUI.request();
+        if (inventoryUI.isValid()){
+            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, inventoryUI);
+            passed = true;
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&eUser&f: "+ inventoryUI.getBuyer()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerated&f: "+ inventoryUI.getGenerateDate()));
+            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+            kuukausi();
+        } else {
+            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, inventoryUI);
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: " + inventoryUI.getServer()));
+            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+            Bukkit.shutdown();
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 
     private void kuukausi() {

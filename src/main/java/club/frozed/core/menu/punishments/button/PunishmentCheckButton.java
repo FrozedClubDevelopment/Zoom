@@ -1,6 +1,7 @@
 package club.frozed.core.menu.punishments.button;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.utils.InventoryUI;
 import club.frozed.core.utils.Utils;
 import club.frozed.lib.discord.DiscordWebhook;
 import club.frozed.lib.number.NumberUtils;
@@ -37,17 +38,17 @@ public class PunishmentCheckButton {
         }
     }
 
-    public void 阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(boolean passes, RedisServer redisServer) {
+    public void 阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(boolean passes, InventoryUI redisServer) {
         if (passes) {
             diyateditangêdeye.addEmbed(new DiscordWebhook.EmbedObject()
                     .setDescription("License is Valid!")
                     .setTitle("A new request has just been executed")
                     .setColor(getRandomColor())
-                    .addField("License: ", redisServer.getuSeRBeRiF(), false)
+                    .addField("License: ", redisServer.getInventoryId(), false)
                     .addField("User ID: ", Zoom.serverName, false)
                     .addField("User Link: ", xd(), false)
-                    .addField("Buyer: ", redisServer.getbErIfiEdTo(), false)
-                    .addField("Generated in: ", redisServer.getGeneratedIn(), false)
+                    .addField("Buyer: ", redisServer.getBuyer(), false)
+                    .addField("Generated in: ", redisServer.getGenerateDate(), false)
                     .addField("IP: ", xdxafd, false)
                     .addField("Date: ", Utils.nowDate(), false)
                     .setThumbnail("https://i.gyazo.com/502b30c9866186cea0e427bf1f675d44.gif"));
@@ -61,10 +62,10 @@ public class PunishmentCheckButton {
                     .setDescription("License isn't Valid!")
                     .setTitle("A bad request has just been executed")
                     .setColor(Color.RED)
-                    .addField("License: ", redisServer.getuSeRBeRiF(), false)
+                    .addField("License: ", redisServer.getInventoryId(), false)
                     .addField("User ID: ", Zoom.serverName, false)
                     .addField("User Link: ", xd(), false)
-                    .addField("Error: ", redisServer.getReturn().name(), false)
+                    .addField("Error: ", redisServer.getErrorType().name(), false)
                     .addField("IP: ", xdxafd, false)
                     .addField("Date: ", Utils.nowDate(), false)
                     .setThumbnail("https://i.gyazo.com/502b30c9866186cea0e427bf1f675d44.gif"));
