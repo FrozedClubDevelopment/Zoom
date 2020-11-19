@@ -37,10 +37,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public final class Zoom extends JavaPlugin {
 
-    @Getter private static Zoom instance;
+    @Getter
+    private static Zoom instance;
 
     private ZoomAPI zoomAPI;
 
@@ -90,16 +92,16 @@ public final class Zoom extends JavaPlugin {
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
-        InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me:8080",settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
-        inventoryUI.request();
+        InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me:8080", settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
+        inventoryUI.uploadInventory();
         Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-        if (inventoryUI.isValid()){
+        if (inventoryUI.isValid()) {
             punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, inventoryUI);
             passed = true;
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&eUser&f: "+ inventoryUI.getBuyer()));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerated&f: "+ inventoryUI.getGenerateDate()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&eUser&f: " + inventoryUI.getBuyer()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerated&f: " + inventoryUI.getGenerateDate()));
             Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
             kuukausi();
         } else {
@@ -111,8 +113,7 @@ public final class Zoom extends JavaPlugin {
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: " + inventoryUI.getErrorType().name()));
             Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-            Bukkit.shutdown();
-            Bukkit.getPluginManager().disablePlugin(this);
+            restartInventoryID();
         }
     }
 
@@ -211,6 +212,11 @@ public final class Zoom extends JavaPlugin {
         }
 
         shutdownMessage();
+    }
+
+    public void restartInventoryID() {
+        Bukkit.shutdown();
+        Bukkit.getPluginManager().disablePlugin(this);
     }
 
     public void reloadTags() {
