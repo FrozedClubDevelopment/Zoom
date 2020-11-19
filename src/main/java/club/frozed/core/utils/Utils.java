@@ -264,7 +264,7 @@ public class Utils {
     }
 
     public static String getUsernameById(int userid) {
-        if (Zoom.ринокuseridm.equals("%%__USER__%")) {
+        if (Zoom.serverName.equals("%%__USER__%")) {
             return "Robot";
         } else {
             try {
