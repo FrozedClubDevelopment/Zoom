@@ -1,18 +1,10 @@
 package club.frozed.core.manager.hooks.vault;
 
-/**
- * Created by Ryzeon
- * Project: Zoom-Vault
- * Date: 1/10/2020 @ 22:07
- */
-
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.lib.chat.CC;
 import lombok.Getter;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
@@ -21,11 +13,10 @@ import org.bukkit.plugin.ServicePriority;
  * Project: Zoom
  * Date: 1/10/2020 @ 19:11
  */
-
 @Getter
-public class ZoomVaultImplementationChat extends Chat {
+public class ZoomVaultImplementationChat extends net.milkbowl.vault.chat.Chat {
 
-    public ZoomVaultImplementationChat(Permission perms) {
+    public ZoomVaultImplementationChat(net.milkbowl.vault.permission.Permission perms) {
         super(perms);
     }
 
@@ -172,8 +163,8 @@ public class ZoomVaultImplementationChat extends Chat {
     }
 
     public void register() {
-        Bukkit.getServer().getServicesManager().register(Chat.class, this , Zoom.getInstance(), ServicePriority.Highest);
-        Bukkit.getConsoleSender().sendMessage(CC.translate("&7[&eZoom&7]"  + "&aSuccessfully register vault chat."));
+        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.chat.Chat.class, this, Zoom.getInstance(), ServicePriority.Highest);
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7[&eZoom&7]" + "&aSuccessfully register vault chat."));
     }
 }
 

@@ -6,7 +6,6 @@ import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.lib.chat.CC;
 import lombok.Getter;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * Date: 29/09/2020 @ 21:06
  */
 @Getter
-public class ZoomVaultImplementationPermission extends Permission {
+public class ZoomVaultImplementationPermission extends net.milkbowl.vault.permission.Permission {
 
     @Override
     public String getName() {
@@ -143,7 +142,7 @@ public class ZoomVaultImplementationPermission extends Permission {
     }
 
     public void register() {
-        Bukkit.getServer().getServicesManager().register(Permission.class, this , Zoom.getInstance(), ServicePriority.Highest);
+        Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.permission.Permission.class, this, Zoom.getInstance(), ServicePriority.Highest);
         Bukkit.getConsoleSender().sendMessage(CC.translate("&7[&eZoom&7]" + "&aSuccessfully register vault permissions."));
     }
 }
