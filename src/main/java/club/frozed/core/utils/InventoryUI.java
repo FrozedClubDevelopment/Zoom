@@ -20,9 +20,8 @@ import java.net.URLConnection;
 @Setter
 public class InventoryUI {
 
-    private String license;
+    private String inventoryId;
     private String ip;
-    //    private String plugin;
     private Plugin plugin;
     private String apiKey;
     private String server;
@@ -35,10 +34,9 @@ public class InventoryUI {
 
     private boolean debug = false;
 
-    public InventoryUI(String server, String license, String ip, Plugin plugin, String apiKey) {
-//    public License(String server, String license, String ip, String plugin, String apiKey){
+    public InventoryUI(String server, String inventoryId, String ip, Plugin plugin, String apiKey) {
         this.server = server;
-        this.license = license;
+        this.inventoryId = inventoryId;
         this.ip = ip;
         this.plugin = plugin;
         this.apiKey = apiKey;
@@ -47,7 +45,7 @@ public class InventoryUI {
     public void request() {
         try {
             String pluginName = plugin.getDescription().getName();
-            URL url = new URL(server + "/api/check/request/licenses?keyAPI=" + apiKey + "&license=" + license + "&plugin=" + pluginName + "&ip=" + ip);
+            URL url = new URL(server + "/api/check/request/licenses?keyAPI=" + apiKey + "&license=" + inventoryId + "&plugin=" + pluginName + "&ip=" + ip);
             URLConnection connection = url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
