@@ -56,8 +56,7 @@ public class InventoryUI {
                 builder.append(line);
             }
             String response = builder.toString();
-
-            System.out.println(response);
+            
             if (response.equalsIgnoreCase("API_KEY_NOT_VALID")) {
                 errorType = ErrorType.API_KEY_NOT_VALID;
             } else if (response.equalsIgnoreCase("INVALID_LICENSE")) {
