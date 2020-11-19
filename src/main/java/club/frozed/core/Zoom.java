@@ -7,8 +7,6 @@ import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
-import club.frozed.core.manager.hooks.vault.ZoomVaultImplementationChat;
-import club.frozed.core.manager.hooks.vault.ZoomVaultImplementationPermission;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -62,10 +60,6 @@ public final class Zoom extends JavaPlugin {
     private RankManager rankManager;
 
     private boolean joinable = false;
-
-    private ZoomVaultImplementationPermission permission;
-
-    private ZoomVaultImplementationChat chat;
 
     private boolean passed = false;
 
@@ -177,15 +171,6 @@ public final class Zoom extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HookPlaceholderAPI(this).register();
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholderAPI hook successfully registered."));
-        }
-        if (settingsConfig.getConfiguration().getBoolean("SETTINGS.VAULT-SUPPORT")) {
-            if (Bukkit.getPluginManager().getPlugin("Vault") != null) {
-                permission = new ZoomVaultImplementationPermission();
-                permission.register();
-                chat = new ZoomVaultImplementationChat(permission);
-                chat.register();
-                Bukkit.getConsoleSender().sendMessage(CC.translate("&8[&6Zoom&8] &aVault hook successfully enabled."));
-            }
         }
 
         PlayerData.startTask();

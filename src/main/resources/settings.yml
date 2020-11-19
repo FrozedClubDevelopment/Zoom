@@ -3,7 +3,6 @@ SETTINGS:
   LICENSE: ''
   PREFIX: '&8[&6Zoom&8] '
   SERVER-NAME: 'DEV'
-  VAULT-SUPPORT: true
   CHAT:
     NAME-COLOR-MENU-TITLE: '&eChoose your name color'
     CHATCOLOR-MENU-TITLE: '&eChoose your chat color'
