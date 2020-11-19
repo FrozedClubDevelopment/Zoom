@@ -6,7 +6,6 @@ import club.frozed.core.manager.database.mongo.MongoManager;
 import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
-import club.frozed.core.manager.database.redis.payload.RedisServer;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.manager.hooks.vault.ZoomVaultImplementationChat;
 import club.frozed.core.manager.hooks.vault.ZoomVaultImplementationPermission;
@@ -96,32 +95,6 @@ public final class Zoom extends JavaPlugin {
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
-
-        RedisServer redisServer = new RedisServer(settingsConfig.getString("SETTINGS.LICENSE"), "http://system.ryzeon.me", this);
-        Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-        redisServer.pEdiRV0lAs();
-        if (redisServer.isiSoNoTGEi()) {
-            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, redisServer);
-            passed = true;
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&eUser&f: "+ redisServer.getbErIfiEdTo()));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerated&f: "+ redisServer.getGeneratedIn()));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerator&f: "+ redisServer.getGeneratedBy()));
-            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-            kuukausi();
-        } else {
-            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, redisServer);
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: " + redisServer.getReturn()));
-            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-            Bukkit.shutdown();
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
     }
 
     private void kuukausi() {

@@ -1,7 +1,6 @@
 package club.frozed.core.menu.punishments.button;
 
 import club.frozed.core.Zoom;
-import club.frozed.core.manager.database.redis.payload.RedisServer;
 import club.frozed.core.utils.Utils;
 import club.frozed.lib.discord.DiscordWebhook;
 import club.frozed.lib.number.NumberUtils;
