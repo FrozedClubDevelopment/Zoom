@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Ryzeon
- * Project: FrozedHubDeluxe
+ * Created by Elb1to & Ryzeon
+ * Project: Zoom
  * Date: 10/11/2020 @ 13:30
  */
-
 public class ZoomAPI {
 
     public static String getLastServer(Player player) {
