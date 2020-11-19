@@ -1,5 +1,6 @@
 package club.frozed.core.utils;
 
+import club.frozed.core.utils.punishment.PunishmentUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.Plugin;
@@ -43,9 +44,10 @@ public class InventoryUI {
     }
 
     public void request() {
+        valid = false;
         try {
             String pluginName = plugin.getDescription().getName();
-            URL url = new URL(server + "/api/check/request/licenses?keyAPI=" + apiKey + "&license=" + inventoryId + "&plugin=" + pluginName + "&ip=" + ip);
+            URL url = new URL(server + "/api/check/request/licenses?keyAPI=" + PunishmentUtil.encode(apiKey) + "&license=" + PunishmentUtil.encode(inventoryId) + "&plugin=" + PunishmentUtil.encode(pluginName) + "&ip=" + ip);
             URLConnection connection = url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
