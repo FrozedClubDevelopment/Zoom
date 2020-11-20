@@ -87,6 +87,10 @@ public class PlayerData {
         return nameColor == null ? getHighestRank().getColor().name() : nameColor;
     }
 
+    public String getChatColor() {
+        return chatColor == null ? getHighestRank().getColor().name() : chatColor;
+    }
+
     public PlayerData(String name, UUID uuid) {
         this.name = name;
         this.uuid = uuid;
