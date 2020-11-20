@@ -30,19 +30,35 @@ public class PlayerMessage {
     public void send() {
         Zoom.getInstance().getMessageManager().getLastReplied().put(sender.getUniqueId(), target.getUniqueId());
         Zoom.getInstance().getMessageManager().getLastReplied().put(target.getUniqueId(), sender.getUniqueId());
+        
+        PlayerData targetData = PlayerData.getPlayerData(target.getUniqueId());
+        PlayerData senderData = PlayerData.getPlayerData(sender.getUniqueId());
 
         String senderFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SENDER")
                 .replace("<target>", this.target.getName())
+                .replace("<rankName>", targetData.getHighestRank().getName())
+                .replace("<rankPrefix>", targetData.getHighestRank().getPrefix())
+                .replace("<rankColor>", targetData.getHighestRank().getColor().toString())
                 .replace("<text>", this.message);
         String targetFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.TARGET")
                 .replace("<sender>", this.sender.getName())
+                .replace("<rankName>", senderData.getHighestRank().getName())
+                .replace("<rankPrefix>", senderData.getHighestRank().getPrefix())
+                .replace("<rankColor>", senderData.getHighestRank().getColor().toString())
                 .replace("<text>", this.message);
         String socialSpyFormat = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.FORMAT.SOCIAL-SPY")
                 .replace("<sender>", this.sender.getName())
+                .replace("<senderRankName>", senderData.getHighestRank().getName())
+                .replace("<senderRankPrefix>", senderData.getHighestRank().getPrefix())
+                .replace("<senderRankColor>", senderData.getHighestRank().getColor().toString())
+
+                .replace("<targetRankName>", targetData.getHighestRank().getName())
+                .replace("<targetRankPrefix>", targetData.getHighestRank().getPrefix())
+                .replace("<targetRankColor>", targetData.getHighestRank().getColor().toString())
+                
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
 
-        PlayerData targetData = PlayerData.getPlayerData(this.target.getUniqueId());
         if (targetData.isToggleSounds()) {
             String sound = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
             if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {
