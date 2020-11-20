@@ -37,32 +37,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 public final class Zoom extends JavaPlugin {
 
-    @Getter
-    private static Zoom instance;
-
+    @Getter private static Zoom instance;
     private ZoomAPI zoomAPI;
-
     private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig, punishmentConfig, commandsFile;
-
     private FrozedLib frozedLib;
-
     private TagManager tagManager;
     private MongoManager mongoManager;
     private RedisManager redisManager;
     private MessageManager messageManager;
     private ChatManager chatManager;
     private PunishmentCheckButton punishmentCheckButton;
-
     private String disableMessage = "null";
-
     private RankManager rankManager;
-
     private boolean joinable = false;
-
     private boolean passed = false;
 
     public static String serverName = "%%__USER__%%";
