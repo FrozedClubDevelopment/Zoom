@@ -51,14 +51,13 @@ public class PlayerMessage {
                 .replace("<senderRankName>", senderData.getHighestRank().getName())
                 .replace("<senderRankPrefix>", senderData.getHighestRank().getPrefix())
                 .replace("<senderRankColor>", senderData.getHighestRank().getColor().toString())
-
+                
                 .replace("<targetRankName>", targetData.getHighestRank().getName())
                 .replace("<targetRankPrefix>", targetData.getHighestRank().getPrefix())
                 .replace("<targetRankColor>", targetData.getHighestRank().getColor().toString())
-                
                 .replace("<target>", this.target.getName())
                 .replace("<text>", this.message);
-
+        
         if (targetData.isToggleSounds()) {
             String sound = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.PRIVATE-MESSAGES.NOTIFICATION-SOUND");
             if (!(sound.equals("none") || sound.equals("NONE") || sound == null)) {

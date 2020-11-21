@@ -2,9 +2,11 @@ package club.frozed.core.manager.listener;
 
 import club.frozed.core.Zoom;
 import club.frozed.lib.chat.CC;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.List;
@@ -16,7 +18,9 @@ public class BlockCommandListener implements Listener {
         List<String> blockedCommand = Zoom.getInstance().getSettingsConfig().getConfiguration().getStringList("SETTINGS.COMMANDS-BLOCKED.LIST");
 
         blockedCommand.forEach(cmd -> {
-            if (e.getMessage().equalsIgnoreCase(cmd)) {
+            String command = e.getMessage().replace("/", "").replaceAll("(?i)bukkit:", "");
+            String cmdXD = e.getMessage().replace("/", "");
+            if (command.equalsIgnoreCase(cmdXD)) {
                 if (e.getPlayer().hasPermission("core.blocked.bypass")) return;
                 if (e.getPlayer().isOp()) return;
                 e.setCancelled(true);
