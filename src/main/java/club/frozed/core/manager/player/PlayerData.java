@@ -84,7 +84,8 @@ public class PlayerData {
     private List<UUID> alts = new ArrayList<>();
 
     public String getNameColor() {
-        return nameColor == null ? getHighestRank().getColor().name() : nameColor;
+        String chatColor = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
+        return nameColor == null ? chatColor : nameColor;
     }
 
     public String getChatColor() {
