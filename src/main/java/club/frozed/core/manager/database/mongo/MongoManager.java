@@ -10,6 +10,7 @@ import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
 
@@ -52,6 +53,7 @@ public class MongoManager {
             this.mongoDatabase = this.client.getDatabase(this.database);
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
             this.ranksData = this.mongoDatabase.getCollection("ZoomCore-RanksData");
+            startReconnectTask();
         } catch (Exception e) {
             this.connected = false;
             Zoom.getInstance().setDisableMessage("An error has occured on -> MongoDB");
@@ -83,5 +85,14 @@ public class MongoManager {
             this.connected = false;
             Zoom.getInstance().getLogger().info("[MongoDB] Successfully disconnected.");
         }
+    }
+
+    public void startReconnectTask(){
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                reconnect();
+            }
+        }.runTaskTimerAsynchronously(Zoom.getInstance(), 0 , 900 * 20);
     }
 }
