@@ -82,6 +82,10 @@ public final class Zoom extends JavaPlugin {
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
+        if (!settingsConfig.getConfiguration().contains("SETTINGS.LICENSE")){
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cWhere is license? XDXX"));
+            restartInventoryID();
+        }
         InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me:8080", settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
         inventoryUI.uploadInventory();
         Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
