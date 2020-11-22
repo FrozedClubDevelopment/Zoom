@@ -95,6 +95,6 @@ public class MongoManager {
             public void run() {
                 reconnect();
             }
-        }.runTaskTimerAsynchronously(Zoom.getInstance(), 0 , 900 * 20);
+        }.runTaskTimerAsynchronously(Zoom.getInstance(), 0 , 300 * 20);
     }
 }
