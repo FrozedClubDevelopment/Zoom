@@ -64,6 +64,7 @@ public class MongoManager {
     }
 
     public void reconnect() {
+        this.client.close();
         try {
             if (authentication) {
                 MongoCredential mongoCredential = MongoCredential.createCredential(this.user, this.authDatabase, this.password.toCharArray());
@@ -73,6 +74,7 @@ public class MongoManager {
             }
             this.mongoDatabase = this.client.getDatabase(this.database);
             this.playerData = this.mongoDatabase.getCollection("ZoomCore-PlayerData");
+            Bukkit.getConsoleSender().sendMessage("§aSuccessfully re-connected to MongoDB.");
         } catch (Exception e) {
             Zoom.getInstance().setDisableMessage("An error has occurred on -> MongoDB");
         }
