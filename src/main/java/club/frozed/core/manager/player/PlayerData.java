@@ -84,12 +84,12 @@ public class PlayerData {
     private List<UUID> alts = new ArrayList<>();
 
     public String getNameColor() {
-        String chatColor = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
-        return nameColor == null ? chatColor : nameColor;
+        return nameColor == null ? getHighestRank().getColor().name() : nameColor;
     }
 
     public String getChatColor() {
-        return chatColor == null ? getHighestRank().getColor().name() : chatColor;
+        String chatColorConfig = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
+        return chatColor == null ? chatColorConfig : chatColor;
     }
 
     public PlayerData(String name, UUID uuid) {
