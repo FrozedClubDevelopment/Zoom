@@ -1,6 +1,7 @@
 PUNISHMENT-MESSAGES:
   MESSAGE-IN-CONSOLE: true
   TIME: '&ffor &e<punish-time>&f.'
+  SILENT: '&7[&aSilent&7] '
   PUBLIC:
     - '&7&m---------------------'
     - '&e<player> &fhas been &e<context> &fby &e<sender> <time>'
@@ -16,9 +17,11 @@ PUNISHMENT-MESSAGES:
       - '&eYou has been warned by &f<sender>&e.'
       - '&eReason&7: &f<reason>'
     MUTE:
-      - '&eYou has been <context> by &f<sender>'
-      - '&eReason&7: &f<reason>'
-      - '&eDuration&7: &f<duration>'
+      TEMPORALY:
+        - '&eYou were temporarily silenced by &f<sender>&e.'
+        - '&eReason&7: &f<reason>'
+        - '&eDuration&7: &f<duration>'
+      PERMANENT:
     CHAT:
       PERMANENT:
         - '&cYou have muted permanent for this server.'
