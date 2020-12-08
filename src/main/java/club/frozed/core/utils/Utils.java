@@ -7,6 +7,7 @@ import com.google.common.base.Joiner;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.gson.reflect.TypeToken;
+import lombok.SneakyThrows;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -223,7 +224,8 @@ public class Utils {
         return ChatColor.stripColor(String.join(" ", Arrays.copyOfRange((CharSequence[]) args, start, args.length)));
     }
 
-    public static String getCountry(String ip) throws Exception {
+    @SneakyThrows
+    public static String getCountry(String ip){
         URL url = new URL("http://ip-api.com/json/" + ip);
         BufferedReader stream = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder entirePage = new StringBuilder();

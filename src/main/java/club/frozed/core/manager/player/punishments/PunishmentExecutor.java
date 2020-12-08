@@ -32,9 +32,9 @@ public class PunishmentExecutor {
 
     private int reasonToStart = 2;
 
-    public PunishmentExecutor(String[] args, CommandSender commandSender){
+    public PunishmentExecutor(String[] args, CommandSender commandSender) {
 //        System.out.println(args.length);
-        if (args.length == 1){
+        if (args.length == 1) {
             this.silent = false;
             this.reason = "No Reason Provided";
             this.duration = -5;
@@ -43,7 +43,7 @@ public class PunishmentExecutor {
                 this.duration = -5L;
             } else {
                 this.duration = DateUtils.getDuration(args[1]);
-                if (duration > 0){
+                if (duration > 0) {
                     this.durationCorrect = true;
                 } else {
                     this.duration = commandSender.hasPermission("core.punishments.limit") ? -5L : TimeUnit.DAYS.toMillis(30);
@@ -106,7 +106,7 @@ public class PunishmentExecutor {
                                 .replace("<reason>", (punishment.getReason() == null || punishment.getReason().isEmpty() || punishment.getReason().equals("") ? "No reason provided" : punishment.getReason()))
                         ));
             } else if (punishment.getType() == PunishmentType.MUTE) {
-                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.MUTE").forEach(s ->
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList(punishment.isLifetime() ? "PUNISHMENT-MESSAGES.PLAYER.MUTE.PERMANENT" : "PUNISHMENT-MESSAGES.PLAYER.MUTE.TEMPORARILY").forEach(s ->
                         player.sendMessage(CC.translate(s)
                                 .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
                                 .replace("<duration>", punishment.getTimeLeft(false))

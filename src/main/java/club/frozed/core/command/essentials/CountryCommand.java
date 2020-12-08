@@ -29,16 +29,15 @@ public class CountryCommand extends BaseCommand {
             return;
         }
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-        if (!offlinePlayer.isOnline()){
+        Player offlinePlayer = Bukkit.getPlayer(args[0]);
+        if (offlinePlayer == null){
             p.sendMessage(CC.RED + offlinePlayer.getName() + " isn't online.");
             return;
         }
-        playerData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
-        String ip = playerData.getPlayer().getAddress().getAddress().toString().replaceAll("/", "");
+        String ip = offlinePlayer.getAddress().getAddress().toString().replaceAll("/", "");
         try {
             p.sendMessage(CC.translate(configCursor.getString("GEO-IP-MESSAGE")
-                    .replace("<player>", playerData.getPlayer().getName())
+                    .replace("<player>", offlinePlayer.getName())
                     .replace("<country>", Objects.requireNonNull(Utils.getCountry(ip))))
             );
         } catch (Exception exception) {

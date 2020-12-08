@@ -1,31 +1,87 @@
 PUNISHMENT-MESSAGES:
   MESSAGE-IN-CONSOLE: true
-  TIME: '&ffor &e<punish-time>&f.'
-  SILENT: '&7[&aSilent&7] '
-  PUBLIC:
-    - '&7&m---------------------'
-    - '&e<player> &fhas been &e<context> &fby &e<sender> <time>'
+  SILENT: '&7[&aSilent&7] ' # EL PREFIX C PONER SOLO GA
+  BAN:
+    TEMPORARILY:
+      - '&7&m--------------------------'
+      - '&f<target> has been temporarily banned'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&eDuration&7: &f<duration>'
+      - '&7&m--------------------------'
+    PERMANENT:
+      - '&7&m--------------------------'
+      - '&f<target> has been permanent banned'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+    UN-BAN:
+      - '&7&m--------------------------'
+      - '&f<target> has been unbanned'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+  BLACKLIST:
+    PERMANENT:
+      - '&7&m--------------------------'
+      - '&f<target> has been blacklisted'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+    UN-BLACKLIST:
+      - '&7&m--------------------------'
+      - '&f<target> has been unblacklist'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+  MUTE:
+    TEMPORARILY:
+      - '&7&m--------------------------'
+      - '&f<target> has been temporarily muted'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&eDuration&7: &f<duration>'
+      - '&7&m--------------------------'
+    PERMANENT:
+      - '&7&m--------------------------'
+      - '&f<target> has been permanent muted'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+    UN-MUTE:
+      - '&7&m--------------------------'
+      - '&f<target> has been unmuted'
+      - '&eStaff&7: &f<sender>'
+      - '&eReason&7: &f<reason>'
+      - '&7&m--------------------------'
+  WARN:
+    - '&7&m--------------------------'
+    - '&f<target> has been permanent warned'
+    - '&eStaff&7: &f<sender>'
     - '&eReason&7: &f<reason>'
-    - '&7&m---------------------'
-  SILENT:
-    - '&7[&aSilent&7] &7&m---------------------'
-    - '&7[&aSilent&7] &e<player> &fhas been &e<context> &fby &e<sender> <time>'
-    - '&7[&aSilent&7] &eReason&7: &f<reason>'
-    - '&7[&aSilent&7] &7&m---------------------'
+    - '&7&m--------------------------'
+  KICK:
+    - '&7&m--------------------------'
+    - '&f<target> has been permanent kicked'
+    - '&eStaff&7: &f<sender>'
+    - '&eReason&7: &f<reason>'
+    - '&7&m--------------------------'
   PLAYER:
     WARN:
       - '&eYou has been warned by &f<sender>&e.'
       - '&eReason&7: &f<reason>'
     MUTE:
-      TEMPORALY:
+      TEMPORARILY:
         - '&eYou were temporarily silenced by &f<sender>&e.'
         - '&eReason&7: &f<reason>'
         - '&eDuration&7: &f<duration>'
       PERMANENT:
+        - '&eYou were permanent silenced by &f<sender>&e.'
+        - '&eReason&7: &f<reason>'
     CHAT:
       PERMANENT:
         - '&cYou have muted permanent for this server.'
-      TEMP:
+      TEMPORARILY:
         - '&cYou have muted for this <mute-time>'
 KICK-PUNISHMENT-MESSAGES:
   ALT-RELATION:
@@ -40,10 +96,10 @@ KICK-PUNISHMENT-MESSAGES:
   IP-BAN:
     - '&7&m--------------------'
     - '&eYou have been blacklist from ExampleNetwork'
-#    - '&eSender&7: &f<punishSender>'
+    #    - '&eSender&7: &f<punishSender>'
     - '&ePunish date&7: &f<punishDate>'
-#    - '&eBan expires in&7: &f<punishRemain>'
-#    - '&eReason&7: &f<punishReason>'
+    #    - '&eBan expires in&7: &f<punishRemain>'
+    #    - '&eReason&7: &f<punishReason>'
     - '<alt-relation>'
     - ''
     - '&astore.frozed.club'
@@ -51,8 +107,8 @@ KICK-PUNISHMENT-MESSAGES:
   BAN:
     - '&7&m--------------------'
     - '&eYou have been banned from ExampleNetwork'
-#    - '&eSender&7: &f<punishSender>'
-#    - '&ePunish date&7: &f<punishDate>'
+    #    - '&eSender&7: &f<punishSender>'
+    #    - '&ePunish date&7: &f<punishDate>'
     - '&eBan expires in&7: &f<punishRemain>'
     - '&eReason&7: &f<punishReason>'
     - '<alt-relation>'
@@ -62,8 +118,8 @@ KICK-PUNISHMENT-MESSAGES:
   TEMP-BAN:
     - '&7&m--------------------'
     - '&eYou have been temporaly banned from ExampleNetwork'
-#    - '&eSender&7: &f<punishSender>'
-#    - '&ePunish date&7: &f<punishDate>'
+    #    - '&eSender&7: &f<punishSender>'
+    #    - '&ePunish date&7: &f<punishDate>'
     - '&eBan expires in&7: &f<punishRemain>'
     - '&eReason&7: &f<punishReason>'
     - '<alt-relation>'

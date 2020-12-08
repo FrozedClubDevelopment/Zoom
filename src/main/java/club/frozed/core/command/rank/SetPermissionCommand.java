@@ -9,6 +9,7 @@ import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -21,40 +22,42 @@ import org.bukkit.entity.Player;
  */
 
 public class SetPermissionCommand extends BaseCommand {
-    @Command(name = "setpermission", permission = "core.rank.setperm", aliases = {"setperm"},inGameOnly = false)
+    @Command(name = "setpermission", permission = "core.rank.setperm", aliases = {"setperm"}, inGameOnly = false)
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender player = cmd.getSender();
         String[] args = cmd.getArgs();
+        TaskUtil.runAsync(() -> {
 
-        if (commandGetterWithThreeArgs(player,args,cmd)) return;
+            if (commandGetterWithThreeArgs(player, args, cmd)) return;
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
-        if (offlinePlayer.isOnline()) {
-            PlayerData playerData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
-            setPermission(player, playerData, args[1], args[2].equalsIgnoreCase("true"));
-            playerData.loadPermissions(playerData.getPlayer());
-        } else {
-            player.sendMessage(CC.translate("&eLoading player data....."));
-            PlayerData targetData = PlayerData.loadData(offlinePlayer.getUniqueId());
-            setPermission(player, targetData, args[1], args[2].equalsIgnoreCase("true"));
-        }
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+            if (offlinePlayer.isOnline()) {
+                PlayerData playerData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
+                setPermission(player, playerData, args[1], args[2].equalsIgnoreCase("true"));
+                playerData.loadPermissions(playerData.getPlayer());
+            } else {
+                player.sendMessage(CC.translate("&eLoading player data....."));
+                PlayerData targetData = PlayerData.loadData(offlinePlayer.getUniqueId());
+                setPermission(player, targetData, args[1], args[2].equalsIgnoreCase("true"));
+            }
+        });
     }
 
     private boolean commandGetterWithThreeArgs(CommandSender player, String[] args, CommandArgs commandArgs) {
-        if (args.length == 0){
+        if (args.length == 0) {
             player.sendMessage(CC.translate("&e/" + commandArgs.getLabel() + " <player> <permission> <true/false>"));
             return true;
         }
-        if (args.length < 1){
+        if (args.length < 1) {
             player.sendMessage(CC.translate("&cSpecific a player."));
             return true;
         }
-        if (args.length < 2){
+        if (args.length < 2) {
             player.sendMessage(CC.translate("&cSpecific a permission."));
             return true;
         }
-        if (args.length < 3){
+        if (args.length < 3) {
             player.sendMessage(CC.translate("&etrue or false"));
             return true;
         }
@@ -78,13 +81,13 @@ public class SetPermissionCommand extends BaseCommand {
             sender.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Removed " + permission + " to " + playerData.getName()));
         }
         Player target = Bukkit.getPlayer(playerData.getName());
-        if (target == null){
-            String json = new RedisMessage(Payload.PLAYER_PERMISSION_UPDATE).setParam("NAME",playerData.getName()).setParam("PERMISSION",permission).toJSON();
+        if (target == null) {
+            String json = new RedisMessage(Payload.PLAYER_PERMISSION_UPDATE).setParam("NAME", playerData.getName()).setParam("PERMISSION", permission).toJSON();
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 Zoom.getInstance().getRedisManager().write(json);
             }
         }
-        if (playerData.isOnline()){
+        if (playerData.isOnline()) {
             playerData.saveData();
         } else {
             PlayerData.deleteOfflineProfile(playerData);

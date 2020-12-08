@@ -50,17 +50,10 @@ public class PlayerAltsButton extends Button {
         }
 
         this.targetData.getAlts().forEach(alts -> {
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(alts);
-            PlayerData altsData;
-            if (offlinePlayer.isOnline()) {
-                altsData = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
-            } else {
-                altsData = PlayerData.loadData(offlinePlayer.getUniqueId());
-            }
-            if (altsData != null) {
+            if (alts != null) {
                 strings.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("MENU.ALTS-INFO")
-                        .replace("<player>", altsData.getName() == null ? "None" : altsData.getName())
-                        .replace("<status>", getStatusPunishment(altsData))
+                        .replace("<player>", alts.getName() == null ? "None" : alts.getName())
+                        .replace("<status>", getStatusPunishment(alts))
                 ));
             }
         });

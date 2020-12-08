@@ -86,7 +86,7 @@ public class ChatListener implements Listener {
                             .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));
                 });
             } else {
-                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMP").forEach(text -> {
+                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.CHAT.TEMPORARILY").forEach(text -> {
                     data.getPlayer().sendMessage(CC.translate(text)
                             .replace("<mute-time>", punishment.getTimeLeft(true))
                             .replace("<reason>", PunishmentUtil.getPunishReason(punishment)));

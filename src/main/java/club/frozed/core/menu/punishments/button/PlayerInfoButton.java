@@ -6,6 +6,7 @@ import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.lib.item.ItemCreator;
 import club.frozed.lib.menu.Button;
+import com.mysql.jdbc.Util;
 import lombok.AllArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -54,10 +55,13 @@ public class PlayerInfoButton extends Button {
     }
 
     private String getCountry() {
+        String ip = this.targetData.getPlayer().getAddress().toString().replaceAll("/", "");
+        String country;
         try {
-            return Utils.getCountry(this.targetData.getIp()) == null ? "Not found" : Utils.getCountry(this.targetData.getIp());
-        } catch (Exception exception) {
-            return "Not found";
+            country = Utils.getCountry(ip);
+        } catch (Exception e) {
+            country = null;
         }
+        return (country == null ? "Not found" : country);
     }
 }

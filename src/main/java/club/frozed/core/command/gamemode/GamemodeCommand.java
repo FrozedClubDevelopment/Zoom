@@ -14,29 +14,30 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GamemodeCommand extends BaseCommand {
 
     @Completer(name = "gamemode", aliases = {"gm"})
     public List<String> gamemodeCompleter(CommandArgs args) {
+        List<String> list = new ArrayList<>();
+
         if (args.length() == 1) {
-            List<String> list = new ArrayList<String>();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                list.add("survival");
-                list.add("creative");
-                list.add("adventure");
-                list.add(p.getName());
-            }
-            return list;
-        } else if (args.length() > 1) {
-            List<String> list = new ArrayList<String>();
+            String match = args.getArgs()[0].toLowerCase();
             list.add("survival");
             list.add("creative");
             list.add("adventure");
-            return list;
+            Zoom.getInstance().getServer().getOnlinePlayers().forEach(player -> list.add(player.getName()));
+            list.removeIf(value -> !(value.contains(match) || value.equalsIgnoreCase(match)));
+        } else if (args.length() > 1) {
+            list.add("survival");
+            list.add("creative");
+            list.add("adventure");
+            String match = args.getArgs()[1].toLowerCase();
+            list.removeIf(value -> !(value.contains(match) || value.equalsIgnoreCase(match)));
         }
-        return null;
+        return list;
     }
 
     @Command(name = "gamemode", permission = "core.gamemode.command", inGameOnly = true, aliases = {"gm"})

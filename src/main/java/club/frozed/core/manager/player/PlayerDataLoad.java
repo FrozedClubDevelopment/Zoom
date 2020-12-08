@@ -2,6 +2,7 @@ package club.frozed.core.manager.player;
 
 import club.frozed.core.Zoom;
 import club.frozed.lib.chat.CC;
+import club.frozed.lib.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,17 +48,14 @@ public class PlayerDataLoad implements Listener {
         if (!playerData.getIp().equalsIgnoreCase(e.getAddress().getHostAddress())) {
             playerData.setIp(e.getAddress().getHostAddress());
         }
-
         playerData.findAlts();
-        for (UUID uuid : playerData.getAlts()) {
-            PlayerData altsData = PlayerData.loadData(uuid);
+        for (PlayerData altsData : playerData.getAlts()) {
             if (altsData != null) {
                 if (altsData.getBannablePunishment() != null) {
                     e.setKickMessage(altsData.getBannablePunishment().toKickMessage(altsData.getName()));
                     e.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 }
             }
-            PlayerData.deleteOfflineProfile(uuid);
         }
         playerData.saveData();
     }
@@ -76,7 +74,7 @@ public class PlayerDataLoad implements Listener {
             e.setKickMessage("§cAn error has ocurred while loading your profile. Please reconnect.");
             return;
         }
-        playerData.loadPermissions(e.getPlayer());
+        TaskUtil.runAsync(() -> playerData.loadPermissions(e.getPlayer()));
     }
 
     private void handledSaveDate(Player player) {

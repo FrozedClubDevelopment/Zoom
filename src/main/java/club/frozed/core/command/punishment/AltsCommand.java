@@ -7,6 +7,7 @@ import club.frozed.lib.chat.CC;
 import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.task.TaskUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,6 +29,8 @@ public class AltsCommand extends BaseCommand {
     public void onCommand(CommandArgs cmd) {
         CommandSender sender = cmd.getSender();
         String[] args = cmd.getArgs();
+
+        TaskUtil.runAsync(() -> {
         if (args.length == 0){
             sender.sendMessage(CC.translate("&e/alts <player>"));
             return;
@@ -51,20 +54,12 @@ public class AltsCommand extends BaseCommand {
             return;
         }
         data.getAlts().forEach(alts -> {
-            OfflinePlayer altsPlayer = Bukkit.getOfflinePlayer(alts);
-            PlayerData altsData;
-            if (altsPlayer.isOnline()){
-                altsData = PlayerData.getPlayerData(alts);
-            } else {
-                altsData = PlayerData.loadData(alts);
-            }
-            if (altsData != null) {
+            if (alts != null) {
                 altsList.add(CC.translate(Zoom.getInstance().getPunishmentConfig().getConfiguration().getString("ALTS-FORMAT.ALT-FORMAT")
-                        .replace("<player>", altsData.getName() == null ? "None" : altsData.getName())
-                        .replace("<status>", getStatusPunishment(altsData))
+                        .replace("<player>", alts.getName() == null ? "None" : alts.getName())
+                        .replace("<status>", getStatusPunishment(alts))
                 ));
             }
-            PlayerData.deleteOfflineProfile(altsData);
         });
         List<String> text = new ArrayList<>();
         Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("ALTS-FORMAT.FORMAT").forEach(msg -> {
@@ -77,6 +72,7 @@ public class AltsCommand extends BaseCommand {
         if (!data.isOnline()) {
             data.removeData();
         }
+        });
     }
 
     private String getStatusPunishment(PlayerData playerData){
