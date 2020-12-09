@@ -169,7 +169,20 @@ public class RankManager {
         }
         String json = new RedisMessage(Payload.RANK_UPDATE_PERMS).setParam("RANK", rank.getName()).toJSON();
 
-        Zoom.getInstance().getRedisManager().write(json);
+        if (Zoom.getInstance().getRedisManager().isActive()){
+            Zoom.getInstance().getRedisManager().write(json);
+        } else {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
+                if (playerData != null) {
+                    if (rank != null) {
+                        if (playerData.hasRank(rank)) {
+                            playerData.refreshPlayer(playerData.getPlayer());
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public void deleteRank(Rank rank) {
