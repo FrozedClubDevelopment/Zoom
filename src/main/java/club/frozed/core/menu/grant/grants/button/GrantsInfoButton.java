@@ -6,9 +6,9 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.grants.Grant;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.grant.WoolUtil;
+import club.frozed.lib.chat.CC;
 import club.frozed.lib.item.ItemCreator;
 import club.frozed.lib.menu.Button;
 import club.frozed.lib.task.TaskUtil;
@@ -41,7 +41,7 @@ public class GrantsInfoButton extends Button {
         if (rank != null) {
             itemCreator.setName(rank.getColor() + grant.getRank().getName());
         } else {
-            itemCreator.setName("&e" + grant.getRankName());
+            itemCreator.setName("&b" + grant.getRankName());
         }
 
         List<String> lore = new ArrayList<>();

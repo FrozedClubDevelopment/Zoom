@@ -3,6 +3,7 @@ SETTINGS:
   LICENSE: ''
   PREFIX: '&8[&6Zoom&8] '
   SERVER-NAME: 'DEV'
+  SERVER-ANNOUNCE: '&8[&b⚡&8] <rank><name> &fis playing on &b<server_name>&f! Use &b/join <server_name> &fto join.'
   CHAT:
     NAME-COLOR-MENU-TITLE: '&eChoose your name color'
     CHATCOLOR-MENU-TITLE: '&eChoose your chat color'

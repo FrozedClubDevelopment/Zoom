@@ -2,14 +2,14 @@ package club.frozed.core.command.rank;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.ranks.Rank;
-import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Clickable;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.chat.CC;
 import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
 import club.frozed.lib.commands.Completer;
-import club.frozed.core.utils.lang.Lang;
 import club.frozed.lib.task.TaskUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -42,7 +42,7 @@ public class RankCommand extends BaseCommand {
             list.add("create");
             list.add("delete");
             list.add("info");
-            list.add("listperms");
+            list.add("perms");
             list.add("setprefix");
             list.add("setsuffix");
             list.add("setcolor");
@@ -86,13 +86,17 @@ public class RankCommand extends BaseCommand {
                     if (player instanceof Player) {
                         Rank.ranks.stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).forEach(ranks -> {
                             List<String> rankInfo = new ArrayList<>();
-                            rankInfo.add(CC.translate("&aPrefix&7 » " + ranks.getPrefix()));
-                            rankInfo.add(CC.translate("&aSuffix&7 » " + (ranks.getSuffix().isEmpty() ? "&cNone" : ranks.getSuffix())));
-                            rankInfo.add(CC.translate("&aColor&7 » " + ranks.getColor() + ranks.getColor().name()));
-                            rankInfo.add(CC.translate("&aDefault&7 » " + (ranks.isDefaultRank() ? "&aYes" : "&cNo")));
-                            rankInfo.add(CC.translate("&aBold&7 » " + (ranks.isBold() ? "&aYes" : "&cNo")));
-                            rankInfo.add(CC.translate("&aItalic&7 » " + (ranks.isItalic() ? "&aYes" : "&cNo")));
-                            rankInfo.add(CC.translate("&aTotal Permissions&7 » &f" + ranks.getPermissions().size()));
+                            rankInfo.add(CC.translate("&b&lRank Information&7:"));
+                            rankInfo.add(" ");
+                            rankInfo.add(CC.translate("&b ▸ &fName: " + ranks.getName()));
+                            rankInfo.add(CC.translate("&b ▸ &fColor: " + ranks.getColor() + ranks.getColor().name()));
+                            rankInfo.add(CC.translate("&b ▸ &fPrefix: " + ranks.getPrefix()));
+                            rankInfo.add(CC.translate("&b ▸ &fSuffix: " + (ranks.getSuffix() == null ? "&cNone" : ranks.getSuffix())));
+                            rankInfo.add(CC.translate("&b ▸ &fisDefault: " + (ranks.isDefaultRank() ? "&aYes" : "&cNo")));
+                            rankInfo.add(CC.translate("&b ▸ &fisItalic: " + (ranks.isItalic() ? "&aYes" : "&cNo")));
+                            rankInfo.add(CC.translate("&b ▸ &fisBold: " + (ranks.isBold() ? "&aYes" : "&cNo")));
+                            rankInfo.add(CC.translate("&b ▸ &fPermissions: " + ranks.getPermissions().size()));
+
                             Clickable clickable = new Clickable(ranks.getColor() + ranks.getName() + CC.translate("&7(&a" + ranks.getPriority() + "&7)"), StringUtils.join(rankInfo, "\n"), null);
                             clickable.sendToPlayer((Player) player);
                         });
@@ -143,25 +147,27 @@ public class RankCommand extends BaseCommand {
                     if (rankGetterWithArgs(player, args, 2)) return;
                     rank = Rank.getRankByName(args[1]);
                     player.sendMessage(CC.MENU_BAR);
-                    player.sendMessage(CC.translate(rank.getColor() + rank.getName() + " info."));
-                    player.sendMessage(CC.translate("&aPrefix&7 » " + rank.getPrefix()));
-                    player.sendMessage(CC.translate("&aSuffix&7 » " + (rank.getSuffix() == null ? "&cNone" : rank.getSuffix())));
-                    player.sendMessage(CC.translate("&aColor&7 » " + rank.getColor() + rank.getColor().name()));
-                    player.sendMessage(CC.translate("&aDefault&7 » " + (rank.isDefaultRank() ? "&aYes" : "&cNo")));
-                    player.sendMessage(CC.translate("&aBold&7 » " + (rank.isBold() ? "&aYes" : "&cNo")));
-                    player.sendMessage(CC.translate("&aItalic&7 » " + (rank.isItalic() ? "&aYes" : "&cNo")));
+                    player.sendMessage(CC.translate("&b&lRank Information&7:"));
+                    player.sendMessage(" ");
+                    player.sendMessage(CC.translate("&b ▸ &fName: " + rank.getName()));
+                    player.sendMessage(CC.translate("&b ▸ &fColor: " + rank.getColor() + rank.getColor().name()));
+                    player.sendMessage(CC.translate("&b ▸ &fPrefix: " + rank.getPrefix()));
+                    player.sendMessage(CC.translate("&b ▸ &fSuffix: " + (rank.getSuffix() == null ? "&cNone" : rank.getSuffix())));
+                    player.sendMessage(CC.translate("&b ▸ &fisDefault: " + (rank.isDefaultRank() ? "&aYes" : "&cNo")));
+                    player.sendMessage(CC.translate("&b ▸ &fisItalic: " + (rank.isItalic() ? "&aYes" : "&cNo")));
+                    player.sendMessage(CC.translate("&b ▸ &fisBold: " + (rank.isBold() ? "&aYes" : "&cNo")));
                     if (player instanceof Player) {
                         Clickable permsClick = new Clickable();
                         List<String> perms = new ArrayList<>();
                         rank.getPermissions().forEach(perm -> perms.add(CC.translate(rank.getColor() + perm)));
-                        permsClick.add(CC.translate("&aTotal Permissions&7 » &f" + rank.getPermissions().size()), StringUtils.join(perms, "\n"), null);
+                        permsClick.add(CC.translate("&b ▸ &fPermissions: " + rank.getPermissions().size()), StringUtils.join(perms, "\n"), null);
                         permsClick.sendToPlayer((Player) player);
                     } else {
-                        player.sendMessage(CC.translate("&aTotal Permissions&7 » &f" + rank.getPermissions().size()));
+                        player.sendMessage(CC.translate("&b ▸ &fPermissions: " + rank.getPermissions().size()));
                     }
                     player.sendMessage(CC.MENU_BAR);
                     break;
-                case "listperms":
+                case "perms":
                     if (rankGetterWithTwoArgs(player, args)) return;
                     rank = Rank.getRankByName(args[1]);
                     player.sendMessage(CC.MENU_BAR);
@@ -242,7 +248,7 @@ public class RankCommand extends BaseCommand {
                     if (args[2] != null) {
                         rank = Rank.getRankByName(args[1]);
                         rank.setBold(Boolean.parseBoolean(args[2]));
-                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Now " + rank.getColor() + rank.getName() + (rank.isItalic() ? "&7 is now bold!" : "&7 is no longer bold.")));
+                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! " + rank.getColor() + rank.getName() + (rank.isItalic() ? "&7 is now bold!" : "&7 is no longer bold.")));
                         Zoom.getInstance().getRankManager().updateRank(rank);
                     } else {
                         player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
@@ -253,7 +259,7 @@ public class RankCommand extends BaseCommand {
                     if (args[2] != null) {
                         rank = Rank.getRankByName(args[1]);
                         rank.setItalic(Boolean.parseBoolean(args[2]));
-                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Now " + rank.getColor() + rank.getName() + (rank.isItalic() ? "&7 is now italic!" : "&7 is no longer italic.")));
+                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! " + rank.getColor() + rank.getName() + (rank.isItalic() ? "&7 is now italic!" : "&7 is no longer italic.")));
                         Zoom.getInstance().getRankManager().updateRank(rank);
                     } else {
                         player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
@@ -279,7 +285,7 @@ public class RankCommand extends BaseCommand {
                         if (rank.getPermissions().contains(args[2])) {
                             rank.getPermissions().remove(args[2]);
                         }
-                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Remove " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
+                        player.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Removed " + args[2] + " permission to rank " + rank.getColor() + rank.getName()));
                         Zoom.getInstance().getRankManager().updateRank(rank);
                     } else {
                         player.sendMessage(CC.translate("&cThe specified rank doesn't exist!"));
@@ -299,6 +305,7 @@ public class RankCommand extends BaseCommand {
             player.sendMessage(CC.translate("&cThis rank don't exist"));
             return true;
         }
+
         return false;
     }
 
@@ -309,6 +316,7 @@ public class RankCommand extends BaseCommand {
             player.sendMessage(CC.translate("&cThis rank don't exist"));
             return true;
         }
+
         return false;
     }
 
@@ -319,40 +327,39 @@ public class RankCommand extends BaseCommand {
             player.sendMessage(CC.translate(Lang.PREFIX + "&cThat rank already exists."));
             return true;
         }
+
         return false;
     }
 
     private void sendPage(CommandSender player, int page) {
         switch (page) {
             case 1:
-                player.sendMessage(CC.MENU_BAR);
-                player.sendMessage(CC.translate("&eRank help [1/3] | /rank help <page>"));
-                player.sendMessage(CC.translate("&e/rank create <name>"));
-                player.sendMessage(CC.translate("&e/rank delete <name>"));
-                player.sendMessage(CC.translate("&e/rank info <rank>"));
-                player.sendMessage(CC.translate("&e/rank setprefix <rank> <prefix>"));
-                player.sendMessage(CC.translate("&e/rank setsuffix <rank> <suffix>"));
-                player.sendMessage(CC.translate("&e/rank setdefault <rank>"));
-                player.sendMessage(CC.MENU_BAR);
+                player.sendMessage(CC.CHAT_BAR);
+                player.sendMessage(CC.translate("&b&lRank Help &7[&f1/2&7] &8- &7&o/rank help <1/2>"));
+                player.sendMessage(CC.translate(" "));
+                player.sendMessage(CC.translate("&b ▸ &f/rank create <name>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank delete <name>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank perms <rank>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank info <rank>"));
+                player.sendMessage(CC.translate(" "));
+                player.sendMessage(CC.translate("&b ▸ &f/rank import &8- &7Load ranks from ranks.yml"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank export &8- &7Export ranks from MongoDB"));
+                player.sendMessage(CC.CHAT_BAR);
                 break;
             case 2:
-                player.sendMessage(CC.MENU_BAR);
-                player.sendMessage(CC.translate("&eRank help [2/3] | /rank help <page>"));
-                player.sendMessage(CC.translate("&e/rank setcolor <rank> <color>"));
-                player.sendMessage(CC.translate("&e/rank setbold <rank>"));
-                player.sendMessage(CC.translate("&e/rank setitalic <rank>"));
-                player.sendMessage(CC.translate("&e/rank setpriority <rank> <priority>"));
-                player.sendMessage(CC.translate("&e/rank addperm <rank> <permission>"));
-                player.sendMessage(CC.translate("&e/rank removeperm <rank> <permission>"));
-                player.sendMessage(CC.translate("&e/rank listperms <rank>"));
-                player.sendMessage(CC.MENU_BAR);
-                break;
-            case 3:
-                player.sendMessage(CC.MENU_BAR);
-                player.sendMessage(CC.translate("&eRank help [3/3] | /rank help <page>"));
-                player.sendMessage(CC.translate("&e/rank import » Load ranks from ranks.yml"));
-                player.sendMessage(CC.translate("&e/rank export » Export ranks form MongoDB"));
-                player.sendMessage(CC.MENU_BAR);
+                player.sendMessage(CC.CHAT_BAR);
+                player.sendMessage(CC.translate("&b&lRank Help &7[&f1/2&7] &8- &7&o/rank help <1/2>"));
+                player.sendMessage(CC.translate(" "));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setColor <rank> <color>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setBold <rank>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setItalic <rank>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setPriority <rank> <priority>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank addPerm <rank> <permission>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank removePerm <rank> <permission>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setPrefix <rank> <prefix>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setSuffix <rank> <suffix>"));
+                player.sendMessage(CC.translate("&b ▸ &f/rank setDefault <rank>"));
+                player.sendMessage(CC.CHAT_BAR);
                 break;
             default:
                 sendPage(player, 1);

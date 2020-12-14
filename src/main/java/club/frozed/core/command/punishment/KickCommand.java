@@ -7,11 +7,11 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentExecutor;
 import club.frozed.core.manager.player.punishments.PunishmentType;
+import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.lib.chat.CC;
 import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
-import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.lib.task.TaskUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -25,7 +25,6 @@ import java.util.UUID;
  * Project: Zoom [Core]
  * Date: 31/10/2020 @ 18:38
  */
-
 public class KickCommand extends BaseCommand {
 
     @Command(name = "kick", inGameOnly = false, permission = "core.punishments.kick", aliases = {"expulsar"})
@@ -36,24 +35,26 @@ public class KickCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
             if (args.length == 0) {
-                commandSender.sendMessage(CC.translate("&e/kick <player> [reason] [-s]"));
+                commandSender.sendMessage(CC.translate("&c/kick <player> [reason] [-s]"));
                 return;
             }
-            PunishmentExecutor parameter = new PunishmentExecutor(cmd.getArgs(), commandSender);
 
+            PunishmentExecutor parameter = new PunishmentExecutor(cmd.getArgs(), commandSender);
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
             PlayerData data;
             if (offlinePlayer.isOnline()) {
                 data = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
             } else {
-                commandSender.sendMessage(CC.translate("&eLoading player data....."));
+                commandSender.sendMessage(CC.translate("&aLoading player data....."));
                 data = PlayerData.loadData(offlinePlayer.getUniqueId());
                 if (data == null) {
                     commandSender.sendMessage(CC.translate("&cError! &7That player doesn't have data"));
                     return;
                 }
             }
-            if (!parameter.validate(commandSender, data)) return;
+            if (!parameter.validate(commandSender, data)) {
+                return;
+            }
 
             Punishment punishment = new Punishment(UUID.randomUUID(), PunishmentType.KICK, System.currentTimeMillis(), parameter.getReason(), -1);
             parameter.invoke(commandSender, punishment);

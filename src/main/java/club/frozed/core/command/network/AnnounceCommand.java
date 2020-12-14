@@ -1,12 +1,13 @@
 package club.frozed.core.command.network;
 
 import club.frozed.core.Zoom;
-import club.frozed.lib.chat.CC;
+import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.chat.CC;
 import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
-import club.frozed.core.utils.lang.Lang;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,6 +20,13 @@ public class AnnounceCommand extends BaseCommand {
 
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
-        Utils.globalBroadcast(player, CC.translate(Lang.PREFIX + "&e" + player.getName() + "&7 is playing on &e" + Lang.SERVER_NAME + "&7. Use &e/join " + Lang.SERVER_NAME + "&7 to join."));
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
+
+        Utils.globalBroadcast(player, CC.translate(Zoom.getInstance().getSettingsConfig().getString("SETTINGS.SERVER-ANNOUNCE"))
+                .replace("<name>", player.getName()
+                .replace("<rank>", playerData.getHighestRank().getPrefix())
+                .replace("<server_name>", Lang.SERVER_NAME)
+                )
+        );
     }
 }

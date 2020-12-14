@@ -1,11 +1,11 @@
 package club.frozed.core.command;
 
 import club.frozed.core.Zoom;
-import club.frozed.lib.commands.BaseCommand;
-import club.frozed.lib.commands.Completer;
 import club.frozed.lib.chat.CC;
+import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
+import club.frozed.lib.commands.Completer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ZoomCommand extends BaseCommand {
         return null;
     }
 
-    @Command(name = "core", aliases = {"zoomcore", "zoom"},inGameOnly = true)
+    @Command(name = "core", aliases = {"zoomcore", "zoom"}, inGameOnly = true)
 
     @Override
     public void onCommand(CommandArgs cmd) {
@@ -35,20 +35,21 @@ public class ZoomCommand extends BaseCommand {
 
         if (args.length == 0) {
             p.sendMessage(CC.CHAT_BAR);
-            p.sendMessage(CC.translate("&6&lZoom &7- &ev" + Zoom.getInstance().getDescription().getVersion()));
+            p.sendMessage(CC.translate("&b&lZoom &7- &fv" + Zoom.getInstance().getDescription().getVersion()));
             p.sendMessage(CC.CHAT_BAR);
-            p.sendMessage(CC.translate("&6Authors&f: &e" + Zoom.getInstance().getAuthors()));
-            p.sendMessage(CC.translate("&6Description&f: &e" + Zoom.getInstance().getDescription().getDescription()));
-            p.sendMessage(CC.translate("&6Website&f: &e" + Zoom.getInstance().getDescription().getWebsite()));
+            p.sendMessage(CC.translate("&bAuthors&f: " + Zoom.getInstance().getAuthors()));
+            p.sendMessage(CC.translate("&bDescription&f: " + Zoom.getInstance().getDescription().getDescription()));
+            p.sendMessage(CC.translate("&bWebsite&f: " + Zoom.getInstance().getDescription().getWebsite()));
             p.sendMessage(CC.CHAT_BAR);
             return;
         }
+
         if (args[0].equalsIgnoreCase("reload")) {
             if (!p.isOp()) return;
             try {
                 Zoom.getInstance().reloadFile();
                 p.sendMessage(CC.CHAT_BAR);
-                p.sendMessage(CC.translate("&6&lZoom &7- &ev" + Zoom.getInstance().getDescription().getVersion()));
+                p.sendMessage(CC.translate("&b&lZoom &7- &bv" + Zoom.getInstance().getDescription().getVersion()));
                 p.sendMessage(CC.translate("&a&oSuccesfully reloaded: &7messages, database and settings"));
                 p.sendMessage(CC.CHAT_BAR);
             } catch (Exception exception) {

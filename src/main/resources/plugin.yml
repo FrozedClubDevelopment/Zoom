@@ -1,7 +1,7 @@
 name: Zoom
-version: 1.3
+version: 1.0
 main: club.frozed.core.Zoom
-description: Server Core
+description: All-in-One Server Core developed on Frozed Club Development.
 website: www.frozed.club
 authors:
   - Ryzeon

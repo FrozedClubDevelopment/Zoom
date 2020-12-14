@@ -19,7 +19,6 @@ import org.bukkit.command.CommandSender;
  * Project: Zoom
  * Date: 22/09/2020 @ 20:42
  */
-
 public class SetRankCommand extends BaseCommand {
 
     @Command(name = "setrank", permission = "core.rank.setrank", inGameOnly = false)
@@ -30,13 +29,14 @@ public class SetRankCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
             if (args.length < 4) {
-                player.sendMessage(CC.translate("&e/setrank <player> <rank> <duration> <reason>"));
+                player.sendMessage(CC.translate("&c/setrank <player> <rank> <duration> <reason>"));
                 return;
             }
             if (!Rank.isRankExist(args[1])) {
                 player.sendMessage(CC.translate("&cThat rank doesn't exists"));
                 return;
             }
+
             Rank rankData = Rank.getRankByName(args[1]);
             String durationTime = "";
             long duration = -1L;
@@ -50,6 +50,7 @@ public class SetRankCommand extends BaseCommand {
                     return;
                 }
             }
+
             String reason = Utils.buildMessage(args, 3);
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
             if (target.isOnline()) {
@@ -60,11 +61,12 @@ public class SetRankCommand extends BaseCommand {
                 }
                 Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
             } else {
-                player.sendMessage(CC.translate("&eLoading player data....."));
+                player.sendMessage(CC.translate("&aLoading player data....."));
                 if (!PlayerData.hasData(target.getName())) {
                     player.sendMessage(CC.translate("&cThat player doesn't have data"));
                     return;
                 }
+
                 PlayerData targetData = PlayerData.loadData(target.getUniqueId());
                 if (targetData != null) {
                     if (targetData.hasRank(rankData)) {

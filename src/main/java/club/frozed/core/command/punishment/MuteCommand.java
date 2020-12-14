@@ -35,7 +35,7 @@ public class MuteCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
             if (args.length == 0) {
-                commandSender.sendMessage(CC.translate("&e/" + cmd.getLabel() + " <player> [reason] [-s]"));
+                commandSender.sendMessage(CC.translate("&c/" + cmd.getLabel() + " <player> [reason] [-s]"));
                 return;
             }
             PunishmentExecutor parameter = new PunishmentExecutor(cmd.getArgs(), commandSender);
@@ -45,7 +45,7 @@ public class MuteCommand extends BaseCommand {
             if (offlinePlayer.isOnline()) {
                 data = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
             } else {
-                commandSender.sendMessage(CC.translate("&eLoading player data....."));
+                commandSender.sendMessage(CC.translate("&aLoading player data....."));
                 data = PlayerData.loadData(offlinePlayer.getUniqueId());
                 if (data == null) {
                     commandSender.sendMessage(CC.translate("&cError! &7That player doesn't have data"));

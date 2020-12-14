@@ -61,7 +61,8 @@ public final class Zoom extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        if (!this.getDescription().getName().equals("Zoom") || !this.getDescription().getDescription().equals("Server Core")
+        if (!this.getDescription().getName().equals("Zoom") || !this.getDescription().getWebsite().equals("www.frozed.club")
+                || !this.getDescription().getDescription().equals("All-in-One Server Core developed on Frozed Club Development.")
                 || !this.getDescription().getAuthors().contains("Elb1to") || !this.getDescription().getAuthors().contains("Ryzeon")) {
             Bukkit.getServer().getPluginManager().disablePlugin(this);
             for (int i = 0; i < 100; i++) {
@@ -83,7 +84,7 @@ public final class Zoom extends JavaPlugin {
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
         if (!settingsConfig.getConfiguration().contains("SETTINGS.LICENSE")){
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cWhere is license? XDXX"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cWhere is the license? XDXD"));
             restartInventoryID();
         }
         InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me:8080", settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
@@ -94,8 +95,8 @@ public final class Zoom extends JavaPlugin {
             passed = true;
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&eUser&f: " + inventoryUI.getBuyer()));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aGenerated&f: " + inventoryUI.getGenerateDate()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bUser&f: " + inventoryUI.getBuyer()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bGenerated&f: " + inventoryUI.getGenerateDate()));
             Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
             kuukausi();
         } else {
@@ -142,12 +143,12 @@ public final class Zoom extends JavaPlugin {
         }
 
         Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
-        Bukkit.getConsoleSender().sendMessage(CC.translate("&6Zoom &8- &fv" + getDescription().getVersion()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&bZoom &8- &fv" + getDescription().getVersion()));
         Bukkit.getConsoleSender().sendMessage(CC.translate("&7Developed on &bFrozed Club Development"));
         Bukkit.getConsoleSender().sendMessage(CC.translate(" "));
-        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &eDevelopers&f: Elb1to & Ryzeon"));
-        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &eMongo&f: " + (mongoManager.isConnected() ? "&aenabled" : "&cdisabled")));
-        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &eRedis&f: " + (redisManager.isActive() ? "&aenabled" : "&cdisabled")));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &bDevelopers&f: Elb1to & Ryzeon"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &bMongo&f: " + (mongoManager.isConnected() ? "&aenabled" : "&cdisabled")));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7 • &bRedis&f: " + (redisManager.isActive() ? "&aenabled" : "&cdisabled")));
         Bukkit.getConsoleSender().sendMessage(CC.CHAT_BAR);
 
         if (redisManager.isActive()) {
@@ -219,7 +220,7 @@ public final class Zoom extends JavaPlugin {
 
     private void loadCommands() {
         frozedLib.setExcludeCommandConfig(settingsConfig, "SETTINGS.DISABLE-COMMANDS");
-        frozedLib.setDisableCommandMessage(CC.translate(Lang.PREFIX + "&e<command> &fcommand was not registered because it was disabled in the configuration."));
+        frozedLib.setDisableCommandMessage(CC.translate(Lang.PREFIX + "&b<command> &fcommand was not registered because it was disabled in the configuration."));
         frozedLib.loadCommandsFromPackage("club.frozed.core.command");
         frozedLib.loadCommandsInFile();
     }
