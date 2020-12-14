@@ -67,6 +67,8 @@ public class InventoryUI {
                 errorType = ErrorType.INVALID_PLUGIN_NAME;
             } else if (response.equalsIgnoreCase("INVALID_IP")) {
                 errorType = ErrorType.INVALID_IP;
+            } else if (response.equalsIgnoreCase("EXPIRED")) {
+                errorType = ErrorType.EXPIRED;
             } else if (response.startsWith("VALID")) {
                 errorType = ErrorType.VALID;
                 valid = true;
@@ -91,7 +93,8 @@ public class InventoryUI {
         INVALID_LICENSE,
         INVALID_PLUGIN_NAME,
         INVALID_IP,
-        VALID;
+        EXPIRED,
+        VALID
     }
 }
 

@@ -169,7 +169,7 @@ public class RankManager {
         }
         String json = new RedisMessage(Payload.RANK_UPDATE_PERMS).setParam("RANK", rank.getName()).toJSON();
 
-        if (Zoom.getInstance().getRedisManager().isActive()){
+        if (Zoom.getInstance().getRedisManager().isActive()) {
             Zoom.getInstance().getRedisManager().write(json);
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {

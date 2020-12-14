@@ -19,6 +19,7 @@ import java.util.List;
  * Project: Zoom [Core]
  * Date: 11/10/2020 @ 18:00
  */
+
 @AllArgsConstructor
 public class PotionButton extends Button {
 
