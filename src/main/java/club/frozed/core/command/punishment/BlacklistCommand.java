@@ -44,7 +44,7 @@ public class BlacklistCommand extends BaseCommand {
             if (offlinePlayer.isOnline()) {
                 data = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
             } else {
-                commandSender.sendMessage(CC.translate("&aLoading player data....."));
+                commandSender.sendMessage(CC.translate("&aLoading player data..."));
                 data = PlayerData.loadData(offlinePlayer.getUniqueId());
                 if (data == null) {
                     commandSender.sendMessage(CC.translate("&cError! &7That player doesn't have data"));

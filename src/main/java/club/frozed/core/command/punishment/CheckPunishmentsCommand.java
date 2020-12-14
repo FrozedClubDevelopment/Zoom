@@ -27,7 +27,7 @@ public class CheckPunishmentsCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
             if (args.length == 0) {
-                player.sendMessage(CC.translate("&e/" + cmd.getLabel() + " <player>"));
+                player.sendMessage(CC.translate("&c/" + cmd.getLabel() + " <player>"));
                 return;
             }
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
@@ -35,7 +35,7 @@ public class CheckPunishmentsCommand extends BaseCommand {
             if (offlinePlayer.isOnline()) {
                 data = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
             } else {
-                player.sendMessage(CC.translate("&eLoading player data....."));
+                player.sendMessage(CC.translate("&aLoading player data..."));
                 data = PlayerData.loadData(offlinePlayer.getUniqueId());
                 if (data == null) {
                     player.sendMessage(CC.translate("&cError! &7That player doesn't have data"));

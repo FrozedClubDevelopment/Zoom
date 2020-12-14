@@ -5,8 +5,8 @@ SETTINGS:
   SERVER-NAME: 'DEV'
   SERVER-ANNOUNCE: '&8[&b⚡&8] <rank><name> &fis playing on &b<server_name>&f! Use &b/join <server_name> &fto join.'
   CHAT:
-    NAME-COLOR-MENU-TITLE: '&eChoose your name color'
-    CHATCOLOR-MENU-TITLE: '&eChoose your chat color'
+    NAME-COLOR-MENU-TITLE: '&8Choose your name color'
+    CHATCOLOR-MENU-TITLE: '&8Choose your chat color'
     FORMAT:
       ENABLED: true
       DEFAULT-COLOR: YELLOW
@@ -14,33 +14,33 @@ SETTINGS:
     MUTE: false
     DELAY: 3
   STAFF-CHAT:
-    FORMAT: '&7(&9SC&7)&7(&e<server>&7) &f<player>&7: &e<text>'
-    SOUND: 'NOTE_PLING' #Only in toggle msg
-    TOGGLE: '&eYou <status> &estaff-chat'
+    FORMAT: '&7(&9SC&7) &7(&e<server>&7) &f<player>&7: &e<text>'
+    SOUND: 'NOTE_PLING'
+    TOGGLE: '&aStatus updated! <status> &9staff-chat'
   ADMIN-CHAT:
     FORMAT: '&7(&cAC&7)&7(&e<server>&7) &f<player>&7: <text>'
     SOUND: 'NOTE_PLING' #Only in toggle msg
-    TOGGLE: '&eYou <status> &eadmin-chat'
+    TOGGLE: '&aStatus update! <status> &cadmin-chat'
   TIPS:
     ENABLED: true
     DELAY: 60
     MODE: normal # Select a random number or announcer in order
     TIPS-LIST: #Use {0} if you want a separator line before the tip. {C}
-      - '&6Hello World!'
-      - '&6Zoom Core!'
-      - '&6Test Tip'
+      - '&b&l[FCD] &7Check our website: http://frozed.club'
+      - '&b&l[FCD] &7Check out all our plugins on MC-Market: https://resources.frozed.club'
+      - '&b&l[FCD] &7Join our discord to keep up to date with everything related to &b&lFrozed Club&7: https://discord.frozed.club'
   PRIVATE-MESSAGES:
     NOTIFICATION-SOUND: 'NOTE_PLING' # put none or NONE to disable sounds
     FORMAT: # <rank>,<prefix>
-      SENDER: '&7(To &e<target>&7) -> &e<text>'
-      TARGET: '&7(From &e<sender>&7) -> &e<text>'
-      SOCIAL-SPY: '&7[&dSocial-Spy&7] &e<sender> &7-> &e<target> &7» <text>'
+      SENDER: '&7(To &b<target>&7) &b<text>'
+      TARGET: '&7(From &b<sender>&7) &b<text>'
+      SOCIAL-SPY: '&7[&3Social-Spy&7] &a<sender> &c<target> &b<text>'
   REPORT:
     COOLDOWN: 60
     MSG:
-      SENDER: '&eYou reported &f<target> &eabout <text>.'
-      STAFF: '&7[&cReport&7] &7[<server>] &f<sender> &ereported &f<target> &eabout <reason>'
-      COOLDOWN: '&eYou must be wait &e<time> &f<left> &eto report another player.'
+      SENDER: '&aYou reported &f<target> &afor &f<text>.'
+      STAFF: '&7[&cReport&7] &7[<server>] &f<sender> &areported &f<target> &afor &f<reason>'
+      COOLDOWN: '&cYou must be wait <time> <left> to report another player.'
   COMMANDS-BLOCKED:
     MSG: '&cThis command is blocked.'
     LIST:
@@ -52,7 +52,8 @@ SETTINGS:
     SOUND: 'ORB_PICKUP'
     JOIN-MSG:
       - '&7&m----------------------------------------------------'
-      - '&eVote for us in NameMC to get the &6Verified Prefix&e! &6https://namemc.com/server/frozed.club'
+      - '&bVote for us in NameMC to get the &6Verified &bPrefix!'
+      - '&8 ▸ &ahttps://namemc.com/server/frozed.club'
       - '&7&m----------------------------------------------------'
     SERVER-IP: 'frozed.club'
     EXECUTE-CMD: 'setperm <player> tag.verfied'

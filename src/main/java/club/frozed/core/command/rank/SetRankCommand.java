@@ -61,7 +61,7 @@ public class SetRankCommand extends BaseCommand {
                 }
                 Zoom.getInstance().getRankManager().giveRank(player, targetData, duration, durationTime.equalsIgnoreCase("permanent"), reason, rankData, "Global");
             } else {
-                player.sendMessage(CC.translate("&aLoading player data....."));
+                player.sendMessage(CC.translate("&aLoading player data..."));
                 if (!PlayerData.hasData(target.getName())) {
                     player.sendMessage(CC.translate("&cThat player doesn't have data"));
                     return;

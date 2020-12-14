@@ -26,7 +26,7 @@ public class GrantsCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
             if (args.length == 0) {
-                player.sendMessage(CC.translate("&e/grants <player>"));
+                player.sendMessage(CC.translate("&c/grants <player>"));
                 return;
             }
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
@@ -34,7 +34,7 @@ public class GrantsCommand extends BaseCommand {
                 PlayerData targetData = PlayerData.getPlayerData(target.getName());
                 (new GrantsMenu(targetData)).openMenu(player);
             } else {
-                player.sendMessage(CC.translate("&eLoading player data....."));
+                player.sendMessage(CC.translate("&aLoading player data..."));
                 PlayerData targetData = PlayerData.loadData(target.getUniqueId());
                 if (targetData == null) {
                     player.sendMessage(CC.translate("&cThat player doesn't have data"));

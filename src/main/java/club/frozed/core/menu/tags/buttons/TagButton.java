@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TagButton extends Button {
 
-    private Tag tag;
+    private final Tag tag;
 
     @Override
     public ItemStack getButtonItem(Player player) {
@@ -38,8 +38,10 @@ public class TagButton extends Button {
                 lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
             }
         }
+
         itemCreator.setLore(lore);
         itemCreator.setAmount(1);
+
         return itemCreator.get();
     }
 
@@ -50,9 +52,10 @@ public class TagButton extends Button {
             data.setTag(tag.getTagPrefix());
             playSuccess(player);
         } else {
-            player.sendMessage("&cYou don't have this tag");
+            player.sendMessage(CC.translate("&cYou don't have this tag"));
             playNeutral(player);
         }
+
         player.closeInventory();
     }
 }

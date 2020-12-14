@@ -22,9 +22,9 @@ public class InstanceCommand extends BaseCommand {
         player.sendMessage(CC.CHAT_BAR);
         player.sendMessage(CC.translate("&b&lZoom &7- &fServer Instance"));
         player.sendMessage(CC.CHAT_BAR);
-        player.sendMessage(CC.translate("&8 ► &7Server&f: &b" + Lang.SERVER_NAME));
-        player.sendMessage(CC.translate("&8 ► &7Version&f: &b" + Bukkit.getServer().getVersion()));
-        player.sendMessage(CC.translate("&8 ► &7Players&f: &b" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers()));
+        player.sendMessage(CC.translate("&8 ▸ &7Server&f: &b" + Lang.SERVER_NAME));
+        player.sendMessage(CC.translate("&8 ▸ &7Version&f: &b" + Bukkit.getServer().getVersion()));
+        player.sendMessage(CC.translate("&8 ▸ &7Players&f: &b" + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers()));
         player.sendMessage(CC.CHAT_BAR);
     }
 }

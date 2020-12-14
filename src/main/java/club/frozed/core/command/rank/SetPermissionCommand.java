@@ -22,14 +22,16 @@ import org.bukkit.entity.Player;
  */
 
 public class SetPermissionCommand extends BaseCommand {
+
     @Command(name = "setpermission", permission = "core.rank.setperm", aliases = {"setperm"}, inGameOnly = false)
     @Override
     public void onCommand(CommandArgs cmd) {
         CommandSender player = cmd.getSender();
         String[] args = cmd.getArgs();
         TaskUtil.runAsync(() -> {
-
-            if (commandGetterWithThreeArgs(player, args, cmd)) return;
+            if (commandGetterWithThreeArgs(player, args, cmd)) {
+                return;
+            }
 
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
             if (offlinePlayer.isOnline()) {
@@ -37,7 +39,7 @@ public class SetPermissionCommand extends BaseCommand {
                 setPermission(player, playerData, args[1], args[2].equalsIgnoreCase("true"));
                 playerData.loadPermissions(playerData.getPlayer());
             } else {
-                player.sendMessage(CC.translate("&eLoading player data....."));
+                player.sendMessage(CC.translate("&aLoading player data..."));
                 PlayerData targetData = PlayerData.loadData(offlinePlayer.getUniqueId());
                 setPermission(player, targetData, args[1], args[2].equalsIgnoreCase("true"));
             }
@@ -46,7 +48,7 @@ public class SetPermissionCommand extends BaseCommand {
 
     private boolean commandGetterWithThreeArgs(CommandSender player, String[] args, CommandArgs commandArgs) {
         if (args.length == 0) {
-            player.sendMessage(CC.translate("&e/" + commandArgs.getLabel() + " <player> <permission> <true/false>"));
+            player.sendMessage(CC.translate("&c/" + commandArgs.getLabel() + " <player> <permission> <true/false>"));
             return true;
         }
         if (args.length < 1) {
@@ -58,9 +60,10 @@ public class SetPermissionCommand extends BaseCommand {
             return true;
         }
         if (args.length < 3) {
-            player.sendMessage(CC.translate("&etrue or false"));
+            player.sendMessage(CC.translate("&ctrue or false"));
             return true;
         }
+
         return false;
     }
 
@@ -80,6 +83,7 @@ public class SetPermissionCommand extends BaseCommand {
             playerData.getPermissions().remove(permission);
             sender.sendMessage(CC.translate(Lang.PREFIX + "&aSuccess! &7Removed " + permission + " to " + playerData.getName()));
         }
+
         Player target = Bukkit.getPlayer(playerData.getName());
         if (target == null) {
             String json = new RedisMessage(Payload.PLAYER_PERMISSION_UPDATE).setParam("NAME", playerData.getName()).setParam("PERMISSION", permission).toJSON();

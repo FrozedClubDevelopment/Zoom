@@ -32,7 +32,7 @@ public class AltsCommand extends BaseCommand {
 
         TaskUtil.runAsync(() -> {
         if (args.length == 0){
-            sender.sendMessage(CC.translate("&e/alts <player>"));
+            sender.sendMessage(CC.translate("&c/alts <player>"));
             return;
         }
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
@@ -40,7 +40,7 @@ public class AltsCommand extends BaseCommand {
         if (offlinePlayer.isOnline()) {
             data = PlayerData.getPlayerData(offlinePlayer.getUniqueId());
         } else {
-            sender.sendMessage(CC.translate("&eLoading player data....."));
+            sender.sendMessage(CC.translate("&aLoading player data..."));
             data = PlayerData.loadData(offlinePlayer.getUniqueId());
             if (data == null){
                 sender.sendMessage(CC.translate("&cThat player doesn't have data"));

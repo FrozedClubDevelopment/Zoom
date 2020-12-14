@@ -156,10 +156,11 @@ public class RankManager {
         if (defaults.size() == 0) {
             List<String> perms = new ArrayList<>();
             List<String> inheritance = new ArrayList<>();
-            Rank defaultRank = new Rank("Default", "&7[&eU&7]", "", ChatColor.YELLOW, 50, true, false, false, perms, inheritance);
+            Rank defaultRank = new Rank("Default", "&7[&bU&7]", "", ChatColor.AQUA, 50, true, false, false, perms, inheritance);
             defaultRank.setDefaultRank(true);
             return defaultRank;
         }
+
         return defaults.get(0);
     }
 
@@ -167,8 +168,8 @@ public class RankManager {
         if (rank != null) {
             rank.update();
         }
-        String json = new RedisMessage(Payload.RANK_UPDATE_PERMS).setParam("RANK", rank.getName()).toJSON();
 
+        String json = new RedisMessage(Payload.RANK_UPDATE_PERMS).setParam("RANK", rank.getName()).toJSON();
         if (Zoom.getInstance().getRedisManager().isActive()) {
             Zoom.getInstance().getRedisManager().write(json);
         } else {
@@ -237,6 +238,7 @@ public class RankManager {
                     }
                 }
             }
+
             Player target = Bukkit.getPlayer(targetData.getName());
             if (target == null) {
                 json = new RedisMessage(Payload.GRANT_UPDATE)

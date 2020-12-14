@@ -1,9 +1,9 @@
-title: '&eTags menu'
+title: '&8Tags Menu'
 # Permission is core.tags.<name>
 no-perms-lore:
   - '&7&m---------------------'
   - '&cYou don''t have this tag'
-  - '&eBuy in store.example.com'
+  - '&cPurchase it at store.frozed.club'
   - '&7&m---------------------'
 tags:
   verified:
@@ -17,7 +17,7 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag> &e<player>&7: &fHello!'
+      - '&b<tag> &f<player>&7: &fHello!'
       - '&7&m------------------'
   heart:
     name: 'Heart'
@@ -30,7 +30,7 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag> &e<player>&7: &fHello!'
+      - '&b<tag> &f<player>&7: &fHello!'
       - '&7&m------------------'
   dolar:
     name: 'Dolar'
@@ -43,5 +43,5 @@ tags:
       data: 0
     lore:
       - '&7&m------------------'
-      - '&e<tag> &e<player>&7: &fHello!'
+      - '&b<tag> &f<player>&7: &fHello!'
       - '&7&m------------------'
