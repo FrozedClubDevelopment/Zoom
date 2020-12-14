@@ -1,5 +1,6 @@
 package club.frozed.core.manager.chat;
 
+import be.maximvdw.placeholderapi.PlaceholderAPI;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
@@ -19,7 +20,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.Objects;
 
@@ -33,8 +33,9 @@ public class ChatListener implements Listener {
         String chatColor = Zoom.getInstance().getSettingsConfig().getConfiguration().getString("SETTINGS.CHAT.FORMAT.DEFAULT-COLOR");
         boolean enabled = Zoom.getInstance().getSettingsConfig().getConfiguration().getBoolean("SETTINGS.CHAT.FORMAT.ENABLED");
         if (!enabled) return;
+        message = message.replace("%", "%%");
 
-        ConfigReplacement replacement = new ConfigReplacement(messageFormat);
+        ConfigReplacement replacement = new ConfigReplacement(CC.translate(messageFormat));
         replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()));
         if (playerData.getTag() != null) {
             replacement.add("<tag>", " " + playerData.getTag() + " ");
@@ -44,33 +45,46 @@ public class ChatListener implements Listener {
         if (playerData.getChatColor() != null) {
             replacement.add("<chatcolor>", ChatColor.valueOf(playerData.getChatColor()));
         } else {
-            replacement.add("<chatcolor>", ChatColor.valueOf(chatColor));
+            replacement.add("<chatcolor>", ChatColor.valueOf(chatColor).toString());
         }
 //        if (playerData.getNameColor() != null) {
-            if (playerData.isItalic() && playerData.isBold()) {
-                replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l§o");
-            } else if (playerData.isBold() && playerData.isItalic()) {
-                replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l§o");
-            } else if (playerData.isItalic()) {
-                replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§o");
-            } else if (playerData.isBold()) {
-                replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l");
-            } else {
-                replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()));
-            }
-//        } else {
-//            replacement.add("<nameColor>", playerData.getHighestRank().getColor());
-//        }
+        if (playerData.isItalic() && playerData.isBold()) {
+            replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l§o");
+        } else if (playerData.isBold() && playerData.isItalic()) {
+            replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l§o");
+        } else if (playerData.isItalic()) {
+            replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§o");
+        } else if (playerData.isBold()) {
+            replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()) + "§l");
+        } else {
+            replacement.add("<nameColor>", ChatColor.valueOf(playerData.getNameColor()));
+        }
 
         replacement.add("<name>", playerData.getHighestRank().formatName(e.getPlayer()));
         replacement.add("<text>", ChatColor.stripColor(message));
 
-        String format = replacement.toString();
+        String format = this.replacePlaceholders(e.getPlayer(), replacement.toString(false)).replace("$&%%/", "&");
         if (playerData.getPlayer().hasPermission("core.chatcolor.format")) {
             format = format.replace(message, CC.translate(message));
         }
 
-        e.setFormat(format.replace("%", "%%").replace("\\$", "\\\\\\$"));
+        e.setFormat(format);
+    }
+
+    private String replacePlaceholders(Player player, String source) {
+
+        if (Zoom.getInstance().getServer().getPluginManager().getPlugin("PlaceholderAPI") != null
+                && Zoom.getInstance().getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
+            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player,
+                    PlaceholderAPI.replacePlaceholders(player, source.replace("&", "$&%%/")));
+        }
+        if (Zoom.getInstance().getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI") != null) {
+            return PlaceholderAPI.replacePlaceholders(player, source.replace("&", "$&%%/"));
+        }
+        if (Zoom.getInstance().getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, source.replace("&", "$&%%/"));
+        }
+        return source;
     }
 
     @EventHandler(priority = EventPriority.HIGH)

@@ -50,6 +50,15 @@
         <!-- PlaceholderAPI -->
         <dependency>
             <groupId>me.clip</groupId>
+            <artifactId>be.maximvdw.placeholderapi</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/MVdWPlaceholderAPI.jar</systemPath>
+        </dependency>
+
+        <!-- MVdWPlaceholderAPI -->
+        <dependency>
+            <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
             <scope>provided</scope>

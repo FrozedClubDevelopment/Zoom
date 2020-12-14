@@ -6,6 +6,7 @@ import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
 import club.frozed.core.utils.punishment.PunishmentUtil;
 import club.frozed.core.utils.time.DateUtils;
+import club.frozed.lib.task.TaskUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.command.CommandSender;
@@ -95,24 +96,26 @@ public class PunishmentExecutor {
     }
 
     public void searchAndDestroy(PlayerData data, Punishment punishment) {
-        Player player = data.getPlayer();
-        if (player != null) {
-            if (punishment.getType().isBannable()) {
-                player.kickPlayer(punishment.toKickMessage(null));
-            } else if (punishment.getType() == PunishmentType.WARN) {
-                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.WARN").forEach(s ->
-                        player.sendMessage(CC.translate(s)
-                                .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
-                                .replace("<reason>", (punishment.getReason() == null || punishment.getReason().isEmpty() || punishment.getReason().equals("") ? "No reason provided" : punishment.getReason()))
-                        ));
-            } else if (punishment.getType() == PunishmentType.MUTE) {
-                Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList(punishment.isLifetime() ? "PUNISHMENT-MESSAGES.PLAYER.MUTE.PERMANENT" : "PUNISHMENT-MESSAGES.PLAYER.MUTE.TEMPORARILY").forEach(s ->
-                        player.sendMessage(CC.translate(s)
-                                .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
-                                .replace("<duration>", punishment.getTimeLeft(false))
-                                .replace("<reason>", (punishment.getReason() == null || punishment.getReason().equals("") || punishment.getReason().isEmpty() ? "No reason provided" : punishment.getReason()))
-                        ));
+        TaskUtil.run(() -> {
+            Player player = data.getPlayer();
+            if (player != null) {
+                if (punishment.getType().isBannable()) {
+                    player.kickPlayer(punishment.toKickMessage(null));
+                } else if (punishment.getType() == PunishmentType.WARN) {
+                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList("PUNISHMENT-MESSAGES.PLAYER.WARN").forEach(s ->
+                            player.sendMessage(CC.translate(s)
+                                    .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
+                                    .replace("<reason>", (punishment.getReason() == null || punishment.getReason().isEmpty() || punishment.getReason().equals("") ? "No reason provided" : punishment.getReason()))
+                            ));
+                } else if (punishment.getType() == PunishmentType.MUTE) {
+                    Zoom.getInstance().getPunishmentConfig().getConfiguration().getStringList(punishment.isLifetime() ? "PUNISHMENT-MESSAGES.PLAYER.MUTE.PERMANENT" : "PUNISHMENT-MESSAGES.PLAYER.MUTE.TEMPORARILY").forEach(s ->
+                            player.sendMessage(CC.translate(s)
+                                    .replace("<sender>", Utils.getDisplayName(punishment.getAddedBy()))
+                                    .replace("<duration>", punishment.getTimeLeft(false))
+                                    .replace("<reason>", (punishment.getReason() == null || punishment.getReason().equals("") || punishment.getReason().isEmpty() ? "No reason provided" : punishment.getReason()))
+                            ));
+                }
             }
-        }
+        });
     }
 }

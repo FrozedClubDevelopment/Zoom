@@ -3,6 +3,9 @@ version: 1.0
 main: club.frozed.core.Zoom
 description: All-in-One Server Core developed on Frozed Club Development.
 website: www.frozed.club
+softdepend:
+  - PlaceholderAPI
+  - MVdWPlaceholderAPI
 authors:
   - Ryzeon
   - Elb1to
