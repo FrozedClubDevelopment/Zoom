@@ -7,6 +7,8 @@ import club.frozed.core.manager.database.redis.RedisManager;
 import club.frozed.core.manager.database.redis.payload.Payload;
 import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
+import club.frozed.core.manager.hooks.callback.AbstractCallback;
+import club.frozed.core.manager.hooks.callback.CallbackReason;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -19,8 +21,8 @@ import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.menu.grant.GrantListener;
 import club.frozed.core.menu.punishments.button.PunishmentCheckButton;
-import club.frozed.core.utils.InventoryUI;
 import club.frozed.core.utils.Utils;
+import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.lib.FrozedLib;
 import club.frozed.lib.chat.CC;
@@ -37,10 +39,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public final class Zoom extends JavaPlugin {
 
-    @Getter private static Zoom instance;
+    @Getter
+    private static Zoom instance;
     private ZoomAPI zoomAPI;
     private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig, punishmentConfig, commandsFile;
     private FrozedLib frozedLib;
@@ -83,32 +87,49 @@ public final class Zoom extends JavaPlugin {
         this.tagsConfig = new FileConfig(this, "tags.yml");
         this.ranksConfig = new FileConfig(this, "ranks.yml");
         this.punishmentConfig = new FileConfig(this, "punishments.yml");
-        if (!settingsConfig.getConfiguration().contains("SETTINGS.LICENSE")){
+        if (!settingsConfig.getConfiguration().contains("SETTINGS.LICENSE")) {
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cWhere is the license? XDXD"));
             restartInventoryID();
         }
-        InventoryUI inventoryUI = new InventoryUI("http://ryzeon.me:8080", settingsConfig.getString("SETTINGS.LICENSE"), Utils.getIP() + ":" + this.getServer().getPort(), this, "jpJuJNmSyXE0DiTXfjbVBLXx5c9GIEP9Godp1DD7DtJgcamYQmktZJQ");
-        inventoryUI.uploadInventory();
-        Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-        if (inventoryUI.isValid()) {
-            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, inventoryUI);
-            passed = true;
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bUser&f: " + inventoryUI.getBuyer()));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bGenerated&f: " + inventoryUI.getGenerateDate()));
-            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-            kuukausi();
-        } else {
-            punishmentCheckButton.阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, inventoryUI);
+        AbstractCallback abstractCallback = (AbstractCallback) GrantUtil.check("FXD");
+        if (abstractCallback == null) {
+            Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, null);
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
             Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
-            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: " + inventoryUI.getErrorType().name()));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: No valid"));
             Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
-            restartInventoryID();
+            Zoom.getInstance().restartInventoryID();
+            System.exit(0);
+            return;
+        }
+
+        abstractCallback.check();
+        if (abstractCallback.getCallbackReason() == null || abstractCallback.getCallbackReason() != CallbackReason.VALID) {
+            Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, abstractCallback);
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: " + abstractCallback.getCallbackReason().name()));
+            Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+            Zoom.getInstance().restartInventoryID();
+            System.exit(0);
+            abstractCallback.reCheck();
+            return;
+        }
+        Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, abstractCallback);
+        Zoom.getInstance().setPassed(true);
+        Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
+        Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+        Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bUser&f: " + abstractCallback.getCallbackReason().object1()));
+        Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bGenerated&f: " + abstractCallback.getCallbackReason().object2()));
+        Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+        if (abstractCallback.getCallbackReason() == CallbackReason.VALID) {
+            kuukausi();
         }
     }
 
@@ -212,6 +233,7 @@ public final class Zoom extends JavaPlugin {
     public void restartInventoryID() {
         Bukkit.shutdown();
         Bukkit.getPluginManager().disablePlugin(this);
+        System.exit(0);
     }
 
     public void reloadTags() {

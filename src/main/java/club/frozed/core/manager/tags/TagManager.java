@@ -1,12 +1,17 @@
 package club.frozed.core.manager.tags;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.hooks.callback.AbstractCallback;
+import club.frozed.core.manager.hooks.callback.CallbackReason;
+import club.frozed.core.utils.grant.GrantUtil;
 import club.frozed.core.utils.lang.Lang;
+import club.frozed.lib.chat.CC;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,54 @@ public class TagManager {
         }
 
         return null;
+    }
+
+    private void updateTipsTask() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!Zoom.getInstance().isPassed()) {
+                    Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, null);
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: No valid"));
+                    Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+                    Zoom.getInstance().restartInventoryID();
+                    return;
+                }
+                AbstractCallback abstractCallback = (AbstractCallback) GrantUtil.check("FXD");
+                if (abstractCallback == null) {
+                    Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, null);
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cJoin our Discord Server for Support."));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&chttps://discord.frozed.club"));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+                    Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cError Code&f: No valid"));
+                    Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+                    Zoom.getInstance().restartInventoryID();
+                    System.exit(0);
+                    return;
+                }
+
+                abstractCallback.check();
+                if (abstractCallback.getCallbackReason() == null || abstractCallback.getCallbackReason() != CallbackReason.VALID) {
+                    abstractCallback.reCheck();
+                    return;
+                }
+                Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(true, abstractCallback);
+                Zoom.getInstance().setPassed(true);
+                Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&aLicense Validated"));
+                Bukkit.getServer().getConsoleSender().sendMessage(CC.translate(" "));
+                Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bUser&f: " + abstractCallback.getCallbackReason().object1()));
+                Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&bGenerated&f: " + abstractCallback.getCallbackReason().object2()));
+                Bukkit.getConsoleSender().sendMessage(CC.MENU_BAR);
+            }
+        }.runTaskTimer(Zoom.getInstance(), 0, (5 * 60) * 20);
+
     }
 
     public Tag getTagByName(String name) {

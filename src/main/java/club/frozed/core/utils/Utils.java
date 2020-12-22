@@ -308,7 +308,7 @@ public class Utils {
 //            Bukkit.getConsoleSender().sendMessage("&c&lYour LocalHost IP are unknown , please check what happend on your intertnet! ERROR LOG:");
             ex.printStackTrace();
         }
-        return ipAddress;
+        return ipAddress + ":" + Zoom.getInstance().getServer().getPort();
     }
 
     public static int randomNumber(int minimo, int maximo) {

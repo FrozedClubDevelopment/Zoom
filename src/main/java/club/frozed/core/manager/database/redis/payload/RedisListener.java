@@ -15,14 +15,9 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.JedisPubSub;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Objects;
 import java.util.UUID;
 
