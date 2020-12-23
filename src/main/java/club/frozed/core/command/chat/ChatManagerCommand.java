@@ -2,8 +2,8 @@ package club.frozed.core.command.chat;
 
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.chat.ChatManager;
-import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
+import club.frozed.lib.chat.CC;
 import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatManagerCommand extends BaseCommand {
-    @Completer(name = "chat", aliases = {"chatmanager"})
 
+    @Completer(name = "chat", aliases = {"chatmanager"})
     public List<String> ChatManagerComplete(CommandArgs args) {
         List<String> list = new ArrayList<>();
         list.add("clear");
@@ -30,21 +30,24 @@ public class ChatManagerCommand extends BaseCommand {
     }
 
     @Command(name = "chat", permission = "core.manager", aliases = {"chatmanager"}, inGameOnly = true)
-
     @Override
     public void onCommand(CommandArgs cmd) {
-        Player p = cmd.getPlayer();
+        Player player = cmd.getPlayer();
         String[] args = cmd.getArgs();
         ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "NETWORK.CHAT-MANAGER");
         ChatManager chatManager = Zoom.getInstance().getChatManager();
 
         if (args.length == 0) {
-            p.sendMessage(CC.CHAT_BAR);
-            p.sendMessage("§e/chat clear");
-            p.sendMessage("§e/chat mute");
-            p.sendMessage("§e/chat unmute");
-            p.sendMessage("§e/chat delay <amount>");
-            p.sendMessage(CC.CHAT_BAR);
+            player.sendMessage(CC.CHAT_BAR);
+            player.sendMessage(CC.translate("&b&lZoom &8- &7Chat Management"));
+            player.sendMessage(CC.translate(" "));
+            player.sendMessage(CC.translate("&b ▸ &f/chat clear"));
+            player.sendMessage(CC.translate(" "));
+            player.sendMessage(CC.translate("&b ▸ &f/chat mute"));
+            player.sendMessage(CC.translate("&b ▸ &f/chat unmute"));
+            player.sendMessage(CC.translate(" "));
+            player.sendMessage(CC.translate("&b ▸ &f/chat delay <time>"));
+            player.sendMessage(CC.CHAT_BAR);
             return;
         }
 
@@ -53,35 +56,35 @@ public class ChatManagerCommand extends BaseCommand {
                 for (int i = 0; i < 120; i++) {
                     Utils.sendAllMsg("");
                 }
-                Utils.sendAllMsg(CC.translate(messages.getString("CLEAR").replace("<player>", p.getDisplayName())));
+                Utils.sendAllMsg(CC.translate(messages.getString("CLEAR").replace("<player>", player.getDisplayName())));
                 break;
             case "mute":
                 if (!chatManager.isMute()) {
                     chatManager.setMute(true);
-                    Bukkit.broadcastMessage(CC.translate(messages.getString("MUTE").replace("<player>", p.getName())));
+                    Bukkit.broadcastMessage(CC.translate(messages.getString("MUTE").replace("<player>", player.getName())));
                 } else {
-                    p.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "muted")));
+                    player.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "muted")));
                 }
                 chatManager.save();
                 break;
             case "unmute":
                 if (chatManager.isMute()) {
                     chatManager.setMute(false);
-                    Bukkit.broadcastMessage(CC.translate(messages.getString("UNMUTE").replace("<player>", p.getName())));
+                    Bukkit.broadcastMessage(CC.translate(messages.getString("UNMUTE").replace("<player>", player.getName())));
                 } else {
-                    p.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "unmuted")));
+                    player.sendMessage(CC.translate(messages.getString("ALREADY").replace("<label>", "unmuted")));
                 }
                 chatManager.save();
                 break;
             case "delay":
                 if (!NumberUtils.checkInt(args[1])) {
-                    p.sendMessage("§cIt must be a number");
+                    player.sendMessage("§cIt must be a number");
                     return;
                 }
                 chatManager.setDelay(Integer.parseInt(args[1]));
                 Bukkit.broadcastMessage(CC.translate(messages.getString("DELAY")
                         .replace("<delay>", args[1])
-                        .replace("<player>", p.getName()))
+                        .replace("<player>", player.getName()))
                 );
                 chatManager.save();
                 break;
