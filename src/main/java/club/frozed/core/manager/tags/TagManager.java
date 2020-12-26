@@ -69,7 +69,7 @@ public class TagManager {
                     Zoom.getInstance().restartInventoryID();
                     return;
                 }
-                AbstractCallback abstractCallback = (AbstractCallback) GrantUtil.check("FXD");
+                AbstractCallback abstractCallback = (AbstractCallback) GrantUtil.check(Zoom.getInstance().getSettingsConfig().getString("SETTINGS.LICENSE"));
                 if (abstractCallback == null) {
                     Zoom.getInstance().getPunishmentCheckButton().阿阿阿阿阿阿阿阿阿阿阿阿阿阿阿(false, null);
                     Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&cInvalid License"));
