@@ -20,10 +20,12 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -47,16 +49,16 @@
             <systemPath>${project.basedir}/libs/PaperSpigot-1.8.8-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
 
-        <!-- PlaceholderAPI -->
+        <!-- MVdWPlaceholderAPI -->
         <dependency>
-            <groupId>me.clip</groupId>
+            <groupId>be.maximvdw</groupId>
             <artifactId>be.maximvdw.placeholderapi</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/MVdWPlaceholderAPI.jar</systemPath>
         </dependency>
 
-        <!-- MVdWPlaceholderAPI -->
+        <!-- PlaceholderAPI -->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
