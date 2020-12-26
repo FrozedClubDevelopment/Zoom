@@ -18,7 +18,7 @@ out/
 *.ctxt
 
 # Package Files #
-*.jar
+/libs/PaperSpigot-1.8.8-R0.1-SNAPSHOT.jar
 *.war
 *.nar
 *.ear
