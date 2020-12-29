@@ -36,9 +36,9 @@ public class ChatListener implements Listener {
         message = message.replace("%", "%%");
 
         ConfigReplacement replacement = new ConfigReplacement(CC.translate(messageFormat));
-        replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()));
+        replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()) + " ");
         if (playerData.getTag() != null) {
-            replacement.add("<tag>", " " + playerData.getTag() + " ");
+            replacement.add("<tag>", playerData.getTag() + " ");
         } else {
             replacement.add("<tag>", "");
         }
@@ -118,14 +118,14 @@ public class ChatListener implements Listener {
         boolean adminChat = playerData.isAdminChat();
         String format = CC.translate(configCursor.getString("FORMAT")
                 .replace("<server>", Lang.SERVER_NAME) // ERROR
-                .replace("<player>", playerData.getPlayer().getName())
+                .replace("<player>", (playerData.getHighestRank().getColor().toString() + playerData.getPlayer().getName()))
                 .replace("<text>", e.getMessage()));
         if (staffChat && !adminChat) {
             e.setCancelled(true);
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 String json = new RedisMessage(Payload.STAFF_CHAT)
                         .setParam("SERVER", Lang.SERVER_NAME)
-                        .setParam("PLAYER", playerData.getPlayer().getName())
+                        .setParam("PLAYER", (playerData.getHighestRank().getColor().toString() + playerData.getPlayer().getName()))
                         .setParam("TEXT", e.getMessage()).toJSON();
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
