@@ -42,6 +42,14 @@ NETWORK:
     WORLD-MESSAGE: '&8 * &b<name> &7| &bChunks&7: &f<chunks> &7| &bEntities&7: &f<entities>'
 
 COMMANDS:
+  LIST:
+    RANK-SEPARATOR: '&f,'
+    PLAYER-SEPARATOR: '&f,'
+    FORMAT:
+      - '<rank_list>'
+      - '&7(&f<online_players>&8/&f<max_players>&7)'
+      - '&aOnline'
+      - '<players_online>'
   SOCIAL:
     STORE: 'resources.frozed.club'
     TWITTER: 'https://twitter.com/FrozedClubGames'

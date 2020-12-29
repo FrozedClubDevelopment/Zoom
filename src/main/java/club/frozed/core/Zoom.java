@@ -58,6 +58,7 @@ public final class Zoom extends JavaPlugin {
     private RankManager rankManager;
     private boolean joinable = false;
     private boolean passed = false;
+    private boolean debug;
 
     public static String serverName = "%%__USER__%%";
 
@@ -134,6 +135,7 @@ public final class Zoom extends JavaPlugin {
     }
 
     private void kuukausi() {
+        this.debug = settingsConfig.getBoolean("SETTINGS.DEBUG");
         this.mongoManager = new MongoManager();
         this.redisManager = new RedisManager();
         this.chatManager = new ChatManager();
