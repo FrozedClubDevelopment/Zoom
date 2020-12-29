@@ -55,6 +55,9 @@ public class PlayerInfoButton extends Button {
     }
 
     private String getCountry() {
+        if (!this.targetData.isOnline()) {
+            return this.targetData.getCountry() == null ? "Not found" : this.targetData.getCountry();
+        }
         String ip = this.targetData.getPlayer().getAddress().toString().replaceAll("/", "");
         String country;
         try {

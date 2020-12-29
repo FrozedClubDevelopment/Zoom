@@ -22,25 +22,26 @@ public class CountryCommand extends BaseCommand {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
         ConfigCursor configCursor = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS");
-        PlayerData playerData;
 
         if (args.length == 0) {
             p.sendMessage("§cUsage /" + cmd.getLabel() + " <player>");
             return;
         }
 
-        Player offlinePlayer = Bukkit.getPlayer(args[0]);
-        if (offlinePlayer == null){
-            p.sendMessage(CC.RED + offlinePlayer.getName() + " isn't online.");
+        Player player = Bukkit.getPlayer(args[0]);
+        if (player == null) {
+            p.sendMessage(CC.RED + player.getName() + " isn't online.");
             return;
         }
-        String ip = offlinePlayer.getAddress().getAddress().toString().replaceAll("/", "");
+        String ip = player.getAddress().toString().replaceAll("/", "");
+        String country = Utils.getCountry(ip);
         try {
             p.sendMessage(CC.translate(configCursor.getString("GEO-IP-MESSAGE")
-                    .replace("<player>", offlinePlayer.getName())
-                    .replace("<country>", Objects.requireNonNull(Utils.getCountry(ip))))
+                    .replace("<player>", player.getName())
+                    .replace("<country>", (country == null ? "No Found" : country)))
             );
         } catch (Exception exception) {
+            exception.printStackTrace();
             p.sendMessage("§eError in get player country");
         }
     }
