@@ -36,20 +36,12 @@ public class ListCommand extends BaseCommand {
             }
         });
         Zoom.getInstance().getMessagesConfig().getStringList("COMMANDS.LIST.FORMAT").forEach(text -> {
-            switch (text) {
-                case "<rank_list>":
-                    player.sendMessage(StringUtils.join(rankList, CC.translate(Zoom.getInstance().getMessagesConfig().getString("COMMANDS.LIST.RANK-SEPARATOR")) + " "));
-                    break;
-                case "<players_online>":
-                    player.sendMessage(StringUtils.join(players, CC.translate(Zoom.getInstance().getMessagesConfig().getString("COMMANDS.LIST.PLAYER-SEPARATOR")) + " "));
-                    break;
-                default:
-                    player.sendMessage(CC.translate(text)
-                            .replace("<online_players>", String.valueOf(Zoom.getInstance().getServer().getOnlinePlayers().size()))
-                            .replace("<max_players>", String.valueOf(Zoom.getInstance().getServer().getMaxPlayers()))
-                    );
-                    break;
-            }
+            player.sendMessage(CC.translate(text)
+                    .replace("<online_players>", String.valueOf(Zoom.getInstance().getServer().getOnlinePlayers().size()))
+                    .replace("<max_players>", String.valueOf(Zoom.getInstance().getServer().getMaxPlayers()))
+                    .replace("<rank_list>", StringUtils.join(rankList, CC.translate(Zoom.getInstance().getMessagesConfig().getString("COMMANDS.LIST.RANK-SEPARATOR")) + " "))
+                    .replace("<players_online>", StringUtils.join(players, CC.translate(Zoom.getInstance().getMessagesConfig().getString("COMMANDS.LIST.PLAYER-SEPARATOR")) + " "))
+            );
         });
     }
 }
