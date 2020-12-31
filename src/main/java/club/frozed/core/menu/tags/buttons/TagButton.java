@@ -29,7 +29,7 @@ public class TagButton extends Button {
         ItemCreator itemCreator = new ItemCreator(tag.getTagIcon());
         itemCreator.setName(tag.getTagDisplayName());
         List<String> lore = new ArrayList<>();
-        if (player.hasPermission(tag.getTagPermission())) {
+        if (player.hasPermission(tag.getTagPermission()) || player.hasPermission("core.tags.all")) {
             for (String msg : tag.getTagLore()) {
                 lore.add(CC.translate(msg.replace("<player>", player.getName()).replace("<tag>", tag.getTagPrefix())));
             }
@@ -48,7 +48,7 @@ public class TagButton extends Button {
     @Override
     public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
         PlayerData data = PlayerData.getPlayerData(player.getUniqueId());
-        if (player.hasPermission(tag.getTagPermission())) {
+        if (player.hasPermission(tag.getTagPermission()) || player.hasPermission("core.tags.all")) {
             data.setTag(tag.getTagPrefix());
             playSuccess(player);
         } else {

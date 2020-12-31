@@ -33,6 +33,9 @@
 - core.chat.delaybypass
 - core.chat.socialspy
 
+> Tags
+- core.tags.all
+
 > Color
 - core.chatcolor
 - core.chatcolor.[color]
