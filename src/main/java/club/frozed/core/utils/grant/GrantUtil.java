@@ -28,18 +28,20 @@ public class GrantUtil {
     public static List<String> savePlayerGrants(List<Grant> grants) {
         List<String> playerGrants = new ArrayList<>();
         for (Grant grant : grants) {
-            playerGrants.add(
-                    grant.getRank().getName()
-                            + ";" + grant.getAddedDate()
-                            + ";" + grant.getDuration()
-                            + ";" + grant.getRemovedDate()
-                            + ";" + grant.getAddedBy()
-                            + ";" + grant.getReason()
-                            + ";" + grant.getRemovedBy()
-                            + ";" + grant.isActive()
-                            + ";" + grant.isPermanent()
-                            + ";" + grant.getServer()
-            );
+            if (grant.getRank() != null) {
+                playerGrants.add(
+                        grant.getRank().getName()
+                                + ";" + grant.getAddedDate()
+                                + ";" + grant.getDuration()
+                                + ";" + grant.getRemovedDate()
+                                + ";" + grant.getAddedBy()
+                                + ";" + grant.getReason()
+                                + ";" + grant.getRemovedBy()
+                                + ";" + grant.isActive()
+                                + ";" + grant.isPermanent()
+                                + ";" + grant.getServer()
+                );
+            }
         }
 
         return playerGrants;
