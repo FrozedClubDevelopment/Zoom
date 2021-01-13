@@ -7,13 +7,14 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.utils.lang.Lang;
 import club.frozed.lib.task.TaskUtil;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class StaffListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoinStaffEvent(PlayerJoinEvent e) {
         TaskUtil.runAsync(() -> {
             PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
@@ -24,32 +25,34 @@ public class StaffListener implements Listener {
                 String lastServer = playerData.getLastServer() == null ? Lang.SERVER_NAME : playerData.getLastServer();
                 if (lastServer.equals(Lang.SERVER_NAME)) {
                     json = new RedisMessage(Payload.STAFF_JOIN)
-                            .setParam("STAFF", e.getPlayer().getName())
+                            .setParam("STAFF", e.getPlayer().getDisplayName())
                             .setParam("SERVER", Lang.SERVER_NAME).toJSON();
                 } else {
                     json = new RedisMessage(Payload.STAFF_SWITCH)
-                            .setParam("STAFF", e.getPlayer().getName())
+                            .setParam("STAFF", e.getPlayer().getDisplayName())
                             .setParam("LAST_SERVER", playerData.getLastServer())
                             .setParam("ACTUAL_SERVER", Lang.SERVER_NAME).toJSON();
                 }
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
-                StaffLang.StaffJoinMessage(e.getPlayer().getName(), Lang.SERVER_NAME);
+                StaffLang.StaffJoinMessage(e.getPlayer().getDisplayName(), Lang.SERVER_NAME);
             }
         });
     }
 
     @EventHandler
     public void onLeaveStaffEvent(PlayerQuitEvent e) {
-        if (!e.getPlayer().hasPermission("core.staff")) return;
+        PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
+        if (playerData == null) return;
+        if (!playerData.getPlayer().hasPermission("core.staff")) return;
         TaskUtil.runAsync(() -> {
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 String json = new RedisMessage(Payload.STAFF_LEAVE)
-                        .setParam("STAFF", e.getPlayer().getName())
+                        .setParam("STAFF", playerData.getHighestRank().getPrefix() + playerData.getChatColor() + e.getPlayer().getName())
                         .setParam("SERVER", Lang.SERVER_NAME).toJSON();
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
-                StaffLang.StaffLeaveMessage(e.getPlayer().getName(), Lang.SERVER_NAME);
+                StaffLang.StaffLeaveMessage(e.getPlayer().getDisplayName(), Lang.SERVER_NAME);
             }
         });
     }
