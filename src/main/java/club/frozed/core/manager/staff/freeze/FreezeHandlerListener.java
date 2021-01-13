@@ -51,7 +51,7 @@ public class FreezeHandlerListener implements Listener {
         Location from = event.getFrom();
         Location to = event.getTo();
         if ((from.getX() != to.getX()) || (from.getZ() != to.getZ())) {
-            new PlayerFreezeMoveEvent(event.getPlayer(), from, to);
+            new PlayerFreezeMoveEvent(event.getPlayer(), from, to).call();
         }
     }
 

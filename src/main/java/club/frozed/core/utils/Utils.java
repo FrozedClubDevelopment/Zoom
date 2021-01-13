@@ -225,7 +225,7 @@ public class Utils {
     }
 
     @SneakyThrows
-    public static String getCountry(String ip){
+    public static String getCountry(String ip) throws Exception{
         URL url = new URL("http://ip-api.com/json/" + ip);
         BufferedReader stream = new BufferedReader(new InputStreamReader(url.openStream()));
         StringBuilder entirePage = new StringBuilder();
