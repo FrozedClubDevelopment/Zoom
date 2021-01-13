@@ -1,6 +1,8 @@
 package club.frozed.core.manager.player;
 
 import club.frozed.core.Zoom;
+import club.frozed.core.manager.event.freeze.PlayerJoinFreezeEvent;
+import club.frozed.core.manager.event.freeze.PlayerLeaveFreezeEvent;
 import club.frozed.lib.chat.CC;
 import club.frozed.lib.task.TaskUtil;
 import org.bukkit.Bukkit;
@@ -9,8 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class PlayerDataLoad implements Listener {
 
@@ -60,7 +66,8 @@ public class PlayerDataLoad implements Listener {
         playerData.saveData();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerLoginEvent(PlayerLoginEvent e) {
         PlayerData playerData = PlayerData.getPlayerData(e.getPlayer().getUniqueId());
         if (playerData == null) {
@@ -77,9 +84,13 @@ public class PlayerDataLoad implements Listener {
         TaskUtil.runAsync(() -> playerData.loadPermissions(e.getPlayer()));
     }
 
+
     private void handledSaveDate(Player player) {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         if (playerData != null) {
+            if (playerData.isFreeze()) {
+                new PlayerLeaveFreezeEvent(player).call();
+            }
             playerData.removeData();
         }
     }
@@ -87,6 +98,16 @@ public class PlayerDataLoad implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         event.setJoinMessage(null);
+        PlayerData playerData = PlayerData.getPlayerData(event.getPlayer().getUniqueId());
+
+        TaskUtil.runLaterAsync(() -> {
+            if (playerData != null && event.getPlayer() != null) {
+                playerData.loadPermissions(event.getPlayer()); //This is because of bungee permissions!
+            }
+        }, 20L * 2);
+        if (playerData.isFreeze()) {
+            new PlayerJoinFreezeEvent(playerData.getPlayer()).call();
+        }
     }
 
     @EventHandler

@@ -7,6 +7,7 @@ import club.frozed.core.manager.player.grants.GrantProcedure;
 import club.frozed.core.manager.player.punishments.Punishment;
 import club.frozed.core.manager.player.punishments.PunishmentType;
 import club.frozed.core.manager.ranks.Rank;
+import club.frozed.core.manager.staff.freeze.FreezeListener;
 import club.frozed.core.menu.punishments.PunishmentFilter;
 import club.frozed.lib.chat.CC;
 import club.frozed.core.utils.Utils;
@@ -456,6 +457,10 @@ public class PlayerData {
         return playerData.get(uuid);
     }
 
+    public static PlayerData getPlayerData(Player player){
+        return playerData.get(player.getUniqueId());
+    }
+
     public static PlayerData getPlayerData(String name) {
         Document document = Zoom.getInstance().getMongoManager().getPlayerData().find(Filters.eq("name", name)).first();
         if (document == null) {
@@ -518,5 +523,13 @@ public class PlayerData {
                 });
             }
         }.runTaskTimer(Zoom.getInstance(), 20L, TimeUnit.MINUTES.toMillis(5L));
+    }
+
+    public boolean isFreeze(){
+        return FreezeListener.getFreezeList().contains(this.uuid);
+    }
+
+    public int getRankPriority() {
+        return this.getHighestRank().getPriority();
     }
 }

@@ -42,6 +42,43 @@ NETWORK:
     WORLD-MESSAGE: '&8 * &b<name> &7| &bChunks&7: &f<chunks> &7| &bEntities&7: &f<entities>'
 
 COMMANDS:
+  FREEZE:
+    LEAVE-FREEZE-CLICKABLE:
+      ENABLED: true
+      TEXT: '&7&8** Click to ban **'
+      TEXT-CLICKABLE: '&7Click here'
+      COMMAND: '/ban <player> 3d Disconnected while frozen'
+    LEAVE-FREEZE: '&b<player> &fhas been disconnect while frozen '
+    JOIN-FREEZE: '&b<player> &fhas been reconnect while frozen'
+    FROZE:
+      PLAYER: '&bYou''ve been frozen'
+      STAFF: '&b<sender> &fhas frozen &b<player>'
+    UNFROZE:
+      PLAYER: '&bYou''ve been unfrozen'
+      STAFF: '&b<sender> &fhas unfrozen &b<player>'
+    FREEZE-ALLOWED-COMMANDS:
+      - '/msg'
+      - '/r'
+      - '/message'
+      - '/helpop'
+    FREEZE-MESSAGE:
+      SOUND:
+        ENABLED: true
+        SOUND: NOTE_PLING
+      MESSAGE:
+        - '&f⬛⬛⬛⬛&c⬛&f⬛⬛⬛⬛'
+        - '&f⬛⬛⬛&c⬛&6⬛&c⬛&f⬛⬛⬛'
+        - '&f⬛⬛&c⬛&6⬛&0⬛&6⬛&c⬛&f⬛⬛'
+        - '&f⬛⬛&c⬛&6⬛&0⬛&6⬛&c⬛&f⬛⬛'
+        - '&f⬛&c⬛&6⬛⬛&0⬛&6⬛⬛&c⬛&f⬛'
+        - '&f⬛&c⬛&6⬛⬛⬛⬛⬛&c⬛&f⬛'
+        - '&c⬛&6⬛⬛⬛&0⬛&6⬛⬛⬛&c⬛'
+        - '&c⬛⬛⬛⬛⬛⬛⬛⬛⬛'
+        - ''
+        - '&4Do NOT log out!'
+        - '&cIf you do, you will be banned'
+        - '&bPlease download &b&lTeamSpeak 3 &band join'
+        - '&bts.example.com'
   LIST:
     RANK-SEPARATOR: '&f,'
     PLAYER-SEPARATOR: '&f,'

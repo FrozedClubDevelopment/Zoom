@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,17 +24,16 @@ import java.util.stream.Collectors;
 
 public class ListCommand extends BaseCommand {
 
+    private final Comparator<PlayerData> PLAYER_DATA_COMPARATOR = Comparator.comparingInt(PlayerData::getRankPriority).reversed();
+
     @Command(name = "list", aliases = {"glist", "players"}, inGameOnly = false)
     @Override
     public void onCommand(CommandArgs commandArgs) {
         CommandSender player = commandArgs.getSender();
-        List<String> rankList = Rank.getRanks().stream().map(rank -> CC.translate(rank.getColor() + rank.getName())).collect(Collectors.toList());
+        List<String> rankList = Rank.getRanks().stream().sorted(Comparator.comparingInt(Rank::getPriority).reversed()).map(rank -> CC.translate(rank.getColor() + rank.getName())).collect(Collectors.toList());
         List<String> players = new ArrayList<>();
-        Zoom.getInstance().getServer().getOnlinePlayers().forEach(sp -> {
-            PlayerData data = PlayerData.getPlayerData(sp.getUniqueId());
-            if (data != null) {
-                players.add(CC.translate(data.getHighestRank().getColor().toString() + data.getName()));
-            }
+        PlayerData.getPlayerData().values().stream().filter(PlayerData::isOnline).sorted(PLAYER_DATA_COMPARATOR).forEach(playerData -> {
+            players.add(CC.translate(playerData.getHighestRank().getColor().toString() + playerData.getPlayer().getName()));
         });
         Zoom.getInstance().getMessagesConfig().getStringList("COMMANDS.LIST.FORMAT").forEach(text -> {
             player.sendMessage(CC.translate(text)

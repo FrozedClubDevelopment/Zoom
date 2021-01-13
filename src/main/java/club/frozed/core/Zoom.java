@@ -17,6 +17,8 @@ import club.frozed.core.manager.player.PlayerDataLoad;
 import club.frozed.core.manager.ranks.RankManager;
 import club.frozed.core.manager.staff.StaffLang;
 import club.frozed.core.manager.staff.StaffListener;
+import club.frozed.core.manager.staff.freeze.FreezeHandlerListener;
+import club.frozed.core.manager.staff.freeze.FreezeListener;
 import club.frozed.core.manager.tags.TagManager;
 import club.frozed.core.manager.tips.TipsRunnable;
 import club.frozed.core.menu.grant.GrantListener;
@@ -34,9 +36,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -252,15 +256,36 @@ public final class Zoom extends JavaPlugin {
     private void loadListener() {
         PluginManager pluginManager = Bukkit.getPluginManager();
         boolean staffJoinMessages = new ConfigCursor(messagesConfig, "NETWORK.STAFF-ALERTS").exists("ENABLED") ? messagesConfig.getBoolean("NETWORK.STAFF-ALERTS.ENABLED") : true;
-        pluginManager.registerEvents(new PlayerDataLoad(), this);
-        pluginManager.registerEvents(new ChatListener(), this);
-        pluginManager.registerEvents(new ButtonListener(), this);
         if (staffJoinMessages) {
             pluginManager.registerEvents(new StaffListener(), this);
         }
-        pluginManager.registerEvents(new GeneralPlayerListener(), this);
-        pluginManager.registerEvents(new BlockCommandListener(), this);
-        pluginManager.registerEvents(new GrantListener(), this);
+        registerListeners(
+                new PlayerDataLoad(),
+                new ChatListener(),
+                new ButtonListener(),
+
+                new GeneralPlayerListener(),
+                new BlockCommandListener(),
+                new GrantListener(),
+                new FreezeListener(),
+                new FreezeHandlerListener()
+        );
+//        pluginManager.registerEvents(new PlayerDataLoad(), this);
+//        pluginManager.registerEvents(new ChatListener(), this);
+//        pluginManager.registerEvents(new ButtonListener(), this);
+//
+//        pluginManager.registerEvents(new GeneralPlayerListener(), this);
+//        pluginManager.registerEvents(new BlockCommandListener(), this);
+//        pluginManager.registerEvents(new GrantListener(), this);
+//        pluginManager.registerEvents(new FreezeListener(), this);
+//        pluginManager.registerEvents(new FreezeHandlerListener());
+    }
+
+    private void registerListeners(Listener... listeners){
+        Arrays.stream(listeners).forEach(listener -> {
+            PluginManager pluginManager = Bukkit.getPluginManager();
+            pluginManager.registerEvents(listener, this);
+        });
     }
 
     public void shutdownMessage() {
