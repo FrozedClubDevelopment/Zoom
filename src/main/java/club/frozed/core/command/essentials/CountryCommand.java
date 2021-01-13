@@ -8,6 +8,7 @@ import club.frozed.lib.commands.BaseCommand;
 import club.frozed.lib.commands.Command;
 import club.frozed.lib.commands.CommandArgs;
 import club.frozed.lib.config.ConfigCursor;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 
 public class CountryCommand extends BaseCommand {
+    @SneakyThrows
     @Command(name = "getcountry", permission = "core.essentials.geoip", aliases = {"geoip"})
 
     @Override

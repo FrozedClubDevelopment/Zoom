@@ -48,7 +48,7 @@ public class StaffListener implements Listener {
         TaskUtil.runAsync(() -> {
             if (Zoom.getInstance().getRedisManager().isActive()) {
                 String json = new RedisMessage(Payload.STAFF_LEAVE)
-                        .setParam("STAFF", playerData.getHighestRank().getPrefix() + playerData.getChatColor() + e.getPlayer().getName())
+                        .setParam("STAFF", playerData.getHighestRank().getPrefix() + playerData.getNameColor() + e.getPlayer().getName())
                         .setParam("SERVER", Lang.SERVER_NAME).toJSON();
                 Zoom.getInstance().getRedisManager().write(json);
             } else {
