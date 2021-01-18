@@ -15,10 +15,10 @@ public class TopCommand extends BaseCommand {
     public void onCommand(CommandArgs cmd) {
         Player p = cmd.getPlayer();
         String[] args = cmd.getArgs();
-        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "teleport");
+        ConfigCursor messages = new ConfigCursor(Zoom.getInstance().getMessagesConfig(), "COMMANDS.TELEPORT-MESSAGES");
         if (args.length == 0) {
             p.teleport(Utils.teleportToTop(p.getLocation()));
-            p.sendMessage(CC.translate(messages.getString("top")));
+            p.sendMessage(CC.translate(messages.getString("TOP")));
             return;
         }
     }
