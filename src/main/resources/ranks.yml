@@ -1,6 +1,6 @@
 Owner:
   NAME: Owner
-  PREFIX: '&7[&4&lOwner&7]'
+  PREFIX: '&7[&4&lOwner&7] '
   SUFFIX: ''
   COLOR: DARK_RED
   DEFAULT: false
@@ -13,7 +13,7 @@ Owner:
     - 'core.owner'
 Manager:
   NAME: Manager
-  PREFIX: '&7[&cManager&7]'
+  PREFIX: '&7[&cManager&7] '
   SUFFIX: ''
   COLOR: RED
   DEFAULT: false
@@ -26,7 +26,7 @@ Manager:
     - 'core.manager'
 Mod:
   NAME: Mod
-  PREFIX: '&7[&2Mod&7]'
+  PREFIX: '&7[&2Mod&7] '
   SUFFIX: ''
   COLOR: DARK_GREEN
   DEFAULT: false
@@ -39,7 +39,7 @@ Mod:
     - 'core.mod'
 Vip:
   NAME: Vip
-  PREFIX: '&7[&a&lVIP&7]'
+  PREFIX: '&7[&a&lVIP&7] '
   SUFFIX: ''
   COLOR: GREEN
   DEFAULT: false
@@ -52,7 +52,7 @@ Vip:
     - 'core.vip'
 Default:
   NAME: Default
-  PREFIX: '&7[&e+&7]'
+  PREFIX: '&7[&e+&7] '
   SUFFIX: ''
   COLOR: GRAY
   DEFAULT: true

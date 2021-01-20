@@ -36,7 +36,8 @@ public class ChatListener implements Listener {
         message = message.replace("%", "%%");
 
         ConfigReplacement replacement = new ConfigReplacement(CC.translate(messageFormat));
-        replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()) + " ");
+        replacement.add("<rank>", CC.translate(playerData.getHighestRank().getPrefix()));
+        replacement.add("<suffix>", CC.translate(playerData.getHighestRank().getSuffix()));
         if (playerData.getTag() != null) {
             replacement.add("<tag>", playerData.getTag() + " ");
         } else {
