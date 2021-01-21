@@ -14,9 +14,11 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ryzeon
@@ -151,7 +153,7 @@ public class Punishment {
 //        } else {
         if (Zoom.getInstance().getPunishmentConfig().getConfiguration().getBoolean("PUNISHMENT-MESSAGES.MESSAGE-IN-CONSOLE")) {
             getPunishmentMessages().forEach(text ->
-                    Bukkit.broadcastMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
+                    Bukkit.getConsoleSender().sendMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
                             .replace("<player>", targetName)
                             .replace("<target>", targetName)
                             .replace("<sender>", senderName)
@@ -163,23 +165,35 @@ public class Punishment {
                             .replace("<time>", getTimeLeft(false))
                             .replace("<duration>", getTimeLeft(false))
                     ));
+            senPlayersMSG(silent, configCursor, targetName, senderName);
         } else {
-            Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-                getPunishmentMessages().forEach(text ->
-                        player.sendMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
-                                .replace("<player>", targetName)
-                                .replace("<target>", targetName)
-                                .replace("<sender>", senderName)
-                                .replace("<staff>", senderName)
-                                .replace("<context>", getContext())
-                                .replace("<reason>", this.pardoned ?
-                                        (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
-                                        : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
-                                .replace("<time>", getTimeLeft(false))
-                                .replace("<duration>", getTimeLeft(false))
-                        ));
-            });
+            senPlayersMSG(silent, configCursor, targetName, senderName);
         }
+    }
+
+    private void senPlayersMSG(boolean silent, ConfigCursor configCursor, String targetName, String senderName) {
+        getPlayers(silent).forEach(player -> {
+            getPunishmentMessages().forEach(text ->
+                    player.sendMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
+                            .replace("<player>", targetName)
+                            .replace("<target>", targetName)
+                            .replace("<sender>", senderName)
+                            .replace("<staff>", senderName)
+                            .replace("<context>", getContext())
+                            .replace("<reason>", this.pardoned ?
+                                    (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                    : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                            .replace("<time>", getTimeLeft(false))
+                            .replace("<duration>", getTimeLeft(false))
+                    ));
+        });
+    }
+
+    private List<Player> getPlayers(boolean silent) {
+        if (silent) {
+            return Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.hasPermission("core.punishments.silent.see")).collect(Collectors.toList());
+        }
+        return new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
     }
 
     public ItemStack toItemStack() {
