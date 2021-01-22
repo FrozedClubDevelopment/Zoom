@@ -3,6 +3,7 @@ package club.frozed.core.manager.hooks;
 import club.frozed.core.Zoom;
 import club.frozed.core.manager.player.PlayerData;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -60,6 +61,16 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
                 return Zoom.getInstance().getRankManager().getDefaultRank().getPrefix();
             }
             return PlayerData.getPlayerData(player.getName()).getHighestRank().getPrefix();
+        }
+
+        // %zoom_rank_name_Color%
+        if (identifier.equalsIgnoreCase("name_Color")) {
+            return ChatColor.valueOf(PlayerData.getPlayerData(player.getUniqueId()).getNameColor()).toString();
+        }
+
+        // %zoom_rank_tag%
+        if (identifier.equalsIgnoreCase("tag")) {
+            return PlayerData.getPlayerData(player.getUniqueId()).getTag() == null ? "" : PlayerData.getPlayerData(player.getUniqueId()).getTag();
         }
 
         return null;
