@@ -24,15 +24,9 @@
 
     <repositories>
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-
-        <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -71,8 +65,8 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Vault.jar</systemPath>
+            <scope>provided</scope>
+            <!--<systemPath>${project.basedir}/libs/Vault.jar</systemPath>-->
         </dependency>
 
         <!-- Lombok -->

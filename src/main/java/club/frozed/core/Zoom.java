@@ -9,8 +9,7 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.manager.hooks.callback.AbstractCallback;
 import club.frozed.core.manager.hooks.callback.CallbackReason;
-import club.frozed.core.manager.impl.VaultChatImpl;
-import club.frozed.core.manager.impl.VaultPermImpl;
+import club.frozed.core.manager.impl.VaultImpl;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -45,12 +44,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 public final class Zoom extends JavaPlugin {
 
-    @Getter
-    private static Zoom instance;
+    @Getter private static Zoom instance;
     private ZoomAPI zoomAPI;
     private FileConfig messagesConfig, databaseConfig, settingsConfig, tagsConfig, ranksConfig, punishmentConfig, commandsFile;
     private FrozedLib frozedLib;
@@ -199,9 +196,9 @@ public final class Zoom extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholderAPI hook successfully registered."));
         }
 
-        if (Bukkit.getPluginManager().getPlugin("Vault") != null) {
-            club.frozed.core.manager.impl.VaultPermImpl vaultPerm = new club.frozed.core.manager.impl.VaultPermImpl().register();
-            new club.frozed.core.manager.impl.VaultChatImpl(vaultPerm).register();
+        if (this.getServer().getPluginManager().getPlugin("Vault") != null) {
+            VaultImpl vault = new VaultImpl();
+            vault.register();
 
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aVault implementation successfully performed."));
         }
