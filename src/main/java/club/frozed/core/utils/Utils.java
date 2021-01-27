@@ -6,7 +6,6 @@ import club.frozed.core.utils.time.DateUtils;
 import com.google.common.base.Joiner;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.gson.reflect.TypeToken;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.*;
@@ -19,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
@@ -30,9 +28,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
-
-    public static final Type LIST_STRING = new TypeToken<List<String>>() {
-    }.getType();
 
     public static int getPing(Player p) {
         try {

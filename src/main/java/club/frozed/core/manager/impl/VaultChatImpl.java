@@ -5,20 +5,18 @@ import club.frozed.core.manager.player.PlayerData;
 import club.frozed.core.manager.ranks.Rank;
 import club.frozed.lib.chat.CC;
 import lombok.Getter;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 
 /**
- * Created by Elb1to
+ * Created by Ryzeon
  * Project: Zoom
  * Date: 1/26/2021 @ 8:52 PM
  */
 @Getter
-public class VaultChatImpl extends Chat {
+public class VaultChatImpl extends net.milkbowl.vault.chat.Chat {
 
-	public VaultChatImpl(Permission perms) {
+	public VaultChatImpl(net.milkbowl.vault.permission.Permission perms) {
 		super(perms);
 	}
 
@@ -183,7 +181,7 @@ public class VaultChatImpl extends Chat {
 	}
 
 	public void register() {
-		Bukkit.getServer().getServicesManager().register(Chat.class, this, Zoom.getInstance(), ServicePriority.Highest);
+		Bukkit.getServer().getServicesManager().register(net.milkbowl.vault.chat.Chat.class, this, Zoom.getInstance(), ServicePriority.Highest);
 		Bukkit.getConsoleSender().sendMessage(CC.translate("&7[&b&lZoom&7]" + "&aSuccessfully implemented Vault's chat into Zoom."));
 	}
 }
