@@ -2,7 +2,7 @@
 SETTINGS:
   DEBUG: false
   LICENSE: ''
-  PREFIX: '&8[&6Zoom&8] '
+  PREFIX: '&8[&b&lZoom&8] '
   SERVER-NAME: 'DEV'
   SERVER-ANNOUNCE: '&8[&b⚡&8] <rank><name> &fis playing on &b<server_name>&f! Use &b/join <server_name> &fto join.'
   CHAT:

@@ -6,7 +6,7 @@
 
     <groupId>club.frozed.core</groupId>
     <artifactId>Zoom</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
     <url>https://github.com/FrozedClubDevelopment/Zoom</url>
 
@@ -14,6 +14,13 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>frozedrepo</id>
+            <url>http://ryzeon.me:8081/</url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -31,13 +38,6 @@
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>frozedrepo</id>
-            <url>http://ryzeon.me:8081/</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <!-- 1.8.8 -->
@@ -64,6 +64,15 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Vault -->
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/Vault.jar</systemPath>
         </dependency>
 
         <!-- Lombok -->

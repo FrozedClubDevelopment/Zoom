@@ -9,6 +9,8 @@ import club.frozed.core.manager.database.redis.payload.RedisMessage;
 import club.frozed.core.manager.hooks.HookPlaceholderAPI;
 import club.frozed.core.manager.hooks.callback.AbstractCallback;
 import club.frozed.core.manager.hooks.callback.CallbackReason;
+import club.frozed.core.manager.impl.VaultChatImpl;
+import club.frozed.core.manager.impl.VaultPermImpl;
 import club.frozed.core.manager.listener.BlockCommandListener;
 import club.frozed.core.manager.listener.GeneralPlayerListener;
 import club.frozed.core.manager.messages.MessageManager;
@@ -195,6 +197,13 @@ public final class Zoom extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new HookPlaceholderAPI(this).register();
             Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aPlaceholderAPI hook successfully registered."));
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("Vault") != null) {
+            club.frozed.core.manager.impl.VaultPermImpl vaultPerm = new club.frozed.core.manager.impl.VaultPermImpl().register();
+            new club.frozed.core.manager.impl.VaultChatImpl(vaultPerm).register();
+
+            Bukkit.getConsoleSender().sendMessage(CC.translate(Lang.PREFIX + "&aVault implementation successfully performed."));
         }
 
         PlayerData.startTask();
