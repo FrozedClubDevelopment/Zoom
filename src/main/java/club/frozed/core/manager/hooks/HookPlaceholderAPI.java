@@ -21,7 +21,7 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public String getIdentifier() {
-        return "zoom";
+        return "Zoom";
     }
 
     @Override
@@ -63,12 +63,12 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
             return PlayerData.getPlayerData(player.getName()).getHighestRank().getPrefix();
         }
 
-        // %zoom_rank_name_Color%
-        if (identifier.equalsIgnoreCase("name_Color")) {
+        // %zoom_rank_name_color%
+        if (identifier.equalsIgnoreCase("name_color")) {
             return ChatColor.valueOf(PlayerData.getPlayerData(player.getUniqueId()).getNameColor()).toString();
         }
 
-        // %zoom_rank_tag%
+        // %zoom_tag%
         if (identifier.equalsIgnoreCase("tag")) {
             return PlayerData.getPlayerData(player.getUniqueId()).getTag() == null ? "" : PlayerData.getPlayerData(player.getUniqueId()).getTag();
         }
