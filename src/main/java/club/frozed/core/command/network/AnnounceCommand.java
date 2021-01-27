@@ -23,10 +23,9 @@ public class AnnounceCommand extends BaseCommand {
         PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
 
         Utils.globalBroadcast(player, CC.translate(Zoom.getInstance().getSettingsConfig().getString("SETTINGS.SERVER-ANNOUNCE"))
-                .replace("<name>", player.getName()
+                .replace("<name>", player.getName())
                 .replace("<rank>", playerData.getHighestRank().getPrefix())
                 .replace("<server_name>", Lang.SERVER_NAME)
-                )
         );
     }
 }
