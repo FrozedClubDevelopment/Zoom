@@ -50,6 +50,7 @@ public class PlayerData {
 
     // Others things
     private String lastServer;
+    private long lastServerTime;
     private boolean staffChat;
     private boolean adminChat;
     private String country;
@@ -207,7 +208,10 @@ public class PlayerData {
             document.put("name_lowercase", this.name.toLowerCase());
         }
         document.put("uuid", getUuid().toString());
+
         document.put("last-server", Lang.SERVER_NAME);
+        document.put("last-server-time", this.lastServerTime);
+
         document.put("staff-chat", this.staffChat);
         document.put("admin-chat", this.adminChat);
         if (getPlayer() != null) {
@@ -256,6 +260,10 @@ public class PlayerData {
         Document document = mongoManager.getPlayerData().find(Filters.eq("uuid", this.uuid.toString())).first();
         if (document != null) {
             this.lastServer = document.getString("last-server");
+            if (document.containsKey("last-server-time")) {
+                this.lastServerTime = document.getLong("last-server-time");
+            }
+
             this.staffChat = document.getBoolean("staff-chat");
             this.adminChat = document.getBoolean("admin-chat");
             this.country = document.getString("country");
@@ -299,7 +307,12 @@ public class PlayerData {
         MongoManager mongoManager = Zoom.getInstance().getMongoManager();
         Document document = mongoManager.getPlayerData().find(Filters.eq("uuid", this.uuid.toString())).first();
         if (document != null) {
+
             this.lastServer = document.getString("last-server");
+            if (document.containsKey("last-server-time")) {
+                this.lastServerTime = document.getLong("last-server-time");
+            }
+
             this.staffChat = document.getBoolean("staff-chat");
             this.adminChat = document.getBoolean("admin-chat");
             this.country = document.getString("country");
@@ -457,7 +470,7 @@ public class PlayerData {
         return playerData.get(uuid);
     }
 
-    public static PlayerData getPlayerData(Player player){
+    public static PlayerData getPlayerData(Player player) {
         return playerData.get(player.getUniqueId());
     }
 
@@ -525,7 +538,7 @@ public class PlayerData {
         }.runTaskTimer(Zoom.getInstance(), 20L, TimeUnit.MINUTES.toMillis(5L));
     }
 
-    public boolean isFreeze(){
+    public boolean isFreeze() {
         return FreezeListener.getFreezeList().contains(this.uuid);
     }
 

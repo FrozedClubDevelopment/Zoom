@@ -28,10 +28,17 @@ public class StaffListener implements Listener {
                             .setParam("STAFF", e.getPlayer().getDisplayName())
                             .setParam("SERVER", Lang.SERVER_NAME).toJSON();
                 } else {
-                    json = new RedisMessage(Payload.STAFF_SWITCH)
-                            .setParam("STAFF", e.getPlayer().getDisplayName())
-                            .setParam("LAST_SERVER", playerData.getLastServer())
-                            .setParam("ACTUAL_SERVER", Lang.SERVER_NAME).toJSON();
+                    long time = System.currentTimeMillis() - playerData.getLastServerTime();
+                    if (time < (5 * 1000)) { // 5 segundos p cambiar de server
+                        json = new RedisMessage(Payload.STAFF_SWITCH)
+                                .setParam("STAFF", e.getPlayer().getDisplayName())
+                                .setParam("LAST_SERVER", playerData.getLastServer())
+                                .setParam("ACTUAL_SERVER", Lang.SERVER_NAME).toJSON();
+                    } else {
+                        json = new RedisMessage(Payload.STAFF_JOIN)
+                                .setParam("STAFF", e.getPlayer().getDisplayName())
+                                .setParam("SERVER", Lang.SERVER_NAME).toJSON();
+                    }
                 }
                 Zoom.getInstance().getRedisManager().write(json);
             } else {

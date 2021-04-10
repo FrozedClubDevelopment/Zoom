@@ -172,20 +172,21 @@ public class Punishment {
     }
 
     private void senPlayersMSG(boolean silent, ConfigCursor configCursor, String targetName, String senderName) {
-        getPlayers(silent).forEach(player -> {
-            getPunishmentMessages().forEach(text ->
-                    player.sendMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
-                            .replace("<player>", targetName)
-                            .replace("<target>", targetName)
-                            .replace("<sender>", senderName)
-                            .replace("<staff>", senderName)
-                            .replace("<context>", getContext())
-                            .replace("<reason>", this.pardoned ?
-                                    (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
-                                    : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
-                            .replace("<time>", getTimeLeft(false))
-                            .replace("<duration>", getTimeLeft(false))
-                    ));
+        getPunishmentMessages().forEach(text -> {
+            getPlayers(silent).forEach(player -> {
+                player.sendMessage((silent ? CC.translate(configCursor.getString("SILENT")) : "") + CC.translate(text)
+                        .replace("<player>", targetName)
+                        .replace("<target>", targetName)
+                        .replace("<sender>", senderName)
+                        .replace("<staff>", senderName)
+                        .replace("<context>", getContext())
+                        .replace("<reason>", this.pardoned ?
+                                (this.pardonedReason == null || this.pardonedReason.isEmpty() || this.pardonedReason.equals("") ? "No reason provided" : this.pardonedReason)
+                                : (this.reason == null || this.reason.isEmpty() || this.reason.equals("") ? "No reason provided" : this.reason))
+                        .replace("<time>", getTimeLeft(false))
+                        .replace("<duration>", getTimeLeft(false))
+                );
+            });
         });
     }
 

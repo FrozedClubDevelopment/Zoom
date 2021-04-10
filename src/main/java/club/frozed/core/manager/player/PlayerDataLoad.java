@@ -91,6 +91,7 @@ public class PlayerDataLoad implements Listener {
             if (playerData.isFreeze()) {
                 new PlayerLeaveFreezeEvent(player).call();
             }
+            playerData.setLastServerTime(System.currentTimeMillis());
             playerData.removeData();
         }
     }

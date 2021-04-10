@@ -5,6 +5,12 @@ SETTINGS:
   PREFIX: '&8[&b&lZoom&8] '
   SERVER-NAME: 'DEV'
   SERVER-ANNOUNCE: '&8[&b⚡&8] <rank><name> &fis playing on &b<server_name>&f! Use &b/join <server_name> &fto join.'
+  AUTO-MUTE:
+    FORBIDDEN_WORDS:
+      - 'L'
+      - 'pussy'
+      - 'fuck'
+    COMMAND: 'tempban <player> Toxic 1d -s'
   CHAT:
     NAME-COLOR-MENU-TITLE: '&8Choose your name color'
     CHATCOLOR-MENU-TITLE: '&8Choose your chat color'

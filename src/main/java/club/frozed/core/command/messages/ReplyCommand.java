@@ -32,7 +32,7 @@ public class ReplyCommand extends BaseCommand {
                 p.sendMessage("§cThere is no player to reply to");
                 return;
             }
-            String text = StringUtils.join(args, ' ', 0, args.length);
+                String text = StringUtils.join(args, ' ', 0, args.length);
             PlayerMessage playerMessage = new PlayerMessage(p, target, text, true);
             playerMessage.send();
         });

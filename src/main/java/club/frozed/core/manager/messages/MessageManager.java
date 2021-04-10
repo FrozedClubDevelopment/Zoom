@@ -8,6 +8,6 @@ import java.util.UUID;
 @Getter
 public class MessageManager {
 
-    private HashMap<UUID, UUID> lastReplied = new HashMap<>();
+    private final HashMap<UUID, UUID> lastReplied = new HashMap<>();
 
 }
