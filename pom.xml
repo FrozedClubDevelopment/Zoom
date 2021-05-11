@@ -15,13 +15,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>frozedrepo</id>
-            <url>http://ryzeon.me:8081/</url>
-        </repository>
-    </distributionManagement>
-
     <repositories>
         <repository>
             <id>placeholderapi</id>
@@ -30,6 +23,11 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+
+        <repository>
+            <id>ryzeon-repo</id>
+            <url>http://ryzeon.me:8081/repository/ryzeon</url>
         </repository>
     </repositories>
 
@@ -103,8 +101,8 @@
         <dependency>
             <groupId>club.frozed.lib</groupId>
             <artifactId>FrozedLib</artifactId>
-            <version>1.0-FINAL</version>
-            <scope>compile</scope>
+            <version>1.2-BETA</version>
+            <classifier>BETA</classifier>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->

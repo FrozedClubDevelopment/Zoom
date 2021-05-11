@@ -147,8 +147,17 @@ public class ZoomAPI {
     }
 
     public static boolean isBanned(Player player) {
-        PlayerData playerData = PlayerData.getPlayerData(player.getName());
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
         return playerData.getActivePunishment(PunishmentType.BAN) != null;
     }
 
+    public static boolean hasTag(Player player) {
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
+        return playerData.getTag() != null;
+    }
+
+    public static String getTag(Player player) {
+        PlayerData playerData = PlayerData.getPlayerData(player.getUniqueId());
+        return playerData.getTag();
+    }
 }
