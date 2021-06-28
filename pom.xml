@@ -102,7 +102,6 @@
             <groupId>club.frozed.lib</groupId>
             <artifactId>FrozedLib</artifactId>
             <version>1.2-BETA</version>
-            <classifier>BETA</classifier>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->

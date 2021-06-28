@@ -5,6 +5,11 @@
 *.ipr
 *.iws
 
+.classpath
+.settings/
+.project
+.factorypath
+
 # IntelliJ
 out/
 
