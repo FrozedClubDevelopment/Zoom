@@ -8,8 +8,8 @@ import club.frozed.lib.chat.CC;
 import club.frozed.lib.menu.Button;
 import club.frozed.lib.menu.buttons.AirButton;
 import club.frozed.lib.menu.buttons.PageInfoButton;
-import club.frozed.lib.menu.pagination.PageButton;
-import club.frozed.lib.menu.pagination.PaginatedMenu;
+import club.frozed.lib.menu.pagination.normal.PageButton;
+import club.frozed.lib.menu.pagination.normal.PaginatedMenu;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
